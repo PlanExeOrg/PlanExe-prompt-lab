@@ -16,7 +16,9 @@ Usage:
     python populate_baseline.py --dry-run /absolute/path/to/zips
 
 The script reads dataset.json to discover which zips belong to train vs verify,
-then extracts each into baseline/train/<name>/ or baseline/verify/<name>/.
+then extracts each into baseline/train/<zip_stem>/ or baseline/verify/<zip_stem>/.
+Skips __MACOSX directories and .DS_Store files.
+Flattens any single top-level directory inside the zip.
 """
 import argparse
 import json
@@ -50,13 +52,47 @@ def resolve_zip(source: str, zip_filename: str, tmp_dir: Path) -> Path:
         return Path(source) / zip_filename
 
 
+SKIP_PREFIXES = ("__MACOSX/",)
+SKIP_NAMES = (".DS_Store",)
+
+
+def _should_skip(name: str) -> bool:
+    """Return True if this zip member should be skipped."""
+    if any(name.startswith(p) for p in SKIP_PREFIXES):
+        return True
+    if Path(name).name in SKIP_NAMES:
+        return True
+    return False
+
+
 def extract_zip(zip_path: Path, target_dir: Path) -> int:
-    """Extract a zip file into target_dir. Returns number of files extracted."""
-    target_dir.mkdir(parents=True, exist_ok=True)
+    """Extract a zip file into target_dir, flattening a single top-level dir.
+
+    Skips __MACOSX and .DS_Store. If all members share a common top-level
+    directory, that level is stripped so files land directly in target_dir.
+    Returns number of files extracted.
+    """
     with zipfile.ZipFile(zip_path, "r") as zf:
-        members = zf.namelist()
-        zf.extractall(target_dir)
-        return len(members)
+        members = [m for m in zf.namelist() if not _should_skip(m)]
+
+        # Detect common top-level directory to flatten
+        top_dirs = {m.split("/")[0] for m in members if "/" in m}
+        strip_prefix = ""
+        if len(top_dirs) == 1:
+            strip_prefix = top_dirs.pop() + "/"
+
+        target_dir.mkdir(parents=True, exist_ok=True)
+        count = 0
+        for member in members:
+            rel_path = member[len(strip_prefix):] if strip_prefix else member
+            if not rel_path or rel_path.endswith("/"):
+                continue
+            dest = target_dir / rel_path
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            with zf.open(member) as src, open(dest, "wb") as dst:
+                shutil.copyfileobj(src, dst)
+            count += 1
+        return count
 
 
 def populate(source: str, dry_run: bool = False, force: bool = False) -> None:
@@ -67,7 +103,7 @@ def populate(source: str, dry_run: bool = False, force: bool = False) -> None:
         ("verify", dataset["verify"]),
     ]
 
-    total_entries = sum(len(entries) for _, entries in splits)
+    total_entries = sum(len(zips) for _, zips in splits)
     found = 0
     skipped = 0
     errors = 0
@@ -75,31 +111,31 @@ def populate(source: str, dry_run: bool = False, force: bool = False) -> None:
     with tempfile.TemporaryDirectory() as tmp_dir:
         tmp_path = Path(tmp_dir)
 
-        for split_name, entries in splits:
-            for entry in entries:
-                name = entry["name"]
-                zip_filename = entry["zip"]
-                target_dir = BASELINE_DIR / split_name / name
+        for split_name, zip_filenames in splits:
+            for zip_filename in zip_filenames:
+                dir_name = Path(zip_filename).stem
+                label = f"{split_name}/{dir_name}"
+                target_dir = BASELINE_DIR / split_name / dir_name
 
                 if target_dir.exists() and not force:
-                    print(f"  [{split_name}/{name}] already exists, skipping (use --force to overwrite)")
+                    print(f"  [{label}] already exists, skipping (use --force to overwrite)")
                     skipped += 1
                     continue
 
                 if dry_run:
-                    print(f"  [{split_name}/{name}] would extract from {zip_filename}")
+                    print(f"  [{label}] would extract from {zip_filename}")
                     found += 1
                     continue
 
                 try:
                     zip_path = resolve_zip(source, zip_filename, tmp_path)
                 except Exception as e:
-                    print(f"  [{split_name}/{name}] ERROR: could not get {zip_filename}: {e}")
+                    print(f"  [{label}] ERROR: could not get {zip_filename}: {e}")
                     errors += 1
                     continue
 
                 if not zip_path.exists():
-                    print(f"  [{split_name}/{name}] ERROR: {zip_path} not found")
+                    print(f"  [{label}] ERROR: {zip_path} not found")
                     errors += 1
                     continue
 
@@ -108,10 +144,10 @@ def populate(source: str, dry_run: bool = False, force: bool = False) -> None:
 
                 try:
                     count = extract_zip(zip_path, target_dir)
-                    print(f"  [{split_name}/{name}] extracted {count} files")
+                    print(f"  [{label}] extracted {count} files")
                     found += 1
                 except Exception as e:
-                    print(f"  [{split_name}/{name}] ERROR extracting: {e}")
+                    print(f"  [{label}] ERROR extracting: {e}")
                     errors += 1
 
     print()
