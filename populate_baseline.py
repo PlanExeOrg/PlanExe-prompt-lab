@@ -52,6 +52,9 @@ def resolve_zip(source: str, zip_filename: str, tmp_dir: Path) -> Path:
         return Path(source) / zip_filename
 
 
+REQUIRED_SUFFIXES = ("plan.txt", "report.html")
+OPTIONAL_SUFFIXES = ("planexe_metadata.json",)
+
 SKIP_PREFIXES = ("__MACOSX/",)
 SKIP_NAMES = (".DS_Store",)
 
@@ -65,11 +68,39 @@ def _should_skip(name: str) -> bool:
     return False
 
 
-def extract_zip(zip_path: Path, target_dir: Path) -> int:
+def _has_suffix(filenames: set[str], suffix: str) -> bool:
+    """Check if any filename matches the suffix (exact or after a '-')."""
+    return any(f == suffix or f.endswith("-" + suffix) for f in filenames)
+
+
+def _check_required_files(members: list[str], strip_prefix: str, label: str) -> list[str]:
+    """Check that the zip contains required files. Returns list of missing required suffixes.
+
+    Prints warnings for missing optional files.
+    """
+    filenames = set()
+    for m in members:
+        rel = m[len(strip_prefix):] if strip_prefix else m
+        if rel and not rel.endswith("/"):
+            filenames.add(rel)
+
+    for suffix in OPTIONAL_SUFFIXES:
+        if not _has_suffix(filenames, suffix):
+            print(f"  [{label}] WARNING: missing optional file: {suffix}")
+
+    missing = []
+    for suffix in REQUIRED_SUFFIXES:
+        if not _has_suffix(filenames, suffix):
+            missing.append(suffix)
+    return missing
+
+
+def extract_zip(zip_path: Path, target_dir: Path, label: str = "") -> int:
     """Extract a zip file into target_dir, flattening a single top-level dir.
 
     Skips __MACOSX and .DS_Store. If all members share a common top-level
     directory, that level is stripped so files land directly in target_dir.
+    Validates that required files (plan.txt, report.html) are present.
     Returns number of files extracted.
     """
     with zipfile.ZipFile(zip_path, "r") as zf:
@@ -80,6 +111,10 @@ def extract_zip(zip_path: Path, target_dir: Path) -> int:
         strip_prefix = ""
         if len(top_dirs) == 1:
             strip_prefix = top_dirs.pop() + "/"
+
+        missing = _check_required_files(members, strip_prefix, label)
+        if missing:
+            raise ValueError(f"zip is missing required files: {', '.join(missing)}")
 
         target_dir.mkdir(parents=True, exist_ok=True)
         count = 0
@@ -143,7 +178,7 @@ def populate(source: str, dry_run: bool = False, force: bool = False) -> None:
                     shutil.rmtree(target_dir)
 
                 try:
-                    count = extract_zip(zip_path, target_dir)
+                    count = extract_zip(zip_path, target_dir, label)
                     print(f"  [{label}] extracted {count} files")
                     found += 1
                 except Exception as e:
