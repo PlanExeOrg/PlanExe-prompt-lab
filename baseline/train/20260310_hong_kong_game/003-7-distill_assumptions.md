@@ -1,0 +1,8 @@
+- 30% budget from pre-sales, 20% private equity, 50% traditional film financing.
+- Month 1: IP rights and screenplay; Month 2: casting; Month 3: permits.
+- Crew: experienced in cinematography, production design, sound, location management.
+- Hong Kong Film Development Council and Film Censorship Authority are primary regulators.
+- Safety: crowd control, traffic management, emergency services, equipment protection.
+- Adhere to Hong Kong's environmental regulations; waste reduction, recycling, noise mitigation.
+- Engage local communities via consultations, information sessions, and outreach programs.
+- Use cloud-based software, secure channels, and data encryption for production management.

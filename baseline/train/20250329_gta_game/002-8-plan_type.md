@@ -1,0 +1,3 @@
+This plan requires one or more physical locations. It cannot be executed digitally.
+
+**Explanation:** Developing a Grand Theft Auto game, even with advanced procedural generation and cloud-based tools, *inherently requires* a physical development environment, including offices, hardware, and in-person collaboration among developers, artists, and designers. Testing the game also requires physical devices and real-world testing scenarios. Securing funding through partnerships and grants involves physical meetings and presentations. Therefore, this plan is classified as physical.

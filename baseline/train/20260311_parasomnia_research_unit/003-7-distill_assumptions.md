@@ -1,0 +1,12 @@
+- Aim 1 gets 50% of budget, Aim 2 gets 30%, and Aim 3 gets 20%.
+- Year 1: Secure property, ethics, staff, and enroll 15-20 participants.
+- Year 2: Enroll 30-35 participants, complete PSG, and submit first publication.
+- Year 3: Data analysis, event-triage algorithm, publications, and dataset deposit.
+- PI oversees; postdocs analyze; techs monitor; psychologist supports; engineer manages; coordinator recruits.
+- If staff leave, redistribute duties and recruit replacements.
+- Approvals: ethics, building permits, fire safety, and data privacy compliance.
+- PI leads approvals with legal/regulatory affairs departments.
+- Safety: padded edges, alarms, trained techs, first aid, CPR, and fire plan.
+- Unit uses energy-efficient appliances, recycles, conserves water, and uses sustainable materials.
+- Team will hold community meetings, address complaints, and be a good neighbor.
+- Secure data, scheduling, and maintenance systems will be integrated for efficiency.

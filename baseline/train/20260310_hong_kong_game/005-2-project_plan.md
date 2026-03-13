@@ -1,0 +1,147 @@
+**Goal Statement:** Produce a modern-day remake of the 1997 film "The Game," set in Hong Kong, for global theatrical distribution by 2028.
+
+## SMART Criteria
+
+- **Specific:** Create a remake of "The Game" set in Hong Kong, updated for a contemporary audience, and produced in English for global theatrical distribution, while adhering to a 'no smoking' policy on screen.
+- **Measurable:** The success of the goal will be measured by the completion and theatrical release of the film, achieving a worldwide gross of HK$940 million–HK$1.7 billion (US$120–220 million), and securing a premium VOD and streaming licensing deal.
+- **Achievable:** The goal is achievable given the availability of Hong Kong's film infrastructure, experienced local crews, and the Hong Kong Film Development Fund incentives, along with a scaled budget to avoid dependence on mainland China box office returns.
+- **Relevant:** This goal is relevant as it leverages a proven psychological thriller concept with a unique Hong Kong setting to create a commercially viable film for a global audience.
+- **Time-bound:** The project should be completed within 18-20 months from greenlight, targeting a festival premiere (Toronto, Busan, or Venice) followed by a theatrical release within 4 weeks and premium VOD within 60 days of theatrical release.
+
+## Dependencies
+
+- Secure IP rights from the original rights holders.
+- Secure funding for the production budget of HK$470 million and P&A allocation of HK$195 million.
+- Finalize screenplay adaptation that uses Hong Kong's architectural paranoia to heighten the stakes.
+- Cast a director and lead actor suitable for the film.
+
+## Resources Required
+
+- HK$470 million production budget.
+- HK$195 million P&A allocation.
+- Experienced local crews in Hong Kong.
+- Hong Kong Film Development Fund incentives.
+- Filming locations in Hong Kong.
+- Post-production facilities.
+- Music composer.
+- Legal counsel for IP rights and regulatory compliance.
+
+## Related Goals
+
+- Maximize worldwide theatrical gross.
+- Secure premium VOD and streaming licensing deal.
+- Achieve critical acclaim and positive word-of-mouth.
+- Establish a successful film franchise.
+
+## Tags
+
+- thriller
+- remake
+- Hong Kong
+- psychological
+- film
+- production
+
+## Risk Assessment and Mitigation Strategies
+
+
+### Key Risks
+
+- Failure to secure IP rights from the original rights holders.
+- Navigating Hong Kong's political and regulatory landscape regarding film content and permits.
+- Differentiating the remake from the original's twist structure.
+- Budget overruns.
+- Logistical challenges of filming in one of the world's most densely populated cities.
+
+### Diverse Risks
+
+- Regulatory & Permitting
+- Intellectual Property
+- Technical
+- Financial
+- Environmental
+- Social
+- Operational
+- Supply Chain
+- Security
+- Talent Availability
+- Market/Competition
+- Long-Term Sustainability
+- Narrative Execution
+- Currency Fluctuation
+
+### Mitigation Plans
+
+- Negotiate rights with Propaganda Films / PolyGram (now likely held by Universal or its subsidiaries), explore alternatives, secure IP legal counsel.
+- Engage local experts, build agency relationships, identify backup locations, maintain a neutral political stance.
+- Script development, fresh narrative, emphasize Hong Kong setting, audience testing of the script.
+- Contingency fund, cost control, bridge financing, completion bond, hedging strategies.
+- Location scouting, permits, local staff, efficient transport, off-peak filming, weather insurance.
+
+## Stakeholder Analysis
+
+
+### Primary Stakeholders
+
+- Director
+- Producer
+- Screenwriter
+- Lead Actors
+- Cinematographer
+- Production Designer
+- Film Editor
+- Hong Kong Film Development Fund
+
+### Secondary Stakeholders
+
+- Propaganda Films / PolyGram (Universal)
+- Hong Kong Film Censorship Authority
+- Hong Kong Tourism Board
+- Local Communities in Hong Kong
+- Theatrical Distributors
+- VOD Platforms
+- Streaming Services
+- Investors
+- Film Critics
+- Target Audience (Adults 25-54)
+
+### Engagement Strategies
+
+- Regular progress reports and creative collaboration with the director, producer, and screenwriter.
+- Negotiate favorable distribution deals with theatrical distributors, VOD platforms, and streaming services.
+- Maintain open communication with the Hong Kong Film Censorship Authority to address any concerns proactively.
+- Engage with local communities in Hong Kong to address concerns about noise and traffic during filming.
+- Provide investors with regular financial updates and ROI projections.
+- Target film critics and genre enthusiasts with marketing campaigns to generate positive word-of-mouth.
+
+## Regulatory and Compliance Requirements
+
+
+### Permits and Licenses
+
+- Film shooting permit from the Hong Kong Film Development Council.
+- Location permits from the Hong Kong government.
+- Work visas for international cast and crew.
+- Copyright clearances for music and other intellectual property.
+
+### Compliance Standards
+
+- Hong Kong Film Censorship Ordinance.
+- Hong Kong Employment Ordinance.
+- Hong Kong environmental regulations.
+- International copyright laws.
+
+### Regulatory Bodies
+
+- Hong Kong Film Development Council.
+- Hong Kong Film Censorship Authority.
+- Hong Kong Labour Department.
+- Hong Kong Environmental Protection Department.
+
+### Compliance Actions
+
+- Apply for film shooting permit.
+- Submit screenplay to the Hong Kong Film Censorship Authority for review.
+- Obtain work visas for international cast and crew.
+- Comply with Hong Kong environmental regulations during filming.
+- Secure copyright clearances for music and other intellectual property.

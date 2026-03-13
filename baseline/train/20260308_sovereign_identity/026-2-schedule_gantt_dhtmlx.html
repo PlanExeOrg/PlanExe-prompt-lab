@@ -1,0 +1,2274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sovereign Identity</title>
+  <style>
+    body {
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        margin: 2rem;
+    }
+  </style>
+  <!--HTML_HEAD_START-->
+  <!-- 
+  Versions available at:
+  https://www.jsdelivr.com/package/npm/dhtmlx-gantt 
+  Version 9.1.0 breaks the zoom in/out/fit buttons.
+  Version 9.0.15 normal. The zoom in/out/fit buttons works.
+  -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dhtmlx-gantt@9.0.15/codebase/dhtmlxgantt.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/dhtmlx-gantt@9.0.15/codebase/dhtmlxgantt.min.js"></script>
+  <style>
+    .gantt_container_with_controls {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+    .gantt_container {
+        width: 100%;
+        height: 80vh;
+        margin-bottom: 1rem;
+    }
+    .gantt_tooltip {
+        max-width: 30rem;
+        white-space: break-spaces;
+    }
+    .gantt-controls {
+        display: flex;
+        gap: 0.5rem;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 1rem;
+        position: relative;
+    }
+    .zoom-buttons {
+        display: flex;
+        gap: 0.5rem;
+        justify-content: center;
+    }
+    .export-button {
+        position: absolute;
+        right: 0;
+    }
+    .gantt-controls button {
+        padding: 0.5rem 1rem;
+        border: 1px solid #ccc;
+        border-radius: 0.25rem;
+        background: white;
+        cursor: pointer;
+        font-size: 0.9rem;
+    }
+    .gantt-controls button:hover {
+        background: #f5f5f5;
+    }
+    .project-task.gantt_task_line {
+        background-color: #b67134;
+        border-color: #f57c00;
+    }
+    .project-task .gantt_task_content {
+        color: white;
+    }
+    .project-task.gantt_project.gantt_task_line {
+        border-radius: 0;
+    }
+  </style>
+  <!--HTML_HEAD_END-->
+</head>
+<body>
+    <h1>Sovereign Identity</h1>
+<!--HTML_BODY_CONTENT_START-->
+<div class="gantt_container_with_controls">
+    <div class="gantt-controls">
+        <div class="zoom-buttons">
+            <button id="zoomFitButton">Zoom Fit</button>
+            <button id="zoomInButton">Zoom In</button>
+            <button id="zoomOutButton">Zoom Out</button>
+        </div>
+        <button id="exportToCSVButton" class="export-button">Export to CSV</button>
+    </div>
+    <div id="gantt_container" class="gantt_container"></div>
+</div>
+<!--HTML_BODY_CONTENT_END-->
+
+<!--HTML_BODY_SCRIPT_START-->
+<script type="module">
+    // When `null`, the "Export to CSV" button is hidden.
+    // When a string, it's the CSV data, eg: `"hello;csv;world"` and the button is shown.
+    const GANTT_DATA_CSV = "project_key,project_name,project_description,project_start_date,project_end_date,project_progress,project_parent,originating_department\n04c97117-c848-4462-a345-72012d3048c9,Sovereign Identity,\"Sovereign Identity\n\nFinal deliverable:\nNeutral Framework\",3/8/2026,11/30/2027,0,,PlanExe\n5684f949-4096-4faa-a559-c2813cce24a3,Project Initiation & Planning,,3/8/2026,9/16/2026,0,04c97117-c848-4462-a345-72012d3048c9,PlanExe\ne9788c79-9efa-4408-80e3-33acbf9f1d2f,Secure Project Funding,,3/8/2026,5/7/2026,0,5684f949-4096-4faa-a559-c2813cce24a3,PlanExe\n58253600-3d98-493f-bad9-10f0685f387d,Identify Potential Funding Sources,\"Identify Potential Funding Sources\n\nDescription:\nResearch and identify potential funding sources, including EU grants, private foundations, and government programs, that align with the project's goals and objectives. This involves searching online databases, attending industry events, and networking with relevant organizations.\n\nResources needed:\n\u2022 Policy and Public-Affairs Coordinator\n\u2022 Lead Researcher\n\u2022 Grant Writer\",3/8/2026,3/23/2026,0,e9788c79-9efa-4408-80e3-33acbf9f1d2f,PlanExe\nd78e9950-e138-4f06-b4c6-4ece06dea7f6,Prepare Grant Proposals,\"Prepare Grant Proposals\n\nDescription:\nDevelop compelling grant proposals tailored to each identified funding source, highlighting the project's impact, feasibility, and alignment with the funder's priorities. This includes writing detailed project descriptions, budgets, and evaluation plans.\n\nResources needed:\n\u2022 Lead Researcher\n\u2022 Grant Writer\n\u2022 Financial Auditor\",3/23/2026,4/7/2026,0,58253600-3d98-493f-bad9-10f0685f387d,PlanExe\n04d31d52-1836-44c0-a951-56f54d5ff9ca,Engage with Funding Organizations,\"Engage with Funding Organizations\n\nDescription:\nEstablish communication channels with funding organizations, attend informational webinars, and network with program officers to build relationships and gather insights into their funding priorities and application processes.\n\nResources needed:\n\u2022 Policy and Public-Affairs Coordinator\n\u2022 Lead Researcher\",4/7/2026,4/22/2026,0,d78e9950-e138-4f06-b4c6-4ece06dea7f6,PlanExe\n7dd9631d-1c80-4333-93ca-96a1106084cd,Manage Currency Exchange Risks,\"Manage Currency Exchange Risks\n\nDescription:\nDevelop a strategy for managing currency exchange risks, including monitoring exchange rates, hedging currency fluctuations, and establishing DKK-specific accounting standards for grant management. Consult with a financial advisor specializing in currency risk management.\n\nResources needed:\n\u2022 Financial Auditor\n\u2022 Financial Advisor\n\u2022 Project Manager\",4/22/2026,5/7/2026,0,e9788c79-9efa-4408-80e3-33acbf9f1d2f,PlanExe\n6aeeb16e-57bb-4f60-a22d-b04bcf662a54,Establish Physical Base in Copenhagen,,5/7/2026,6/8/2026,0,e9788c79-9efa-4408-80e3-33acbf9f1d2f,PlanExe\n8cf0e8d3-c22d-469a-a1ab-bfd671c6b694,Identify potential office spaces in Copenhagen,\"Identify potential office spaces in Copenhagen\n\nDescription:\nObjective: Identify suitable office spaces in Copenhagen that meet the project's requirements.\nScope: Research and compile a list of potential office spaces, considering factors such as location, size, security, and accessibility.\nSteps: 1. Define the project's office space requirements. 2. Research available office spaces in Copenhagen using online resources and real estate agents. 3. Compile a list of potential office spaces with relevant details.\nDeliverables: A list of potential office spaces in Copenhagen with detailed information.\n\nResources needed:\n\u2022 Project Manager\n\u2022 Real Estate Agent\n\u2022 Administrative Assistant\",5/7/2026,5/15/2026,0,6aeeb16e-57bb-4f60-a22d-b04bcf662a54,PlanExe\nd1f31d17-262e-4da5-ac14-8cd3d3277617,Assess security requirements for workspace,\"Assess security requirements for workspace\n\nDescription:\nObjective: Determine the security requirements for the project's workspace.\nScope: Identify and document the security measures necessary to protect sensitive data and equipment.\nSteps: 1. Conduct a security risk assessment. 2. Identify security requirements based on the risk assessment. 3. Document the security requirements in a security plan.\nDeliverables: A security plan outlining the security requirements for the project's workspace.\n\nResources needed:\n\u2022 Security Expert\n\u2022 Technical Lead\n\u2022 Lead Researcher\",5/15/2026,5/23/2026,0,8cf0e8d3-c22d-469a-a1ab-bfd671c6b694,PlanExe\n988a120c-293d-4ba3-b63a-2c41f8f589dc,Negotiate lease terms for selected space,\"Negotiate lease terms for selected space\n\nDescription:\nObjective: Negotiate favorable lease terms for the selected office space.\nScope: Negotiate the lease agreement with the landlord, ensuring that the terms are acceptable to the project.\nSteps: 1. Review the lease agreement. 2. Identify areas for negotiation. 3. Negotiate the lease terms with the landlord. 4. Finalize the lease agreement.\nDeliverables: A finalized lease agreement for the selected office space.\n\nResources needed:\n\u2022 Project Manager\n\u2022 Legal Counsel\n\u2022 Real Estate Agent\",5/23/2026,5/31/2026,0,d1f31d17-262e-4da5-ac14-8cd3d3277617,PlanExe\n2940e67e-338f-4e4e-a442-3a6cd4723785,Prepare workspace for security-sensitive research,\"Prepare workspace for security-sensitive research\n\nDescription:\nObjective: Prepare the workspace to meet the security requirements for security-sensitive digital identity research.\nScope: Implement the necessary security measures to protect sensitive data and equipment.\nSteps: 1. Implement the security plan. 2. Install security systems and equipment. 3. Test the security systems and equipment.\nDeliverables: A secure workspace ready for security-sensitive digital identity research.\n\nResources needed:\n\u2022 Security Expert\n\u2022 Technical Lead\n\u2022 Engineer\n\u2022 Contractor\",5/31/2026,6/8/2026,0,6aeeb16e-57bb-4f60-a22d-b04bcf662a54,PlanExe\n69f4d01b-b7bd-4e83-89d9-bf196dc7f7df,Define Technical Definitions of Platform Neutrality and Fallback Access,,6/8/2026,6/28/2026,0,6aeeb16e-57bb-4f60-a22d-b04bcf662a54,PlanExe\n2f5c3216-558f-4686-900b-4306b42ae900,Research Platform Neutrality Definitions,\"Research Platform Neutrality Definitions\n\nDescription:\nObjective: Gather existing definitions of platform neutrality from various sources.\nScope: Review academic literature, industry standards, and regulatory documents.\nSteps: Search online databases, consult with experts, and analyze relevant publications.\nDeliverables: A comprehensive list of platform neutrality definitions.\n\nResources needed:\n\u2022 Lead Researcher\n\u2022 Regulatory and Compliance Specialist\",6/8/2026,6/13/2026,0,69f4d01b-b7bd-4e83-89d9-bf196dc7f7df,PlanExe\n40bbcfb5-e464-4820-ae15-b2f0478b52bb,Define Fallback Access Requirements,\"Define Fallback Access Requirements\n\nDescription:\nObjective: Establish technical requirements for fallback access paths.\nScope: Define authentication methods, security protocols, and user experience considerations.\nSteps: Analyze existing fallback mechanisms, consult with security experts, and develop detailed specifications.\nDeliverables: A document outlining the technical requirements for fallback access.\n\nResources needed:\n\u2022 Technical Lead\n\u2022 Engineer\n\u2022 Mobile security and authentication protocols expertise\",6/13/2026,6/18/2026,0,2f5c3216-558f-4686-900b-4306b42ae900,PlanExe\n494b7356-c158-4d61-a311-53305dd21720,Analyze AltID Technical Constraints,\"Analyze AltID Technical Constraints\n\nDescription:\nObjective: Understand the technical limitations and requirements of AltID.\nScope: Review AltID documentation, consult with Digitaliseringsstyrelsen, and analyze its architecture.\nSteps: Gather information from relevant stakeholders, conduct technical analysis, and document findings.\nDeliverables: A report summarizing AltID's technical constraints and requirements.\n\nResources needed:\n\u2022 Lead Researcher\n\u2022 Technical Lead\n\u2022 Regulatory and Compliance Specialist\",6/18/2026,6/23/2026,0,40bbcfb5-e464-4820-ae15-b2f0478b52bb,PlanExe\nc178a3be-dd45-4464-b764-df7463c418ac,Draft Technical Definitions Document,\"Draft Technical Definitions Document\n\nDescription:\nObjective: Create a consolidated document with precise technical definitions.\nScope: Combine research, requirements, and constraints into a single document.\nSteps: Synthesize information, draft definitions, and obtain feedback from stakeholders.\nDeliverables: A final technical definitions document for platform neutrality and fallback access.\n\nResources needed:\n\u2022 Lead Researcher\n\u2022 Technical Lead\n\u2022 Regulatory and Compliance Specialist\n\u2022 Policy and Public-Affairs Coordinator\",6/23/2026,6/28/2026,0,69f4d01b-b7bd-4e83-89d9-bf196dc7f7df,PlanExe\n870a5b4c-f42d-48ee-b463-5cf00d61393d,Develop Comprehensive Security Strategy,,6/28/2026,7/30/2026,0,69f4d01b-b7bd-4e83-89d9-bf196dc7f7df,PlanExe\n1e524d0a-48a0-4992-acd0-0175f215db30,Identify Security Risks and Threats,\"Identify Security Risks and Threats\n\nDescription:\nObjective: Identify potential security risks and threats to the project's digital identity framework.\nScope: Assess vulnerabilities in demonstrators, code repository, data storage, communication channels, and coalition building.\nSteps: Conduct threat modeling workshops, review existing security assessments, and consult with security experts.\nDeliverables: A comprehensive list of identified security risks and threats.\n\nResources needed:\n\u2022 Lead Researcher\n\u2022 Technical Lead\n\u2022 Security Review Specialist\",6/28/2026,7/6/2026,0,870a5b4c-f42d-48ee-b463-5cf00d61393d,PlanExe\n0f002bd9-809d-459a-b912-091f0a61b8ba,Develop Security Policies and Procedures,\"Develop Security Policies and Procedures\n\nDescription:\nObjective: Develop security policies and procedures to mitigate identified risks.\nScope: Create guidelines for secure coding practices, data storage, communication protocols, and incident response.\nSteps: Research industry best practices, adapt existing security policies, and consult with legal counsel.\nDeliverables: A documented set of security policies and procedures.\n\nResources needed:\n\u2022 Lead Researcher\n\u2022 Technical Lead\n\u2022 Security Review Specialist\n\u2022 Regulatory and Compliance Specialist\",7/6/2026,7/14/2026,0,1e524d0a-48a0-4992-acd0-0175f215db30,PlanExe\n532c8397-3df1-4b75-bffb-486c71a55af3,Implement Security Controls and Measures,\"Implement Security Controls and Measures\n\nDescription:\nObjective: Implement security controls and measures to protect project assets.\nScope: Configure firewalls, intrusion detection systems, access controls, and encryption mechanisms.\nSteps: Deploy security tools, configure security settings, and conduct security audits.\nDeliverables: A secure infrastructure with implemented security controls.\n\nResources needed:\n\u2022 Technical Lead\n\u2022 Engineer\n\u2022 Security Review Specialist\",7/14/2026,7/22/2026,0,0f002bd9-809d-459a-b912-091f0a61b8ba,PlanExe\ne09cd39e-f4cf-4180-9077-2f5f9b5d816f,Establish Incident Response Plan,\"Establish Incident Response Plan\n\nDescription:\nObjective: Create a plan for responding to security incidents.\nScope: Define roles and responsibilities, establish communication protocols, and develop procedures for incident containment and recovery.\nSteps: Research incident response best practices, adapt existing incident response plans, and conduct tabletop exercises.\nDeliverables: A documented incident response plan.\n\nResources needed:\n\u2022 Lead Researcher\n\u2022 Technical Lead\n\u2022 Security Review Specialist\n\u2022 Policy and Public-Affairs Coordinator\",7/22/2026,7/30/2026,0,870a5b4c-f42d-48ee-b463-5cf00d61393d,PlanExe\n845e209d-90ea-4313-92fa-6837fed213ca,Develop Alternative Scenarios and Intervention Points,,7/30/2026,8/15/2026,0,870a5b4c-f42d-48ee-b463-5cf00d61393d,PlanExe\n6e94a2c8-bf97-425c-9b60-d6fca79afbdd,Identify Alternative Legal Pathways,\"Identify Alternative Legal Pathways\n\nDescription:\nResearch and document alternative legal and regulatory pathways for promoting platform neutrality in Danish digital identity, beyond eIDAS2 and AltID.\n\nResources needed:\n\u2022 Regulatory and Compliance Specialist\n\u2022 Legal Counsel\",7/30/2026,8/3/2026,0,845e209d-90ea-4313-92fa-6837fed213ca,PlanExe\nba8066b2-c8c8-4ca3-9ba1-76db5eb0f1f7,Explore Unilateral Actions for Digital Sovereignty,\"Explore Unilateral Actions for Digital Sovereignty\n\nDescription:\nIdentify and analyze actions Denmark can take unilaterally to advance digital sovereignty in the digital identity space, independent of EU-level initiatives.\n\nResources needed:\n\u2022 Policy and Public-Affairs Coordinator\n\u2022 Lead Researcher\",8/3/2026,8/7/2026,0,6e94a2c8-bf97-425c-9b60-d6fca79afbdd,PlanExe\n47917541-aa78-4cbb-89cb-7ce158ecb0d3,Research Alternative Technical Standards,\"Research Alternative Technical Standards\n\nDescription:\nIdentify specific technical standards or open-source initiatives that Denmark could champion independently to promote platform neutrality and fallback access.\n\nResources needed:\n\u2022 Technical Lead\n\u2022 Engineer\",8/7/2026,8/11/2026,0,ba8066b2-c8c8-4ca3-9ba1-76db5eb0f1f7,PlanExe\n68c87288-f12b-4db6-bd57-9de993b2492f,Conduct Scenario Planning Workshops,\"Conduct Scenario Planning Workshops\n\nDescription:\nOrganize and facilitate scenario planning workshops with key stakeholders to explore alternative intervention points and potential fallback positions.\n\nResources needed:\n\u2022 Policy and Public-Affairs Coordinator\n\u2022 Lead Researcher\n\u2022 Workshop Facilitator\",8/11/2026,8/15/2026,0,845e209d-90ea-4313-92fa-6837fed213ca,PlanExe\n4f5f68af-1207-4252-a0f2-054765ccb987,Define Technical Standards and Certification Strategy,,8/15/2026,9/16/2026,0,5684f949-4096-4faa-a559-c2813cce24a3,PlanExe\n9db5800f-c4bf-457d-908b-72913db82610,Research relevant technical standards,\"Research relevant technical standards\n\nDescription:\nIdentify and analyze existing technical standards related to digital identity, authentication, and security protocols. This includes standards from organizations like ISO, ETSI, and W3C.\n\nResources needed:\n\u2022 Lead Researcher\n\u2022 Technical Lead\n\u2022 Regulatory and Compliance Specialist\",8/15/2026,8/23/2026,0,4f5f68af-1207-4252-a0f2-054765ccb987,PlanExe\n4e9990fc-2bcc-4c55-960d-32d8d7b69b75,Analyze eIDAS certification schemes,\"Analyze eIDAS certification schemes\n\nDescription:\nInvestigate existing eIDAS certification schemes and conformity assessment procedures to understand the requirements for certifying platform-neutral solutions. Identify gaps and potential challenges.\n\nResources needed:\n\u2022 Regulatory and Compliance Specialist\n\u2022 Technical Lead\",8/23/2026,8/31/2026,0,9db5800f-c4bf-457d-908b-72913db82610,PlanExe\nba83a385-3f8f-48d7-b8dc-ba1275345ce3,Engage with standards bodies,\"Engage with standards bodies\n\nDescription:\nEstablish communication channels with relevant standards bodies (e.g., ETSI, CEN/CENELEC) and technical working groups. Attend meetings, submit proposals, and participate in discussions to advocate for platform-neutral standards.\n\nResources needed:\n\u2022 Policy and Public-Affairs Coordinator\n\u2022 Lead Researcher\n\u2022 Technical Lead\",8/31/2026,9/8/2026,0,4e9990fc-2bcc-4c55-960d-32d8d7b69b75,PlanExe\nfd990824-100a-4f40-8c6b-575501306cb2,Develop certification strategy,\"Develop certification strategy\n\nDescription:\nFormulate a detailed strategy for certifying platform-neutral solutions under eIDAS, including identifying the necessary steps, resources, and timelines. Address assurance levels and conformity assessment requirements.\n\nResources needed:\n\u2022 Lead Researcher\n\u2022 Technical Lead\n\u2022 Regulatory and Compliance Specialist\n\u2022 Policy and Public-Affairs Coordinator\",9/8/2026,9/16/2026,0,4f5f68af-1207-4252-a0f2-054765ccb987,PlanExe\ndef01dd8-b255-45c9-ac06-49e4e7dc6199,Technical Feasibility Demonstrations,,9/16/2026,12/21/2026,0,5684f949-4096-4faa-a559-c2813cce24a3,PlanExe\n90d8943b-5b2d-4e30-adf1-bdf6b6953ec2,Develop FIDO2 Demonstrator on GrapheneOS,,9/16/2026,11/3/2026,0,def01dd8-b255-45c9-ac06-49e4e7dc6199,PlanExe\n004530d4-15c5-42ec-934b-c1366dc73b03,Set up GrapheneOS development environment,\"Set up GrapheneOS development environment\n\nDescription:\nObjective: Configure a secure and isolated development environment on GrapheneOS for FIDO2 implementation.\nScope: Includes installing necessary SDKs, libraries, and tools.\nSteps: 1. Install GrapheneOS on a test device. 2. Configure Android Studio or similar IDE. 3. Install FIDO2 libraries and dependencies. 4. Test the environment with a basic FIDO2 interaction.\nDeliverables: A fully functional development environment on GrapheneOS.\n\nResources needed:\n\u2022 Engineer\n\u2022 GrapheneOS device\n\u2022 Android Studio\",9/16/2026,9/28/2026,0,90d8943b-5b2d-4e30-adf1-bdf6b6953ec2,PlanExe\nb6a7f206-97a2-44c5-b050-a6dcb9d885f1,Implement FIDO2 authentication flow,\"Implement FIDO2 authentication flow\n\nDescription:\nObjective: Develop the core FIDO2 authentication flow within the GrapheneOS environment.\nScope: Covers registration, authentication, and key management.\nSteps: 1. Implement FIDO2 registration process. 2. Implement FIDO2 authentication process. 3. Securely store and manage FIDO2 keys. 4. Test the authentication flow with a test server.\nDeliverables: A functional FIDO2 authentication flow on GrapheneOS.\n\nResources needed:\n\u2022 Engineer\n\u2022 Mobile security expert\",9/28/2026,10/10/2026,0,004530d4-15c5-42ec-934b-c1366dc73b03,PlanExe\n0eb3c4f7-9b27-4883-acd3-7a277b0698e0,Integrate with test authentication server,\"Integrate with test authentication server\n\nDescription:\nObjective: Integrate the FIDO2 implementation with a test authentication server for verification.\nScope: Includes setting up the test server and configuring communication protocols.\nSteps: 1. Set up a test authentication server. 2. Configure communication between GrapheneOS device and server. 3. Test the FIDO2 authentication flow with the server. 4. Troubleshoot any integration issues.\nDeliverables: Successful integration with a test authentication server.\n\nResources needed:\n\u2022 Engineer\n\u2022 Web authentication expert\",10/10/2026,10/22/2026,0,b6a7f206-97a2-44c5-b050-a6dcb9d885f1,PlanExe\n63aa453f-1083-4561-a775-794d3ce62244,Secure FIDO2 implementation on GrapheneOS,\"Secure FIDO2 implementation on GrapheneOS\n\nDescription:\nObjective: Ensure the security of the FIDO2 implementation on GrapheneOS.\nScope: Includes vulnerability assessments, code reviews, and security hardening.\nSteps: 1. Conduct vulnerability assessments. 2. Perform code reviews. 3. Implement security hardening measures. 4. Test the security of the implementation.\nDeliverables: A secure FIDO2 implementation on GrapheneOS.\n\nResources needed:\n\u2022 Mobile security expert\n\u2022 Security review specialist\",10/22/2026,11/3/2026,0,90d8943b-5b2d-4e30-adf1-bdf6b6953ec2,PlanExe\nf5a2bd2e-738a-4b97-81ca-cbb65256305a,Develop Browser-Based Fallback Demonstrator,,11/3/2026,11/23/2026,0,90d8943b-5b2d-4e30-adf1-bdf6b6953ec2,PlanExe\n271cd7c6-9a76-4e01-85e5-318571a26388,Design Browser Fallback Authentication Flow,\"Design Browser Fallback Authentication Flow\n\nDescription:\nDefine the user experience and technical steps for the browser-based fallback authentication flow. This includes selecting appropriate authentication methods (e.g., OTP, email link), designing the user interface, and outlining the data flow between the browser, server, and any external services.\n\nResources needed:\n\u2022 Web Authentication Expert\n\u2022 UI/UX Designer\n\u2022 Security Architect\",11/3/2026,11/8/2026,0,f5a2bd2e-738a-4b97-81ca-cbb65256305a,PlanExe\n7c855acb-2aac-4397-813c-3525cb949a41,Implement Server-Side Fallback Logic,\"Implement Server-Side Fallback Logic\n\nDescription:\nDevelop the server-side components required to support the browser-based fallback authentication flow. This includes handling authentication requests, generating and verifying OTPs or email links, managing user sessions, and integrating with the existing authentication infrastructure.\n\nResources needed:\n\u2022 Backend Engineer\n\u2022 Security Engineer\n\u2022 Database Administrator\",11/8/2026,11/13/2026,0,271cd7c6-9a76-4e01-85e5-318571a26388,PlanExe\n73e05302-3536-4a47-82f4-10ae0d72d8a7,Develop Browser-Side Fallback Interface,\"Develop Browser-Side Fallback Interface\n\nDescription:\nCreate the user interface for the browser-based fallback authentication flow. This includes implementing the login form, OTP input fields, email link handling, and error messages. Ensure the interface is accessible, user-friendly, and secure.\n\nResources needed:\n\u2022 Frontend Engineer\n\u2022 UI/UX Designer\n\u2022 Accessibility Expert\",11/13/2026,11/18/2026,0,7c855acb-2aac-4397-813c-3525cb949a41,PlanExe\n96b0cac0-f7f6-4a93-ad47-2f4420b4597c,Test Browser Compatibility and Security,\"Test Browser Compatibility and Security\n\nDescription:\nThoroughly test the browser-based fallback authentication flow across different browsers (Chrome, Firefox, Safari, Edge) and operating systems (Windows, macOS, Linux). Conduct security testing to identify and address any vulnerabilities, such as XSS or CSRF attacks.\n\nResources needed:\n\u2022 Security Engineer\n\u2022 QA Tester\n\u2022 Browser Compatibility Specialist\",11/18/2026,11/23/2026,0,f5a2bd2e-738a-4b97-81ca-cbb65256305a,PlanExe\n26facecc-7632-46bc-8a16-e77685e0841e,Conduct External Security Review of Demonstrators,,11/23/2026,12/9/2026,0,f5a2bd2e-738a-4b97-81ca-cbb65256305a,PlanExe\nb7221d81-ebdc-4dfd-9191-bc56c03a2a02,Prepare demonstrators for security review,\"Prepare demonstrators for security review\n\nDescription:\nPackage the FIDO2 and browser-based demonstrators with necessary documentation for the external security review team. This includes code, architecture diagrams, and usage instructions.\n\nResources needed:\n\u2022 Technical Lead\n\u2022 Engineers/Contractors\",11/23/2026,11/27/2026,0,26facecc-7632-46bc-8a16-e77685e0841e,PlanExe\nd18a4efb-3b82-457b-abf3-c532d4740bca,Engage external security review firm,\"Engage external security review firm\n\nDescription:\nFinalize the contract with the selected external security firm. Provide them with access to the demonstrators and relevant documentation. Schedule kickoff meeting.\n\nResources needed:\n\u2022 Lead Researcher\n\u2022 Technical Lead\n\u2022 Budget for external security review\",11/27/2026,12/1/2026,0,b7221d81-ebdc-4dfd-9191-bc56c03a2a02,PlanExe\n2b6e221d-6aaf-4c8b-8911-104a2e9b464f,Address security review findings,\"Address security review findings\n\nDescription:\nReview the security review report and prioritize identified vulnerabilities. Develop and implement remediation plans for each vulnerability. Retest remediated code.\n\nResources needed:\n\u2022 Technical Lead\n\u2022 Engineers/Contractors\n\u2022 Security Review Specialist\",12/1/2026,12/5/2026,0,d18a4efb-3b82-457b-abf3-c532d4740bca,PlanExe\n01ed9177-859e-4839-aa3e-4031a309e2c6,Document security review process,\"Document security review process\n\nDescription:\nCreate a comprehensive report documenting the entire security review process, including the initial assessment, identified vulnerabilities, remediation steps, and retesting results.\n\nResources needed:\n\u2022 Technical Lead\n\u2022 Security Review Specialist\",12/5/2026,12/9/2026,0,26facecc-7632-46bc-8a16-e77685e0841e,PlanExe\n6cc750ea-ab0c-4c5f-a715-045ff9d18a23,Integrate Demonstrators with Test Environment,,12/9/2026,12/21/2026,0,def01dd8-b255-45c9-ac06-49e4e7dc6199,PlanExe\nabb74865-68b7-45c5-8990-c00f5088ca2b,Prepare Test Environment Configuration,\"Prepare Test Environment Configuration\n\nDescription:\nObjective: Configure the test environment to accurately simulate the target deployment environment.\nScope: Includes setting up necessary servers, databases, and network configurations.\nSteps: 1. Identify required test environment components. 2. Configure servers and databases. 3. Set up network configurations. 4. Verify environment setup.\nDeliverables: Configured test environment.\n\nResources needed:\n\u2022 System Administrator\n\u2022 Network Engineer\n\u2022 Database Administrator\",12/9/2026,12/12/2026,0,6cc750ea-ab0c-4c5f-a715-045ff9d18a23,PlanExe\n9e8d444b-804e-4b48-a0c9-30c6ec9c1825,Adapt Demonstrators for Test Environment,\"Adapt Demonstrators for Test Environment\n\nDescription:\nObjective: Modify the demonstrators to function correctly within the test environment.\nScope: Includes adjusting configuration files, API endpoints, and data sources.\nSteps: 1. Identify necessary modifications. 2. Update configuration files. 3. Adjust API endpoints. 4. Verify demonstrator functionality.\nDeliverables: Adapted demonstrators.\n\nResources needed:\n\u2022 Technical Lead\n\u2022 Engineer\",12/12/2026,12/15/2026,0,abb74865-68b7-45c5-8990-c00f5088ca2b,PlanExe\n3d51086d-3132-4d75-be38-f68ebe14486f,Execute Integration Tests,\"Execute Integration Tests\n\nDescription:\nObjective: Perform integration tests to ensure the demonstrators function correctly within the test environment.\nScope: Includes running predefined test cases and documenting results.\nSteps: 1. Prepare test cases. 2. Execute test cases. 3. Document test results. 4. Analyze test results.\nDeliverables: Test results and analysis.\n\nResources needed:\n\u2022 Engineer\n\u2022 Technical Lead\",12/15/2026,12/18/2026,0,9e8d444b-804e-4b48-a0c9-30c6ec9c1825,PlanExe\n8d82847a-08aa-4cbe-ac95-d6ee8b6553c2,Address Integration Issues,\"Address Integration Issues\n\nDescription:\nObjective: Resolve any issues identified during integration testing.\nScope: Includes debugging, code modifications, and retesting.\nSteps: 1. Identify root cause of issues. 2. Implement fixes. 3. Retest affected components. 4. Verify issue resolution.\nDeliverables: Resolved integration issues.\n\nResources needed:\n\u2022 Engineer\n\u2022 Technical Lead\",12/18/2026,12/21/2026,0,6cc750ea-ab0c-4c5f-a715-045ff9d18a23,PlanExe\nfb696a06-1829-4b3d-8107-f430813a9b20,Policy Advocacy & Coalition Building,,12/21/2026,6/3/2027,0,def01dd8-b255-45c9-ac06-49e4e7dc6199,PlanExe\n59acc572-ad22-42f7-94b6-1998e1e5cf97,Build Coalition of Support,,12/21/2026,2/19/2027,0,fb696a06-1829-4b3d-8107-f430813a9b20,PlanExe\n724a49b7-da44-4f46-b3f5-50de430d89d8,Identify Key Stakeholders for Coalition,\"Identify Key Stakeholders for Coalition\n\nDescription:\nObjective: Identify and prioritize key stakeholders (civil-society organizations, privacy advocates, academic researchers, security experts, contingency-planning stakeholders, and sympathetic members of Folketinget's digital policy committee) for building a coalition of support.\nScope: Research and compile a list of relevant organizations and individuals, assess their potential interest and influence, and prioritize outreach efforts.\nSteps: 1. Conduct online research to identify potential stakeholders. 2. Analyze their mission, activities, and past involvement in digital identity and related issues. 3. Assess their potential interest and influence based on their expertise, network, and resources. 4. Prioritize outreach efforts based on the assessment.\nDeliverables: A prioritized list of key stakeholders with contact information and a brief assessment of their potential interest and influence.\n\nResources needed:\n\u2022 Policy and Public-Affairs Coordinator\n\u2022 Lead Researcher\",12/21/2026,1/5/2027,0,59acc572-ad22-42f7-94b6-1998e1e5cf97,PlanExe\n3902e8fd-2412-474f-8069-9934b109af67,Develop Coalition Engagement Strategy,\"Develop Coalition Engagement Strategy\n\nDescription:\nObjective: Develop a comprehensive engagement strategy for building and maintaining a coalition of support.\nScope: Define the coalition's goals, identify shared interests, develop messaging, and establish communication channels.\nSteps: 1. Define the coalition's goals and objectives. 2. Identify shared interests among potential coalition members. 3. Develop compelling messaging that resonates with different stakeholders. 4. Establish clear communication channels and decision-making protocols. 5. Offer incentives for participation.\nDeliverables: A detailed coalition engagement strategy document outlining goals, messaging, communication channels, and incentives.\n\nResources needed:\n\u2022 Policy and Public-Affairs Coordinator\n\u2022 Lead Researcher\",1/5/2027,1/20/2027,0,724a49b7-da44-4f46-b3f5-50de430d89d8,PlanExe\n8eaf83ac-7b34-4fdd-9fa0-9f9ffe43adc6,Conduct Initial Outreach to Stakeholders,\"Conduct Initial Outreach to Stakeholders\n\nDescription:\nObjective: Initiate contact with key stakeholders to gauge their interest in joining the coalition.\nScope: Prepare outreach materials, schedule meetings, and conduct initial conversations.\nSteps: 1. Prepare outreach materials, including a brief overview of the project and the coalition's goals. 2. Schedule initial meetings with key stakeholders. 3. Conduct initial conversations to gauge their interest and address any concerns. 4. Follow up with stakeholders to provide additional information and answer questions.\nDeliverables: Records of initial outreach efforts, including meeting notes and follow-up communications.\n\nResources needed:\n\u2022 Policy and Public-Affairs Coordinator\n\u2022 Lead Researcher\",1/20/2027,2/4/2027,0,3902e8fd-2412-474f-8069-9934b109af67,PlanExe\ne7aacef4-37bd-4459-8d36-c29a2c449c37,Formalize Coalition Structure and Agreements,\"Formalize Coalition Structure and Agreements\n\nDescription:\nObjective: Establish a formal structure for the coalition and develop agreements outlining roles, responsibilities, and decision-making processes.\nScope: Define the coalition's governance structure, draft a memorandum of understanding, and establish communication protocols.\nSteps: 1. Define the coalition's governance structure (e.g., steering committee, working groups). 2. Draft a memorandum of understanding outlining roles, responsibilities, and decision-making processes. 3. Establish clear communication protocols for sharing information and coordinating activities. 4. Obtain formal agreement from coalition members.\nDeliverables: A signed memorandum of understanding and a documented governance structure.\n\nResources needed:\n\u2022 Policy and Public-Affairs Coordinator\n\u2022 Lead Researcher\n\u2022 Legal Counsel (limited)\",2/4/2027,2/19/2027,0,59acc572-ad22-42f7-94b6-1998e1e5cf97,PlanExe\n24a1310f-5a78-4b58-8ea4-f9cb72f0b70f,Develop Policy Advocacy Messaging,,2/19/2027,3/23/2027,0,59acc572-ad22-42f7-94b6-1998e1e5cf97,PlanExe\na414a7d3-6b12-4561-b497-b7adf8d50fc5,Research Digitaliseringsstyrelsen's policy priorities,\"Research Digitaliseringsstyrelsen's policy priorities\n\nDescription:\nObjective: Understand the current policy priorities of Digitaliseringsstyrelsen related to digital identity and platform neutrality.\nScope: Review publicly available documents, reports, and statements from Digitaliseringsstyrelsen.\nSteps: 1. Identify relevant documents. 2. Analyze the documents for key themes and priorities. 3. Summarize findings.\nDeliverables: A summary report outlining Digitaliseringsstyrelsen's policy priorities.\n\nResources needed:\n\u2022 Policy and Public-Affairs Coordinator\n\u2022 Lead Researcher\",2/19/2027,2/27/2027,0,24a1310f-5a78-4b58-8ea4-f9cb72f0b70f,PlanExe\nd8c0f57c-62a0-4e26-b17f-a2a3a4e568ab,Draft initial advocacy messaging,\"Draft initial advocacy messaging\n\nDescription:\nObjective: Develop initial advocacy messaging that highlights the benefits of platform neutrality and fallback access.\nScope: Craft compelling arguments tailored to Digitaliseringsstyrelsen's priorities.\nSteps: 1. Develop key messages. 2. Refine messaging based on research. 3. Create briefing materials.\nDeliverables: Draft advocacy messaging and briefing materials.\n\nResources needed:\n\u2022 Policy and Public-Affairs Coordinator\n\u2022 Lead Researcher\",2/27/2027,3/7/2027,0,a414a7d3-6b12-4561-b497-b7adf8d50fc5,PlanExe\nbd1ce63a-d45f-42db-b4a5-ef278bf58ce0,Refine messaging based on stakeholder feedback,\"Refine messaging based on stakeholder feedback\n\nDescription:\nObjective: Refine advocacy messaging based on feedback from coalition members and other stakeholders.\nScope: Incorporate feedback to strengthen the messaging and address potential concerns.\nSteps: 1. Share draft messaging with stakeholders. 2. Collect feedback. 3. Revise messaging based on feedback.\nDeliverables: Refined advocacy messaging.\n\nResources needed:\n\u2022 Policy and Public-Affairs Coordinator\n\u2022 Lead Researcher\n\u2022 Coalition Members\",3/7/2027,3/15/2027,0,d8c0f57c-62a0-4e26-b17f-a2a3a4e568ab,PlanExe\n2da7cfa5-c629-4fda-9833-27e5ad789ce8,Prepare presentation materials for Digitaliseringsstyrelsen,\"Prepare presentation materials for Digitaliseringsstyrelsen\n\nDescription:\nObjective: Prepare presentation materials for meetings with Digitaliseringsstyrelsen representatives.\nScope: Create a clear and concise presentation that effectively communicates the project's goals and benefits.\nSteps: 1. Develop presentation slides. 2. Practice the presentation. 3. Finalize presentation materials.\nDeliverables: Presentation materials for Digitaliseringsstyrelsen.\n\nResources needed:\n\u2022 Policy and Public-Affairs Coordinator\n\u2022 Lead Researcher\n\u2022 Technical Lead\",3/15/2027,3/23/2027,0,24a1310f-5a78-4b58-8ea4-f9cb72f0b70f,PlanExe\n79eeb071-7bf5-4336-831d-0f85990e013e,Engage with Digitaliseringsstyrelsen,,3/23/2027,4/24/2027,0,24a1310f-5a78-4b58-8ea4-f9cb72f0b70f,PlanExe\nbe5941e5-1926-429b-90a0-df1a273a0f5c,Identify Key Digitaliseringsstyrelsen Contacts,\"Identify Key Digitaliseringsstyrelsen Contacts\n\nDescription:\nIdentify individuals within Digitaliseringsstyrelsen who are most relevant to the project's goals and have the authority to influence decisions related to digital identity and procurement.\n\nResources needed:\n\u2022 Policy and Public-Affairs Coordinator\n\u2022 Lead Researcher\",3/23/2027,3/31/2027,0,79eeb071-7bf5-4336-831d-0f85990e013e,PlanExe\nc3df2c42-9258-4ac9-8090-d5b849518b87,Schedule Initial Introductory Meeting,\"Schedule Initial Introductory Meeting\n\nDescription:\nRequest and schedule an initial meeting with identified key contacts at Digitaliseringsstyrelsen to introduce the project, its goals, and its potential benefits for Danish digital identity.\n\nResources needed:\n\u2022 Policy and Public-Affairs Coordinator\n\u2022 Lead Researcher\",3/31/2027,4/8/2027,0,be5941e5-1926-429b-90a0-df1a273a0f5c,PlanExe\ne069de97-5325-4e5b-8127-17a74cc90ae7,Prepare Meeting Briefing Materials,\"Prepare Meeting Briefing Materials\n\nDescription:\nDevelop clear, concise, and persuasive briefing materials for the initial meeting, highlighting the project's objectives, the benefits of platform neutrality and fallback access, and potential areas for collaboration.\n\nResources needed:\n\u2022 Policy and Public-Affairs Coordinator\n\u2022 Lead Researcher\n\u2022 Technical Lead\",4/8/2027,4/16/2027,0,c3df2c42-9258-4ac9-8090-d5b849518b87,PlanExe\nab489960-4797-4643-9ba2-4633657a1db4,Conduct Follow-Up Communication,\"Conduct Follow-Up Communication\n\nDescription:\nAfter the initial meeting, send a thank-you note and follow up with Digitaliseringsstyrelsen contacts to answer any questions, provide additional information, and schedule further discussions.\n\nResources needed:\n\u2022 Policy and Public-Affairs Coordinator\",4/16/2027,4/24/2027,0,79eeb071-7bf5-4336-831d-0f85990e013e,PlanExe\n0db236ce-d540-4f35-971b-65fbd94acd4a,Engage with Members of Folketinget's Digital Policy Committee,,4/24/2027,6/3/2027,0,fb696a06-1829-4b3d-8107-f430813a9b20,PlanExe\n4783b03d-2e3a-4b8c-a11d-68e4ee83b87a,Identify Key Committee Members,\"Identify Key Committee Members\n\nDescription:\nIdentify the members of Folketinget's Digital Policy Committee who are most relevant to the project's goals and who are likely to be receptive to the project's message. This involves researching their backgrounds, policy positions, and areas of interest.\n\nResources needed:\n\u2022 Policy and Public-Affairs Coordinator\n\u2022 Lead Researcher\",4/24/2027,5/2/2027,0,0db236ce-d540-4f35-971b-65fbd94acd4a,PlanExe\n3884844a-2b9c-47aa-9d5c-2fe99d9ce0f7,Research Committee's Digital Policy Priorities,\"Research Committee's Digital Policy Priorities\n\nDescription:\nResearch the Digital Policy Committee's current priorities and agenda to understand the context in which the project's message will be received. This includes reviewing committee reports, meeting minutes, and public statements.\n\nResources needed:\n\u2022 Policy and Public-Affairs Coordinator\n\u2022 Lead Researcher\",5/2/2027,5/10/2027,0,4783b03d-2e3a-4b8c-a11d-68e4ee83b87a,PlanExe\n113949e5-1723-4c22-af4f-f2ee90017e31,Prepare Tailored Briefing Materials,\"Prepare Tailored Briefing Materials\n\nDescription:\nDevelop briefing materials that are tailored to the specific interests and concerns of the Digital Policy Committee members. This includes summarizing the project's goals, highlighting the benefits of platform neutrality and fallback access, and addressing potential questions or objections.\n\nResources needed:\n\u2022 Policy and Public-Affairs Coordinator\n\u2022 Lead Researcher\n\u2022 Technical Lead\",5/10/2027,5/18/2027,0,3884844a-2b9c-47aa-9d5c-2fe99d9ce0f7,PlanExe\n14f91ab9-9433-4fb8-a3e1-d6be94f4eb9a,Schedule and Conduct Meetings,\"Schedule and Conduct Meetings\n\nDescription:\nSchedule meetings with the Digital Policy Committee members and present the project's message in a clear and persuasive manner. This includes preparing for the meetings, delivering the presentation, and answering questions from the committee members.\n\nResources needed:\n\u2022 Policy and Public-Affairs Coordinator\n\u2022 Lead Researcher\n\u2022 Technical Lead\",5/18/2027,5/26/2027,0,113949e5-1723-4c22-af4f-f2ee90017e31,PlanExe\nf46fb567-b8f0-4c90-b519-3f6dfec3c9d8,Follow Up and Maintain Communication,\"Follow Up and Maintain Communication\n\nDescription:\nFollow up with the Digital Policy Committee members after the meetings to answer any remaining questions and maintain communication. This includes providing additional information, addressing concerns, and building relationships with the committee members.\n\nResources needed:\n\u2022 Policy and Public-Affairs Coordinator\",5/26/2027,6/3/2027,0,0db236ce-d540-4f35-971b-65fbd94acd4a,PlanExe\n2818c1ea-61d6-4225-bef2-1a9fdf606e90,Procurement Influence & Standards Engagement,,6/3/2027,10/5/2027,0,fb696a06-1829-4b3d-8107-f430813a9b20,PlanExe\nada98db8-a04d-4ba3-b5be-0510b22243a1,Analyze AltID Procurement Documents,,6/3/2027,6/15/2027,0,2818c1ea-61d6-4225-bef2-1a9fdf606e90,PlanExe\nfc4fa905-2d44-4b3e-b090-1f26e9f6c4f8,Identify relevant AltID procurement sources,\"Identify relevant AltID procurement sources\n\nDescription:\nObjective: Determine where AltID procurement documents are published or available.\nScope: Research official websites, databases, and contact relevant agencies.\nSteps: 1. Search Digitaliseringsstyrelsen website. 2. Contact relevant personnel. 3. Explore EU procurement databases.\nDeliverables: List of sources for procurement documents.\n\nResources needed:\n\u2022 Policy and Public-Affairs Coordinator\n\u2022 Lead Researcher\",6/3/2027,6/6/2027,0,ada98db8-a04d-4ba3-b5be-0510b22243a1,PlanExe\n26170a1d-c370-4142-8ecb-469253cefd83,Gather AltID procurement documents,\"Gather AltID procurement documents\n\nDescription:\nObjective: Collect all available AltID procurement documents from identified sources.\nScope: Obtain documents related to current and past procurement activities.\nSteps: 1. Download documents from online sources. 2. Request documents from contacts. 3. Organize documents in a central repository.\nDeliverables: Complete collection of AltID procurement documents.\n\nResources needed:\n\u2022 Policy and Public-Affairs Coordinator\n\u2022 Lead Researcher\",6/6/2027,6/9/2027,0,fc4fa905-2d44-4b3e-b090-1f26e9f6c4f8,PlanExe\n12bea96d-f828-416e-ae38-fdcfb1165346,Review documents for platform neutrality,\"Review documents for platform neutrality\n\nDescription:\nObjective: Identify sections related to platform requirements.\nScope: Analyze documents for mentions of platform neutrality, open standards, or vendor lock-in.\nSteps: 1. Scan documents for keywords. 2. Highlight relevant sections. 3. Summarize findings.\nDeliverables: Report on platform neutrality mentions.\n\nResources needed:\n\u2022 Regulatory and Compliance Specialist\n\u2022 Technical Lead\",6/9/2027,6/12/2027,0,26170a1d-c370-4142-8ecb-469253cefd83,PlanExe\ne3b83869-b5e9-4538-8cc0-e3c7e8dbd050,Assess completeness of documentation,\"Assess completeness of documentation\n\nDescription:\nObjective: Determine if the collected documents provide a complete picture of AltID procurement.\nScope: Identify any gaps in the documentation and plan to address them.\nSteps: 1. Compare documents against expected content. 2. Identify missing information. 3. Develop a plan to obtain missing documents.\nDeliverables: Report on documentation completeness.\n\nResources needed:\n\u2022 Lead Researcher\n\u2022 Policy and Public-Affairs Coordinator\",6/12/2027,6/15/2027,0,ada98db8-a04d-4ba3-b5be-0510b22243a1,PlanExe\n4a5dad17-0a9b-4948-a27f-bbd7baf5a6c6,Advocate for Platform-Neutral Language in Procurement Documents,,6/15/2027,7/5/2027,0,ada98db8-a04d-4ba3-b5be-0510b22243a1,PlanExe\n933d87c4-07de-4c03-9c23-de427d76efeb,Identify Key Procurement Requirements,\"Identify Key Procurement Requirements\n\nDescription:\nObjective: Determine the specific requirements and criteria outlined in the AltID procurement documents related to platform neutrality.\nScope: Review all relevant sections of the procurement documents, including technical specifications, evaluation criteria, and contractual terms.\nSteps: 1. Obtain the AltID procurement documents. 2. Identify sections related to platform compatibility, interoperability, and vendor lock-in. 3. Extract specific requirements and criteria related to platform neutrality.\nDeliverables: A summary of key procurement requirements related to platform neutrality.\n\nResources needed:\n\u2022 Regulatory and Compliance Specialist\n\u2022 Technical Lead\n\u2022 Procurement Lawyer\",6/15/2027,6/20/2027,0,4a5dad17-0a9b-4948-a27f-bbd7baf5a6c6,PlanExe\n0ee8ed98-72c1-4d51-b979-9dde22fc4d9b,Analyze Technical Specifications for Platform Bias,\"Analyze Technical Specifications for Platform Bias\n\nDescription:\nObjective: Analyze the technical specifications within the AltID procurement documents to identify potential biases towards specific platforms or technologies.\nScope: Examine the technical requirements for authentication methods, security protocols, and integration interfaces.\nSteps: 1. Review the technical specifications for authentication methods (e.g., FIDO2, WebAuthn). 2. Identify any requirements that favor specific platforms or vendors. 3. Assess the impact of these biases on platform neutrality.\nDeliverables: A report identifying potential platform biases in the technical specifications.\n\nResources needed:\n\u2022 Technical Lead\n\u2022 Engineer\n\u2022 Mobile Security Expert\",6/20/2027,6/25/2027,0,933d87c4-07de-4c03-9c23-de427d76efeb,PlanExe\ne336f171-2b20-436c-8298-1d26ace8d622,Assess Evaluation Criteria for Platform Neutrality,\"Assess Evaluation Criteria for Platform Neutrality\n\nDescription:\nObjective: Evaluate the evaluation criteria used in the AltID procurement process to determine if they adequately consider platform neutrality.\nScope: Review the criteria used to assess vendor proposals and identify any potential biases.\nSteps: 1. Review the evaluation criteria for technical merit, cost-effectiveness, and security. 2. Assess whether the criteria explicitly reward or penalize platform-neutral solutions. 3. Identify any gaps in the evaluation process related to platform neutrality.\nDeliverables: An assessment of the evaluation criteria's impact on platform neutrality.\n\nResources needed:\n\u2022 Regulatory and Compliance Specialist\n\u2022 Policy and Public-Affairs Coordinator\n\u2022 Procurement Lawyer\",6/25/2027,6/30/2027,0,0ee8ed98-72c1-4d51-b979-9dde22fc4d9b,PlanExe\na1abb0e8-d17d-454e-9606-5513c8407991,Draft Alternative Procurement Language,\"Draft Alternative Procurement Language\n\nDescription:\nObjective: Develop alternative procurement language that promotes platform neutrality and avoids vendor lock-in.\nScope: Create specific wording for technical specifications, evaluation criteria, and contractual terms.\nSteps: 1. Research best practices for platform-neutral procurement language. 2. Draft alternative wording for key sections of the AltID procurement documents. 3. Ensure that the language is clear, concise, and enforceable.\nDeliverables: A set of alternative procurement language recommendations.\n\nResources needed:\n\u2022 Policy and Public-Affairs Coordinator\n\u2022 Technical Lead\n\u2022 Procurement Lawyer\",6/30/2027,7/5/2027,0,4a5dad17-0a9b-4948-a27f-bbd7baf5a6c6,PlanExe\n242a1996-2eea-405f-afa6-b6b83b096128,Engage with EU Bodies and Technical Working Groups,,7/5/2027,8/6/2027,0,4a5dad17-0a9b-4948-a27f-bbd7baf5a6c6,PlanExe\nd4cff72a-b67d-47f1-b331-44bff8d104dc,Identify Key EU Contacts,\"Identify Key EU Contacts\n\nDescription:\nIdentify key individuals within relevant EU bodies and technical working groups. This involves researching the organizational structure of these bodies, identifying individuals with decision-making power or influence, and gathering their contact information.\n\nResources needed:\n\u2022 Policy and Public-Affairs Coordinator\n\u2022 Lead Researcher\",7/5/2027,7/13/2027,0,242a1996-2eea-405f-afa6-b6b83b096128,PlanExe\nfeabccd7-271c-43a9-8fcc-8c9c7e275654,Prioritize EU Engagement Efforts,\"Prioritize EU Engagement Efforts\n\nDescription:\nPrioritize engagement efforts based on potential impact. This involves assessing the relevance of different EU bodies and technical working groups to the project's goals, evaluating the likelihood of influencing their decisions, and allocating resources accordingly.\n\nResources needed:\n\u2022 Policy and Public-Affairs Coordinator\n\u2022 Lead Researcher\n\u2022 Regulatory and Compliance Specialist\",7/13/2027,7/21/2027,0,d4cff72a-b67d-47f1-b331-44bff8d104dc,PlanExe\na135391b-1989-400f-be34-24628cdba304,Prepare Persuasive Arguments,\"Prepare Persuasive Arguments\n\nDescription:\nPrepare well-researched and persuasive arguments for platform-neutral standards. This involves gathering evidence to support the benefits of platform neutrality, developing clear and concise messaging, and tailoring arguments to the specific concerns of different stakeholders.\n\nResources needed:\n\u2022 Lead Researcher\n\u2022 Technical Lead\n\u2022 Policy and Public-Affairs Coordinator\",7/21/2027,7/29/2027,0,feabccd7-271c-43a9-8fcc-8c9c7e275654,PlanExe\n2e1c861e-8558-4d54-a9da-d99369e28a8a,Allocate Resources for EU Engagement,\"Allocate Resources for EU Engagement\n\nDescription:\nAllocate sufficient time and resources for travel and participation in EU meetings. This involves budgeting for travel expenses, scheduling meetings and events, and ensuring that project staff have the necessary time and support to participate effectively.\n\nResources needed:\n\u2022 Project Manager\n\u2022 Policy and Public-Affairs Coordinator\",7/29/2027,8/6/2027,0,242a1996-2eea-405f-afa6-b6b83b096128,PlanExe\n9b172774-494a-49e2-b1e0-9a145aab7a77,Advocate for Platform-Neutral Standards in eIDAS2,,8/6/2027,10/5/2027,0,2818c1ea-61d6-4225-bef2-1a9fdf606e90,PlanExe\n79b24a9e-a2a6-447a-b3fc-6dd6235bdf22,Identify Key eIDAS2 Stakeholders,\"Identify Key eIDAS2 Stakeholders\n\nDescription:\nIdentify and map key individuals and organizations involved in the eIDAS2 standardization process, including representatives from member states, industry, and academia. This will involve desk research, attending industry events, and networking with relevant contacts.\n\nResources needed:\n\u2022 Policy and Public-Affairs Coordinator\n\u2022 Lead Researcher\",8/6/2027,8/18/2027,0,9b172774-494a-49e2-b1e0-9a145aab7a77,PlanExe\nd3c37be4-2564-4479-88eb-c9958ae80d5a,Analyze eIDAS2 Draft Standards,\"Analyze eIDAS2 Draft Standards\n\nDescription:\nThoroughly review and analyze the draft eIDAS2 standards to identify areas where platform-neutral approaches can be incorporated or strengthened. This will involve technical analysis, legal review, and consultation with experts.\n\nResources needed:\n\u2022 Technical Lead\n\u2022 Regulatory and Compliance Specialist\n\u2022 Lead Researcher\",8/18/2027,8/30/2027,0,79b24a9e-a2a6-447a-b3fc-6dd6235bdf22,PlanExe\nf60a8670-6cc3-427b-85fd-3c83c5959859,Develop Platform-Neutral Standard Proposals,\"Develop Platform-Neutral Standard Proposals\n\nDescription:\nDevelop concrete proposals for incorporating platform-neutral standards into eIDAS2, including specific technical specifications and implementation guidelines. This will involve technical writing, collaboration with experts, and stakeholder consultation.\n\nResources needed:\n\u2022 Technical Lead\n\u2022 Regulatory and Compliance Specialist\n\u2022 Policy and Public-Affairs Coordinator\",8/30/2027,9/11/2027,0,d3c37be4-2564-4479-88eb-c9958ae80d5a,PlanExe\n8471c19a-0bf6-4c9c-9846-d95a306931fc,Present Proposals to eIDAS2 Working Groups,\"Present Proposals to eIDAS2 Working Groups\n\nDescription:\nPresent the platform-neutral standard proposals to relevant eIDAS2 working groups and advocate for their adoption. This will involve preparing presentations, attending meetings, and engaging in discussions with stakeholders.\n\nResources needed:\n\u2022 Policy and Public-Affairs Coordinator\n\u2022 Technical Lead\n\u2022 Lead Researcher\",9/11/2027,9/23/2027,0,f60a8670-6cc3-427b-85fd-3c83c5959859,PlanExe\n96cc9a1b-521a-4c43-b659-d03298013aac,Monitor eIDAS2 Standardization Progress,\"Monitor eIDAS2 Standardization Progress\n\nDescription:\nContinuously monitor the progress of the eIDAS2 standardization process and adapt advocacy efforts as needed. This will involve tracking key milestones, attending meetings, and engaging with stakeholders.\n\nResources needed:\n\u2022 Policy and Public-Affairs Coordinator\n\u2022 Lead Researcher\",9/23/2027,10/5/2027,0,9b172774-494a-49e2-b1e0-9a145aab7a77,PlanExe\n22fd76fb-e29e-4f01-b67e-04c0910ea34c,Project Closure & Reporting,,10/5/2027,11/30/2027,0,04c97117-c848-4462-a345-72012d3048c9,PlanExe\ndc88ca39-5e4a-45ad-94eb-4be94d22650f,Publish Feasibility Report,,10/5/2027,10/25/2027,0,22fd76fb-e29e-4f01-b67e-04c0910ea34c,PlanExe\n3565b10c-f7f9-459d-b58f-7c2465d7ed32,Synthesize research findings into report,\"Synthesize research findings into report\n\nDescription:\nObjective: Compile all research data, analysis, and demonstrator results into a cohesive and persuasive feasibility report.\nScope: Includes summarizing technical findings, regulatory analysis, policy recommendations, and financial implications.\nSteps: Review all project documentation, draft report sections, integrate findings, and ensure consistency.\nDeliverables: A complete draft of the feasibility report.\n\nResources needed:\n\u2022 Lead Researcher\n\u2022 Technical Lead\n\u2022 Regulatory and Compliance Specialist\n\u2022 Policy and Public-Affairs Coordinator\",10/5/2027,10/9/2027,0,dc88ca39-5e4a-45ad-94eb-4be94d22650f,PlanExe\n19103b9c-5313-4e2e-bd4b-1d51bcc2a055,Obtain internal review and feedback,\"Obtain internal review and feedback\n\nDescription:\nObjective: Circulate the draft feasibility report among internal stakeholders for review and feedback.\nScope: Includes primary stakeholders (Lead Researcher, Technical Lead, etc.) and potentially key secondary stakeholders.\nSteps: Distribute the report, schedule review meetings, collect feedback, and document all comments.\nDeliverables: A consolidated list of feedback and suggested revisions.\n\nResources needed:\n\u2022 Lead Researcher\n\u2022 Project Manager\",10/9/2027,10/13/2027,0,3565b10c-f7f9-459d-b58f-7c2465d7ed32,PlanExe\n530f5678-94a7-4c18-9495-f0903d425f85,Incorporate feedback and revise report,\"Incorporate feedback and revise report\n\nDescription:\nObjective: Address all feedback received and revise the feasibility report accordingly.\nScope: Includes incorporating technical corrections, clarifying policy recommendations, and improving overall readability.\nSteps: Review feedback, prioritize revisions, implement changes, and ensure accuracy.\nDeliverables: A revised draft of the feasibility report.\n\nResources needed:\n\u2022 Lead Researcher\n\u2022 Technical Lead\n\u2022 Regulatory and Compliance Specialist\n\u2022 Policy and Public-Affairs Coordinator\",10/13/2027,10/17/2027,0,19103b9c-5313-4e2e-bd4b-1d51bcc2a055,PlanExe\nf64825de-bfc7-494f-b73a-b41e039033fa,Secure final approvals for publication,\"Secure final approvals for publication\n\nDescription:\nObjective: Obtain final approvals from relevant authorities for publishing the feasibility report.\nScope: Includes internal approvals (e.g., from the project sponsor) and potentially external approvals (e.g., from Digitaliseringsstyrelsen).\nSteps: Submit the revised report for approval, address any remaining concerns, and obtain formal sign-off.\nDeliverables: Formal approval to publish the feasibility report.\n\nResources needed:\n\u2022 Lead Researcher\n\u2022 Policy and Public-Affairs Coordinator\",10/17/2027,10/21/2027,0,530f5678-94a7-4c18-9495-f0903d425f85,PlanExe\nc94d0e46-4a10-4f4d-a8ed-8a857786348d,Publish and disseminate feasibility report,\"Publish and disseminate feasibility report\n\nDescription:\nObjective: Publish the final feasibility report and disseminate it to relevant stakeholders.\nScope: Includes publishing the report online, distributing it to key contacts, and promoting it through relevant channels.\nSteps: Prepare the report for publication, upload it to the project website, notify stakeholders, and track dissemination efforts.\nDeliverables: Published feasibility report and documented dissemination activities.\n\nResources needed:\n\u2022 Policy and Public-Affairs Coordinator\n\u2022 Communications Specialist\",10/21/2027,10/25/2027,0,dc88ca39-5e4a-45ad-94eb-4be94d22650f,PlanExe\ncf49d695-57fa-4c55-b4f1-845db19015f6,Deliver Working Demonstrators,,10/25/2027,11/6/2027,0,dc88ca39-5e4a-45ad-94eb-4be94d22650f,PlanExe\n35b7eea0-7c39-480d-9465-7df140571764,Prepare Demonstrator Packaging,\"Prepare Demonstrator Packaging\n\nDescription:\nPackage the FIDO2 and browser-based demonstrators for distribution, including all necessary files, documentation, and installation instructions. Ensure the packaging is user-friendly and secure.\n\nResources needed:\n\u2022 Technical Lead\n\u2022 Engineer\n\u2022 Documentation Specialist\",10/25/2027,10/28/2027,0,cf49d695-57fa-4c55-b4f1-845db19015f6,PlanExe\ncd646bcb-6b9d-4828-801f-bc93d484e7f5,Test Demonstrator Deployment,\"Test Demonstrator Deployment\n\nDescription:\nThoroughly test the deployment process of both demonstrators in a controlled environment to identify and resolve any issues. Verify that the demonstrators function as expected after deployment.\n\nResources needed:\n\u2022 Technical Lead\n\u2022 Engineer\n\u2022 Security Review Specialist\",10/28/2027,10/31/2027,0,35b7eea0-7c39-480d-9465-7df140571764,PlanExe\n273c6f22-8bd1-411d-abdc-534d31cfa0f9,Obtain Final Sign-Off,\"Obtain Final Sign-Off\n\nDescription:\nObtain final sign-off from relevant stakeholders (e.g., Digitaliseringsstyrelsen, project sponsors) on the demonstrators, confirming that they meet the agreed-upon requirements and are ready for delivery.\n\nResources needed:\n\u2022 Lead Researcher\n\u2022 Policy and Public-Affairs Coordinator\",10/31/2027,11/3/2027,0,cd646bcb-6b9d-4828-801f-bc93d484e7f5,PlanExe\n8c194074-d963-4617-9161-eb6e840ff1fe,Deliver Demonstrators to Stakeholders,\"Deliver Demonstrators to Stakeholders\n\nDescription:\nDeliver the packaged demonstrators to the designated stakeholders, providing any necessary support or training. Ensure that stakeholders have the resources and information they need to effectively utilize the demonstrators.\n\nResources needed:\n\u2022 Policy and Public-Affairs Coordinator\n\u2022 Technical Lead\",11/3/2027,11/6/2027,0,cf49d695-57fa-4c55-b4f1-845db19015f6,PlanExe\n4a55fac6-68b9-48d3-a711-165e77e38215,Finalize Project Documentation,,11/6/2027,11/22/2027,0,cf49d695-57fa-4c55-b4f1-845db19015f6,PlanExe\n7936ab7b-927d-45c2-9a28-76cc6fa7730e,Gather all project documentation,\"Gather all project documentation\n\nDescription:\nCollect all relevant documents, including reports, meeting minutes, code, and design specifications.\n\nResources needed:\n\u2022 Project Manager\n\u2022 Technical Lead\n\u2022 Team Members\",11/6/2027,11/10/2027,0,4a55fac6-68b9-48d3-a711-165e77e38215,PlanExe\n148b00e8-c7ea-4f8a-90c4-292a53bac330,Organize and index documentation,\"Organize and index documentation\n\nDescription:\nStructure the documentation logically and create an index for easy navigation and retrieval.\n\nResources needed:\n\u2022 Project Manager\n\u2022 Technical Writer\",11/10/2027,11/14/2027,0,7936ab7b-927d-45c2-9a28-76cc6fa7730e,PlanExe\n4d72cbc2-8eab-4599-86f6-42aa3b33887a,Review documentation for completeness,\"Review documentation for completeness\n\nDescription:\nEnsure all required documents are present and contain the necessary information.\n\nResources needed:\n\u2022 Project Manager\n\u2022 Technical Lead\n\u2022 Regulatory and Compliance Specialist\",11/14/2027,11/18/2027,0,148b00e8-c7ea-4f8a-90c4-292a53bac330,PlanExe\n8852283d-43a6-4ec6-a19b-db439235a5e7,Archive project documentation,\"Archive project documentation\n\nDescription:\nStore the finalized documentation in a secure and accessible location for future reference.\n\nResources needed:\n\u2022 Project Manager\n\u2022 IT Support\",11/18/2027,11/22/2027,0,4a55fac6-68b9-48d3-a711-165e77e38215,PlanExe\n5d34ded8-d96a-45cb-b6c5-0c922a3469b4,Disseminate Project Results,,11/22/2027,11/30/2027,0,22fd76fb-e29e-4f01-b67e-04c0910ea34c,PlanExe\n22ac4afb-8cce-4fea-b568-469d677e51ee,Create dissemination materials,\"Create dissemination materials\n\nDescription:\nObjective: Develop engaging and informative materials to communicate project findings.\nScope: Includes creating a project website, summary reports, presentations, and social media content.\nSteps: Design materials, write content, obtain approvals, and prepare for distribution.\nDeliverables: Website, reports, presentations, social media posts.\n\nResources needed:\n\u2022 Policy and Public-Affairs Coordinator\n\u2022 Lead Researcher\n\u2022 Graphic designer\n\u2022 Web developer\",11/22/2027,11/24/2027,0,5d34ded8-d96a-45cb-b6c5-0c922a3469b4,PlanExe\nda5d2e29-d360-41d3-874e-bba346a1262e,Identify target audiences,\"Identify target audiences\n\nDescription:\nObjective: Determine the key stakeholders to reach with project results.\nScope: Includes identifying relevant policymakers, industry experts, civil society organizations, and the general public.\nSteps: Conduct stakeholder analysis, prioritize audiences, and develop targeted messaging.\nDeliverables: List of target audiences with contact information and communication preferences.\n\nResources needed:\n\u2022 Policy and Public-Affairs Coordinator\n\u2022 Lead Researcher\",11/24/2027,11/26/2027,0,22ac4afb-8cce-4fea-b568-469d677e51ee,PlanExe\nc9a47bdd-de48-401c-87d3-849995d2b729,Distribute results through channels,\"Distribute results through channels\n\nDescription:\nObjective: Effectively disseminate project findings to target audiences.\nScope: Includes utilizing various communication channels such as email, social media, conferences, and publications.\nSteps: Schedule dissemination activities, send out materials, track engagement, and gather feedback.\nDeliverables: Dissemination schedule, email campaigns, social media posts, conference presentations, publications.\n\nResources needed:\n\u2022 Policy and Public-Affairs Coordinator\n\u2022 Lead Researcher\n\u2022 Communications specialist\",11/26/2027,11/28/2027,0,da5d2e29-d360-41d3-874e-bba346a1262e,PlanExe\nc11c251d-ca00-4d3d-9ea1-b31081106226,Monitor and evaluate impact,\"Monitor and evaluate impact\n\nDescription:\nObjective: Assess the effectiveness of dissemination efforts and measure the impact of project results.\nScope: Includes tracking website traffic, social media engagement, media coverage, and policy changes.\nSteps: Collect data, analyze results, and prepare an evaluation report.\nDeliverables: Evaluation report with key findings and recommendations.\n\nResources needed:\n\u2022 Policy and Public-Affairs Coordinator\n\u2022 Lead Researcher\n\u2022 Data analyst\",11/28/2027,11/30/2027,0,5d34ded8-d96a-45cb-b6c5-0c922a3469b4,PlanExe\n";
+
+    // This must be a string, eg: `"planexe_export.csv"`
+    const GANTT_FILENAME_CSV = "PlanExe_Export_Sovereign_Identity.csv";
+
+    // This must be json. It's not a string.
+    const GANTT_DATA_DHTMLX = {
+  "tasks": [
+    {
+      "id": "04c97117-c848-4462-a345-72012d3048c9",
+      "text": "Sovereign Identity",
+      "custom_tooltip": "<b>Sovereign Identity</b><br><b>Final deliverable:</b><br>Neutral Framework",
+      "progress": 0,
+      "open": true,
+      "meta": "",
+      "type": "project"
+    },
+    {
+      "id": "5684f949-4096-4faa-a559-c2813cce24a3",
+      "text": "Project Initiation & Planning",
+      "custom_tooltip": "<b>Project Initiation &amp; Planning</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "04c97117-c848-4462-a345-72012d3048c9 SS",
+      "parent": "04c97117-c848-4462-a345-72012d3048c9",
+      "type": "project"
+    },
+    {
+      "id": "e9788c79-9efa-4408-80e3-33acbf9f1d2f",
+      "text": "Secure Project Funding",
+      "custom_tooltip": "<b>Secure Project Funding</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "5684f949-4096-4faa-a559-c2813cce24a3 SS",
+      "parent": "5684f949-4096-4faa-a559-c2813cce24a3",
+      "type": "project"
+    },
+    {
+      "id": "58253600-3d98-493f-bad9-10f0685f387d",
+      "text": "Identify Potential Funding Sources",
+      "custom_tooltip": "<b>Identify Potential Funding Sources</b><br>Research and identify potential funding sources, including EU grants, private foundations, and government programs, that align with the project&#x27;s goals and objectives. This involves searching online databases, attending industry events, and networking with relevant organizations.<br><b>Resources needed:</b><br><ul><li>Policy and Public-Affairs Coordinator</li><li>Lead Researcher</li><li>Grant Writer</li></ul>",
+      "start_date": "2026-03-08",
+      "duration": 15.0,
+      "progress": 0,
+      "open": true,
+      "meta": "e9788c79-9efa-4408-80e3-33acbf9f1d2f SS",
+      "parent": "e9788c79-9efa-4408-80e3-33acbf9f1d2f"
+    },
+    {
+      "id": "d78e9950-e138-4f06-b4c6-4ece06dea7f6",
+      "text": "Prepare Grant Proposals",
+      "custom_tooltip": "<b>Prepare Grant Proposals</b><br>Develop compelling grant proposals tailored to each identified funding source, highlighting the project&#x27;s impact, feasibility, and alignment with the funder&#x27;s priorities. This includes writing detailed project descriptions, budgets, and evaluation plans.<br><b>Resources needed:</b><br><ul><li>Lead Researcher</li><li>Grant Writer</li><li>Financial Auditor</li></ul>",
+      "start_date": "2026-03-23",
+      "duration": 15.0,
+      "progress": 0,
+      "open": true,
+      "meta": "58253600-3d98-493f-bad9-10f0685f387d FS",
+      "parent": "e9788c79-9efa-4408-80e3-33acbf9f1d2f"
+    },
+    {
+      "id": "04d31d52-1836-44c0-a951-56f54d5ff9ca",
+      "text": "Engage with Funding Organizations",
+      "custom_tooltip": "<b>Engage with Funding Organizations</b><br>Establish communication channels with funding organizations, attend informational webinars, and network with program officers to build relationships and gather insights into their funding priorities and application processes.<br><b>Resources needed:</b><br><ul><li>Policy and Public-Affairs Coordinator</li><li>Lead Researcher</li></ul>",
+      "start_date": "2026-04-07",
+      "duration": 15.0,
+      "progress": 0,
+      "open": true,
+      "meta": "d78e9950-e138-4f06-b4c6-4ece06dea7f6 FS",
+      "parent": "e9788c79-9efa-4408-80e3-33acbf9f1d2f"
+    },
+    {
+      "id": "7dd9631d-1c80-4333-93ca-96a1106084cd",
+      "text": "Manage Currency Exchange Risks",
+      "custom_tooltip": "<b>Manage Currency Exchange Risks</b><br>Develop a strategy for managing currency exchange risks, including monitoring exchange rates, hedging currency fluctuations, and establishing DKK-specific accounting standards for grant management. Consult with a financial advisor specializing in currency risk management.<br><b>Resources needed:</b><br><ul><li>Financial Auditor</li><li>Financial Advisor</li><li>Project Manager</li></ul>",
+      "start_date": "2026-04-22",
+      "duration": 15.0,
+      "progress": 0,
+      "open": true,
+      "meta": "e9788c79-9efa-4408-80e3-33acbf9f1d2f FF, 04d31d52-1836-44c0-a951-56f54d5ff9ca FS",
+      "parent": "e9788c79-9efa-4408-80e3-33acbf9f1d2f"
+    },
+    {
+      "id": "6aeeb16e-57bb-4f60-a22d-b04bcf662a54",
+      "text": "Establish Physical Base in Copenhagen",
+      "custom_tooltip": "<b>Establish Physical Base in Copenhagen</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "e9788c79-9efa-4408-80e3-33acbf9f1d2f FS",
+      "parent": "5684f949-4096-4faa-a559-c2813cce24a3",
+      "type": "project"
+    },
+    {
+      "id": "8cf0e8d3-c22d-469a-a1ab-bfd671c6b694",
+      "text": "Identify potential office spaces in Copenhagen",
+      "custom_tooltip": "<b>Identify potential office spaces in Copenhagen</b><br>Objective: Identify suitable office spaces in Copenhagen that meet the project&#x27;s requirements.\nScope: Research and compile a list of potential office spaces, considering factors such as location, size, security, and accessibility.\nSteps: 1. Define the project&#x27;s office space requirements. 2. Research available office spaces in Copenhagen using online resources and real estate agents. 3. Compile a list of potential office spaces with relevant details.\nDeliverables: A list of potential office spaces in Copenhagen with detailed information.<br><b>Resources needed:</b><br><ul><li>Project Manager</li><li>Real Estate Agent</li><li>Administrative Assistant</li></ul>",
+      "start_date": "2026-05-07",
+      "duration": 8.0,
+      "progress": 0,
+      "open": true,
+      "meta": "6aeeb16e-57bb-4f60-a22d-b04bcf662a54 SS",
+      "parent": "6aeeb16e-57bb-4f60-a22d-b04bcf662a54"
+    },
+    {
+      "id": "d1f31d17-262e-4da5-ac14-8cd3d3277617",
+      "text": "Assess security requirements for workspace",
+      "custom_tooltip": "<b>Assess security requirements for workspace</b><br>Objective: Determine the security requirements for the project&#x27;s workspace.\nScope: Identify and document the security measures necessary to protect sensitive data and equipment.\nSteps: 1. Conduct a security risk assessment. 2. Identify security requirements based on the risk assessment. 3. Document the security requirements in a security plan.\nDeliverables: A security plan outlining the security requirements for the project&#x27;s workspace.<br><b>Resources needed:</b><br><ul><li>Security Expert</li><li>Technical Lead</li><li>Lead Researcher</li></ul>",
+      "start_date": "2026-05-15",
+      "duration": 8.0,
+      "progress": 0,
+      "open": true,
+      "meta": "8cf0e8d3-c22d-469a-a1ab-bfd671c6b694 FS",
+      "parent": "6aeeb16e-57bb-4f60-a22d-b04bcf662a54"
+    },
+    {
+      "id": "988a120c-293d-4ba3-b63a-2c41f8f589dc",
+      "text": "Negotiate lease terms for selected space",
+      "custom_tooltip": "<b>Negotiate lease terms for selected space</b><br>Objective: Negotiate favorable lease terms for the selected office space.\nScope: Negotiate the lease agreement with the landlord, ensuring that the terms are acceptable to the project.\nSteps: 1. Review the lease agreement. 2. Identify areas for negotiation. 3. Negotiate the lease terms with the landlord. 4. Finalize the lease agreement.\nDeliverables: A finalized lease agreement for the selected office space.<br><b>Resources needed:</b><br><ul><li>Project Manager</li><li>Legal Counsel</li><li>Real Estate Agent</li></ul>",
+      "start_date": "2026-05-23",
+      "duration": 8.0,
+      "progress": 0,
+      "open": true,
+      "meta": "d1f31d17-262e-4da5-ac14-8cd3d3277617 FS",
+      "parent": "6aeeb16e-57bb-4f60-a22d-b04bcf662a54"
+    },
+    {
+      "id": "2940e67e-338f-4e4e-a442-3a6cd4723785",
+      "text": "Prepare workspace for security-sensitive research",
+      "custom_tooltip": "<b>Prepare workspace for security-sensitive research</b><br>Objective: Prepare the workspace to meet the security requirements for security-sensitive digital identity research.\nScope: Implement the necessary security measures to protect sensitive data and equipment.\nSteps: 1. Implement the security plan. 2. Install security systems and equipment. 3. Test the security systems and equipment.\nDeliverables: A secure workspace ready for security-sensitive digital identity research.<br><b>Resources needed:</b><br><ul><li>Security Expert</li><li>Technical Lead</li><li>Engineer</li><li>Contractor</li></ul>",
+      "start_date": "2026-05-31",
+      "duration": 8.0,
+      "progress": 0,
+      "open": true,
+      "meta": "6aeeb16e-57bb-4f60-a22d-b04bcf662a54 FF, 988a120c-293d-4ba3-b63a-2c41f8f589dc FS",
+      "parent": "6aeeb16e-57bb-4f60-a22d-b04bcf662a54"
+    },
+    {
+      "id": "69f4d01b-b7bd-4e83-89d9-bf196dc7f7df",
+      "text": "Define Technical Definitions of Platform Neutrality and Fallback Access",
+      "custom_tooltip": "<b>Define Technical Definitions of Platform Neutrality and Fallback Access</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "6aeeb16e-57bb-4f60-a22d-b04bcf662a54 FS",
+      "parent": "5684f949-4096-4faa-a559-c2813cce24a3",
+      "type": "project"
+    },
+    {
+      "id": "2f5c3216-558f-4686-900b-4306b42ae900",
+      "text": "Research Platform Neutrality Definitions",
+      "custom_tooltip": "<b>Research Platform Neutrality Definitions</b><br>Objective: Gather existing definitions of platform neutrality from various sources.\nScope: Review academic literature, industry standards, and regulatory documents.\nSteps: Search online databases, consult with experts, and analyze relevant publications.\nDeliverables: A comprehensive list of platform neutrality definitions.<br><b>Resources needed:</b><br><ul><li>Lead Researcher</li><li>Regulatory and Compliance Specialist</li></ul>",
+      "start_date": "2026-06-08",
+      "duration": 5.0,
+      "progress": 0,
+      "open": true,
+      "meta": "69f4d01b-b7bd-4e83-89d9-bf196dc7f7df SS",
+      "parent": "69f4d01b-b7bd-4e83-89d9-bf196dc7f7df"
+    },
+    {
+      "id": "40bbcfb5-e464-4820-ae15-b2f0478b52bb",
+      "text": "Define Fallback Access Requirements",
+      "custom_tooltip": "<b>Define Fallback Access Requirements</b><br>Objective: Establish technical requirements for fallback access paths.\nScope: Define authentication methods, security protocols, and user experience considerations.\nSteps: Analyze existing fallback mechanisms, consult with security experts, and develop detailed specifications.\nDeliverables: A document outlining the technical requirements for fallback access.<br><b>Resources needed:</b><br><ul><li>Technical Lead</li><li>Engineer</li><li>Mobile security and authentication protocols expertise</li></ul>",
+      "start_date": "2026-06-13",
+      "duration": 5.0,
+      "progress": 0,
+      "open": true,
+      "meta": "2f5c3216-558f-4686-900b-4306b42ae900 FS",
+      "parent": "69f4d01b-b7bd-4e83-89d9-bf196dc7f7df"
+    },
+    {
+      "id": "494b7356-c158-4d61-a311-53305dd21720",
+      "text": "Analyze AltID Technical Constraints",
+      "custom_tooltip": "<b>Analyze AltID Technical Constraints</b><br>Objective: Understand the technical limitations and requirements of AltID.\nScope: Review AltID documentation, consult with Digitaliseringsstyrelsen, and analyze its architecture.\nSteps: Gather information from relevant stakeholders, conduct technical analysis, and document findings.\nDeliverables: A report summarizing AltID&#x27;s technical constraints and requirements.<br><b>Resources needed:</b><br><ul><li>Lead Researcher</li><li>Technical Lead</li><li>Regulatory and Compliance Specialist</li></ul>",
+      "start_date": "2026-06-18",
+      "duration": 5.0,
+      "progress": 0,
+      "open": true,
+      "meta": "40bbcfb5-e464-4820-ae15-b2f0478b52bb FS",
+      "parent": "69f4d01b-b7bd-4e83-89d9-bf196dc7f7df"
+    },
+    {
+      "id": "c178a3be-dd45-4464-b764-df7463c418ac",
+      "text": "Draft Technical Definitions Document",
+      "custom_tooltip": "<b>Draft Technical Definitions Document</b><br>Objective: Create a consolidated document with precise technical definitions.\nScope: Combine research, requirements, and constraints into a single document.\nSteps: Synthesize information, draft definitions, and obtain feedback from stakeholders.\nDeliverables: A final technical definitions document for platform neutrality and fallback access.<br><b>Resources needed:</b><br><ul><li>Lead Researcher</li><li>Technical Lead</li><li>Regulatory and Compliance Specialist</li><li>Policy and Public-Affairs Coordinator</li></ul>",
+      "start_date": "2026-06-23",
+      "duration": 5.0,
+      "progress": 0,
+      "open": true,
+      "meta": "69f4d01b-b7bd-4e83-89d9-bf196dc7f7df FF, 494b7356-c158-4d61-a311-53305dd21720 FS",
+      "parent": "69f4d01b-b7bd-4e83-89d9-bf196dc7f7df"
+    },
+    {
+      "id": "870a5b4c-f42d-48ee-b463-5cf00d61393d",
+      "text": "Develop Comprehensive Security Strategy",
+      "custom_tooltip": "<b>Develop Comprehensive Security Strategy</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "69f4d01b-b7bd-4e83-89d9-bf196dc7f7df FS",
+      "parent": "5684f949-4096-4faa-a559-c2813cce24a3",
+      "type": "project"
+    },
+    {
+      "id": "1e524d0a-48a0-4992-acd0-0175f215db30",
+      "text": "Identify Security Risks and Threats",
+      "custom_tooltip": "<b>Identify Security Risks and Threats</b><br>Objective: Identify potential security risks and threats to the project&#x27;s digital identity framework.\nScope: Assess vulnerabilities in demonstrators, code repository, data storage, communication channels, and coalition building.\nSteps: Conduct threat modeling workshops, review existing security assessments, and consult with security experts.\nDeliverables: A comprehensive list of identified security risks and threats.<br><b>Resources needed:</b><br><ul><li>Lead Researcher</li><li>Technical Lead</li><li>Security Review Specialist</li></ul>",
+      "start_date": "2026-06-28",
+      "duration": 8.0,
+      "progress": 0,
+      "open": true,
+      "meta": "870a5b4c-f42d-48ee-b463-5cf00d61393d SS",
+      "parent": "870a5b4c-f42d-48ee-b463-5cf00d61393d"
+    },
+    {
+      "id": "0f002bd9-809d-459a-b912-091f0a61b8ba",
+      "text": "Develop Security Policies and Procedures",
+      "custom_tooltip": "<b>Develop Security Policies and Procedures</b><br>Objective: Develop security policies and procedures to mitigate identified risks.\nScope: Create guidelines for secure coding practices, data storage, communication protocols, and incident response.\nSteps: Research industry best practices, adapt existing security policies, and consult with legal counsel.\nDeliverables: A documented set of security policies and procedures.<br><b>Resources needed:</b><br><ul><li>Lead Researcher</li><li>Technical Lead</li><li>Security Review Specialist</li><li>Regulatory and Compliance Specialist</li></ul>",
+      "start_date": "2026-07-06",
+      "duration": 8.0,
+      "progress": 0,
+      "open": true,
+      "meta": "1e524d0a-48a0-4992-acd0-0175f215db30 FS",
+      "parent": "870a5b4c-f42d-48ee-b463-5cf00d61393d"
+    },
+    {
+      "id": "532c8397-3df1-4b75-bffb-486c71a55af3",
+      "text": "Implement Security Controls and Measures",
+      "custom_tooltip": "<b>Implement Security Controls and Measures</b><br>Objective: Implement security controls and measures to protect project assets.\nScope: Configure firewalls, intrusion detection systems, access controls, and encryption mechanisms.\nSteps: Deploy security tools, configure security settings, and conduct security audits.\nDeliverables: A secure infrastructure with implemented security controls.<br><b>Resources needed:</b><br><ul><li>Technical Lead</li><li>Engineer</li><li>Security Review Specialist</li></ul>",
+      "start_date": "2026-07-14",
+      "duration": 8.0,
+      "progress": 0,
+      "open": true,
+      "meta": "0f002bd9-809d-459a-b912-091f0a61b8ba FS",
+      "parent": "870a5b4c-f42d-48ee-b463-5cf00d61393d"
+    },
+    {
+      "id": "e09cd39e-f4cf-4180-9077-2f5f9b5d816f",
+      "text": "Establish Incident Response Plan",
+      "custom_tooltip": "<b>Establish Incident Response Plan</b><br>Objective: Create a plan for responding to security incidents.\nScope: Define roles and responsibilities, establish communication protocols, and develop procedures for incident containment and recovery.\nSteps: Research incident response best practices, adapt existing incident response plans, and conduct tabletop exercises.\nDeliverables: A documented incident response plan.<br><b>Resources needed:</b><br><ul><li>Lead Researcher</li><li>Technical Lead</li><li>Security Review Specialist</li><li>Policy and Public-Affairs Coordinator</li></ul>",
+      "start_date": "2026-07-22",
+      "duration": 8.0,
+      "progress": 0,
+      "open": true,
+      "meta": "870a5b4c-f42d-48ee-b463-5cf00d61393d FF, 532c8397-3df1-4b75-bffb-486c71a55af3 FS",
+      "parent": "870a5b4c-f42d-48ee-b463-5cf00d61393d"
+    },
+    {
+      "id": "845e209d-90ea-4313-92fa-6837fed213ca",
+      "text": "Develop Alternative Scenarios and Intervention Points",
+      "custom_tooltip": "<b>Develop Alternative Scenarios and Intervention Points</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "870a5b4c-f42d-48ee-b463-5cf00d61393d FS",
+      "parent": "5684f949-4096-4faa-a559-c2813cce24a3",
+      "type": "project"
+    },
+    {
+      "id": "6e94a2c8-bf97-425c-9b60-d6fca79afbdd",
+      "text": "Identify Alternative Legal Pathways",
+      "custom_tooltip": "<b>Identify Alternative Legal Pathways</b><br>Research and document alternative legal and regulatory pathways for promoting platform neutrality in Danish digital identity, beyond eIDAS2 and AltID.<br><b>Resources needed:</b><br><ul><li>Regulatory and Compliance Specialist</li><li>Legal Counsel</li></ul>",
+      "start_date": "2026-07-30",
+      "duration": 4.0,
+      "progress": 0,
+      "open": true,
+      "meta": "845e209d-90ea-4313-92fa-6837fed213ca SS",
+      "parent": "845e209d-90ea-4313-92fa-6837fed213ca"
+    },
+    {
+      "id": "ba8066b2-c8c8-4ca3-9ba1-76db5eb0f1f7",
+      "text": "Explore Unilateral Actions for Digital Sovereignty",
+      "custom_tooltip": "<b>Explore Unilateral Actions for Digital Sovereignty</b><br>Identify and analyze actions Denmark can take unilaterally to advance digital sovereignty in the digital identity space, independent of EU-level initiatives.<br><b>Resources needed:</b><br><ul><li>Policy and Public-Affairs Coordinator</li><li>Lead Researcher</li></ul>",
+      "start_date": "2026-08-03",
+      "duration": 4.0,
+      "progress": 0,
+      "open": true,
+      "meta": "6e94a2c8-bf97-425c-9b60-d6fca79afbdd FS",
+      "parent": "845e209d-90ea-4313-92fa-6837fed213ca"
+    },
+    {
+      "id": "47917541-aa78-4cbb-89cb-7ce158ecb0d3",
+      "text": "Research Alternative Technical Standards",
+      "custom_tooltip": "<b>Research Alternative Technical Standards</b><br>Identify specific technical standards or open-source initiatives that Denmark could champion independently to promote platform neutrality and fallback access.<br><b>Resources needed:</b><br><ul><li>Technical Lead</li><li>Engineer</li></ul>",
+      "start_date": "2026-08-07",
+      "duration": 4.0,
+      "progress": 0,
+      "open": true,
+      "meta": "ba8066b2-c8c8-4ca3-9ba1-76db5eb0f1f7 FS",
+      "parent": "845e209d-90ea-4313-92fa-6837fed213ca"
+    },
+    {
+      "id": "68c87288-f12b-4db6-bd57-9de993b2492f",
+      "text": "Conduct Scenario Planning Workshops",
+      "custom_tooltip": "<b>Conduct Scenario Planning Workshops</b><br>Organize and facilitate scenario planning workshops with key stakeholders to explore alternative intervention points and potential fallback positions.<br><b>Resources needed:</b><br><ul><li>Policy and Public-Affairs Coordinator</li><li>Lead Researcher</li><li>Workshop Facilitator</li></ul>",
+      "start_date": "2026-08-11",
+      "duration": 4.0,
+      "progress": 0,
+      "open": true,
+      "meta": "845e209d-90ea-4313-92fa-6837fed213ca FF, 47917541-aa78-4cbb-89cb-7ce158ecb0d3 FS",
+      "parent": "845e209d-90ea-4313-92fa-6837fed213ca"
+    },
+    {
+      "id": "4f5f68af-1207-4252-a0f2-054765ccb987",
+      "text": "Define Technical Standards and Certification Strategy",
+      "custom_tooltip": "<b>Define Technical Standards and Certification Strategy</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "5684f949-4096-4faa-a559-c2813cce24a3 FF, 845e209d-90ea-4313-92fa-6837fed213ca FS",
+      "parent": "5684f949-4096-4faa-a559-c2813cce24a3",
+      "type": "project"
+    },
+    {
+      "id": "9db5800f-c4bf-457d-908b-72913db82610",
+      "text": "Research relevant technical standards",
+      "custom_tooltip": "<b>Research relevant technical standards</b><br>Identify and analyze existing technical standards related to digital identity, authentication, and security protocols. This includes standards from organizations like ISO, ETSI, and W3C.<br><b>Resources needed:</b><br><ul><li>Lead Researcher</li><li>Technical Lead</li><li>Regulatory and Compliance Specialist</li></ul>",
+      "start_date": "2026-08-15",
+      "duration": 8.0,
+      "progress": 0,
+      "open": true,
+      "meta": "4f5f68af-1207-4252-a0f2-054765ccb987 SS",
+      "parent": "4f5f68af-1207-4252-a0f2-054765ccb987"
+    },
+    {
+      "id": "4e9990fc-2bcc-4c55-960d-32d8d7b69b75",
+      "text": "Analyze eIDAS certification schemes",
+      "custom_tooltip": "<b>Analyze eIDAS certification schemes</b><br>Investigate existing eIDAS certification schemes and conformity assessment procedures to understand the requirements for certifying platform-neutral solutions. Identify gaps and potential challenges.<br><b>Resources needed:</b><br><ul><li>Regulatory and Compliance Specialist</li><li>Technical Lead</li></ul>",
+      "start_date": "2026-08-23",
+      "duration": 8.0,
+      "progress": 0,
+      "open": true,
+      "meta": "9db5800f-c4bf-457d-908b-72913db82610 FS",
+      "parent": "4f5f68af-1207-4252-a0f2-054765ccb987"
+    },
+    {
+      "id": "ba83a385-3f8f-48d7-b8dc-ba1275345ce3",
+      "text": "Engage with standards bodies",
+      "custom_tooltip": "<b>Engage with standards bodies</b><br>Establish communication channels with relevant standards bodies (e.g., ETSI, CEN/CENELEC) and technical working groups. Attend meetings, submit proposals, and participate in discussions to advocate for platform-neutral standards.<br><b>Resources needed:</b><br><ul><li>Policy and Public-Affairs Coordinator</li><li>Lead Researcher</li><li>Technical Lead</li></ul>",
+      "start_date": "2026-08-31",
+      "duration": 8.0,
+      "progress": 0,
+      "open": true,
+      "meta": "4e9990fc-2bcc-4c55-960d-32d8d7b69b75 FS",
+      "parent": "4f5f68af-1207-4252-a0f2-054765ccb987"
+    },
+    {
+      "id": "fd990824-100a-4f40-8c6b-575501306cb2",
+      "text": "Develop certification strategy",
+      "custom_tooltip": "<b>Develop certification strategy</b><br>Formulate a detailed strategy for certifying platform-neutral solutions under eIDAS, including identifying the necessary steps, resources, and timelines. Address assurance levels and conformity assessment requirements.<br><b>Resources needed:</b><br><ul><li>Lead Researcher</li><li>Technical Lead</li><li>Regulatory and Compliance Specialist</li><li>Policy and Public-Affairs Coordinator</li></ul>",
+      "start_date": "2026-09-08",
+      "duration": 8.0,
+      "progress": 0,
+      "open": true,
+      "meta": "4f5f68af-1207-4252-a0f2-054765ccb987 FF, ba83a385-3f8f-48d7-b8dc-ba1275345ce3 FS",
+      "parent": "4f5f68af-1207-4252-a0f2-054765ccb987"
+    },
+    {
+      "id": "def01dd8-b255-45c9-ac06-49e4e7dc6199",
+      "text": "Technical Feasibility Demonstrations",
+      "custom_tooltip": "<b>Technical Feasibility Demonstrations</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "5684f949-4096-4faa-a559-c2813cce24a3 FS",
+      "parent": "04c97117-c848-4462-a345-72012d3048c9",
+      "type": "project"
+    },
+    {
+      "id": "90d8943b-5b2d-4e30-adf1-bdf6b6953ec2",
+      "text": "Develop FIDO2 Demonstrator on GrapheneOS",
+      "custom_tooltip": "<b>Develop FIDO2 Demonstrator on GrapheneOS</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "def01dd8-b255-45c9-ac06-49e4e7dc6199 SS",
+      "parent": "def01dd8-b255-45c9-ac06-49e4e7dc6199",
+      "type": "project"
+    },
+    {
+      "id": "004530d4-15c5-42ec-934b-c1366dc73b03",
+      "text": "Set up GrapheneOS development environment",
+      "custom_tooltip": "<b>Set up GrapheneOS development environment</b><br>Objective: Configure a secure and isolated development environment on GrapheneOS for FIDO2 implementation.\nScope: Includes installing necessary SDKs, libraries, and tools.\nSteps: 1. Install GrapheneOS on a test device. 2. Configure Android Studio or similar IDE. 3. Install FIDO2 libraries and dependencies. 4. Test the environment with a basic FIDO2 interaction.\nDeliverables: A fully functional development environment on GrapheneOS.<br><b>Resources needed:</b><br><ul><li>Engineer</li><li>GrapheneOS device</li><li>Android Studio</li></ul>",
+      "start_date": "2026-09-16",
+      "duration": 12.0,
+      "progress": 0,
+      "open": true,
+      "meta": "90d8943b-5b2d-4e30-adf1-bdf6b6953ec2 SS",
+      "parent": "90d8943b-5b2d-4e30-adf1-bdf6b6953ec2"
+    },
+    {
+      "id": "b6a7f206-97a2-44c5-b050-a6dcb9d885f1",
+      "text": "Implement FIDO2 authentication flow",
+      "custom_tooltip": "<b>Implement FIDO2 authentication flow</b><br>Objective: Develop the core FIDO2 authentication flow within the GrapheneOS environment.\nScope: Covers registration, authentication, and key management.\nSteps: 1. Implement FIDO2 registration process. 2. Implement FIDO2 authentication process. 3. Securely store and manage FIDO2 keys. 4. Test the authentication flow with a test server.\nDeliverables: A functional FIDO2 authentication flow on GrapheneOS.<br><b>Resources needed:</b><br><ul><li>Engineer</li><li>Mobile security expert</li></ul>",
+      "start_date": "2026-09-28",
+      "duration": 12.0,
+      "progress": 0,
+      "open": true,
+      "meta": "004530d4-15c5-42ec-934b-c1366dc73b03 FS",
+      "parent": "90d8943b-5b2d-4e30-adf1-bdf6b6953ec2"
+    },
+    {
+      "id": "0eb3c4f7-9b27-4883-acd3-7a277b0698e0",
+      "text": "Integrate with test authentication server",
+      "custom_tooltip": "<b>Integrate with test authentication server</b><br>Objective: Integrate the FIDO2 implementation with a test authentication server for verification.\nScope: Includes setting up the test server and configuring communication protocols.\nSteps: 1. Set up a test authentication server. 2. Configure communication between GrapheneOS device and server. 3. Test the FIDO2 authentication flow with the server. 4. Troubleshoot any integration issues.\nDeliverables: Successful integration with a test authentication server.<br><b>Resources needed:</b><br><ul><li>Engineer</li><li>Web authentication expert</li></ul>",
+      "start_date": "2026-10-10",
+      "duration": 12.0,
+      "progress": 0,
+      "open": true,
+      "meta": "b6a7f206-97a2-44c5-b050-a6dcb9d885f1 FS",
+      "parent": "90d8943b-5b2d-4e30-adf1-bdf6b6953ec2"
+    },
+    {
+      "id": "63aa453f-1083-4561-a775-794d3ce62244",
+      "text": "Secure FIDO2 implementation on GrapheneOS",
+      "custom_tooltip": "<b>Secure FIDO2 implementation on GrapheneOS</b><br>Objective: Ensure the security of the FIDO2 implementation on GrapheneOS.\nScope: Includes vulnerability assessments, code reviews, and security hardening.\nSteps: 1. Conduct vulnerability assessments. 2. Perform code reviews. 3. Implement security hardening measures. 4. Test the security of the implementation.\nDeliverables: A secure FIDO2 implementation on GrapheneOS.<br><b>Resources needed:</b><br><ul><li>Mobile security expert</li><li>Security review specialist</li></ul>",
+      "start_date": "2026-10-22",
+      "duration": 12.0,
+      "progress": 0,
+      "open": true,
+      "meta": "90d8943b-5b2d-4e30-adf1-bdf6b6953ec2 FF, 0eb3c4f7-9b27-4883-acd3-7a277b0698e0 FS",
+      "parent": "90d8943b-5b2d-4e30-adf1-bdf6b6953ec2"
+    },
+    {
+      "id": "f5a2bd2e-738a-4b97-81ca-cbb65256305a",
+      "text": "Develop Browser-Based Fallback Demonstrator",
+      "custom_tooltip": "<b>Develop Browser-Based Fallback Demonstrator</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "90d8943b-5b2d-4e30-adf1-bdf6b6953ec2 FS",
+      "parent": "def01dd8-b255-45c9-ac06-49e4e7dc6199",
+      "type": "project"
+    },
+    {
+      "id": "271cd7c6-9a76-4e01-85e5-318571a26388",
+      "text": "Design Browser Fallback Authentication Flow",
+      "custom_tooltip": "<b>Design Browser Fallback Authentication Flow</b><br>Define the user experience and technical steps for the browser-based fallback authentication flow. This includes selecting appropriate authentication methods (e.g., OTP, email link), designing the user interface, and outlining the data flow between the browser, server, and any external services.<br><b>Resources needed:</b><br><ul><li>Web Authentication Expert</li><li>UI/UX Designer</li><li>Security Architect</li></ul>",
+      "start_date": "2026-11-03",
+      "duration": 5.0,
+      "progress": 0,
+      "open": true,
+      "meta": "f5a2bd2e-738a-4b97-81ca-cbb65256305a SS",
+      "parent": "f5a2bd2e-738a-4b97-81ca-cbb65256305a"
+    },
+    {
+      "id": "7c855acb-2aac-4397-813c-3525cb949a41",
+      "text": "Implement Server-Side Fallback Logic",
+      "custom_tooltip": "<b>Implement Server-Side Fallback Logic</b><br>Develop the server-side components required to support the browser-based fallback authentication flow. This includes handling authentication requests, generating and verifying OTPs or email links, managing user sessions, and integrating with the existing authentication infrastructure.<br><b>Resources needed:</b><br><ul><li>Backend Engineer</li><li>Security Engineer</li><li>Database Administrator</li></ul>",
+      "start_date": "2026-11-08",
+      "duration": 5.0,
+      "progress": 0,
+      "open": true,
+      "meta": "271cd7c6-9a76-4e01-85e5-318571a26388 FS",
+      "parent": "f5a2bd2e-738a-4b97-81ca-cbb65256305a"
+    },
+    {
+      "id": "73e05302-3536-4a47-82f4-10ae0d72d8a7",
+      "text": "Develop Browser-Side Fallback Interface",
+      "custom_tooltip": "<b>Develop Browser-Side Fallback Interface</b><br>Create the user interface for the browser-based fallback authentication flow. This includes implementing the login form, OTP input fields, email link handling, and error messages. Ensure the interface is accessible, user-friendly, and secure.<br><b>Resources needed:</b><br><ul><li>Frontend Engineer</li><li>UI/UX Designer</li><li>Accessibility Expert</li></ul>",
+      "start_date": "2026-11-13",
+      "duration": 5.0,
+      "progress": 0,
+      "open": true,
+      "meta": "7c855acb-2aac-4397-813c-3525cb949a41 FS",
+      "parent": "f5a2bd2e-738a-4b97-81ca-cbb65256305a"
+    },
+    {
+      "id": "96b0cac0-f7f6-4a93-ad47-2f4420b4597c",
+      "text": "Test Browser Compatibility and Security",
+      "custom_tooltip": "<b>Test Browser Compatibility and Security</b><br>Thoroughly test the browser-based fallback authentication flow across different browsers (Chrome, Firefox, Safari, Edge) and operating systems (Windows, macOS, Linux). Conduct security testing to identify and address any vulnerabilities, such as XSS or CSRF attacks.<br><b>Resources needed:</b><br><ul><li>Security Engineer</li><li>QA Tester</li><li>Browser Compatibility Specialist</li></ul>",
+      "start_date": "2026-11-18",
+      "duration": 5.0,
+      "progress": 0,
+      "open": true,
+      "meta": "f5a2bd2e-738a-4b97-81ca-cbb65256305a FF, 73e05302-3536-4a47-82f4-10ae0d72d8a7 FS",
+      "parent": "f5a2bd2e-738a-4b97-81ca-cbb65256305a"
+    },
+    {
+      "id": "26facecc-7632-46bc-8a16-e77685e0841e",
+      "text": "Conduct External Security Review of Demonstrators",
+      "custom_tooltip": "<b>Conduct External Security Review of Demonstrators</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "f5a2bd2e-738a-4b97-81ca-cbb65256305a FS",
+      "parent": "def01dd8-b255-45c9-ac06-49e4e7dc6199",
+      "type": "project"
+    },
+    {
+      "id": "b7221d81-ebdc-4dfd-9191-bc56c03a2a02",
+      "text": "Prepare demonstrators for security review",
+      "custom_tooltip": "<b>Prepare demonstrators for security review</b><br>Package the FIDO2 and browser-based demonstrators with necessary documentation for the external security review team. This includes code, architecture diagrams, and usage instructions.<br><b>Resources needed:</b><br><ul><li>Technical Lead</li><li>Engineers/Contractors</li></ul>",
+      "start_date": "2026-11-23",
+      "duration": 4.0,
+      "progress": 0,
+      "open": true,
+      "meta": "26facecc-7632-46bc-8a16-e77685e0841e SS",
+      "parent": "26facecc-7632-46bc-8a16-e77685e0841e"
+    },
+    {
+      "id": "d18a4efb-3b82-457b-abf3-c532d4740bca",
+      "text": "Engage external security review firm",
+      "custom_tooltip": "<b>Engage external security review firm</b><br>Finalize the contract with the selected external security firm. Provide them with access to the demonstrators and relevant documentation. Schedule kickoff meeting.<br><b>Resources needed:</b><br><ul><li>Lead Researcher</li><li>Technical Lead</li><li>Budget for external security review</li></ul>",
+      "start_date": "2026-11-27",
+      "duration": 4.0,
+      "progress": 0,
+      "open": true,
+      "meta": "b7221d81-ebdc-4dfd-9191-bc56c03a2a02 FS",
+      "parent": "26facecc-7632-46bc-8a16-e77685e0841e"
+    },
+    {
+      "id": "2b6e221d-6aaf-4c8b-8911-104a2e9b464f",
+      "text": "Address security review findings",
+      "custom_tooltip": "<b>Address security review findings</b><br>Review the security review report and prioritize identified vulnerabilities. Develop and implement remediation plans for each vulnerability. Retest remediated code.<br><b>Resources needed:</b><br><ul><li>Technical Lead</li><li>Engineers/Contractors</li><li>Security Review Specialist</li></ul>",
+      "start_date": "2026-12-01",
+      "duration": 4.0,
+      "progress": 0,
+      "open": true,
+      "meta": "d18a4efb-3b82-457b-abf3-c532d4740bca FS",
+      "parent": "26facecc-7632-46bc-8a16-e77685e0841e"
+    },
+    {
+      "id": "01ed9177-859e-4839-aa3e-4031a309e2c6",
+      "text": "Document security review process",
+      "custom_tooltip": "<b>Document security review process</b><br>Create a comprehensive report documenting the entire security review process, including the initial assessment, identified vulnerabilities, remediation steps, and retesting results.<br><b>Resources needed:</b><br><ul><li>Technical Lead</li><li>Security Review Specialist</li></ul>",
+      "start_date": "2026-12-05",
+      "duration": 4.0,
+      "progress": 0,
+      "open": true,
+      "meta": "26facecc-7632-46bc-8a16-e77685e0841e FF, 2b6e221d-6aaf-4c8b-8911-104a2e9b464f FS",
+      "parent": "26facecc-7632-46bc-8a16-e77685e0841e"
+    },
+    {
+      "id": "6cc750ea-ab0c-4c5f-a715-045ff9d18a23",
+      "text": "Integrate Demonstrators with Test Environment",
+      "custom_tooltip": "<b>Integrate Demonstrators with Test Environment</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "def01dd8-b255-45c9-ac06-49e4e7dc6199 FF, 26facecc-7632-46bc-8a16-e77685e0841e FS",
+      "parent": "def01dd8-b255-45c9-ac06-49e4e7dc6199",
+      "type": "project"
+    },
+    {
+      "id": "abb74865-68b7-45c5-8990-c00f5088ca2b",
+      "text": "Prepare Test Environment Configuration",
+      "custom_tooltip": "<b>Prepare Test Environment Configuration</b><br>Objective: Configure the test environment to accurately simulate the target deployment environment.\nScope: Includes setting up necessary servers, databases, and network configurations.\nSteps: 1. Identify required test environment components. 2. Configure servers and databases. 3. Set up network configurations. 4. Verify environment setup.\nDeliverables: Configured test environment.<br><b>Resources needed:</b><br><ul><li>System Administrator</li><li>Network Engineer</li><li>Database Administrator</li></ul>",
+      "start_date": "2026-12-09",
+      "duration": 3.0,
+      "progress": 0,
+      "open": true,
+      "meta": "6cc750ea-ab0c-4c5f-a715-045ff9d18a23 SS",
+      "parent": "6cc750ea-ab0c-4c5f-a715-045ff9d18a23"
+    },
+    {
+      "id": "9e8d444b-804e-4b48-a0c9-30c6ec9c1825",
+      "text": "Adapt Demonstrators for Test Environment",
+      "custom_tooltip": "<b>Adapt Demonstrators for Test Environment</b><br>Objective: Modify the demonstrators to function correctly within the test environment.\nScope: Includes adjusting configuration files, API endpoints, and data sources.\nSteps: 1. Identify necessary modifications. 2. Update configuration files. 3. Adjust API endpoints. 4. Verify demonstrator functionality.\nDeliverables: Adapted demonstrators.<br><b>Resources needed:</b><br><ul><li>Technical Lead</li><li>Engineer</li></ul>",
+      "start_date": "2026-12-12",
+      "duration": 3.0,
+      "progress": 0,
+      "open": true,
+      "meta": "abb74865-68b7-45c5-8990-c00f5088ca2b FS",
+      "parent": "6cc750ea-ab0c-4c5f-a715-045ff9d18a23"
+    },
+    {
+      "id": "3d51086d-3132-4d75-be38-f68ebe14486f",
+      "text": "Execute Integration Tests",
+      "custom_tooltip": "<b>Execute Integration Tests</b><br>Objective: Perform integration tests to ensure the demonstrators function correctly within the test environment.\nScope: Includes running predefined test cases and documenting results.\nSteps: 1. Prepare test cases. 2. Execute test cases. 3. Document test results. 4. Analyze test results.\nDeliverables: Test results and analysis.<br><b>Resources needed:</b><br><ul><li>Engineer</li><li>Technical Lead</li></ul>",
+      "start_date": "2026-12-15",
+      "duration": 3.0,
+      "progress": 0,
+      "open": true,
+      "meta": "9e8d444b-804e-4b48-a0c9-30c6ec9c1825 FS",
+      "parent": "6cc750ea-ab0c-4c5f-a715-045ff9d18a23"
+    },
+    {
+      "id": "8d82847a-08aa-4cbe-ac95-d6ee8b6553c2",
+      "text": "Address Integration Issues",
+      "custom_tooltip": "<b>Address Integration Issues</b><br>Objective: Resolve any issues identified during integration testing.\nScope: Includes debugging, code modifications, and retesting.\nSteps: 1. Identify root cause of issues. 2. Implement fixes. 3. Retest affected components. 4. Verify issue resolution.\nDeliverables: Resolved integration issues.<br><b>Resources needed:</b><br><ul><li>Engineer</li><li>Technical Lead</li></ul>",
+      "start_date": "2026-12-18",
+      "duration": 3.0,
+      "progress": 0,
+      "open": true,
+      "meta": "6cc750ea-ab0c-4c5f-a715-045ff9d18a23 FF, 3d51086d-3132-4d75-be38-f68ebe14486f FS",
+      "parent": "6cc750ea-ab0c-4c5f-a715-045ff9d18a23"
+    },
+    {
+      "id": "fb696a06-1829-4b3d-8107-f430813a9b20",
+      "text": "Policy Advocacy & Coalition Building",
+      "custom_tooltip": "<b>Policy Advocacy &amp; Coalition Building</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "def01dd8-b255-45c9-ac06-49e4e7dc6199 FS",
+      "parent": "04c97117-c848-4462-a345-72012d3048c9",
+      "type": "project"
+    },
+    {
+      "id": "59acc572-ad22-42f7-94b6-1998e1e5cf97",
+      "text": "Build Coalition of Support",
+      "custom_tooltip": "<b>Build Coalition of Support</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "fb696a06-1829-4b3d-8107-f430813a9b20 SS",
+      "parent": "fb696a06-1829-4b3d-8107-f430813a9b20",
+      "type": "project"
+    },
+    {
+      "id": "724a49b7-da44-4f46-b3f5-50de430d89d8",
+      "text": "Identify Key Stakeholders for Coalition",
+      "custom_tooltip": "<b>Identify Key Stakeholders for Coalition</b><br>Objective: Identify and prioritize key stakeholders (civil-society organizations, privacy advocates, academic researchers, security experts, contingency-planning stakeholders, and sympathetic members of Folketinget&#x27;s digital policy committee) for building a coalition of support.\nScope: Research and compile a list of relevant organizations and individuals, assess their potential interest and influence, and prioritize outreach efforts.\nSteps: 1. Conduct online research to identify potential stakeholders. 2. Analyze their mission, activities, and past involvement in digital identity and related issues. 3. Assess their potential interest and influence based on their expertise, network, and resources. 4. Prioritize outreach efforts based on the assessment.\nDeliverables: A prioritized list of key stakeholders with contact information and a brief assessment of their potential interest and influence.<br><b>Resources needed:</b><br><ul><li>Policy and Public-Affairs Coordinator</li><li>Lead Researcher</li></ul>",
+      "start_date": "2026-12-21",
+      "duration": 15.0,
+      "progress": 0,
+      "open": true,
+      "meta": "59acc572-ad22-42f7-94b6-1998e1e5cf97 SS",
+      "parent": "59acc572-ad22-42f7-94b6-1998e1e5cf97"
+    },
+    {
+      "id": "3902e8fd-2412-474f-8069-9934b109af67",
+      "text": "Develop Coalition Engagement Strategy",
+      "custom_tooltip": "<b>Develop Coalition Engagement Strategy</b><br>Objective: Develop a comprehensive engagement strategy for building and maintaining a coalition of support.\nScope: Define the coalition&#x27;s goals, identify shared interests, develop messaging, and establish communication channels.\nSteps: 1. Define the coalition&#x27;s goals and objectives. 2. Identify shared interests among potential coalition members. 3. Develop compelling messaging that resonates with different stakeholders. 4. Establish clear communication channels and decision-making protocols. 5. Offer incentives for participation.\nDeliverables: A detailed coalition engagement strategy document outlining goals, messaging, communication channels, and incentives.<br><b>Resources needed:</b><br><ul><li>Policy and Public-Affairs Coordinator</li><li>Lead Researcher</li></ul>",
+      "start_date": "2027-01-05",
+      "duration": 15.0,
+      "progress": 0,
+      "open": true,
+      "meta": "724a49b7-da44-4f46-b3f5-50de430d89d8 FS",
+      "parent": "59acc572-ad22-42f7-94b6-1998e1e5cf97"
+    },
+    {
+      "id": "8eaf83ac-7b34-4fdd-9fa0-9f9ffe43adc6",
+      "text": "Conduct Initial Outreach to Stakeholders",
+      "custom_tooltip": "<b>Conduct Initial Outreach to Stakeholders</b><br>Objective: Initiate contact with key stakeholders to gauge their interest in joining the coalition.\nScope: Prepare outreach materials, schedule meetings, and conduct initial conversations.\nSteps: 1. Prepare outreach materials, including a brief overview of the project and the coalition&#x27;s goals. 2. Schedule initial meetings with key stakeholders. 3. Conduct initial conversations to gauge their interest and address any concerns. 4. Follow up with stakeholders to provide additional information and answer questions.\nDeliverables: Records of initial outreach efforts, including meeting notes and follow-up communications.<br><b>Resources needed:</b><br><ul><li>Policy and Public-Affairs Coordinator</li><li>Lead Researcher</li></ul>",
+      "start_date": "2027-01-20",
+      "duration": 15.0,
+      "progress": 0,
+      "open": true,
+      "meta": "3902e8fd-2412-474f-8069-9934b109af67 FS",
+      "parent": "59acc572-ad22-42f7-94b6-1998e1e5cf97"
+    },
+    {
+      "id": "e7aacef4-37bd-4459-8d36-c29a2c449c37",
+      "text": "Formalize Coalition Structure and Agreements",
+      "custom_tooltip": "<b>Formalize Coalition Structure and Agreements</b><br>Objective: Establish a formal structure for the coalition and develop agreements outlining roles, responsibilities, and decision-making processes.\nScope: Define the coalition&#x27;s governance structure, draft a memorandum of understanding, and establish communication protocols.\nSteps: 1. Define the coalition&#x27;s governance structure (e.g., steering committee, working groups). 2. Draft a memorandum of understanding outlining roles, responsibilities, and decision-making processes. 3. Establish clear communication protocols for sharing information and coordinating activities. 4. Obtain formal agreement from coalition members.\nDeliverables: A signed memorandum of understanding and a documented governance structure.<br><b>Resources needed:</b><br><ul><li>Policy and Public-Affairs Coordinator</li><li>Lead Researcher</li><li>Legal Counsel (limited)</li></ul>",
+      "start_date": "2027-02-04",
+      "duration": 15.0,
+      "progress": 0,
+      "open": true,
+      "meta": "59acc572-ad22-42f7-94b6-1998e1e5cf97 FF, 8eaf83ac-7b34-4fdd-9fa0-9f9ffe43adc6 FS",
+      "parent": "59acc572-ad22-42f7-94b6-1998e1e5cf97"
+    },
+    {
+      "id": "24a1310f-5a78-4b58-8ea4-f9cb72f0b70f",
+      "text": "Develop Policy Advocacy Messaging",
+      "custom_tooltip": "<b>Develop Policy Advocacy Messaging</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "59acc572-ad22-42f7-94b6-1998e1e5cf97 FS",
+      "parent": "fb696a06-1829-4b3d-8107-f430813a9b20",
+      "type": "project"
+    },
+    {
+      "id": "a414a7d3-6b12-4561-b497-b7adf8d50fc5",
+      "text": "Research Digitaliseringsstyrelsen's policy priorities",
+      "custom_tooltip": "<b>Research Digitaliseringsstyrelsen&#x27;s policy priorities</b><br>Objective: Understand the current policy priorities of Digitaliseringsstyrelsen related to digital identity and platform neutrality.\nScope: Review publicly available documents, reports, and statements from Digitaliseringsstyrelsen.\nSteps: 1. Identify relevant documents. 2. Analyze the documents for key themes and priorities. 3. Summarize findings.\nDeliverables: A summary report outlining Digitaliseringsstyrelsen&#x27;s policy priorities.<br><b>Resources needed:</b><br><ul><li>Policy and Public-Affairs Coordinator</li><li>Lead Researcher</li></ul>",
+      "start_date": "2027-02-19",
+      "duration": 8.0,
+      "progress": 0,
+      "open": true,
+      "meta": "24a1310f-5a78-4b58-8ea4-f9cb72f0b70f SS",
+      "parent": "24a1310f-5a78-4b58-8ea4-f9cb72f0b70f"
+    },
+    {
+      "id": "d8c0f57c-62a0-4e26-b17f-a2a3a4e568ab",
+      "text": "Draft initial advocacy messaging",
+      "custom_tooltip": "<b>Draft initial advocacy messaging</b><br>Objective: Develop initial advocacy messaging that highlights the benefits of platform neutrality and fallback access.\nScope: Craft compelling arguments tailored to Digitaliseringsstyrelsen&#x27;s priorities.\nSteps: 1. Develop key messages. 2. Refine messaging based on research. 3. Create briefing materials.\nDeliverables: Draft advocacy messaging and briefing materials.<br><b>Resources needed:</b><br><ul><li>Policy and Public-Affairs Coordinator</li><li>Lead Researcher</li></ul>",
+      "start_date": "2027-02-27",
+      "duration": 8.0,
+      "progress": 0,
+      "open": true,
+      "meta": "a414a7d3-6b12-4561-b497-b7adf8d50fc5 FS",
+      "parent": "24a1310f-5a78-4b58-8ea4-f9cb72f0b70f"
+    },
+    {
+      "id": "bd1ce63a-d45f-42db-b4a5-ef278bf58ce0",
+      "text": "Refine messaging based on stakeholder feedback",
+      "custom_tooltip": "<b>Refine messaging based on stakeholder feedback</b><br>Objective: Refine advocacy messaging based on feedback from coalition members and other stakeholders.\nScope: Incorporate feedback to strengthen the messaging and address potential concerns.\nSteps: 1. Share draft messaging with stakeholders. 2. Collect feedback. 3. Revise messaging based on feedback.\nDeliverables: Refined advocacy messaging.<br><b>Resources needed:</b><br><ul><li>Policy and Public-Affairs Coordinator</li><li>Lead Researcher</li><li>Coalition Members</li></ul>",
+      "start_date": "2027-03-07",
+      "duration": 8.0,
+      "progress": 0,
+      "open": true,
+      "meta": "d8c0f57c-62a0-4e26-b17f-a2a3a4e568ab FS",
+      "parent": "24a1310f-5a78-4b58-8ea4-f9cb72f0b70f"
+    },
+    {
+      "id": "2da7cfa5-c629-4fda-9833-27e5ad789ce8",
+      "text": "Prepare presentation materials for Digitaliseringsstyrelsen",
+      "custom_tooltip": "<b>Prepare presentation materials for Digitaliseringsstyrelsen</b><br>Objective: Prepare presentation materials for meetings with Digitaliseringsstyrelsen representatives.\nScope: Create a clear and concise presentation that effectively communicates the project&#x27;s goals and benefits.\nSteps: 1. Develop presentation slides. 2. Practice the presentation. 3. Finalize presentation materials.\nDeliverables: Presentation materials for Digitaliseringsstyrelsen.<br><b>Resources needed:</b><br><ul><li>Policy and Public-Affairs Coordinator</li><li>Lead Researcher</li><li>Technical Lead</li></ul>",
+      "start_date": "2027-03-15",
+      "duration": 8.0,
+      "progress": 0,
+      "open": true,
+      "meta": "24a1310f-5a78-4b58-8ea4-f9cb72f0b70f FF, bd1ce63a-d45f-42db-b4a5-ef278bf58ce0 FS",
+      "parent": "24a1310f-5a78-4b58-8ea4-f9cb72f0b70f"
+    },
+    {
+      "id": "79eeb071-7bf5-4336-831d-0f85990e013e",
+      "text": "Engage with Digitaliseringsstyrelsen",
+      "custom_tooltip": "<b>Engage with Digitaliseringsstyrelsen</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "24a1310f-5a78-4b58-8ea4-f9cb72f0b70f FS",
+      "parent": "fb696a06-1829-4b3d-8107-f430813a9b20",
+      "type": "project"
+    },
+    {
+      "id": "be5941e5-1926-429b-90a0-df1a273a0f5c",
+      "text": "Identify Key Digitaliseringsstyrelsen Contacts",
+      "custom_tooltip": "<b>Identify Key Digitaliseringsstyrelsen Contacts</b><br>Identify individuals within Digitaliseringsstyrelsen who are most relevant to the project&#x27;s goals and have the authority to influence decisions related to digital identity and procurement.<br><b>Resources needed:</b><br><ul><li>Policy and Public-Affairs Coordinator</li><li>Lead Researcher</li></ul>",
+      "start_date": "2027-03-23",
+      "duration": 8.0,
+      "progress": 0,
+      "open": true,
+      "meta": "79eeb071-7bf5-4336-831d-0f85990e013e SS",
+      "parent": "79eeb071-7bf5-4336-831d-0f85990e013e"
+    },
+    {
+      "id": "c3df2c42-9258-4ac9-8090-d5b849518b87",
+      "text": "Schedule Initial Introductory Meeting",
+      "custom_tooltip": "<b>Schedule Initial Introductory Meeting</b><br>Request and schedule an initial meeting with identified key contacts at Digitaliseringsstyrelsen to introduce the project, its goals, and its potential benefits for Danish digital identity.<br><b>Resources needed:</b><br><ul><li>Policy and Public-Affairs Coordinator</li><li>Lead Researcher</li></ul>",
+      "start_date": "2027-03-31",
+      "duration": 8.0,
+      "progress": 0,
+      "open": true,
+      "meta": "be5941e5-1926-429b-90a0-df1a273a0f5c FS",
+      "parent": "79eeb071-7bf5-4336-831d-0f85990e013e"
+    },
+    {
+      "id": "e069de97-5325-4e5b-8127-17a74cc90ae7",
+      "text": "Prepare Meeting Briefing Materials",
+      "custom_tooltip": "<b>Prepare Meeting Briefing Materials</b><br>Develop clear, concise, and persuasive briefing materials for the initial meeting, highlighting the project&#x27;s objectives, the benefits of platform neutrality and fallback access, and potential areas for collaboration.<br><b>Resources needed:</b><br><ul><li>Policy and Public-Affairs Coordinator</li><li>Lead Researcher</li><li>Technical Lead</li></ul>",
+      "start_date": "2027-04-08",
+      "duration": 8.0,
+      "progress": 0,
+      "open": true,
+      "meta": "c3df2c42-9258-4ac9-8090-d5b849518b87 FS",
+      "parent": "79eeb071-7bf5-4336-831d-0f85990e013e"
+    },
+    {
+      "id": "ab489960-4797-4643-9ba2-4633657a1db4",
+      "text": "Conduct Follow-Up Communication",
+      "custom_tooltip": "<b>Conduct Follow-Up Communication</b><br>After the initial meeting, send a thank-you note and follow up with Digitaliseringsstyrelsen contacts to answer any questions, provide additional information, and schedule further discussions.<br><b>Resources needed:</b><br><ul><li>Policy and Public-Affairs Coordinator</li></ul>",
+      "start_date": "2027-04-16",
+      "duration": 8.0,
+      "progress": 0,
+      "open": true,
+      "meta": "79eeb071-7bf5-4336-831d-0f85990e013e FF, e069de97-5325-4e5b-8127-17a74cc90ae7 FS",
+      "parent": "79eeb071-7bf5-4336-831d-0f85990e013e"
+    },
+    {
+      "id": "0db236ce-d540-4f35-971b-65fbd94acd4a",
+      "text": "Engage with Members of Folketinget's Digital Policy Committee",
+      "custom_tooltip": "<b>Engage with Members of Folketinget&#x27;s Digital Policy Committee</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "fb696a06-1829-4b3d-8107-f430813a9b20 FF, 79eeb071-7bf5-4336-831d-0f85990e013e FS",
+      "parent": "fb696a06-1829-4b3d-8107-f430813a9b20",
+      "type": "project"
+    },
+    {
+      "id": "4783b03d-2e3a-4b8c-a11d-68e4ee83b87a",
+      "text": "Identify Key Committee Members",
+      "custom_tooltip": "<b>Identify Key Committee Members</b><br>Identify the members of Folketinget&#x27;s Digital Policy Committee who are most relevant to the project&#x27;s goals and who are likely to be receptive to the project&#x27;s message. This involves researching their backgrounds, policy positions, and areas of interest.<br><b>Resources needed:</b><br><ul><li>Policy and Public-Affairs Coordinator</li><li>Lead Researcher</li></ul>",
+      "start_date": "2027-04-24",
+      "duration": 8.0,
+      "progress": 0,
+      "open": true,
+      "meta": "0db236ce-d540-4f35-971b-65fbd94acd4a SS",
+      "parent": "0db236ce-d540-4f35-971b-65fbd94acd4a"
+    },
+    {
+      "id": "3884844a-2b9c-47aa-9d5c-2fe99d9ce0f7",
+      "text": "Research Committee's Digital Policy Priorities",
+      "custom_tooltip": "<b>Research Committee&#x27;s Digital Policy Priorities</b><br>Research the Digital Policy Committee&#x27;s current priorities and agenda to understand the context in which the project&#x27;s message will be received. This includes reviewing committee reports, meeting minutes, and public statements.<br><b>Resources needed:</b><br><ul><li>Policy and Public-Affairs Coordinator</li><li>Lead Researcher</li></ul>",
+      "start_date": "2027-05-02",
+      "duration": 8.0,
+      "progress": 0,
+      "open": true,
+      "meta": "4783b03d-2e3a-4b8c-a11d-68e4ee83b87a FS",
+      "parent": "0db236ce-d540-4f35-971b-65fbd94acd4a"
+    },
+    {
+      "id": "113949e5-1723-4c22-af4f-f2ee90017e31",
+      "text": "Prepare Tailored Briefing Materials",
+      "custom_tooltip": "<b>Prepare Tailored Briefing Materials</b><br>Develop briefing materials that are tailored to the specific interests and concerns of the Digital Policy Committee members. This includes summarizing the project&#x27;s goals, highlighting the benefits of platform neutrality and fallback access, and addressing potential questions or objections.<br><b>Resources needed:</b><br><ul><li>Policy and Public-Affairs Coordinator</li><li>Lead Researcher</li><li>Technical Lead</li></ul>",
+      "start_date": "2027-05-10",
+      "duration": 8.0,
+      "progress": 0,
+      "open": true,
+      "meta": "3884844a-2b9c-47aa-9d5c-2fe99d9ce0f7 FS",
+      "parent": "0db236ce-d540-4f35-971b-65fbd94acd4a"
+    },
+    {
+      "id": "14f91ab9-9433-4fb8-a3e1-d6be94f4eb9a",
+      "text": "Schedule and Conduct Meetings",
+      "custom_tooltip": "<b>Schedule and Conduct Meetings</b><br>Schedule meetings with the Digital Policy Committee members and present the project&#x27;s message in a clear and persuasive manner. This includes preparing for the meetings, delivering the presentation, and answering questions from the committee members.<br><b>Resources needed:</b><br><ul><li>Policy and Public-Affairs Coordinator</li><li>Lead Researcher</li><li>Technical Lead</li></ul>",
+      "start_date": "2027-05-18",
+      "duration": 8.0,
+      "progress": 0,
+      "open": true,
+      "meta": "113949e5-1723-4c22-af4f-f2ee90017e31 FS",
+      "parent": "0db236ce-d540-4f35-971b-65fbd94acd4a"
+    },
+    {
+      "id": "f46fb567-b8f0-4c90-b519-3f6dfec3c9d8",
+      "text": "Follow Up and Maintain Communication",
+      "custom_tooltip": "<b>Follow Up and Maintain Communication</b><br>Follow up with the Digital Policy Committee members after the meetings to answer any remaining questions and maintain communication. This includes providing additional information, addressing concerns, and building relationships with the committee members.<br><b>Resources needed:</b><br><ul><li>Policy and Public-Affairs Coordinator</li></ul>",
+      "start_date": "2027-05-26",
+      "duration": 8.0,
+      "progress": 0,
+      "open": true,
+      "meta": "0db236ce-d540-4f35-971b-65fbd94acd4a FF, 14f91ab9-9433-4fb8-a3e1-d6be94f4eb9a FS",
+      "parent": "0db236ce-d540-4f35-971b-65fbd94acd4a"
+    },
+    {
+      "id": "2818c1ea-61d6-4225-bef2-1a9fdf606e90",
+      "text": "Procurement Influence & Standards Engagement",
+      "custom_tooltip": "<b>Procurement Influence &amp; Standards Engagement</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "fb696a06-1829-4b3d-8107-f430813a9b20 FS",
+      "parent": "04c97117-c848-4462-a345-72012d3048c9",
+      "type": "project"
+    },
+    {
+      "id": "ada98db8-a04d-4ba3-b5be-0510b22243a1",
+      "text": "Analyze AltID Procurement Documents",
+      "custom_tooltip": "<b>Analyze AltID Procurement Documents</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "2818c1ea-61d6-4225-bef2-1a9fdf606e90 SS",
+      "parent": "2818c1ea-61d6-4225-bef2-1a9fdf606e90",
+      "type": "project"
+    },
+    {
+      "id": "fc4fa905-2d44-4b3e-b090-1f26e9f6c4f8",
+      "text": "Identify relevant AltID procurement sources",
+      "custom_tooltip": "<b>Identify relevant AltID procurement sources</b><br>Objective: Determine where AltID procurement documents are published or available.\nScope: Research official websites, databases, and contact relevant agencies.\nSteps: 1. Search Digitaliseringsstyrelsen website. 2. Contact relevant personnel. 3. Explore EU procurement databases.\nDeliverables: List of sources for procurement documents.<br><b>Resources needed:</b><br><ul><li>Policy and Public-Affairs Coordinator</li><li>Lead Researcher</li></ul>",
+      "start_date": "2027-06-03",
+      "duration": 3.0,
+      "progress": 0,
+      "open": true,
+      "meta": "ada98db8-a04d-4ba3-b5be-0510b22243a1 SS",
+      "parent": "ada98db8-a04d-4ba3-b5be-0510b22243a1"
+    },
+    {
+      "id": "26170a1d-c370-4142-8ecb-469253cefd83",
+      "text": "Gather AltID procurement documents",
+      "custom_tooltip": "<b>Gather AltID procurement documents</b><br>Objective: Collect all available AltID procurement documents from identified sources.\nScope: Obtain documents related to current and past procurement activities.\nSteps: 1. Download documents from online sources. 2. Request documents from contacts. 3. Organize documents in a central repository.\nDeliverables: Complete collection of AltID procurement documents.<br><b>Resources needed:</b><br><ul><li>Policy and Public-Affairs Coordinator</li><li>Lead Researcher</li></ul>",
+      "start_date": "2027-06-06",
+      "duration": 3.0,
+      "progress": 0,
+      "open": true,
+      "meta": "fc4fa905-2d44-4b3e-b090-1f26e9f6c4f8 FS",
+      "parent": "ada98db8-a04d-4ba3-b5be-0510b22243a1"
+    },
+    {
+      "id": "12bea96d-f828-416e-ae38-fdcfb1165346",
+      "text": "Review documents for platform neutrality",
+      "custom_tooltip": "<b>Review documents for platform neutrality</b><br>Objective: Identify sections related to platform requirements.\nScope: Analyze documents for mentions of platform neutrality, open standards, or vendor lock-in.\nSteps: 1. Scan documents for keywords. 2. Highlight relevant sections. 3. Summarize findings.\nDeliverables: Report on platform neutrality mentions.<br><b>Resources needed:</b><br><ul><li>Regulatory and Compliance Specialist</li><li>Technical Lead</li></ul>",
+      "start_date": "2027-06-09",
+      "duration": 3.0,
+      "progress": 0,
+      "open": true,
+      "meta": "26170a1d-c370-4142-8ecb-469253cefd83 FS",
+      "parent": "ada98db8-a04d-4ba3-b5be-0510b22243a1"
+    },
+    {
+      "id": "e3b83869-b5e9-4538-8cc0-e3c7e8dbd050",
+      "text": "Assess completeness of documentation",
+      "custom_tooltip": "<b>Assess completeness of documentation</b><br>Objective: Determine if the collected documents provide a complete picture of AltID procurement.\nScope: Identify any gaps in the documentation and plan to address them.\nSteps: 1. Compare documents against expected content. 2. Identify missing information. 3. Develop a plan to obtain missing documents.\nDeliverables: Report on documentation completeness.<br><b>Resources needed:</b><br><ul><li>Lead Researcher</li><li>Policy and Public-Affairs Coordinator</li></ul>",
+      "start_date": "2027-06-12",
+      "duration": 3.0,
+      "progress": 0,
+      "open": true,
+      "meta": "ada98db8-a04d-4ba3-b5be-0510b22243a1 FF, 12bea96d-f828-416e-ae38-fdcfb1165346 FS",
+      "parent": "ada98db8-a04d-4ba3-b5be-0510b22243a1"
+    },
+    {
+      "id": "4a5dad17-0a9b-4948-a27f-bbd7baf5a6c6",
+      "text": "Advocate for Platform-Neutral Language in Procurement Documents",
+      "custom_tooltip": "<b>Advocate for Platform-Neutral Language in Procurement Documents</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "ada98db8-a04d-4ba3-b5be-0510b22243a1 FS",
+      "parent": "2818c1ea-61d6-4225-bef2-1a9fdf606e90",
+      "type": "project"
+    },
+    {
+      "id": "933d87c4-07de-4c03-9c23-de427d76efeb",
+      "text": "Identify Key Procurement Requirements",
+      "custom_tooltip": "<b>Identify Key Procurement Requirements</b><br>Objective: Determine the specific requirements and criteria outlined in the AltID procurement documents related to platform neutrality.\nScope: Review all relevant sections of the procurement documents, including technical specifications, evaluation criteria, and contractual terms.\nSteps: 1. Obtain the AltID procurement documents. 2. Identify sections related to platform compatibility, interoperability, and vendor lock-in. 3. Extract specific requirements and criteria related to platform neutrality.\nDeliverables: A summary of key procurement requirements related to platform neutrality.<br><b>Resources needed:</b><br><ul><li>Regulatory and Compliance Specialist</li><li>Technical Lead</li><li>Procurement Lawyer</li></ul>",
+      "start_date": "2027-06-15",
+      "duration": 5.0,
+      "progress": 0,
+      "open": true,
+      "meta": "4a5dad17-0a9b-4948-a27f-bbd7baf5a6c6 SS",
+      "parent": "4a5dad17-0a9b-4948-a27f-bbd7baf5a6c6"
+    },
+    {
+      "id": "0ee8ed98-72c1-4d51-b979-9dde22fc4d9b",
+      "text": "Analyze Technical Specifications for Platform Bias",
+      "custom_tooltip": "<b>Analyze Technical Specifications for Platform Bias</b><br>Objective: Analyze the technical specifications within the AltID procurement documents to identify potential biases towards specific platforms or technologies.\nScope: Examine the technical requirements for authentication methods, security protocols, and integration interfaces.\nSteps: 1. Review the technical specifications for authentication methods (e.g., FIDO2, WebAuthn). 2. Identify any requirements that favor specific platforms or vendors. 3. Assess the impact of these biases on platform neutrality.\nDeliverables: A report identifying potential platform biases in the technical specifications.<br><b>Resources needed:</b><br><ul><li>Technical Lead</li><li>Engineer</li><li>Mobile Security Expert</li></ul>",
+      "start_date": "2027-06-20",
+      "duration": 5.0,
+      "progress": 0,
+      "open": true,
+      "meta": "933d87c4-07de-4c03-9c23-de427d76efeb FS",
+      "parent": "4a5dad17-0a9b-4948-a27f-bbd7baf5a6c6"
+    },
+    {
+      "id": "e336f171-2b20-436c-8298-1d26ace8d622",
+      "text": "Assess Evaluation Criteria for Platform Neutrality",
+      "custom_tooltip": "<b>Assess Evaluation Criteria for Platform Neutrality</b><br>Objective: Evaluate the evaluation criteria used in the AltID procurement process to determine if they adequately consider platform neutrality.\nScope: Review the criteria used to assess vendor proposals and identify any potential biases.\nSteps: 1. Review the evaluation criteria for technical merit, cost-effectiveness, and security. 2. Assess whether the criteria explicitly reward or penalize platform-neutral solutions. 3. Identify any gaps in the evaluation process related to platform neutrality.\nDeliverables: An assessment of the evaluation criteria&#x27;s impact on platform neutrality.<br><b>Resources needed:</b><br><ul><li>Regulatory and Compliance Specialist</li><li>Policy and Public-Affairs Coordinator</li><li>Procurement Lawyer</li></ul>",
+      "start_date": "2027-06-25",
+      "duration": 5.0,
+      "progress": 0,
+      "open": true,
+      "meta": "0ee8ed98-72c1-4d51-b979-9dde22fc4d9b FS",
+      "parent": "4a5dad17-0a9b-4948-a27f-bbd7baf5a6c6"
+    },
+    {
+      "id": "a1abb0e8-d17d-454e-9606-5513c8407991",
+      "text": "Draft Alternative Procurement Language",
+      "custom_tooltip": "<b>Draft Alternative Procurement Language</b><br>Objective: Develop alternative procurement language that promotes platform neutrality and avoids vendor lock-in.\nScope: Create specific wording for technical specifications, evaluation criteria, and contractual terms.\nSteps: 1. Research best practices for platform-neutral procurement language. 2. Draft alternative wording for key sections of the AltID procurement documents. 3. Ensure that the language is clear, concise, and enforceable.\nDeliverables: A set of alternative procurement language recommendations.<br><b>Resources needed:</b><br><ul><li>Policy and Public-Affairs Coordinator</li><li>Technical Lead</li><li>Procurement Lawyer</li></ul>",
+      "start_date": "2027-06-30",
+      "duration": 5.0,
+      "progress": 0,
+      "open": true,
+      "meta": "4a5dad17-0a9b-4948-a27f-bbd7baf5a6c6 FF, e336f171-2b20-436c-8298-1d26ace8d622 FS",
+      "parent": "4a5dad17-0a9b-4948-a27f-bbd7baf5a6c6"
+    },
+    {
+      "id": "242a1996-2eea-405f-afa6-b6b83b096128",
+      "text": "Engage with EU Bodies and Technical Working Groups",
+      "custom_tooltip": "<b>Engage with EU Bodies and Technical Working Groups</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "4a5dad17-0a9b-4948-a27f-bbd7baf5a6c6 FS",
+      "parent": "2818c1ea-61d6-4225-bef2-1a9fdf606e90",
+      "type": "project"
+    },
+    {
+      "id": "d4cff72a-b67d-47f1-b331-44bff8d104dc",
+      "text": "Identify Key EU Contacts",
+      "custom_tooltip": "<b>Identify Key EU Contacts</b><br>Identify key individuals within relevant EU bodies and technical working groups. This involves researching the organizational structure of these bodies, identifying individuals with decision-making power or influence, and gathering their contact information.<br><b>Resources needed:</b><br><ul><li>Policy and Public-Affairs Coordinator</li><li>Lead Researcher</li></ul>",
+      "start_date": "2027-07-05",
+      "duration": 8.0,
+      "progress": 0,
+      "open": true,
+      "meta": "242a1996-2eea-405f-afa6-b6b83b096128 SS",
+      "parent": "242a1996-2eea-405f-afa6-b6b83b096128"
+    },
+    {
+      "id": "feabccd7-271c-43a9-8fcc-8c9c7e275654",
+      "text": "Prioritize EU Engagement Efforts",
+      "custom_tooltip": "<b>Prioritize EU Engagement Efforts</b><br>Prioritize engagement efforts based on potential impact. This involves assessing the relevance of different EU bodies and technical working groups to the project&#x27;s goals, evaluating the likelihood of influencing their decisions, and allocating resources accordingly.<br><b>Resources needed:</b><br><ul><li>Policy and Public-Affairs Coordinator</li><li>Lead Researcher</li><li>Regulatory and Compliance Specialist</li></ul>",
+      "start_date": "2027-07-13",
+      "duration": 8.0,
+      "progress": 0,
+      "open": true,
+      "meta": "d4cff72a-b67d-47f1-b331-44bff8d104dc FS",
+      "parent": "242a1996-2eea-405f-afa6-b6b83b096128"
+    },
+    {
+      "id": "a135391b-1989-400f-be34-24628cdba304",
+      "text": "Prepare Persuasive Arguments",
+      "custom_tooltip": "<b>Prepare Persuasive Arguments</b><br>Prepare well-researched and persuasive arguments for platform-neutral standards. This involves gathering evidence to support the benefits of platform neutrality, developing clear and concise messaging, and tailoring arguments to the specific concerns of different stakeholders.<br><b>Resources needed:</b><br><ul><li>Lead Researcher</li><li>Technical Lead</li><li>Policy and Public-Affairs Coordinator</li></ul>",
+      "start_date": "2027-07-21",
+      "duration": 8.0,
+      "progress": 0,
+      "open": true,
+      "meta": "feabccd7-271c-43a9-8fcc-8c9c7e275654 FS",
+      "parent": "242a1996-2eea-405f-afa6-b6b83b096128"
+    },
+    {
+      "id": "2e1c861e-8558-4d54-a9da-d99369e28a8a",
+      "text": "Allocate Resources for EU Engagement",
+      "custom_tooltip": "<b>Allocate Resources for EU Engagement</b><br>Allocate sufficient time and resources for travel and participation in EU meetings. This involves budgeting for travel expenses, scheduling meetings and events, and ensuring that project staff have the necessary time and support to participate effectively.<br><b>Resources needed:</b><br><ul><li>Project Manager</li><li>Policy and Public-Affairs Coordinator</li></ul>",
+      "start_date": "2027-07-29",
+      "duration": 8.0,
+      "progress": 0,
+      "open": true,
+      "meta": "242a1996-2eea-405f-afa6-b6b83b096128 FF, a135391b-1989-400f-be34-24628cdba304 FS",
+      "parent": "242a1996-2eea-405f-afa6-b6b83b096128"
+    },
+    {
+      "id": "9b172774-494a-49e2-b1e0-9a145aab7a77",
+      "text": "Advocate for Platform-Neutral Standards in eIDAS2",
+      "custom_tooltip": "<b>Advocate for Platform-Neutral Standards in eIDAS2</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "2818c1ea-61d6-4225-bef2-1a9fdf606e90 FF, 242a1996-2eea-405f-afa6-b6b83b096128 FS",
+      "parent": "2818c1ea-61d6-4225-bef2-1a9fdf606e90",
+      "type": "project"
+    },
+    {
+      "id": "79b24a9e-a2a6-447a-b3fc-6dd6235bdf22",
+      "text": "Identify Key eIDAS2 Stakeholders",
+      "custom_tooltip": "<b>Identify Key eIDAS2 Stakeholders</b><br>Identify and map key individuals and organizations involved in the eIDAS2 standardization process, including representatives from member states, industry, and academia. This will involve desk research, attending industry events, and networking with relevant contacts.<br><b>Resources needed:</b><br><ul><li>Policy and Public-Affairs Coordinator</li><li>Lead Researcher</li></ul>",
+      "start_date": "2027-08-06",
+      "duration": 12.0,
+      "progress": 0,
+      "open": true,
+      "meta": "9b172774-494a-49e2-b1e0-9a145aab7a77 SS",
+      "parent": "9b172774-494a-49e2-b1e0-9a145aab7a77"
+    },
+    {
+      "id": "d3c37be4-2564-4479-88eb-c9958ae80d5a",
+      "text": "Analyze eIDAS2 Draft Standards",
+      "custom_tooltip": "<b>Analyze eIDAS2 Draft Standards</b><br>Thoroughly review and analyze the draft eIDAS2 standards to identify areas where platform-neutral approaches can be incorporated or strengthened. This will involve technical analysis, legal review, and consultation with experts.<br><b>Resources needed:</b><br><ul><li>Technical Lead</li><li>Regulatory and Compliance Specialist</li><li>Lead Researcher</li></ul>",
+      "start_date": "2027-08-18",
+      "duration": 12.0,
+      "progress": 0,
+      "open": true,
+      "meta": "79b24a9e-a2a6-447a-b3fc-6dd6235bdf22 FS",
+      "parent": "9b172774-494a-49e2-b1e0-9a145aab7a77"
+    },
+    {
+      "id": "f60a8670-6cc3-427b-85fd-3c83c5959859",
+      "text": "Develop Platform-Neutral Standard Proposals",
+      "custom_tooltip": "<b>Develop Platform-Neutral Standard Proposals</b><br>Develop concrete proposals for incorporating platform-neutral standards into eIDAS2, including specific technical specifications and implementation guidelines. This will involve technical writing, collaboration with experts, and stakeholder consultation.<br><b>Resources needed:</b><br><ul><li>Technical Lead</li><li>Regulatory and Compliance Specialist</li><li>Policy and Public-Affairs Coordinator</li></ul>",
+      "start_date": "2027-08-30",
+      "duration": 12.0,
+      "progress": 0,
+      "open": true,
+      "meta": "d3c37be4-2564-4479-88eb-c9958ae80d5a FS",
+      "parent": "9b172774-494a-49e2-b1e0-9a145aab7a77"
+    },
+    {
+      "id": "8471c19a-0bf6-4c9c-9846-d95a306931fc",
+      "text": "Present Proposals to eIDAS2 Working Groups",
+      "custom_tooltip": "<b>Present Proposals to eIDAS2 Working Groups</b><br>Present the platform-neutral standard proposals to relevant eIDAS2 working groups and advocate for their adoption. This will involve preparing presentations, attending meetings, and engaging in discussions with stakeholders.<br><b>Resources needed:</b><br><ul><li>Policy and Public-Affairs Coordinator</li><li>Technical Lead</li><li>Lead Researcher</li></ul>",
+      "start_date": "2027-09-11",
+      "duration": 12.0,
+      "progress": 0,
+      "open": true,
+      "meta": "f60a8670-6cc3-427b-85fd-3c83c5959859 FS",
+      "parent": "9b172774-494a-49e2-b1e0-9a145aab7a77"
+    },
+    {
+      "id": "96cc9a1b-521a-4c43-b659-d03298013aac",
+      "text": "Monitor eIDAS2 Standardization Progress",
+      "custom_tooltip": "<b>Monitor eIDAS2 Standardization Progress</b><br>Continuously monitor the progress of the eIDAS2 standardization process and adapt advocacy efforts as needed. This will involve tracking key milestones, attending meetings, and engaging with stakeholders.<br><b>Resources needed:</b><br><ul><li>Policy and Public-Affairs Coordinator</li><li>Lead Researcher</li></ul>",
+      "start_date": "2027-09-23",
+      "duration": 12.0,
+      "progress": 0,
+      "open": true,
+      "meta": "9b172774-494a-49e2-b1e0-9a145aab7a77 FF, 8471c19a-0bf6-4c9c-9846-d95a306931fc FS",
+      "parent": "9b172774-494a-49e2-b1e0-9a145aab7a77"
+    },
+    {
+      "id": "22fd76fb-e29e-4f01-b67e-04c0910ea34c",
+      "text": "Project Closure & Reporting",
+      "custom_tooltip": "<b>Project Closure &amp; Reporting</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "04c97117-c848-4462-a345-72012d3048c9 FF, 2818c1ea-61d6-4225-bef2-1a9fdf606e90 FS",
+      "parent": "04c97117-c848-4462-a345-72012d3048c9",
+      "type": "project"
+    },
+    {
+      "id": "dc88ca39-5e4a-45ad-94eb-4be94d22650f",
+      "text": "Publish Feasibility Report",
+      "custom_tooltip": "<b>Publish Feasibility Report</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "22fd76fb-e29e-4f01-b67e-04c0910ea34c SS",
+      "parent": "22fd76fb-e29e-4f01-b67e-04c0910ea34c",
+      "type": "project"
+    },
+    {
+      "id": "3565b10c-f7f9-459d-b58f-7c2465d7ed32",
+      "text": "Synthesize research findings into report",
+      "custom_tooltip": "<b>Synthesize research findings into report</b><br>Objective: Compile all research data, analysis, and demonstrator results into a cohesive and persuasive feasibility report.\nScope: Includes summarizing technical findings, regulatory analysis, policy recommendations, and financial implications.\nSteps: Review all project documentation, draft report sections, integrate findings, and ensure consistency.\nDeliverables: A complete draft of the feasibility report.<br><b>Resources needed:</b><br><ul><li>Lead Researcher</li><li>Technical Lead</li><li>Regulatory and Compliance Specialist</li><li>Policy and Public-Affairs Coordinator</li></ul>",
+      "start_date": "2027-10-05",
+      "duration": 4.0,
+      "progress": 0,
+      "open": true,
+      "meta": "dc88ca39-5e4a-45ad-94eb-4be94d22650f SS",
+      "parent": "dc88ca39-5e4a-45ad-94eb-4be94d22650f"
+    },
+    {
+      "id": "19103b9c-5313-4e2e-bd4b-1d51bcc2a055",
+      "text": "Obtain internal review and feedback",
+      "custom_tooltip": "<b>Obtain internal review and feedback</b><br>Objective: Circulate the draft feasibility report among internal stakeholders for review and feedback.\nScope: Includes primary stakeholders (Lead Researcher, Technical Lead, etc.) and potentially key secondary stakeholders.\nSteps: Distribute the report, schedule review meetings, collect feedback, and document all comments.\nDeliverables: A consolidated list of feedback and suggested revisions.<br><b>Resources needed:</b><br><ul><li>Lead Researcher</li><li>Project Manager</li></ul>",
+      "start_date": "2027-10-09",
+      "duration": 4.0,
+      "progress": 0,
+      "open": true,
+      "meta": "3565b10c-f7f9-459d-b58f-7c2465d7ed32 FS",
+      "parent": "dc88ca39-5e4a-45ad-94eb-4be94d22650f"
+    },
+    {
+      "id": "530f5678-94a7-4c18-9495-f0903d425f85",
+      "text": "Incorporate feedback and revise report",
+      "custom_tooltip": "<b>Incorporate feedback and revise report</b><br>Objective: Address all feedback received and revise the feasibility report accordingly.\nScope: Includes incorporating technical corrections, clarifying policy recommendations, and improving overall readability.\nSteps: Review feedback, prioritize revisions, implement changes, and ensure accuracy.\nDeliverables: A revised draft of the feasibility report.<br><b>Resources needed:</b><br><ul><li>Lead Researcher</li><li>Technical Lead</li><li>Regulatory and Compliance Specialist</li><li>Policy and Public-Affairs Coordinator</li></ul>",
+      "start_date": "2027-10-13",
+      "duration": 4.0,
+      "progress": 0,
+      "open": true,
+      "meta": "19103b9c-5313-4e2e-bd4b-1d51bcc2a055 FS",
+      "parent": "dc88ca39-5e4a-45ad-94eb-4be94d22650f"
+    },
+    {
+      "id": "f64825de-bfc7-494f-b73a-b41e039033fa",
+      "text": "Secure final approvals for publication",
+      "custom_tooltip": "<b>Secure final approvals for publication</b><br>Objective: Obtain final approvals from relevant authorities for publishing the feasibility report.\nScope: Includes internal approvals (e.g., from the project sponsor) and potentially external approvals (e.g., from Digitaliseringsstyrelsen).\nSteps: Submit the revised report for approval, address any remaining concerns, and obtain formal sign-off.\nDeliverables: Formal approval to publish the feasibility report.<br><b>Resources needed:</b><br><ul><li>Lead Researcher</li><li>Policy and Public-Affairs Coordinator</li></ul>",
+      "start_date": "2027-10-17",
+      "duration": 4.0,
+      "progress": 0,
+      "open": true,
+      "meta": "530f5678-94a7-4c18-9495-f0903d425f85 FS",
+      "parent": "dc88ca39-5e4a-45ad-94eb-4be94d22650f"
+    },
+    {
+      "id": "c94d0e46-4a10-4f4d-a8ed-8a857786348d",
+      "text": "Publish and disseminate feasibility report",
+      "custom_tooltip": "<b>Publish and disseminate feasibility report</b><br>Objective: Publish the final feasibility report and disseminate it to relevant stakeholders.\nScope: Includes publishing the report online, distributing it to key contacts, and promoting it through relevant channels.\nSteps: Prepare the report for publication, upload it to the project website, notify stakeholders, and track dissemination efforts.\nDeliverables: Published feasibility report and documented dissemination activities.<br><b>Resources needed:</b><br><ul><li>Policy and Public-Affairs Coordinator</li><li>Communications Specialist</li></ul>",
+      "start_date": "2027-10-21",
+      "duration": 4.0,
+      "progress": 0,
+      "open": true,
+      "meta": "dc88ca39-5e4a-45ad-94eb-4be94d22650f FF, f64825de-bfc7-494f-b73a-b41e039033fa FS",
+      "parent": "dc88ca39-5e4a-45ad-94eb-4be94d22650f"
+    },
+    {
+      "id": "cf49d695-57fa-4c55-b4f1-845db19015f6",
+      "text": "Deliver Working Demonstrators",
+      "custom_tooltip": "<b>Deliver Working Demonstrators</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "dc88ca39-5e4a-45ad-94eb-4be94d22650f FS",
+      "parent": "22fd76fb-e29e-4f01-b67e-04c0910ea34c",
+      "type": "project"
+    },
+    {
+      "id": "35b7eea0-7c39-480d-9465-7df140571764",
+      "text": "Prepare Demonstrator Packaging",
+      "custom_tooltip": "<b>Prepare Demonstrator Packaging</b><br>Package the FIDO2 and browser-based demonstrators for distribution, including all necessary files, documentation, and installation instructions. Ensure the packaging is user-friendly and secure.<br><b>Resources needed:</b><br><ul><li>Technical Lead</li><li>Engineer</li><li>Documentation Specialist</li></ul>",
+      "start_date": "2027-10-25",
+      "duration": 3.0,
+      "progress": 0,
+      "open": true,
+      "meta": "cf49d695-57fa-4c55-b4f1-845db19015f6 SS",
+      "parent": "cf49d695-57fa-4c55-b4f1-845db19015f6"
+    },
+    {
+      "id": "cd646bcb-6b9d-4828-801f-bc93d484e7f5",
+      "text": "Test Demonstrator Deployment",
+      "custom_tooltip": "<b>Test Demonstrator Deployment</b><br>Thoroughly test the deployment process of both demonstrators in a controlled environment to identify and resolve any issues. Verify that the demonstrators function as expected after deployment.<br><b>Resources needed:</b><br><ul><li>Technical Lead</li><li>Engineer</li><li>Security Review Specialist</li></ul>",
+      "start_date": "2027-10-28",
+      "duration": 3.0,
+      "progress": 0,
+      "open": true,
+      "meta": "35b7eea0-7c39-480d-9465-7df140571764 FS",
+      "parent": "cf49d695-57fa-4c55-b4f1-845db19015f6"
+    },
+    {
+      "id": "273c6f22-8bd1-411d-abdc-534d31cfa0f9",
+      "text": "Obtain Final Sign-Off",
+      "custom_tooltip": "<b>Obtain Final Sign-Off</b><br>Obtain final sign-off from relevant stakeholders (e.g., Digitaliseringsstyrelsen, project sponsors) on the demonstrators, confirming that they meet the agreed-upon requirements and are ready for delivery.<br><b>Resources needed:</b><br><ul><li>Lead Researcher</li><li>Policy and Public-Affairs Coordinator</li></ul>",
+      "start_date": "2027-10-31",
+      "duration": 3.0,
+      "progress": 0,
+      "open": true,
+      "meta": "cd646bcb-6b9d-4828-801f-bc93d484e7f5 FS",
+      "parent": "cf49d695-57fa-4c55-b4f1-845db19015f6"
+    },
+    {
+      "id": "8c194074-d963-4617-9161-eb6e840ff1fe",
+      "text": "Deliver Demonstrators to Stakeholders",
+      "custom_tooltip": "<b>Deliver Demonstrators to Stakeholders</b><br>Deliver the packaged demonstrators to the designated stakeholders, providing any necessary support or training. Ensure that stakeholders have the resources and information they need to effectively utilize the demonstrators.<br><b>Resources needed:</b><br><ul><li>Policy and Public-Affairs Coordinator</li><li>Technical Lead</li></ul>",
+      "start_date": "2027-11-03",
+      "duration": 3.0,
+      "progress": 0,
+      "open": true,
+      "meta": "cf49d695-57fa-4c55-b4f1-845db19015f6 FF, 273c6f22-8bd1-411d-abdc-534d31cfa0f9 FS",
+      "parent": "cf49d695-57fa-4c55-b4f1-845db19015f6"
+    },
+    {
+      "id": "4a55fac6-68b9-48d3-a711-165e77e38215",
+      "text": "Finalize Project Documentation",
+      "custom_tooltip": "<b>Finalize Project Documentation</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "cf49d695-57fa-4c55-b4f1-845db19015f6 FS",
+      "parent": "22fd76fb-e29e-4f01-b67e-04c0910ea34c",
+      "type": "project"
+    },
+    {
+      "id": "7936ab7b-927d-45c2-9a28-76cc6fa7730e",
+      "text": "Gather all project documentation",
+      "custom_tooltip": "<b>Gather all project documentation</b><br>Collect all relevant documents, including reports, meeting minutes, code, and design specifications.<br><b>Resources needed:</b><br><ul><li>Project Manager</li><li>Technical Lead</li><li>Team Members</li></ul>",
+      "start_date": "2027-11-06",
+      "duration": 4.0,
+      "progress": 0,
+      "open": true,
+      "meta": "4a55fac6-68b9-48d3-a711-165e77e38215 SS",
+      "parent": "4a55fac6-68b9-48d3-a711-165e77e38215"
+    },
+    {
+      "id": "148b00e8-c7ea-4f8a-90c4-292a53bac330",
+      "text": "Organize and index documentation",
+      "custom_tooltip": "<b>Organize and index documentation</b><br>Structure the documentation logically and create an index for easy navigation and retrieval.<br><b>Resources needed:</b><br><ul><li>Project Manager</li><li>Technical Writer</li></ul>",
+      "start_date": "2027-11-10",
+      "duration": 4.0,
+      "progress": 0,
+      "open": true,
+      "meta": "7936ab7b-927d-45c2-9a28-76cc6fa7730e FS",
+      "parent": "4a55fac6-68b9-48d3-a711-165e77e38215"
+    },
+    {
+      "id": "4d72cbc2-8eab-4599-86f6-42aa3b33887a",
+      "text": "Review documentation for completeness",
+      "custom_tooltip": "<b>Review documentation for completeness</b><br>Ensure all required documents are present and contain the necessary information.<br><b>Resources needed:</b><br><ul><li>Project Manager</li><li>Technical Lead</li><li>Regulatory and Compliance Specialist</li></ul>",
+      "start_date": "2027-11-14",
+      "duration": 4.0,
+      "progress": 0,
+      "open": true,
+      "meta": "148b00e8-c7ea-4f8a-90c4-292a53bac330 FS",
+      "parent": "4a55fac6-68b9-48d3-a711-165e77e38215"
+    },
+    {
+      "id": "8852283d-43a6-4ec6-a19b-db439235a5e7",
+      "text": "Archive project documentation",
+      "custom_tooltip": "<b>Archive project documentation</b><br>Store the finalized documentation in a secure and accessible location for future reference.<br><b>Resources needed:</b><br><ul><li>Project Manager</li><li>IT Support</li></ul>",
+      "start_date": "2027-11-18",
+      "duration": 4.0,
+      "progress": 0,
+      "open": true,
+      "meta": "4a55fac6-68b9-48d3-a711-165e77e38215 FF, 4d72cbc2-8eab-4599-86f6-42aa3b33887a FS",
+      "parent": "4a55fac6-68b9-48d3-a711-165e77e38215"
+    },
+    {
+      "id": "5d34ded8-d96a-45cb-b6c5-0c922a3469b4",
+      "text": "Disseminate Project Results",
+      "custom_tooltip": "<b>Disseminate Project Results</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "22fd76fb-e29e-4f01-b67e-04c0910ea34c FF, 4a55fac6-68b9-48d3-a711-165e77e38215 FS",
+      "parent": "22fd76fb-e29e-4f01-b67e-04c0910ea34c",
+      "type": "project"
+    },
+    {
+      "id": "22ac4afb-8cce-4fea-b568-469d677e51ee",
+      "text": "Create dissemination materials",
+      "custom_tooltip": "<b>Create dissemination materials</b><br>Objective: Develop engaging and informative materials to communicate project findings.\nScope: Includes creating a project website, summary reports, presentations, and social media content.\nSteps: Design materials, write content, obtain approvals, and prepare for distribution.\nDeliverables: Website, reports, presentations, social media posts.<br><b>Resources needed:</b><br><ul><li>Policy and Public-Affairs Coordinator</li><li>Lead Researcher</li><li>Graphic designer</li><li>Web developer</li></ul>",
+      "start_date": "2027-11-22",
+      "duration": 2.0,
+      "progress": 0,
+      "open": true,
+      "meta": "5d34ded8-d96a-45cb-b6c5-0c922a3469b4 SS",
+      "parent": "5d34ded8-d96a-45cb-b6c5-0c922a3469b4"
+    },
+    {
+      "id": "da5d2e29-d360-41d3-874e-bba346a1262e",
+      "text": "Identify target audiences",
+      "custom_tooltip": "<b>Identify target audiences</b><br>Objective: Determine the key stakeholders to reach with project results.\nScope: Includes identifying relevant policymakers, industry experts, civil society organizations, and the general public.\nSteps: Conduct stakeholder analysis, prioritize audiences, and develop targeted messaging.\nDeliverables: List of target audiences with contact information and communication preferences.<br><b>Resources needed:</b><br><ul><li>Policy and Public-Affairs Coordinator</li><li>Lead Researcher</li></ul>",
+      "start_date": "2027-11-24",
+      "duration": 2.0,
+      "progress": 0,
+      "open": true,
+      "meta": "22ac4afb-8cce-4fea-b568-469d677e51ee FS",
+      "parent": "5d34ded8-d96a-45cb-b6c5-0c922a3469b4"
+    },
+    {
+      "id": "c9a47bdd-de48-401c-87d3-849995d2b729",
+      "text": "Distribute results through channels",
+      "custom_tooltip": "<b>Distribute results through channels</b><br>Objective: Effectively disseminate project findings to target audiences.\nScope: Includes utilizing various communication channels such as email, social media, conferences, and publications.\nSteps: Schedule dissemination activities, send out materials, track engagement, and gather feedback.\nDeliverables: Dissemination schedule, email campaigns, social media posts, conference presentations, publications.<br><b>Resources needed:</b><br><ul><li>Policy and Public-Affairs Coordinator</li><li>Lead Researcher</li><li>Communications specialist</li></ul>",
+      "start_date": "2027-11-26",
+      "duration": 2.0,
+      "progress": 0,
+      "open": true,
+      "meta": "da5d2e29-d360-41d3-874e-bba346a1262e FS",
+      "parent": "5d34ded8-d96a-45cb-b6c5-0c922a3469b4"
+    },
+    {
+      "id": "c11c251d-ca00-4d3d-9ea1-b31081106226",
+      "text": "Monitor and evaluate impact",
+      "custom_tooltip": "<b>Monitor and evaluate impact</b><br>Objective: Assess the effectiveness of dissemination efforts and measure the impact of project results.\nScope: Includes tracking website traffic, social media engagement, media coverage, and policy changes.\nSteps: Collect data, analyze results, and prepare an evaluation report.\nDeliverables: Evaluation report with key findings and recommendations.<br><b>Resources needed:</b><br><ul><li>Policy and Public-Affairs Coordinator</li><li>Lead Researcher</li><li>Data analyst</li></ul>",
+      "start_date": "2027-11-28",
+      "duration": 2.0,
+      "progress": 0,
+      "open": true,
+      "meta": "5d34ded8-d96a-45cb-b6c5-0c922a3469b4 FF, c9a47bdd-de48-401c-87d3-849995d2b729 FS",
+      "parent": "5d34ded8-d96a-45cb-b6c5-0c922a3469b4"
+    }
+  ],
+  "links": [
+    {
+      "id": "link_1",
+      "source": "04c97117-c848-4462-a345-72012d3048c9",
+      "target": "5684f949-4096-4faa-a559-c2813cce24a3",
+      "type": "1",
+      "lag": 0.0
+    },
+    {
+      "id": "link_2",
+      "source": "5684f949-4096-4faa-a559-c2813cce24a3",
+      "target": "e9788c79-9efa-4408-80e3-33acbf9f1d2f",
+      "type": "1",
+      "lag": 0.0
+    },
+    {
+      "id": "link_3",
+      "source": "58253600-3d98-493f-bad9-10f0685f387d",
+      "target": "d78e9950-e138-4f06-b4c6-4ece06dea7f6",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_4",
+      "source": "d78e9950-e138-4f06-b4c6-4ece06dea7f6",
+      "target": "04d31d52-1836-44c0-a951-56f54d5ff9ca",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_5",
+      "source": "04d31d52-1836-44c0-a951-56f54d5ff9ca",
+      "target": "7dd9631d-1c80-4333-93ca-96a1106084cd",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_6",
+      "source": "e9788c79-9efa-4408-80e3-33acbf9f1d2f",
+      "target": "6aeeb16e-57bb-4f60-a22d-b04bcf662a54",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_7",
+      "source": "8cf0e8d3-c22d-469a-a1ab-bfd671c6b694",
+      "target": "d1f31d17-262e-4da5-ac14-8cd3d3277617",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_8",
+      "source": "d1f31d17-262e-4da5-ac14-8cd3d3277617",
+      "target": "988a120c-293d-4ba3-b63a-2c41f8f589dc",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_9",
+      "source": "988a120c-293d-4ba3-b63a-2c41f8f589dc",
+      "target": "2940e67e-338f-4e4e-a442-3a6cd4723785",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_10",
+      "source": "6aeeb16e-57bb-4f60-a22d-b04bcf662a54",
+      "target": "69f4d01b-b7bd-4e83-89d9-bf196dc7f7df",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_11",
+      "source": "2f5c3216-558f-4686-900b-4306b42ae900",
+      "target": "40bbcfb5-e464-4820-ae15-b2f0478b52bb",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_12",
+      "source": "40bbcfb5-e464-4820-ae15-b2f0478b52bb",
+      "target": "494b7356-c158-4d61-a311-53305dd21720",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_13",
+      "source": "494b7356-c158-4d61-a311-53305dd21720",
+      "target": "c178a3be-dd45-4464-b764-df7463c418ac",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_14",
+      "source": "69f4d01b-b7bd-4e83-89d9-bf196dc7f7df",
+      "target": "870a5b4c-f42d-48ee-b463-5cf00d61393d",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_15",
+      "source": "1e524d0a-48a0-4992-acd0-0175f215db30",
+      "target": "0f002bd9-809d-459a-b912-091f0a61b8ba",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_16",
+      "source": "0f002bd9-809d-459a-b912-091f0a61b8ba",
+      "target": "532c8397-3df1-4b75-bffb-486c71a55af3",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_17",
+      "source": "532c8397-3df1-4b75-bffb-486c71a55af3",
+      "target": "e09cd39e-f4cf-4180-9077-2f5f9b5d816f",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_18",
+      "source": "870a5b4c-f42d-48ee-b463-5cf00d61393d",
+      "target": "845e209d-90ea-4313-92fa-6837fed213ca",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_19",
+      "source": "6e94a2c8-bf97-425c-9b60-d6fca79afbdd",
+      "target": "ba8066b2-c8c8-4ca3-9ba1-76db5eb0f1f7",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_20",
+      "source": "ba8066b2-c8c8-4ca3-9ba1-76db5eb0f1f7",
+      "target": "47917541-aa78-4cbb-89cb-7ce158ecb0d3",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_21",
+      "source": "47917541-aa78-4cbb-89cb-7ce158ecb0d3",
+      "target": "68c87288-f12b-4db6-bd57-9de993b2492f",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_22",
+      "source": "5684f949-4096-4faa-a559-c2813cce24a3",
+      "target": "4f5f68af-1207-4252-a0f2-054765ccb987",
+      "type": "2",
+      "lag": 0.0
+    },
+    {
+      "id": "link_23",
+      "source": "845e209d-90ea-4313-92fa-6837fed213ca",
+      "target": "4f5f68af-1207-4252-a0f2-054765ccb987",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_24",
+      "source": "9db5800f-c4bf-457d-908b-72913db82610",
+      "target": "4e9990fc-2bcc-4c55-960d-32d8d7b69b75",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_25",
+      "source": "4e9990fc-2bcc-4c55-960d-32d8d7b69b75",
+      "target": "ba83a385-3f8f-48d7-b8dc-ba1275345ce3",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_26",
+      "source": "ba83a385-3f8f-48d7-b8dc-ba1275345ce3",
+      "target": "fd990824-100a-4f40-8c6b-575501306cb2",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_27",
+      "source": "5684f949-4096-4faa-a559-c2813cce24a3",
+      "target": "def01dd8-b255-45c9-ac06-49e4e7dc6199",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_28",
+      "source": "def01dd8-b255-45c9-ac06-49e4e7dc6199",
+      "target": "90d8943b-5b2d-4e30-adf1-bdf6b6953ec2",
+      "type": "1",
+      "lag": 0.0
+    },
+    {
+      "id": "link_29",
+      "source": "004530d4-15c5-42ec-934b-c1366dc73b03",
+      "target": "b6a7f206-97a2-44c5-b050-a6dcb9d885f1",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_30",
+      "source": "b6a7f206-97a2-44c5-b050-a6dcb9d885f1",
+      "target": "0eb3c4f7-9b27-4883-acd3-7a277b0698e0",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_31",
+      "source": "0eb3c4f7-9b27-4883-acd3-7a277b0698e0",
+      "target": "63aa453f-1083-4561-a775-794d3ce62244",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_32",
+      "source": "90d8943b-5b2d-4e30-adf1-bdf6b6953ec2",
+      "target": "f5a2bd2e-738a-4b97-81ca-cbb65256305a",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_33",
+      "source": "271cd7c6-9a76-4e01-85e5-318571a26388",
+      "target": "7c855acb-2aac-4397-813c-3525cb949a41",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_34",
+      "source": "7c855acb-2aac-4397-813c-3525cb949a41",
+      "target": "73e05302-3536-4a47-82f4-10ae0d72d8a7",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_35",
+      "source": "73e05302-3536-4a47-82f4-10ae0d72d8a7",
+      "target": "96b0cac0-f7f6-4a93-ad47-2f4420b4597c",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_36",
+      "source": "f5a2bd2e-738a-4b97-81ca-cbb65256305a",
+      "target": "26facecc-7632-46bc-8a16-e77685e0841e",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_37",
+      "source": "b7221d81-ebdc-4dfd-9191-bc56c03a2a02",
+      "target": "d18a4efb-3b82-457b-abf3-c532d4740bca",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_38",
+      "source": "d18a4efb-3b82-457b-abf3-c532d4740bca",
+      "target": "2b6e221d-6aaf-4c8b-8911-104a2e9b464f",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_39",
+      "source": "2b6e221d-6aaf-4c8b-8911-104a2e9b464f",
+      "target": "01ed9177-859e-4839-aa3e-4031a309e2c6",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_40",
+      "source": "def01dd8-b255-45c9-ac06-49e4e7dc6199",
+      "target": "6cc750ea-ab0c-4c5f-a715-045ff9d18a23",
+      "type": "2",
+      "lag": 0.0
+    },
+    {
+      "id": "link_41",
+      "source": "26facecc-7632-46bc-8a16-e77685e0841e",
+      "target": "6cc750ea-ab0c-4c5f-a715-045ff9d18a23",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_42",
+      "source": "abb74865-68b7-45c5-8990-c00f5088ca2b",
+      "target": "9e8d444b-804e-4b48-a0c9-30c6ec9c1825",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_43",
+      "source": "9e8d444b-804e-4b48-a0c9-30c6ec9c1825",
+      "target": "3d51086d-3132-4d75-be38-f68ebe14486f",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_44",
+      "source": "3d51086d-3132-4d75-be38-f68ebe14486f",
+      "target": "8d82847a-08aa-4cbe-ac95-d6ee8b6553c2",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_45",
+      "source": "def01dd8-b255-45c9-ac06-49e4e7dc6199",
+      "target": "fb696a06-1829-4b3d-8107-f430813a9b20",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_46",
+      "source": "fb696a06-1829-4b3d-8107-f430813a9b20",
+      "target": "59acc572-ad22-42f7-94b6-1998e1e5cf97",
+      "type": "1",
+      "lag": 0.0
+    },
+    {
+      "id": "link_47",
+      "source": "724a49b7-da44-4f46-b3f5-50de430d89d8",
+      "target": "3902e8fd-2412-474f-8069-9934b109af67",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_48",
+      "source": "3902e8fd-2412-474f-8069-9934b109af67",
+      "target": "8eaf83ac-7b34-4fdd-9fa0-9f9ffe43adc6",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_49",
+      "source": "8eaf83ac-7b34-4fdd-9fa0-9f9ffe43adc6",
+      "target": "e7aacef4-37bd-4459-8d36-c29a2c449c37",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_50",
+      "source": "59acc572-ad22-42f7-94b6-1998e1e5cf97",
+      "target": "24a1310f-5a78-4b58-8ea4-f9cb72f0b70f",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_51",
+      "source": "a414a7d3-6b12-4561-b497-b7adf8d50fc5",
+      "target": "d8c0f57c-62a0-4e26-b17f-a2a3a4e568ab",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_52",
+      "source": "d8c0f57c-62a0-4e26-b17f-a2a3a4e568ab",
+      "target": "bd1ce63a-d45f-42db-b4a5-ef278bf58ce0",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_53",
+      "source": "bd1ce63a-d45f-42db-b4a5-ef278bf58ce0",
+      "target": "2da7cfa5-c629-4fda-9833-27e5ad789ce8",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_54",
+      "source": "24a1310f-5a78-4b58-8ea4-f9cb72f0b70f",
+      "target": "79eeb071-7bf5-4336-831d-0f85990e013e",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_55",
+      "source": "be5941e5-1926-429b-90a0-df1a273a0f5c",
+      "target": "c3df2c42-9258-4ac9-8090-d5b849518b87",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_56",
+      "source": "c3df2c42-9258-4ac9-8090-d5b849518b87",
+      "target": "e069de97-5325-4e5b-8127-17a74cc90ae7",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_57",
+      "source": "e069de97-5325-4e5b-8127-17a74cc90ae7",
+      "target": "ab489960-4797-4643-9ba2-4633657a1db4",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_58",
+      "source": "fb696a06-1829-4b3d-8107-f430813a9b20",
+      "target": "0db236ce-d540-4f35-971b-65fbd94acd4a",
+      "type": "2",
+      "lag": 0.0
+    },
+    {
+      "id": "link_59",
+      "source": "79eeb071-7bf5-4336-831d-0f85990e013e",
+      "target": "0db236ce-d540-4f35-971b-65fbd94acd4a",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_60",
+      "source": "4783b03d-2e3a-4b8c-a11d-68e4ee83b87a",
+      "target": "3884844a-2b9c-47aa-9d5c-2fe99d9ce0f7",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_61",
+      "source": "3884844a-2b9c-47aa-9d5c-2fe99d9ce0f7",
+      "target": "113949e5-1723-4c22-af4f-f2ee90017e31",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_62",
+      "source": "113949e5-1723-4c22-af4f-f2ee90017e31",
+      "target": "14f91ab9-9433-4fb8-a3e1-d6be94f4eb9a",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_63",
+      "source": "14f91ab9-9433-4fb8-a3e1-d6be94f4eb9a",
+      "target": "f46fb567-b8f0-4c90-b519-3f6dfec3c9d8",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_64",
+      "source": "fb696a06-1829-4b3d-8107-f430813a9b20",
+      "target": "2818c1ea-61d6-4225-bef2-1a9fdf606e90",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_65",
+      "source": "2818c1ea-61d6-4225-bef2-1a9fdf606e90",
+      "target": "ada98db8-a04d-4ba3-b5be-0510b22243a1",
+      "type": "1",
+      "lag": 0.0
+    },
+    {
+      "id": "link_66",
+      "source": "fc4fa905-2d44-4b3e-b090-1f26e9f6c4f8",
+      "target": "26170a1d-c370-4142-8ecb-469253cefd83",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_67",
+      "source": "26170a1d-c370-4142-8ecb-469253cefd83",
+      "target": "12bea96d-f828-416e-ae38-fdcfb1165346",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_68",
+      "source": "12bea96d-f828-416e-ae38-fdcfb1165346",
+      "target": "e3b83869-b5e9-4538-8cc0-e3c7e8dbd050",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_69",
+      "source": "ada98db8-a04d-4ba3-b5be-0510b22243a1",
+      "target": "4a5dad17-0a9b-4948-a27f-bbd7baf5a6c6",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_70",
+      "source": "933d87c4-07de-4c03-9c23-de427d76efeb",
+      "target": "0ee8ed98-72c1-4d51-b979-9dde22fc4d9b",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_71",
+      "source": "0ee8ed98-72c1-4d51-b979-9dde22fc4d9b",
+      "target": "e336f171-2b20-436c-8298-1d26ace8d622",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_72",
+      "source": "e336f171-2b20-436c-8298-1d26ace8d622",
+      "target": "a1abb0e8-d17d-454e-9606-5513c8407991",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_73",
+      "source": "4a5dad17-0a9b-4948-a27f-bbd7baf5a6c6",
+      "target": "242a1996-2eea-405f-afa6-b6b83b096128",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_74",
+      "source": "d4cff72a-b67d-47f1-b331-44bff8d104dc",
+      "target": "feabccd7-271c-43a9-8fcc-8c9c7e275654",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_75",
+      "source": "feabccd7-271c-43a9-8fcc-8c9c7e275654",
+      "target": "a135391b-1989-400f-be34-24628cdba304",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_76",
+      "source": "a135391b-1989-400f-be34-24628cdba304",
+      "target": "2e1c861e-8558-4d54-a9da-d99369e28a8a",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_77",
+      "source": "2818c1ea-61d6-4225-bef2-1a9fdf606e90",
+      "target": "9b172774-494a-49e2-b1e0-9a145aab7a77",
+      "type": "2",
+      "lag": 0.0
+    },
+    {
+      "id": "link_78",
+      "source": "242a1996-2eea-405f-afa6-b6b83b096128",
+      "target": "9b172774-494a-49e2-b1e0-9a145aab7a77",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_79",
+      "source": "79b24a9e-a2a6-447a-b3fc-6dd6235bdf22",
+      "target": "d3c37be4-2564-4479-88eb-c9958ae80d5a",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_80",
+      "source": "d3c37be4-2564-4479-88eb-c9958ae80d5a",
+      "target": "f60a8670-6cc3-427b-85fd-3c83c5959859",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_81",
+      "source": "f60a8670-6cc3-427b-85fd-3c83c5959859",
+      "target": "8471c19a-0bf6-4c9c-9846-d95a306931fc",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_82",
+      "source": "8471c19a-0bf6-4c9c-9846-d95a306931fc",
+      "target": "96cc9a1b-521a-4c43-b659-d03298013aac",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_83",
+      "source": "04c97117-c848-4462-a345-72012d3048c9",
+      "target": "22fd76fb-e29e-4f01-b67e-04c0910ea34c",
+      "type": "2",
+      "lag": 0.0
+    },
+    {
+      "id": "link_84",
+      "source": "2818c1ea-61d6-4225-bef2-1a9fdf606e90",
+      "target": "22fd76fb-e29e-4f01-b67e-04c0910ea34c",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_85",
+      "source": "22fd76fb-e29e-4f01-b67e-04c0910ea34c",
+      "target": "dc88ca39-5e4a-45ad-94eb-4be94d22650f",
+      "type": "1",
+      "lag": 0.0
+    },
+    {
+      "id": "link_86",
+      "source": "3565b10c-f7f9-459d-b58f-7c2465d7ed32",
+      "target": "19103b9c-5313-4e2e-bd4b-1d51bcc2a055",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_87",
+      "source": "19103b9c-5313-4e2e-bd4b-1d51bcc2a055",
+      "target": "530f5678-94a7-4c18-9495-f0903d425f85",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_88",
+      "source": "530f5678-94a7-4c18-9495-f0903d425f85",
+      "target": "f64825de-bfc7-494f-b73a-b41e039033fa",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_89",
+      "source": "f64825de-bfc7-494f-b73a-b41e039033fa",
+      "target": "c94d0e46-4a10-4f4d-a8ed-8a857786348d",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_90",
+      "source": "dc88ca39-5e4a-45ad-94eb-4be94d22650f",
+      "target": "cf49d695-57fa-4c55-b4f1-845db19015f6",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_91",
+      "source": "35b7eea0-7c39-480d-9465-7df140571764",
+      "target": "cd646bcb-6b9d-4828-801f-bc93d484e7f5",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_92",
+      "source": "cd646bcb-6b9d-4828-801f-bc93d484e7f5",
+      "target": "273c6f22-8bd1-411d-abdc-534d31cfa0f9",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_93",
+      "source": "273c6f22-8bd1-411d-abdc-534d31cfa0f9",
+      "target": "8c194074-d963-4617-9161-eb6e840ff1fe",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_94",
+      "source": "cf49d695-57fa-4c55-b4f1-845db19015f6",
+      "target": "4a55fac6-68b9-48d3-a711-165e77e38215",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_95",
+      "source": "7936ab7b-927d-45c2-9a28-76cc6fa7730e",
+      "target": "148b00e8-c7ea-4f8a-90c4-292a53bac330",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_96",
+      "source": "148b00e8-c7ea-4f8a-90c4-292a53bac330",
+      "target": "4d72cbc2-8eab-4599-86f6-42aa3b33887a",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_97",
+      "source": "4d72cbc2-8eab-4599-86f6-42aa3b33887a",
+      "target": "8852283d-43a6-4ec6-a19b-db439235a5e7",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_98",
+      "source": "22fd76fb-e29e-4f01-b67e-04c0910ea34c",
+      "target": "5d34ded8-d96a-45cb-b6c5-0c922a3469b4",
+      "type": "2",
+      "lag": 0.0
+    },
+    {
+      "id": "link_99",
+      "source": "4a55fac6-68b9-48d3-a711-165e77e38215",
+      "target": "5d34ded8-d96a-45cb-b6c5-0c922a3469b4",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_100",
+      "source": "22ac4afb-8cce-4fea-b568-469d677e51ee",
+      "target": "da5d2e29-d360-41d3-874e-bba346a1262e",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_101",
+      "source": "da5d2e29-d360-41d3-874e-bba346a1262e",
+      "target": "c9a47bdd-de48-401c-87d3-849995d2b729",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_102",
+      "source": "c9a47bdd-de48-401c-87d3-849995d2b729",
+      "target": "c11c251d-ca00-4d3d-9ea1-b31081106226",
+      "type": "0",
+      "lag": 0.0
+    }
+  ]
+};
+
+    function zoomFit() {
+        const tasks = gantt.getTaskByTime();
+        if (tasks.length > 0) {
+            const firstTask = tasks[0];
+            const lastTask = tasks[tasks.length - 1];
+            gantt.showDate(firstTask.start_date);
+            
+            // Calculate total duration in days
+            const startDate = new Date(firstTask.start_date);
+            const endDate = new Date(lastTask.end_date);
+            const durationDays = (endDate - startDate) / (1000 * 60 * 60 * 24);
+            
+            // Choose appropriate scale based on duration
+            if (durationDays > 3650) { // More than 10 years
+                gantt.config.scale_unit = "year";
+                gantt.config.step = 10;
+                gantt.config.subscales = [
+                    {unit: "year", step: 1, date: "%Y"}
+                ];
+            } else if (durationDays > 365) { // More than 1 year
+                gantt.config.scale_unit = "year";
+                gantt.config.step = 1;
+                gantt.config.subscales = [
+                    {unit: "month", step: 1, date: "%M"}
+                ];
+            } else if (durationDays > 30) { // More than 1 month
+                gantt.config.scale_unit = "month";
+                gantt.config.step = 1;
+                gantt.config.subscales = [
+                    {unit: "day", step: 1, date: "%d"}
+                ];
+            } else if (durationDays > 7) { // More than 1 week
+                gantt.config.scale_unit = "week";
+                gantt.config.step = 1;
+                gantt.config.subscales = [
+                    {unit: "day", step: 1, date: "%d"}
+                ];
+            } else {
+                gantt.config.scale_unit = "day";
+                gantt.config.step = 1;
+                gantt.config.subscales = [];
+            }
+            gantt.render();
+        }
+    }
+
+    function zoomIn() {
+        const currentUnit = gantt.config.scale_unit;
+        const currentStep = gantt.config.step;
+        
+        if (currentUnit === "year" && currentStep === 10) {
+            gantt.config.scale_unit = "year";
+            gantt.config.step = 1;
+            gantt.config.subscales = [
+                {unit: "month", step: 1, date: "%M"}
+            ];
+        } else if (currentUnit === "year") {
+            gantt.config.scale_unit = "month";
+            gantt.config.step = 1;
+            gantt.config.subscales = [
+                {unit: "day", step: 1, date: "%d"}
+            ];
+        } else if (currentUnit === "month") {
+            gantt.config.scale_unit = "week";
+            gantt.config.step = 1;
+            gantt.config.subscales = [
+                {unit: "day", step: 1, date: "%d"}
+            ];
+        } else if (currentUnit === "week") {
+            gantt.config.scale_unit = "day";
+            gantt.config.step = 1;
+            gantt.config.subscales = [];
+        }
+        gantt.render();
+    }
+
+    function zoomOut() {
+        const currentUnit = gantt.config.scale_unit;
+        const currentStep = gantt.config.step;
+        
+        if (currentUnit === "day") {
+            gantt.config.scale_unit = "week";
+            gantt.config.step = 1;
+            gantt.config.subscales = [
+                {unit: "day", step: 1, date: "%d"}
+            ];
+        } else if (currentUnit === "week") {
+            gantt.config.scale_unit = "month";
+            gantt.config.step = 1;
+            gantt.config.subscales = [
+                {unit: "day", step: 1, date: "%d"}
+            ];
+        } else if (currentUnit === "month") {
+            gantt.config.scale_unit = "year";
+            gantt.config.step = 1;
+            gantt.config.subscales = [
+                {unit: "month", step: 1, date: "%M"}
+            ];
+        } else if (currentUnit === "year") {
+            gantt.config.scale_unit = "year";
+            gantt.config.step = 10;
+            gantt.config.subscales = [
+                {unit: "year", step: 1, date: "%Y"}
+            ];
+        }
+        gantt.render();
+    }
+
+    function downloadCSV() {
+        if (GANTT_DATA_CSV === null) {
+            return;
+        }
+        const blob = new Blob([GANTT_DATA_CSV], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        const url = URL.createObjectURL(blob);
+        link.setAttribute('href', url);
+        link.setAttribute('download', GANTT_FILENAME_CSV);
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+    // Gantt Initialization
+    gantt.config.readonly = true;
+    gantt.config.date_format = "%Y-%m-%d";
+    gantt.config.scale_unit = "month";
+    gantt.config.step = 1;
+    gantt.config.subscales = [
+        {unit: "day", step: 1, date: "%d"}
+    ];
+
+    gantt.config.columns = [
+        {name:"text", label:"Task name", width:"*", tree:true},
+        // {name:"start_date", label:"Start time", align: "center"},
+        // {name:"duration", label:"Duration", align: "center"}
+    ];
+
+    gantt.templates.task_class = function(start, end, task) {
+        if (task.type === "project") {
+            return "project-task";
+        }
+        return "";
+    };
+
+    gantt.templates.tooltip_text = function(start, end, task) {
+        return task.custom_tooltip || "No tooltip";
+    };
+    
+	gantt.plugins({
+		tooltip: true
+	});
+	gantt.attachEvent("onGanttReady", function(){
+		var tooltips = gantt.ext.tooltips;
+		tooltips.tooltip.setViewport(gantt.$task_data);
+	});
+    gantt.init("gantt_container");
+    gantt.parse(GANTT_DATA_DHTMLX);
+
+    // Hide the export to CSV button if there is no CSV data
+    if (GANTT_DATA_CSV === null) {
+        document.getElementById('exportToCSVButton').style.display = 'none';
+    }
+
+    document.getElementById('zoomFitButton').addEventListener('click', zoomFit);
+    document.getElementById('zoomInButton').addEventListener('click', zoomIn);
+    document.getElementById('zoomOutButton').addEventListener('click', zoomOut);
+    document.getElementById('exportToCSVButton').addEventListener('click', downloadCSV);
+</script>
+<!--HTML_BODY_SCRIPT_END-->
+</body>
+</html>
