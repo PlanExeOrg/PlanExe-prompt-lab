@@ -1,0 +1,2 @@
+- **Status:** YELLOW
+- **Recommendation:** <code>GO\_IF\_FP0</code>, Proceed only if FP0 fixpack is accepted and executed

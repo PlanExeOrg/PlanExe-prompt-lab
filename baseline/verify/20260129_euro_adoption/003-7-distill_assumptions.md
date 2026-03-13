@@ -1,0 +1,8 @@
+- Danish government is primary funding source, with 10% contingency for unforeseen expenses.
+- Key milestones: political decision, referendum, legal steps, ERM II entry, euro day.
+- Internal resources: Danmarks Nationalbank, Danish FSA, ministries; RACI matrix defines roles.
+- Folketinget, ECB, Commission approvals needed; compliance via due diligence and coordination.
+- Risk protocols include plans for financial failures, disturbances, cyberattacks; drills held.
+- Recycled materials used for euro coins/notes; carbon offset program mitigates transport impact.
+- Stakeholder involvement: consultations, forums, meetings; engagement team manages communication.
+- IT updates: banking, payments, accounting; phased rollout minimizes disruption; staff training.

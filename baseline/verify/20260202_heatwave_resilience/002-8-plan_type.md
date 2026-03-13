@@ -1,0 +1,3 @@
+This plan requires one or more physical locations. It cannot be executed digitally.
+
+**Explanation:** This plan *unequivocally requires* physical locations (cooling centers), transportation, outreach to residents, home-level interventions, and coordination with health systems. It also involves staffing, procurement, and physical installation of equipment. The entire plan is grounded in physical actions and locations within a specific city.

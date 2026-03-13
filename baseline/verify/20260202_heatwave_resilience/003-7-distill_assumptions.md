@@ -1,0 +1,11 @@
+- €2.0M: 30% cooling centers, 25% outreach, 20% home, 15% transport, 10% management.
+- €1.5M: Scale home interventions and outreach by 50%, cooling centers by 25%.
+- Cooling contracts finalized month 1, outreach training mid-month 2, home deployment month 3.
+- Health system integration protocols established by end of month 2.
+- 5 FTE municipal staff for management, data, health; 15 FTE contractors for operations.
+- 50 volunteers support outreach, transport, and cooling centers.
+- Existing municipal ordinances support cooling centers, worker protection, and public communications.
+- Safety: mandatory breaks, buddy system, emergency contacts, and secure data handling.
+- Cooling centers use efficient appliances; sustainable home materials; optimized transport routes.
+- Stakeholder engagement includes meetings, surveys, and forums for community input.
+- GDPR-compliant database manages data, outreach, cooling, transport, and communications.

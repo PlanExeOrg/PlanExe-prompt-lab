@@ -1,0 +1,64 @@
+
+## Question 1 - What is the specific allocation strategy within the 4 million DKK total budget ceiling, detailing the projected split between the maximum 1.35 million DKK donation outlay, logistics/QA costs, and campaign marketing/staff overhead?
+
+**Assumptions:** Assumption: The budget is allocated with a 34% maximum allocation to donation (1.35M DKK), 45% to required logistics/QA infrastructure (1.8M DKK, covering hub rental, cleaning contracts, and 3rd party transport), and 21% to marketing/stakeholder management (850,000 DKK).
+
+**Assessments:** Title: Financial Feasibility Assessment
+Description: Evaluation of the proposed 4M DKK budget allocation viability against campaign success criteria.
+Details: The 45% logistics allocation (1.8M DKK) is aggressive for establishing temporary hubs and contracting 3rd party transport nationwide; Risk 3 indicates transport costs might exceed estimates by 400k DKK. Opportunity: If the recovery volume exceeds the 40% target, the 1.35M DKK donation ceiling should be stressed, necessitating securing Finance commitment now to cover potential over-performance bonuses. Quantifiable Metric: Contingency buffer for logistics overrun is set at 10% of the logistics budget (180,000 DKK).
+
+## Question 2 - Given the Q3 nationwide launch, what specific logistical milestones must occur between the Q2 pilot completion and the Q3 launch (e.g., hub finalization, initial logistics contracts signed) to ensure readiness for a 60% load via municipal stations?
+
+**Assumptions:** Assumption: The Q2 pilot completion date is 2026-06-30. Hub location finalization and sanitation equipment procurement must be complete by 2026-07-15. All municipal SLAs from Risk 1 must be formally signed and ratified by 2026-07-31.
+
+**Assessments:** Title: Timeline Adherence Checkpoint
+Description: Assessment of critical path milestones required between pilot conclusion and national scale-up to meet volume goals.
+Details: The timeline is extremely tight, allowing only 4 weeks post-pilot for finalizing high-stakes contractual agreements (SLAs with municipalities). If municipal station training/signage (addressed in Risk 1 mitigation) is delayed past July 31st, the entire 60% volume throughput goal for Q3 is jeopardized, likely leading to a minimum 4-week delay in achieving the 108,000 crate recovery target. Opportunity: Completing hub setup early allows Q3 marketing spend to be front-loaded for maximum initial impact.
+
+## Question 3 - What dedicated personnel and external contractor support (e.g., cleaning crews, logistics managers) are required to staff and manage the three centralized temporary quality assessment hubs for the campaign duration (Q3 to Q4 2026)?
+
+**Assumptions:** Assumption: Each of the three hubs requires a dedicated Site Manager (Arla staff), two temporary logistics coordinators (contractors), and an average of 6 cleaning/sorting operatives (contracted labor), totaling 27 full-time equivalent operational roles across the network.
+
+**Assessments:** Title: Resource Allocation & Staffing Risk
+Description: Evaluation of the personnel requirements for physical asset triage based on the centralized hub model.
+Details: Understaffing the 6-person cleaning crews at any single hub risks immediate backlog if contamination (Risk 4) is high. This requires immediate contracting resources, which impacts the logistics budget (1.8M DKK). Benefit: Centralization allows for specialized training, improving QA consistency (up to 98% successful reintroduction rate projected). Risk: Failure to secure specialized cleaning/sorting contractors by May 2026 will result in significant operational lag post-pilot.
+
+## Question 4 - How will Arla ensure adherence to Danish environmental and waste handling regulations (e.g., REACH compliance for cleaning agents, cross-regional waste transport permitting) when routing collected crates through three distinct QA hubs and then reintroducing them into the national dairy supply chain?
+
+**Assumptions:** Assumption: Arla's internal legal/compliance team will conduct a rapid review in Q2 2026 to confirm that cleaning agents and procedures meet all relevant Danish Environmental Protection Agency (EPA) standards for food-contact plastic reuse, and that a standard waste transport waiver or permit is secured for the defined logistics routes.
+
+**Assessments:** Title: Governance and Regulatory Compliance
+Description: Review of necessary legal and environmental compliance checkpoints for the reverse logistics and cleaning process.
+Details: If the chosen cleaning protocol introduces unknown or uncertified chemicals, the entire batch of recovered crates could be permanently tainted, invalidating the CO2 reduction benefit and potentially leading to regulatory fines. Opportunity: Proactive certification in Q2 can be leveraged in marketing as proof of rigorous environmental stewardship. Risk: Failure to secure transport permits for cross-regional hub transport could halt logistics entirely, with compliance remediation estimated at 4-6 weeks.
+
+## Question 5 - What defined operational procedures and visual identification training materials will be provided to municipal recycling station staff, ensuring they can efficiently triage the 60% target volume into 'clean/reusable' vs. 'damaged/recyclable' streams?
+
+**Assumptions:** Assumption: Municipal staff training will be delivered via a standardized, one-day on-site workshop supplemented by laminated quick-reference guides maintained at the intake area for the duration of the campaign (Q3-Q4 2026).
+
+**Assessments:** Title: Safety and Contamination Risk Management at Drop-off Site
+Description: Assessing the training adequacy for high-volume, low-supervision locations.
+Details: Staff at municipal stations typically handle high volumes of diverse waste; inadequate training increases the risk of poor sorting (contamination) or unsafe handling practices (personal safety). Given the municipal focus (Risk 1), the training must explicitly cover safe handling of potentially heavier/full crates during collection and sorting. Benefit: Well-trained staff reduces the contamination rate at the source, significantly easing the burden on the centralized hubs (Risk 3). Mitigation requires Arla to cover the cost of outsourced training services.
+
+## Question 6 - Beyond recycling stations and supermarkets, are there any other government bodies or environmental NGOs (e.g., dedicated plastics organizations) that must be formally consulted or partnered with to promote the campaign or manage overflow/end-of-life processing for unrecoverable crates?
+
+**Assumptions:** Assumption: The primary municipal partnerships cover end-of-life routing via existing municipal contracts. However, consultation with the Danish Environmental Protection Agency (EPA) regarding the overall material flow tracking is mandatory, even if they are not active campaign partners.
+
+**Assessments:** Title: External Environmental Stewardship Engagement
+Description: Identifying necessary external consultative bodies required for systemic environmental acceptance and regulatory support.
+Details: Non-engagement with relevant environmental bodies risks negative press positioning the campaign as purely self-serving PR rather than genuine environmental action, conflicting with the CSR purpose. Opportunity: Early engagement with the EPA could lead to official certification or endorsement of the CO2 savings calculation, substantially boosting the credibility of the campaign's environmental claims (a key communication component). This consultation should be budgeted within the 850k DKK marketing/overhead pillar.
+
+## Question 7 - How will the communication strategy, guided by 'provocative narrative dominance,' be balanced with the need to maintain harmonious long-term relationships with the cooperative's primary retail partners (Salling, Coop, Rema 1000) who must host the collection infrastructure?
+
+**Assumptions:** Assumption: All marketing collateral displayed within supermarket premises (signage, posters) must be pre-approved by a designated liaison from each major retail group 30 days prior to placement, focusing on visuals/text that emphasize the charitable donation (Arla Foundation) over any potentially accusatory environmental tone (Risk 6 mitigation).
+
+**Assessments:** Title: Stakeholder Synergy and Partnership Management
+Description: Balancing high-impact public narrative (earned media) with critical partner cooperation (operational success).
+Details: The 'low-risk' mandate requires avoiding alienating retail staff who are essential for the low-volume, high-visibility channel. If the provocative marketing is perceived by store managers as antagonistic toward their customers or employees (Risk 2), compliance will drop, regardless of the subsidy structure. Benefit: Pre-approval streamlines deployment and builds trust, ensuring retailers feel management control over in-store messaging, enhancing future collaboration opportunities.
+
+## Question 8 - Since the success criterion includes reducing new-crate production orders in 2027, what mandatory data exchange mechanism will be established between the QA Hub managers and Arla's Procurement/Production department to accurately forecast the available recovered crate inventory?
+
+**Assumptions:** Assumption: A mandatory monthly 'Ready-to-Deploy Stock Report' will be generated by the Central Hub Logistics Lead and electronically submitted to Arla Procurement by the 5th day of every month, starting September 2026.
+
+**Assessments:** Title: Operational Systems Integration for Future Planning
+Description: Ensuring the success criteria related to 2027 production planning is met via timely data transfer.
+Details: The current plan relies on an implied coordination (Risk 7). Failure to establish a formal, timely data exchange risks purchasing replacements unnecessarily, directly contradicting the CO2 reduction goal for the subsequent year. The formal deadline (5th of the month) provides a clear system trigger. Opportunity: Successful data integration post-campaign can serve as a blueprint for managing returnable asset tracking across other Arla packaging categories.

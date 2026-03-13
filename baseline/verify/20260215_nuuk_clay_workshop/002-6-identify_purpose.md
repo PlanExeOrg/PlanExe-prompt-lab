@@ -1,0 +1,5 @@
+**Purpose:** business
+
+**Purpose Detailed:** Establishing a sustainable, low-risk community-based arts initiative that serves as a social 'third place' for locals and tourists in Nuuk. The workshop focuses on accessible hand-building and wheel-throwing courses, with structured open-studio hours and recurring short-term classes. It addresses local cultural engagement, tourism integration, and creative wellness while accounting for Greenland-specific logistical challenges such as high import costs, seasonal demand fluctuations, and long supply lead times. The operational model prioritizes resilience through part-time staffing (four instructors), flexible pricing (memberships and drop-ins), and strategic location near Katuaq Cultural Centre and Nuuk Center to maximize visibility and foot traffic.
+
+**Topic:** Community Clay Workshop in Nuuk, Greenland

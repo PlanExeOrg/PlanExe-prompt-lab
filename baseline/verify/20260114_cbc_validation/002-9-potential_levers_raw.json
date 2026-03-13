@@ -1,0 +1,385 @@
+{
+  "responses": [
+    {
+      "strategic_rationale": "This project's core challenge lies in balancing rigorous validation with budget and schedule constraints. The need to simulate extreme space conditions (thermal, dynamic, vacuum) necessitates complex and costly testing infrastructure. Simultaneously, the program aims for high wall-plug efficiency and beam quality, demanding precise control and advanced materials. The levers below address these tensions by modulating the scope of validation, the fidelity of environmental simulation, the aggressiveness of performance targets, and the degree of automation in testing and control.",
+      "levers": [
+        {
+          "lever_index": 1,
+          "name": "Environmental Fidelity Strategy",
+          "consequences": "Modulating the accuracy of environmental simulations impacts the realism of the test. Immediate: Reduced simulation fidelity lowers upfront costs. \u2192 Systemic: Less accurate models lead to 15% higher downstream integration risks. \u2192 Strategic: Impacts the confidence in scaling models and technology readiness level.",
+          "options": [
+            "Employ simplified thermal and vibration profiles based on historical averages, accepting reduced accuracy in stress representation.",
+            "Implement flight-representative thermal maps and vibration spectra with limited parametric variation, balancing cost and realism.",
+            "Develop fully programmable, spatially resolved thermal injection and multi-axis vibration with real-time adaptive control, maximizing simulation fidelity and capturing edge cases."
+          ],
+          "review_lever": "Controls Cost vs. Accuracy. Weakness: The options don't explicitly address the trade-off between simulation fidelity and the ability to extrapolate results to different mission profiles."
+        },
+        {
+          "lever_index": 2,
+          "name": "Performance Target Aggressiveness",
+          "consequences": "Adjusting performance targets affects the stringency of validation. Immediate: Relaxed targets reduce the risk of test failure. \u2192 Systemic: Lower performance thresholds result in 10% less competitive system performance. \u2192 Strategic: Impacts the potential for future mission applications and market adoption.",
+          "options": [
+            "Set minimum acceptable Strehl ratio and wall-plug efficiency targets based on current technology benchmarks, prioritizing risk mitigation.",
+            "Define ambitious but achievable Strehl ratio and wall-plug efficiency targets based on projected technology advancements, balancing risk and reward.",
+            "Establish stretch Strehl ratio and wall-plug efficiency targets exceeding state-of-the-art performance, incentivizing innovation but increasing the risk of not meeting requirements."
+          ],
+          "review_lever": "Controls Risk vs. Reward. Weakness: The options fail to consider the impact of target selection on the system's operational lifetime and reliability."
+        },
+        {
+          "lever_index": 3,
+          "name": "Automation and Control Strategy",
+          "consequences": "The level of automation influences operational efficiency and data quality. Immediate: Increased automation requires higher initial investment. \u2192 Systemic: Automated data acquisition reduces human error by 20% and accelerates analysis. \u2192 Strategic: Impacts the speed of iteration and the robustness of the validation process.",
+          "options": [
+            "Employ manual data acquisition and control with limited automation, minimizing upfront costs but increasing operational overhead.",
+            "Implement semi-automated data acquisition and control with scripting for routine tasks, balancing cost and efficiency.",
+            "Develop a fully automated, closed-loop control system with real-time data analysis and adaptive testing, maximizing efficiency and data quality."
+          ],
+          "review_lever": "Controls Cost vs. Efficiency. Weakness: The options do not address the complexity of integrating automation with existing lab infrastructure."
+        },
+        {
+          "lever_index": 4,
+          "name": "Validation Scope Strategy",
+          "consequences": "The breadth of validation determines the confidence in system robustness. Immediate: Narrower scope reduces testing time and cost. \u2192 Systemic: Limited validation increases the risk of uncovering unforeseen failure modes by 30% during deployment. \u2192 Strategic: Impacts the overall reliability and mission success rate.",
+          "options": [
+            "Focus validation on nominal operating conditions and a limited set of failure modes, minimizing testing scope.",
+            "Expand validation to include a wider range of operating conditions and potential failure modes, balancing scope and resources.",
+            "Conduct comprehensive validation encompassing all foreseeable operating conditions, failure modes, and edge cases, maximizing system robustness and confidence."
+          ],
+          "review_lever": "Controls Cost vs. Robustness. Weakness: The options don't consider the use of digital twins or virtual validation to augment the physical testing scope."
+        },
+        {
+          "lever_index": 5,
+          "name": "Component Qualification Strategy",
+          "consequences": "The rigor of component qualification impacts system reliability. Immediate: Stringent qualification increases component costs. \u2192 Systemic: Higher component reliability reduces system downtime by 15% and maintenance costs. \u2192 Strategic: Impacts the long-term operational cost and mission lifespan.",
+          "options": [
+            "Utilize commercial-off-the-shelf (COTS) components with minimal qualification, minimizing upfront costs but increasing risk of failure.",
+            "Employ enhanced-reliability components with standard qualification procedures, balancing cost and reliability.",
+            "Implement custom-designed, radiation-hardened components with extensive qualification testing, maximizing reliability and performance in harsh environments."
+          ],
+          "review_lever": "Controls Cost vs. Reliability. Weakness: The options fail to address the potential for supply chain disruptions and the availability of qualified components."
+        }
+      ],
+      "summary": "The levers are reasonably well-balanced, addressing key aspects of the validation program. However, they lack a specific focus on model validation. The current levers emphasize physical testing, but the program relies heavily on a TSO scaling model. Add 'Implement a multi-fidelity model validation strategy, incorporating both experimental data and high-fidelity simulations to refine and validate the TSO scaling model' to the Environmental Fidelity Strategy."
+    },
+    {
+      "strategic_rationale": "This project faces a core tension between rigorous validation and budget constraints. The need to simulate harsh space environments and achieve high beam quality demands sophisticated and expensive testing methodologies. Simultaneously, the project aims for scalability, requiring a balance between detailed component-level testing and system-level validation. The chosen levers address these tensions by focusing on cost-effective testing strategies, efficient resource allocation, and risk mitigation through phased validation and robust modeling.",
+      "levers": [
+        {
+          "lever_index": 1,
+          "name": "Thermal Simulation Fidelity Strategy",
+          "consequences": "Lower fidelity reduces cost but risks underestimating thermal effects. Immediate: Faster initial testing \u2192 Systemic: Reduced accuracy in TSO model \u2192 Strategic: Potential for in-flight performance degradation and mission failure.",
+          "options": [
+            "Employ simplified, steady-state thermal modeling with limited transient analysis.",
+            "Implement spatially resolved, transient heat injection calibrated to representative electronics heat maps and time constants.",
+            "Integrate high-fidelity, multi-physics thermal modeling incorporating computational fluid dynamics and radiation transport, validated with extensive sensor networks."
+          ],
+          "review_lever": "Controls Cost vs. Accuracy. Weakness: The options don't explicitly address the trade-off between simulation complexity and computational resources/time."
+        },
+        {
+          "lever_index": 2,
+          "name": "Vibration Qualification Rigor",
+          "consequences": "Reduced vibration testing saves time and money but increases the risk of structural failure. Immediate: Lower initial equipment costs \u2192 Systemic: Increased risk of resonant amplification during flight \u2192 Strategic: Potential for catastrophic hardware failure and mission loss.",
+          "options": [
+            "Perform basic swept-sine vibration testing at limited amplitudes and frequencies.",
+            "Subject the payload to injected flight-representative vibration spectra at the bench interface, including reaction-wheel bands and broadband microvibration.",
+            "Implement a closed-loop, multi-axis vibration control system with real-time adaptive filtering based on in-situ sensor feedback, simulating worst-case flight dynamics."
+          ],
+          "review_lever": "Controls Cost vs. Risk. Weakness: The options don't consider the impact of vibration testing on the lifespan of sensitive optical components."
+        },
+        {
+          "lever_index": 3,
+          "name": "Metrology and Phasing Accuracy",
+          "consequences": "Lower accuracy reduces initial cost but compromises beam quality. Immediate: Reduced sensor costs \u2192 Systemic: Lower Strehl ratio and beam quality \u2192 Strategic: Failure to meet operational beam quality targets and mission objectives.",
+          "options": [
+            "Utilize basic interferometry for seam phasing with limited wavefront sensing.",
+            "Employ co-wavelength pilot tones that are frequency-shifted and orthogonally code-modulated, with balanced heterodyne/lock-in detection.",
+            "Integrate advanced wavefront sensing techniques such as Shack-Hartmann or phase diversity with real-time adaptive optics for dynamic aberration correction."
+          ],
+          "review_lever": "Controls Cost vs. Performance. Weakness: The options fail to address the calibration and maintenance requirements of the metrology systems."
+        },
+        {
+          "lever_index": 4,
+          "name": "Contamination Control Stringency",
+          "consequences": "Relaxed contamination control reduces operational costs but increases the risk of optical degradation. Immediate: Reduced cleaning costs \u2192 Systemic: Increased laser-induced contamination and throughput degradation \u2192 Strategic: Potential for catastrophic optical damage and mission failure.",
+          "options": [
+            "Implement basic bakeout procedures with limited in-situ monitoring.",
+            "Include bakeout plus in-situ witness samples and scatter/throughput monitoring with separate particulate and molecular cleanliness gates.",
+            "Establish a closed-loop contamination control system with real-time particulate and molecular monitoring, coupled with automated cleaning and mitigation procedures using advanced surface passivation techniques."
+          ],
+          "review_lever": "Controls Cost vs. Reliability. Weakness: The options don't fully address the trade-off between preventative measures and reactive cleaning strategies."
+        },
+        {
+          "lever_index": 5,
+          "name": "Scaling Model Validation Scope",
+          "consequences": "Limited validation reduces confidence in scaling predictions. Immediate: Faster model development \u2192 Systemic: Increased uncertainty in 19+ tile performance predictions \u2192 Strategic: Potential for inaccurate scaling and costly redesigns for larger apertures.",
+          "options": [
+            "Validate the TSO scaling parameters with uncertainty bounds under only constrained boundary conditions.",
+            "Validate the TSO scaling parameters with uncertainty bounds under constrained and unconstrained boundary conditions.",
+            "Develop a physics-based digital twin of the optical engine, continuously updated with real-time sensor data and validated against experimental results, enabling predictive scaling analysis and anomaly detection."
+          ],
+          "review_lever": "Controls Speed vs. Scalability. Weakness: The options do not consider the cost and time associated with developing and maintaining a high-fidelity digital twin."
+        }
+      ],
+      "summary": "The levers are well-balanced, addressing key aspects of the validation program. However, they lack a dedicated lever focusing on the *manufacturing tolerances* of the optical tiles and their impact on overall system performance. This is a critical omission, as even minor variations in tile geometry can significantly affect beam coherence and Strehl ratio. Add 'Implement a rigorous tile manufacturing tolerance specification and verification process, including high-precision metrology and statistical process control' to the 'Metrology and Phasing Accuracy' lever."
+    },
+    {
+      "strategic_rationale": "This project faces a core tension between rigorous validation and resource constraints (budget and schedule). The need to simulate realistic space conditions (thermal, vibration, vacuum) drives up complexity and cost. Simultaneously, the desire for scalability (validated TSO model for 19+ tiles) demands a robust, well-characterized demonstrator. These levers address key aspects of this trade-off: balancing fidelity with cost, managing risk through phased validation, and optimizing resource allocation across competing priorities.",
+      "levers": [
+        {
+          "lever_index": 1,
+          "name": "Environmental Fidelity Strategy",
+          "consequences": "Altering the simulation fidelity impacts validation confidence and cost. Immediate: Reduced test costs \u2192 Systemic: Lower confidence in scaling model \u2192 Strategic: Potential for costly on-orbit failures if model is inaccurate. Trade-off between cost and risk.",
+          "options": [
+            "Employ simplified thermal and vibration profiles based on historical averages, accepting reduced realism for lower operational costs.",
+            "Implement representative thermal and vibration profiles with transient heat injection and flight-representative vibration spectra, balancing cost and fidelity.",
+            "Replicate worst-case, spatially resolved, transient thermal and dynamic loading scenarios with margin, using active control to maintain extreme conditions, increasing cost but maximizing validation confidence."
+          ],
+          "review_lever": "Controls Cost vs. Validation Confidence. Weakness: The options don't explicitly address the impact of environmental fidelity on the *granularity* of the TSO scaling model (e.g., number of parameters identified)."
+        },
+        {
+          "lever_index": 2,
+          "name": "Validation Phasing Strategy",
+          "consequences": "The sequencing of validation activities affects risk and schedule. Immediate: Delayed full-system testing \u2192 Systemic: Reduced parallelization of tasks \u2192 Strategic: Potential schedule overruns if early failures occur. Trade-off between parallel execution and risk mitigation.",
+          "options": [
+            "Execute all validation tests concurrently after full system integration, accepting higher risk of late-stage failures.",
+            "Implement a phased validation approach with sequential testing of subsystems and integrated system, balancing risk and schedule.",
+            "Adopt an iterative 'build-test-learn' cycle, integrating early data from focused experiments to refine the system design and validation plan, potentially accelerating overall validation through early risk reduction."
+          ],
+          "review_lever": "Controls Schedule vs. Risk. Weakness: The options don't consider the *type* of failures that are most likely (e.g., thermal, vibration, optical) and how the phasing strategy should prioritize those."
+        },
+        {
+          "lever_index": 3,
+          "name": "Metrology Resource Allocation",
+          "consequences": "The distribution of metrology resources impacts measurement accuracy and cost. Immediate: Reduced metrology costs \u2192 Systemic: Increased uncertainty in performance metrics \u2192 Strategic: Difficulty in demonstrating compliance with Strehl and WPE targets. Trade-off between cost and measurement precision.",
+          "options": [
+            "Utilize existing metrology equipment and standard calibration procedures, accepting potential limitations in accuracy and resolution.",
+            "Invest in enhanced metrology equipment and refined calibration procedures to improve measurement accuracy and resolution, balancing cost and precision.",
+            "Develop and deploy custom, in-situ metrology solutions with real-time data analysis and feedback control, maximizing measurement precision and enabling adaptive testing, but increasing cost and complexity."
+          ],
+          "review_lever": "Controls Cost vs. Measurement Precision. Weakness: The options fail to address the *spatial and temporal resolution* requirements of the metrology, which are critical for capturing transient thermal and vibration effects."
+        },
+        {
+          "lever_index": 4,
+          "name": "Contamination Control Strategy",
+          "consequences": "The level of contamination control impacts long-term performance and risk. Immediate: Reduced contamination control costs \u2192 Systemic: Increased risk of laser-induced contamination and throughput degradation \u2192 Strategic: Potential for premature mission failure due to optical damage. Trade-off between cost and long-term reliability.",
+          "options": [
+            "Implement basic contamination control measures (e.g., standard cleaning procedures and limited bakeout), accepting a higher risk of performance degradation.",
+            "Employ enhanced contamination control measures (e.g., rigorous cleaning procedures, extended bakeout, and in-situ witness samples), balancing cost and risk.",
+            "Integrate advanced contamination monitoring and mitigation systems (e.g., real-time particulate and molecular contamination sensors, active purging, and laser-induced contamination countermeasures), maximizing long-term reliability but increasing cost and complexity."
+          ],
+          "review_lever": "Controls Cost vs. Long-Term Reliability. Weakness: The options don't consider the *specific contaminants* that are most likely to be present in the system and how the control strategy should target those."
+        },
+        {
+          "lever_index": 5,
+          "name": "Boundary Condition Modeling Strategy",
+          "consequences": "The fidelity of boundary condition modeling impacts the accuracy of the TSO scaling model. Immediate: Simplified modeling \u2192 Systemic: Inaccurate scaling parameters \u2192 Strategic: Poor performance prediction for 19+ tile apertures. Trade-off between model complexity and predictive power.",
+          "options": [
+            "Model the perimeter constraint stiffness as a fixed parameter, neglecting hysteresis and micro-slip effects, accepting reduced model accuracy.",
+            "Characterize and model the perimeter constraint stiffness with hysteresis and micro-slip effects, balancing model complexity and accuracy.",
+            "Employ a physics-informed neural network to model the complex, nonlinear behavior of the perimeter constraint stiffness, leveraging machine learning to capture subtle effects and improve model accuracy, but increasing computational cost and requiring extensive training data."
+          ],
+          "review_lever": "Controls Model Complexity vs. Predictive Power. Weakness: The options don't address how the boundary condition model will be *validated* against experimental data, which is crucial for ensuring its accuracy."
+        }
+      ],
+      "summary": "The levers are well-defined and address critical aspects of the project. However, they lack a direct focus on *software* validation. The success of coherent beam combining heavily relies on the control algorithms and phasing software. Add 'Implement a formal verification process for the control software, including unit testing, integration testing, and system-level testing with simulated and real-world data' to the Validation Phasing Strategy lever."
+    }
+  ],
+  "levers": [
+    {
+      "lever_id": "8c519536-401c-4c30-b298-f31bb8e1663d",
+      "name": "Environmental Fidelity Strategy",
+      "consequences": "Modulating the accuracy of environmental simulations impacts the realism of the test. Immediate: Reduced simulation fidelity lowers upfront costs. \u2192 Systemic: Less accurate models lead to 15% higher downstream integration risks. \u2192 Strategic: Impacts the confidence in scaling models and technology readiness level.",
+      "options": [
+        "Employ simplified thermal and vibration profiles based on historical averages, accepting reduced accuracy in stress representation.",
+        "Implement flight-representative thermal maps and vibration spectra with limited parametric variation, balancing cost and realism.",
+        "Develop fully programmable, spatially resolved thermal injection and multi-axis vibration with real-time adaptive control, maximizing simulation fidelity and capturing edge cases."
+      ],
+      "review": "Controls Cost vs. Accuracy. Weakness: The options don't explicitly address the trade-off between simulation fidelity and the ability to extrapolate results to different mission profiles."
+    },
+    {
+      "lever_id": "a983b7b0-6e82-499f-bd38-043e583bce36",
+      "name": "Performance Target Aggressiveness",
+      "consequences": "Adjusting performance targets affects the stringency of validation. Immediate: Relaxed targets reduce the risk of test failure. \u2192 Systemic: Lower performance thresholds result in 10% less competitive system performance. \u2192 Strategic: Impacts the potential for future mission applications and market adoption.",
+      "options": [
+        "Set minimum acceptable Strehl ratio and wall-plug efficiency targets based on current technology benchmarks, prioritizing risk mitigation.",
+        "Define ambitious but achievable Strehl ratio and wall-plug efficiency targets based on projected technology advancements, balancing risk and reward.",
+        "Establish stretch Strehl ratio and wall-plug efficiency targets exceeding state-of-the-art performance, incentivizing innovation but increasing the risk of not meeting requirements."
+      ],
+      "review": "Controls Risk vs. Reward. Weakness: The options fail to consider the impact of target selection on the system's operational lifetime and reliability."
+    },
+    {
+      "lever_id": "a1163812-90bd-44f1-9938-ef0fdad30eaa",
+      "name": "Automation and Control Strategy",
+      "consequences": "The level of automation influences operational efficiency and data quality. Immediate: Increased automation requires higher initial investment. \u2192 Systemic: Automated data acquisition reduces human error by 20% and accelerates analysis. \u2192 Strategic: Impacts the speed of iteration and the robustness of the validation process.",
+      "options": [
+        "Employ manual data acquisition and control with limited automation, minimizing upfront costs but increasing operational overhead.",
+        "Implement semi-automated data acquisition and control with scripting for routine tasks, balancing cost and efficiency.",
+        "Develop a fully automated, closed-loop control system with real-time data analysis and adaptive testing, maximizing efficiency and data quality."
+      ],
+      "review": "Controls Cost vs. Efficiency. Weakness: The options do not address the complexity of integrating automation with existing lab infrastructure."
+    },
+    {
+      "lever_id": "fa612354-b19a-4aac-b771-8848466fc3cb",
+      "name": "Validation Scope Strategy",
+      "consequences": "The breadth of validation determines the confidence in system robustness. Immediate: Narrower scope reduces testing time and cost. \u2192 Systemic: Limited validation increases the risk of uncovering unforeseen failure modes by 30% during deployment. \u2192 Strategic: Impacts the overall reliability and mission success rate.",
+      "options": [
+        "Focus validation on nominal operating conditions and a limited set of failure modes, minimizing testing scope.",
+        "Expand validation to include a wider range of operating conditions and potential failure modes, balancing scope and resources.",
+        "Conduct comprehensive validation encompassing all foreseeable operating conditions, failure modes, and edge cases, maximizing system robustness and confidence."
+      ],
+      "review": "Controls Cost vs. Robustness. Weakness: The options don't consider the use of digital twins or virtual validation to augment the physical testing scope."
+    },
+    {
+      "lever_id": "12e7b5fe-9f07-4299-877b-9f17b8d81d1e",
+      "name": "Component Qualification Strategy",
+      "consequences": "The rigor of component qualification impacts system reliability. Immediate: Stringent qualification increases component costs. \u2192 Systemic: Higher component reliability reduces system downtime by 15% and maintenance costs. \u2192 Strategic: Impacts the long-term operational cost and mission lifespan.",
+      "options": [
+        "Utilize commercial-off-the-shelf (COTS) components with minimal qualification, minimizing upfront costs but increasing risk of failure.",
+        "Employ enhanced-reliability components with standard qualification procedures, balancing cost and reliability.",
+        "Implement custom-designed, radiation-hardened components with extensive qualification testing, maximizing reliability and performance in harsh environments."
+      ],
+      "review": "Controls Cost vs. Reliability. Weakness: The options fail to address the potential for supply chain disruptions and the availability of qualified components."
+    },
+    {
+      "lever_id": "3840b9a3-a867-4fe3-b487-23716dad7fc5",
+      "name": "Thermal Simulation Fidelity Strategy",
+      "consequences": "Lower fidelity reduces cost but risks underestimating thermal effects. Immediate: Faster initial testing \u2192 Systemic: Reduced accuracy in TSO model \u2192 Strategic: Potential for in-flight performance degradation and mission failure.",
+      "options": [
+        "Employ simplified, steady-state thermal modeling with limited transient analysis.",
+        "Implement spatially resolved, transient heat injection calibrated to representative electronics heat maps and time constants.",
+        "Integrate high-fidelity, multi-physics thermal modeling incorporating computational fluid dynamics and radiation transport, validated with extensive sensor networks."
+      ],
+      "review": "Controls Cost vs. Accuracy. Weakness: The options don't explicitly address the trade-off between simulation complexity and computational resources/time."
+    },
+    {
+      "lever_id": "e79da74e-fe8d-48a7-b1be-d00bbcb1af29",
+      "name": "Vibration Qualification Rigor",
+      "consequences": "Reduced vibration testing saves time and money but increases the risk of structural failure. Immediate: Lower initial equipment costs \u2192 Systemic: Increased risk of resonant amplification during flight \u2192 Strategic: Potential for catastrophic hardware failure and mission loss.",
+      "options": [
+        "Perform basic swept-sine vibration testing at limited amplitudes and frequencies.",
+        "Subject the payload to injected flight-representative vibration spectra at the bench interface, including reaction-wheel bands and broadband microvibration.",
+        "Implement a closed-loop, multi-axis vibration control system with real-time adaptive filtering based on in-situ sensor feedback, simulating worst-case flight dynamics."
+      ],
+      "review": "Controls Cost vs. Risk. Weakness: The options don't consider the impact of vibration testing on the lifespan of sensitive optical components."
+    },
+    {
+      "lever_id": "916e611b-5a38-468c-9301-74ba8a2c306a",
+      "name": "Metrology and Phasing Accuracy",
+      "consequences": "Lower accuracy reduces initial cost but compromises beam quality. Immediate: Reduced sensor costs \u2192 Systemic: Lower Strehl ratio and beam quality \u2192 Strategic: Failure to meet operational beam quality targets and mission objectives.",
+      "options": [
+        "Utilize basic interferometry for seam phasing with limited wavefront sensing.",
+        "Employ co-wavelength pilot tones that are frequency-shifted and orthogonally code-modulated, with balanced heterodyne/lock-in detection.",
+        "Integrate advanced wavefront sensing techniques such as Shack-Hartmann or phase diversity with real-time adaptive optics for dynamic aberration correction."
+      ],
+      "review": "Controls Cost vs. Performance. Weakness: The options fail to address the calibration and maintenance requirements of the metrology systems."
+    },
+    {
+      "lever_id": "5ee9b3d1-3aa0-47a2-a760-515ea096df01",
+      "name": "Contamination Control Stringency",
+      "consequences": "Relaxed contamination control reduces operational costs but increases the risk of optical degradation. Immediate: Reduced cleaning costs \u2192 Systemic: Increased laser-induced contamination and throughput degradation \u2192 Strategic: Potential for catastrophic optical damage and mission failure.",
+      "options": [
+        "Implement basic bakeout procedures with limited in-situ monitoring.",
+        "Include bakeout plus in-situ witness samples and scatter/throughput monitoring with separate particulate and molecular cleanliness gates.",
+        "Establish a closed-loop contamination control system with real-time particulate and molecular monitoring, coupled with automated cleaning and mitigation procedures using advanced surface passivation techniques."
+      ],
+      "review": "Controls Cost vs. Reliability. Weakness: The options don't fully address the trade-off between preventative measures and reactive cleaning strategies."
+    },
+    {
+      "lever_id": "0443690e-f73e-4227-b7d7-194545a65af3",
+      "name": "Scaling Model Validation Scope",
+      "consequences": "Limited validation reduces confidence in scaling predictions. Immediate: Faster model development \u2192 Systemic: Increased uncertainty in 19+ tile performance predictions \u2192 Strategic: Potential for inaccurate scaling and costly redesigns for larger apertures.",
+      "options": [
+        "Validate the TSO scaling parameters with uncertainty bounds under only constrained boundary conditions.",
+        "Validate the TSO scaling parameters with uncertainty bounds under constrained and unconstrained boundary conditions.",
+        "Develop a physics-based digital twin of the optical engine, continuously updated with real-time sensor data and validated against experimental results, enabling predictive scaling analysis and anomaly detection."
+      ],
+      "review": "Controls Speed vs. Scalability. Weakness: The options do not consider the cost and time associated with developing and maintaining a high-fidelity digital twin."
+    },
+    {
+      "lever_id": "005b2cf3-1284-4e62-b075-70133ff816e9",
+      "name": "Environmental Fidelity Strategy",
+      "consequences": "Altering the simulation fidelity impacts validation confidence and cost. Immediate: Reduced test costs \u2192 Systemic: Lower confidence in scaling model \u2192 Strategic: Potential for costly on-orbit failures if model is inaccurate. Trade-off between cost and risk.",
+      "options": [
+        "Employ simplified thermal and vibration profiles based on historical averages, accepting reduced realism for lower operational costs.",
+        "Implement representative thermal and vibration profiles with transient heat injection and flight-representative vibration spectra, balancing cost and fidelity.",
+        "Replicate worst-case, spatially resolved, transient thermal and dynamic loading scenarios with margin, using active control to maintain extreme conditions, increasing cost but maximizing validation confidence."
+      ],
+      "review": "Controls Cost vs. Validation Confidence. Weakness: The options don't explicitly address the impact of environmental fidelity on the *granularity* of the TSO scaling model (e.g., number of parameters identified)."
+    },
+    {
+      "lever_id": "1b49fed0-aee1-4c99-8bed-cb9d031e2f69",
+      "name": "Validation Phasing Strategy",
+      "consequences": "The sequencing of validation activities affects risk and schedule. Immediate: Delayed full-system testing \u2192 Systemic: Reduced parallelization of tasks \u2192 Strategic: Potential schedule overruns if early failures occur. Trade-off between parallel execution and risk mitigation.",
+      "options": [
+        "Execute all validation tests concurrently after full system integration, accepting higher risk of late-stage failures.",
+        "Implement a phased validation approach with sequential testing of subsystems and integrated system, balancing risk and schedule.",
+        "Adopt an iterative 'build-test-learn' cycle, integrating early data from focused experiments to refine the system design and validation plan, potentially accelerating overall validation through early risk reduction."
+      ],
+      "review": "Controls Schedule vs. Risk. Weakness: The options don't consider the *type* of failures that are most likely (e.g., thermal, vibration, optical) and how the phasing strategy should prioritize those."
+    },
+    {
+      "lever_id": "b8e49527-10a7-4c93-b3a3-f5d71e193d5d",
+      "name": "Metrology Resource Allocation",
+      "consequences": "The distribution of metrology resources impacts measurement accuracy and cost. Immediate: Reduced metrology costs \u2192 Systemic: Increased uncertainty in performance metrics \u2192 Strategic: Difficulty in demonstrating compliance with Strehl and WPE targets. Trade-off between cost and measurement precision.",
+      "options": [
+        "Utilize existing metrology equipment and standard calibration procedures, accepting potential limitations in accuracy and resolution.",
+        "Invest in enhanced metrology equipment and refined calibration procedures to improve measurement accuracy and resolution, balancing cost and precision.",
+        "Develop and deploy custom, in-situ metrology solutions with real-time data analysis and feedback control, maximizing measurement precision and enabling adaptive testing, but increasing cost and complexity."
+      ],
+      "review": "Controls Cost vs. Measurement Precision. Weakness: The options fail to address the *spatial and temporal resolution* requirements of the metrology, which are critical for capturing transient thermal and vibration effects."
+    },
+    {
+      "lever_id": "4162c345-7cc7-46f0-a83a-680a12aca8b8",
+      "name": "Contamination Control Strategy",
+      "consequences": "The level of contamination control impacts long-term performance and risk. Immediate: Reduced contamination control costs \u2192 Systemic: Increased risk of laser-induced contamination and throughput degradation \u2192 Strategic: Potential for premature mission failure due to optical damage. Trade-off between cost and long-term reliability.",
+      "options": [
+        "Implement basic contamination control measures (e.g., standard cleaning procedures and limited bakeout), accepting a higher risk of performance degradation.",
+        "Employ enhanced contamination control measures (e.g., rigorous cleaning procedures, extended bakeout, and in-situ witness samples), balancing cost and risk.",
+        "Integrate advanced contamination monitoring and mitigation systems (e.g., real-time particulate and molecular contamination sensors, active purging, and laser-induced contamination countermeasures), maximizing long-term reliability but increasing cost and complexity."
+      ],
+      "review": "Controls Cost vs. Long-Term Reliability. Weakness: The options don't consider the *specific contaminants* that are most likely to be present in the system and how the control strategy should target those."
+    },
+    {
+      "lever_id": "28697061-f5e2-431d-9c09-57724baed3c1",
+      "name": "Boundary Condition Modeling Strategy",
+      "consequences": "The fidelity of boundary condition modeling impacts the accuracy of the TSO scaling model. Immediate: Simplified modeling \u2192 Systemic: Inaccurate scaling parameters \u2192 Strategic: Poor performance prediction for 19+ tile apertures. Trade-off between model complexity and predictive power.",
+      "options": [
+        "Model the perimeter constraint stiffness as a fixed parameter, neglecting hysteresis and micro-slip effects, accepting reduced model accuracy.",
+        "Characterize and model the perimeter constraint stiffness with hysteresis and micro-slip effects, balancing model complexity and accuracy.",
+        "Employ a physics-informed neural network to model the complex, nonlinear behavior of the perimeter constraint stiffness, leveraging machine learning to capture subtle effects and improve model accuracy, but increasing computational cost and requiring extensive training data."
+      ],
+      "review": "Controls Model Complexity vs. Predictive Power. Weakness: The options don't address how the boundary condition model will be *validated* against experimental data, which is crucial for ensuring its accuracy."
+    }
+  ],
+  "metadata": {
+    "metadata_1": {
+      "context_window": 3900,
+      "num_output": 8192,
+      "is_chat_model": true,
+      "is_function_calling_model": false,
+      "model_name": "google/gemini-2.0-flash-001",
+      "system_role": "system",
+      "llm_classname": "OpenRouter_LLM"
+    },
+    "metadata_2": {
+      "context_window": 3900,
+      "num_output": 8192,
+      "is_chat_model": true,
+      "is_function_calling_model": false,
+      "model_name": "google/gemini-2.0-flash-001",
+      "system_role": "system",
+      "llm_classname": "OpenRouter_LLM"
+    },
+    "metadata_3": {
+      "context_window": 3900,
+      "num_output": 8192,
+      "is_chat_model": true,
+      "is_function_calling_model": false,
+      "model_name": "google/gemini-2.0-flash-001",
+      "system_role": "system",
+      "llm_classname": "OpenRouter_LLM"
+    }
+  },
+  "system_prompt": "You are an expert strategic analyst. Generate solution space parameters following these directives:\n\n1. **Output Requirements**\n   - You must generate EXACTLY 5 levers per response. Do not generate more or fewer than 5 levers.\n   - Format options as discrete JSON list items with 3 QUALITATIVE choices:\n     ```json\n     \"options\": [\"Descriptive Strategic Choice\", \"Descriptive Strategic Choice\", \"Descriptive Strategic Choice\"]\n     ```\n\n2. **Lever Quality Standards**\n   - Consequences MUST:\n     \u2022 Chain three SPECIFIC effects: \"Immediate: [effect] \u2192 Systemic: [impact] \u2192 Strategic: [implication]\"\n     \u2022 Include measurable outcomes: \"Systemic: 25% faster scaling through...\"\n     \u2022 Explicitly describe trade-offs between core tensions\n   - Options MUST:\n     \u2022 Represent distinct strategic pathways (not just labels)\n     \u2022 Include at least one unconventional/innovative approach\n     \u2022 Show clear progression: conservative \u2192 moderate \u2192 radical\n     \u2022 NO prefixes (e.g., \"Option A:\", \"Choice 1:\")\n\n3. **Strategic Framing**\n   - Name levers as strategic concepts (e.g., \"Material Adaptation Strategy\")\n   - Frame options as complete strategic approaches\n   - Ensure levers challenge core project assumptions\n\n4. **Validation Protocols**\n   - For `review_lever`:\n     \u2022 State the trade-off explicitly: \"Controls [Tension A] vs. [Tension B].\"\n     \u2022 Identify a specific weakness: \"Weakness: The options fail to consider [specific factor].\"\n   - For `summary`:\n     \u2022 Identify ONE critical missing dimension\n     \u2022 Prescribe CONCRETE addition: \"Add '[full strategic option]' to [lever]\"\n\n5. **Prohibitions**\n   - NO prefixes/labels in options (e.g., \"Option A:\", \"Choice 1:\")\n   - NO generic option labels (e.g., \"Optimize X\", \"Tolerate Y\")\n   - NO placeholder consequences\n   - NO \"[specific innovative option]\" placeholders\n   - NO value sets without clear strategic progression\n\n6. **Option Structure Enforcement**\n   - Radical option must include emerging tech/business model\n   - Maintain parallel grammatical structure across options\n   - Ensure options are self-contained descriptions",
+  "user_prompt": "File 'plan.txt':\nPlan:\nThis program executes a stress-test validation of the critical path for space-based coherent beam combining: preserving optical coherence and far-field beam quality under worst-case thermal and dynamic loading in hard vacuum. The demonstrator is a seven-tile (~700-emitter) \u201c1+6\u201d optical engine selected as the minimum topology that contains a fully surrounded center tile; the mechanical mount is designed with tunable perimeter constraint stiffness so the center-tile boundary condition can emulate multi-ring confinement and provide identifiable parameters for a radial Thermal-Structural-Optical (TSO) scaling model intended for 19+ tile apertures. To prevent artificial thermal success, the program uses spatially resolved, transient heat injection calibrated to representative electronics heat maps and time constants, reproducing localized hotspots and thermal slews rather than a smooth resistive soak, and it couples this to a defined heat-rejection interface whose thermal impedance is controlled and measured. To prevent \u201cquiet chamber\u201d success, the payload is subjected to injected flight-representative vibration spectra at the bench interface (reaction-wheel bands, broadband microvibration, and slewing transients), explicitly validating that the >5 kHz local phase correction bandwidth has sufficient disturbance rejection margin under hostile dynamics. Program gates include bakeout and contamination certification prior to high-power operation, post-vibration retention of alignment and phasing without manual re-tuning, and sustained in-vacuum targets of wall-plug efficiency \u226535% and operational beam quality defined on a disturbance-qualified basis (system Strehl \u22650.65 threshold with \u22650.80 stretch during defined thermal and vibration stress profiles), with \u201csustained\u201d defined as continuous operation for at least 300 seconds or three dominant thermal time constants (whichever is longer).\n\nVerification is structured to remain common-path through the high-fluence optics: far-field metrics are formed from a low-power sample taken after the last high-power optical surface, ensuring the measurement is sensitive to post-splitter aberrations and high-fluence wavefront distortion, while high-power termination uses a low-back-reflection calorimetric dump housed in a shrouded beamline with baffles and glare stops engineered to suppress chamber multipath. Seam phasing uses co-wavelength pilot tones that are frequency-shifted and orthogonally code-modulated, with balanced heterodyne/lock-in detection at an intermediate frequency, narrowband filtering, and detector protection sized to measured chamber stray-light levels; rather than treating SNR gates as schedule risk, the program front-loads a backscatter/SNR burn-down test to qualify the dump, shrouding, and sensing chain before full array integration. Deliverables include the shock-and-vibration characterized optical payload, the validated TSO scaling parameters with uncertainty bounds under constrained and unconstrained boundary conditions, and a vacuum-truth dataset demonstrating stable coherence under simultaneous thermal transients and injected flight vibration.\n\nDefinitions and test profiles: \u201c1+6\u201d denotes a hexagonal ring of six tiles surrounding one center tile; \u201c19+\u201d denotes multi-ring apertures (two or more rings) used only as the scaling target for model extrapolation, not a claim of direct demonstration. \u201cSystem Strehl\u201d is the measured Strehl ratio at the far-field-equivalent sensor plane using the common-path post\u2013last-optic sample, reported as a function of applied stress. \u201cSustained\u201d operation is defined as continuous operation for at least 300 seconds or three time constants of the slowest Thermal-Structural-Optical (TSO) mode demonstrably impacting Strehl (whichever is longer), where the governing time constant is identified from measured Strehl settling rather than only thermal plate equilibrium. \u201cWall-plug efficiency (WPE)\u201d is reported at two boundaries: (i) optical power out divided by electrical power into the laser/amplifier tiles (\u201claser WPE\u201d), and (ii) the same numerator divided by tile power plus phasing/metrology/control electronics power (\u201cengine WPE\u201d); facility services (vacuum pumps, external chillers, and chamber infrastructure) are excluded but separately metered and reported as overhead. \u201cHeat-rejection interface\u201d is the controlled thermal boundary (e.g., conductive cold plate to an externally conditioned sink and/or a radiative interface) with measured thermal impedance and vibration injection, used to match a flight-representative range rather than an effectively infinite laboratory heat sink. \u201cTunable perimeter constraint stiffness\u201d refers to selectable, locked configurations (no in-test adjustment) with hysteresis and micro-slip characterized prior to vibration runs to avoid rattle-driven phase noise. \u201cControl bandwidth >5 kHz\u201d applies to the local optical phase correction loops (intra-tile emitter phasing and tile-level piston control), while global beam steering/tip-tilt is treated separately with its own bandwidth requirement driven by the injected vibration spectrum; vibration qualification includes swept-sine and random profiles explicitly screening for control\u2013structure interaction (CSI) instabilities near loop crossover. \u201cOperational beam quality\u201d is evaluated during simultaneous stressors consisting of (i) thermal transients that reproduce localized hotspot maps with representative peak gradient and time constant, including step-and-hold and ramp profiles, and (ii) injected vibration at the bench interface with a defined power spectral density spanning low-frequency reaction-wheel harmonics (tens to hundreds of Hz), mid-frequency structural modes (hundreds of Hz to a few kHz), and broadband microvibration content up to the control bandwidth. \u201cBackscatter/SNR burn-down\u201d is the early test phase that measures stray-light levels and heterodyne pilot recovery margin with the final beam dump, shrouding, and baffle configuration installed, and it is a go/no-go gate before full-power multi-tile integration; contamination control includes bakeout plus in-situ witness samples and scatter/throughput monitoring with separate particulate and molecular cleanliness gates and a defined allowable throughput degradation slope (e.g., <0.1% per hour) to detect onset laser-induced contamination before catastrophic damage. \u201cGraceful degradation\u201d requires stable convergence and bounded performance under sparse-array conditions, demonstrated by commanded dropout of at least 5% of emitters (distributed and clustered cases) without controller divergence and with Strehl and WPE impacts measured and reported.\n\nBudget: $20 million.\n\nDon't go for the most aggressive scenario.\n\n\nToday's date:\n2026-Jan-14\n\nProject start ASAP\n\nFile 'purpose.md':\n**Purpose:** business\n\n**Purpose Detailed:** Validating optical coherence and beam quality under extreme conditions for space-based applications, including thermal and dynamic loading, with a focus on scalability and efficiency.\n\n**Topic:** Space-based coherent beam combining stress-test validation program\n\nFile 'plan_type.md':\nThis plan requires one or more physical locations. It cannot be executed digitally.\n\n**Explanation:** This plan *unequivocally requires* physical construction, testing, and validation of hardware in a laboratory setting. The description explicitly mentions physical components like a 'seven-tile optical engine,' 'mechanical mount,' 'heat-rejection interface,' and 'vibration spectra.' It also involves 'bakeout and contamination certification,' 'high-power operation,' and 'in-vacuum targets.' The entire project revolves around physical experimentation and measurement, making it a *clear* physical endeavor."
+}

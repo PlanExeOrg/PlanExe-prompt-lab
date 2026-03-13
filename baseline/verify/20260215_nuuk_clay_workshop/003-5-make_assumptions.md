@@ -1,0 +1,64 @@
+
+## Question 1 - What is the exact size and layout of the physical space required for the clay workshop, including kiln zones, worktables, drying areas, storage, and open-studio seating?
+
+**Assumptions:** Assumption: The workshop will occupy a 120–150 m² space with a modular layout allowing flexible reconfiguration. Kiln zone requires 15 m² with dedicated ventilation and fire safety measures; drying area needs 30 m² with climate control; worktables require 40 m²; storage and admin take up 20 m²; open-studio seating accommodates 12–16 people.
+
+**Assessments:** Title: Operational Systems Assessment
+Description: Evaluation of spatial efficiency and workflow integration.
+Details: A well-designed layout ensures smooth material flow from entry to firing, reduces congestion during peak hours, and supports both drop-in sessions and structured courses. Using a modular design allows seasonal adjustments—e.g., expanding drying zones in winter or adding temporary tables in summer. Compliance with fire safety codes and thermal zoning is critical. Failure to allocate sufficient drying space may lead to project damage due to inconsistent humidity, increasing waste by up to 30%. Budgeting must include insulation, HVAC controls, and non-slip flooring. This directly impacts the Energy-Efficient Facility Design and Safety & Risk Management levers.
+
+## Question 2 - How will the four part-time instructors be scheduled across weekly sessions to ensure 100% coverage while maintaining work-life balance and avoiding burnout?
+
+**Assumptions:** Assumption: Instructors will follow a rotating 4-week schedule with staggered shifts (e.g., two instructors per week), each teaching 8–10 hours weekly. Cross-training ensures all can cover any skill level. A digital shift calendar with real-time updates will be used for coordination.
+
+**Assessments:** Title: Resources & Personnel Assessment
+Description: Analysis of staffing structure and sustainability.
+Details: A rotating schedule prevents over-reliance on any single instructor and aligns with the Instructor Resilience Network. With only four part-timers, workload distribution is crucial—exceeding 10 hours/week risks burnout and turnover. Cross-training reduces dependency on specific individuals and enables last-minute coverage. Digital scheduling improves transparency and accountability. However, if not managed carefully, overlapping shifts could create inefficiencies or gaps. Ensuring fair rotation and providing rest periods supports long-term retention. This directly affects operational continuity and staff morale, key to Year 1 success.
+
+## Question 3 - What is the detailed breakdown of the 2 million DKK budget across startup costs, equipment, rent, utilities, salaries, supplies, and marketing?
+
+**Assumptions:** Assumption: The budget allocates 40% to fit-out and equipment (kilns, tables, tools), 25% to rent and utilities (first year), 20% to instructor salaries (4 × 15,000 DKK/month), 10% to materials and supplies, and 5% to marketing and community outreach. A 100,000 DKK contingency fund is included for currency volatility and unforeseen expenses.
+
+**Assessments:** Title: Funding & Budget Assessment
+Description: Financial feasibility and risk exposure analysis.
+Details: The 2 million DKK budget is realistic but tight. Equipment and fit-out represent the largest cost—especially kilns and insulation—requiring bulk procurement to reduce per-unit costs. Salaries are within market rates for part-time arts educators in Greenland. Marketing spend must be targeted: social media ads, hotel partnerships, and Katuaq co-promotions. Currency hedging is essential given USD-denominated imports. Without a contingency fund, exchange rate swings could exceed budget by 15%. This assessment confirms financial viability only if supply chain and energy strategies are executed precisely.
+
+## Question 4 - What are the specific milestones and timeline for securing the location, completing fit-out, hiring staff, and launching the first course?
+
+**Assumptions:** Assumption: The project starts immediately on 2026-Feb-15. Key milestones: Lease signed by Apr-30 (60 days), fit-out completed by Jul-31 (150 days), staff hired by May-15 (60 days), first course begins Aug-1 (100 days). A 3-week soft launch for locals precedes full public opening.
+
+**Assessments:** Title: Timeline & Milestones Assessment
+Description: Project execution plan and risk of delay.
+Details: The 150-day timeline is aggressive but feasible if regulatory approvals are secured early. Delays in permitting (Risk 1) could push opening to October, missing summer tourism peaks. Fit-out includes electrical upgrades, kiln installation, and passive solar modifications—each requiring specialist contractors. Staff hiring must include background checks and cross-training. A soft launch allows feedback and system testing. Missing the August launch window would reduce tourist engagement by 40% and jeopardize Year 1 revenue targets. This timeline is critical to Seasonal Demand Buffering and Cultural Anchoring goals.
+
+## Question 5 - How will the workshop comply with Greenlandic regulations regarding cultural heritage, environmental impact, and commercial use of traditional designs?
+
+**Assumptions:** Assumption: The workshop will establish a formal advisory council with elders and local artists, obtain written consent before using traditional motifs, and adhere to Greenland’s Environmental Protection Act and building codes. All exhibitions and curriculum elements will undergo community review.
+
+**Assessments:** Title: Governance & Regulations Assessment
+Description: Legal and ethical compliance framework.
+Details: Regulatory compliance is non-negotiable. Zoning approval for a commercial arts space near Katuaq requires proof of environmental safety (e.g., kiln emissions), fire safety, and noise control. Cultural collaboration must go beyond tokenism—using traditional forms without consent risks legal action and reputational damage. The advisory council ensures authenticity and protects intellectual property. Documentation must be bilingual (Danish/Greenlandic). Non-compliance could result in fines, closure, or loss of partnership with Katuaq. This directly supports the Cultural Anchoring Framework and mitigates Risk 6.
+
+## Question 6 - What measures will be taken to manage safety risks related to kiln operation, clay dust, and heating systems in a cold climate?
+
+**Assumptions:** Assumption: Safety protocols include mandatory training for all users, HEPA-filtered ventilation in kiln and drying zones, fire extinguishers at every station, emergency shutdown procedures, and regular inspections. Clay dust control will use wet-mix techniques and sealed storage.
+
+**Assessments:** Title: Safety & Risk Management Assessment
+Description: Hazard mitigation and incident prevention.
+Details: Kiln fires and overheating are significant risks in cold climates where insulation may trap heat. Poor ventilation increases health risks from silica dust and fumes. Emergency procedures must be posted and practiced monthly. Inspections should occur quarterly. Training must be mandatory for all participants, especially tourists. A safety officer role (rotated among instructors) ensures accountability. Failure to implement these measures could lead to injuries, equipment damage, or insurance claims. This is critical for operational continuity and liability protection, directly supporting the Energy-Efficient Facility Design and Instructor Resilience Network.
+
+## Question 7 - How will the workshop minimize its environmental footprint, particularly in terms of energy use, material sourcing, and waste management?
+
+**Assumptions:** Assumption: The workshop will use passive solar design, modular kilns, and recycled packaging. Waste clay will be reclaimed and reused. Local partnerships will prioritize low-impact materials. A compostable packaging policy will be implemented for tourist kits.
+
+**Assessments:** Title: Environmental Impact Assessment
+Description: Sustainability performance and ecological responsibility.
+Details: Reducing environmental impact enhances public perception and aligns with Greenland’s values. Passive solar design cuts heating needs by 40%, while modular kilns prevent idle energy use. Reclaiming waste clay reduces material demand by up to 25%. Using recycled packaging and biodegradable glazes lowers landfill burden. Partnering with local artisans supports circular economy principles. These actions strengthen the Cultural Anchoring Framework and Energy-Efficient Facility Design. Failure to manage waste could lead to fines or community backlash. This is essential for long-term brand credibility and alignment with Green initiatives.
+
+## Question 8 - How will stakeholders—including locals, tourists, Katuaq Cultural Centre, and local artisans—be engaged throughout the planning and operational phases?
+
+**Assumptions:** Assumption: Stakeholder involvement will include quarterly community forums, co-design workshops for exhibitions, youth apprenticeships with schools, and guest artist events. Feedback will be collected via digital surveys and in-person comment boards.
+
+**Assessments:** Title: Stakeholder Involvement Assessment
+Description: Community integration and trust-building strategy.
+Details: Active stakeholder engagement fosters ownership and repeat participation. Locals feel represented when their stories and designs shape programming. Tourists gain deeper cultural context through interactive experiences. Katuaq becomes a true partner through joint exhibitions and event planning. Youth programs build intergenerational bridges. Regular feedback loops allow course adjustments and crisis response. Without this, the workshop risks being seen as an external imposition. This directly supports the Community Co-Creation Ecosystem and Cultural Anchoring Framework, enhancing long-term sustainability and social impact.

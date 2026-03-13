@@ -1,0 +1,40 @@
+- Workshop occupies 120–150 m² with modular layout.
+- Kiln zone requires 15 m² with ventilation and fire safety.
+- Drying area needs 30 m² with climate control.
+- Worktables require 40 m² for student use.
+- Storage and admin take up 20 m².
+- Open-studio seating accommodates 12–16 people.
+- Instructors follow a rotating 4-week schedule.
+- Each instructor teaches 8–10 hours weekly.
+- Cross-training ensures all can cover any skill level.
+- Digital shift calendar enables real-time coordination.
+- Budget allocates 40% to fit-out and equipment.
+- 25% covers rent and utilities for Year 1.
+- 20% funds instructor salaries (4 × 15,000 DKK/month).
+- 10% is for materials and supplies.
+- 5% supports marketing and outreach.
+- 100,000 DKK contingency fund for currency volatility.
+- Project starts on 2026-Feb-15.
+- Lease signed by Apr-30 (60 days).
+- Fit-out completed by Jul-31 (150 days).
+- Staff hired by May-15 (60 days).
+- First course begins Aug-1 (100 days).
+- Three-week soft launch precedes public opening.
+- Formal advisory council includes elders and artists.
+- Written consent obtained before using traditional motifs.
+- All exhibitions undergo community review.
+- Mandatory training for all users on safety protocols.
+- HEPA-filtered ventilation in kiln and drying zones.
+- Fire extinguishers at every station.
+- Emergency shutdown procedures are posted and practiced.
+- Clay dust controlled via wet-mix techniques and sealed storage.
+- Passive solar design reduces heating needs by 40%.
+- Modular kilns operate only during scheduled sessions.
+- Waste clay is reclaimed and reused.
+- Recycled packaging used for tourist kits.
+- Compostable materials implemented for events.
+- Quarterly community forums ensure stakeholder input.
+- Co-design workshops shape exhibitions and courses.
+- Youth apprenticeships partner with local schools.
+- Guest artist events foster cultural exchange.
+- Feedback collected via digital surveys and comment boards.

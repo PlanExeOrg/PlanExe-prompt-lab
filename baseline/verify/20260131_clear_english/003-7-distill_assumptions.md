@@ -1,0 +1,8 @@
+- Phase 1: $1M, Phase 2: $1.5M, Phase 3: $1M; 70% grants, 30% licensing.
+- Phase 2 go/no-go: 80%+ comprehension, positive feedback, 3+ org adoption.
+- Phase 1: 3 linguists, 2 developers, 1 PM; 50% hires, 50% contracts.
+- Engagement focuses on ISO, W3C, and national education boards via committee participation.
+- Safety risks: data privacy, distress; mitigation: anonymization, consent, support.
+- Environmental impact: paper; mitigation: recycled paper, minimal prints, digital options.
+- Stakeholder engagement: surveys, focus groups, forums; feedback incorporated into design.
+- Project uses Asana, Git, and Slack for task management, progress tracking, collaboration.

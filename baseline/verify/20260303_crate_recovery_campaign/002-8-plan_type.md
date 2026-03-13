@@ -1,0 +1,3 @@
+This plan requires one or more physical locations. It cannot be executed digitally.
+
+**Explanation:** The plan is to execute a nationwide campaign requiring the physical movement, collection, inspection, cleaning, and redistribution of plastic milk crates across Denmark, involving physical drop-off points at supermarkets and municipal recycling stations. This necessitates significant physical logistics, coordination with numerous physical locations (stores and stations), and material handling, classifying it definitively as a physical plan.

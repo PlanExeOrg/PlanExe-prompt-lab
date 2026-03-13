@@ -1,0 +1,8 @@
+- Budget allocation: 34% donation (1.35M DKK), 45% logistics (1.8M DKK), 21% marketing (850k DKK).
+- Hub finalization and municipal SLAs must be signed by July 15th and July 31st, 2026, respectively.
+- Three centralized hubs require 27 FTE roles, primarily contracted cleaning and logistics staff.
+- Internal legal review must confirm cleaning agents meet Danish EPA standards by end of Q2 2026.
+- Municipal staff need one-day on-site workshops and laminated guides for sorting efficiency.
+- Consultation with the Danish Environmental Protection Agency regarding material flow tracking is mandatory.
+- All in-store marketing collateral requires pre-approval by retail liaisons 30 days prior to placement.
+- A monthly 'Ready-to-Deploy Stock Report' must reach Procurement by the 5th day monthly, starting September 2026.

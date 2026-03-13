@@ -1,0 +1,8 @@
+- Initial budget is $50 million USD, 70% FEMA, 30% state emergency funds.
+- Phase 3 (Recovery) is 3 months; Phase 4 (Monitoring) is 5 years.
+- Phase 1: 500 LE Rangers, 200 patrol officers, 100 National Guard personnel.
+- MOUs for authority transfer from NPS to State Governors within 24 hours.
+- First responders get PPE; evacuees get N95 respirators at centers.
+- Ash disposal follows EPA guidelines; fuel spills cleaned immediately; habitat protected.
+- Multi-channel communication for stakeholders; information translated into multiple languages.
+- Unified incident management system tracks resources, manages communication, coordinates operations.

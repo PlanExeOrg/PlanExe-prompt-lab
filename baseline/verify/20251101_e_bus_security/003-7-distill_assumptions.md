@@ -1,0 +1,8 @@
+- National rollout receives DKK 84M, Copenhagen pilot receives DKK 36M of the budget.
+- Copenhagen pilot: vendor engagement in 30 days, isolation/testing in 60, deployment in 90.
+- The project requires a core team of 10 FTEs with specific cybersecurity expertise.
+- The project must comply with the EU's NIS Directive and Danish cybersecurity regulations.
+- Modifying e-bus systems introduces safety risks mitigated through testing and certifications.
+- The project's environmental impact will be minimal through energy efficiency and waste reduction.
+- Stakeholder engagement is crucial through meetings, surveys, and feedback incorporation.
+- The project will impact operational systems, requiring software updates and revised procedures.

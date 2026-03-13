@@ -1,0 +1,3 @@
+This plan requires one or more physical locations. It cannot be executed digitally.
+
+**Explanation:** This plan details a large-scale physical evacuation in response to a volcanic eruption. It involves traffic control, establishing shelters, deploying resources (water, medical supplies, security), and coordinating multiple agencies across different locations. The plan explicitly mentions physical locations (Yellowstone, West Yellowstone, Gardiner, Cody, Boseman, Idaho Falls, Salt Lake City, Denver), routes (US-191, US-20, US-89), and physical infrastructure (roads, hospitals, communication centers, power grids). The entire operation is predicated on physical movement, resource deployment, and on-the-ground coordination, making it unequivocally a physical plan.

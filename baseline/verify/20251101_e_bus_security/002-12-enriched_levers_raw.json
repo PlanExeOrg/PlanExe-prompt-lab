@@ -1,0 +1,129 @@
+{
+  "metadata": [
+    {
+      "context_window": 3900,
+      "num_output": 8192,
+      "is_chat_model": true,
+      "is_function_calling_model": false,
+      "model_name": "google/gemini-2.0-flash-001",
+      "system_role": "system",
+      "llm_classname": "OpenRouter_LLM"
+    },
+    {
+      "context_window": 3900,
+      "num_output": 8192,
+      "is_chat_model": true,
+      "is_function_calling_model": false,
+      "model_name": "google/gemini-2.0-flash-001",
+      "system_role": "system",
+      "llm_classname": "OpenRouter_LLM"
+    }
+  ],
+  "characterized_levers": [
+    {
+      "lever_id": "5a89331f-135d-4fa2-abbc-b0fc6451cfca",
+      "name": "Vendor Relationship Strategy",
+      "consequences": "Choosing a confrontational approach risks vendor non-cooperation. Immediate: Delayed access to system information. \u2192 Systemic: 30% slower vulnerability patching due to vendor resistance. \u2192 Strategic: Increased long-term costs and potential legal battles.",
+      "options": [
+        "Maintain cordial relations, seeking voluntary vendor cooperation and information sharing.",
+        "Adopt a firm but fair approach, demanding full access and compliance under existing contracts, with threat of legal action.",
+        "Implement aggressive legal and regulatory pressure, including potential blacklisting and retroactive liability claims, to force vendor compliance and set a precedent."
+      ],
+      "review": "Controls Cooperation vs. Conflict. Weakness: The options don't consider the potential for international trade disputes.",
+      "deduplication_justification": "This lever focuses on the strategy for managing relationships with vendors, considering cooperation versus conflict. It's distinct from other levers as it directly addresses the human element and potential legal ramifications of vendor interactions.",
+      "description": "The Vendor Relationship Strategy defines the approach taken with the e-bus vendors, ranging from collaborative to adversarial. It controls the level of cooperation and information sharing expected from vendors. The objective is to gain necessary access and compliance for security measures. Key success metrics include vendor responsiveness, access to critical system information, and adherence to security requirements.",
+      "synergy_text": "This lever strongly synergizes with Procurement Reform Strategy. A firm vendor relationship can enforce stricter security standards in future procurements. It also enhances Vendor Dependency Management by clarifying the terms of engagement and potential exit strategies.",
+      "conflict_text": "An aggressive Vendor Relationship Strategy can conflict with Deployment Speed & Scope. Pushing too hard might delay implementation if vendors resist or become uncooperative. It may also strain Operator Training & Response if vendors withhold information."
+    },
+    {
+      "lever_id": "6516a0b8-e774-4aa1-9be5-e694029411b1",
+      "name": "Isolation Depth Strategy",
+      "consequences": "Deeper isolation increases security but can cripple essential maintenance. Immediate: Reduced remote diagnostics capabilities. \u2192 Systemic: 40% increase in on-site maintenance costs due to limited remote access. \u2192 Strategic: Potential for service disruptions and higher operational expenses.",
+      "options": [
+        "Implement minimal isolation, focusing on severing only the most critical remote access pathways while retaining some vendor diagnostic capabilities.",
+        "Implement moderate isolation, creating a secure operator-controlled gateway for essential remote diagnostics and updates, with strict access controls.",
+        "Implement complete air-gapping of drive/brake/steer systems, eliminating all remote access and relying solely on on-site maintenance and diagnostics."
+      ],
+      "review": "Controls Security vs. Maintainability. Weakness: The options fail to account for the evolving threat landscape and the need for adaptable security measures.",
+      "deduplication_justification": "This lever addresses the depth of isolation implemented, balancing security with maintainability. It's distinct because it focuses on the technical implementation of isolation and its impact on operational aspects like remote diagnostics and maintenance costs.",
+      "description": "The Isolation Depth Strategy determines the extent to which critical e-bus systems are isolated from remote access. It controls the level of connectivity retained for vendor diagnostics and updates. The objective is to minimize the attack surface and prevent unauthorized remote control. Key success metrics include the complete removal of kill-switch capabilities and the reduction of remote vulnerabilities.",
+      "synergy_text": "Isolation Depth Strategy works well with Rollback and Recovery Strategy. Deeper isolation reduces the likelihood of needing a rollback, while a robust rollback plan mitigates the risk of complete isolation. It also supports Operator Training & Response by simplifying the threat landscape.",
+      "conflict_text": "Complete air-gapping, a high Isolation Depth Strategy, can conflict with Vendor Relationship Strategy if vendors are unwilling to provide on-site support. It also creates tension with Deployment Speed & Scope, as thorough isolation can be time-consuming."
+    },
+    {
+      "lever_id": "ebcb1f34-0fa8-4572-b7f3-1e60c428ff73",
+      "name": "Rollback and Recovery Strategy",
+      "consequences": "A slow rollback process can lead to prolonged service disruptions. Immediate: Extended downtime during incidents. \u2192 Systemic: 50% longer recovery times due to inefficient rollback procedures. \u2192 Strategic: Damage to public trust and potential economic losses from service interruptions.",
+      "options": [
+        "Develop a basic rollback playbook focused on manual system restoration procedures.",
+        "Create a comprehensive rollback playbook with automated scripts for rapid system restoration and data recovery.",
+        "Implement a fully automated, resilient rollback system with redundant backups and failover capabilities, leveraging containerization and infrastructure-as-code principles for near-instantaneous recovery."
+      ],
+      "review": "Controls Speed vs. Complexity. Weakness: The options don't consider the human element in incident response and the need for well-trained personnel.",
+      "deduplication_justification": "This lever focuses on the rollback and recovery strategy, specifically addressing the speed and complexity of restoring systems after an incident. It's distinct because it directly addresses incident response and business continuity.",
+      "description": "The Rollback and Recovery Strategy defines the procedures and capabilities for restoring e-bus systems to a secure state after a cyber incident. It controls the speed and completeness of system recovery. The objective is to minimize downtime and data loss in the event of a successful attack. Key success metrics include recovery time objective (RTO) and recovery point objective (RPO).",
+      "synergy_text": "This lever has strong synergy with Operator Training & Response. Well-trained operators are crucial for executing rollback procedures effectively. It also complements Isolation Depth Strategy, providing a safety net in case isolation fails.",
+      "conflict_text": "A fully automated Rollback and Recovery Strategy can conflict with Vendor Dependency Management if it relies on vendor-specific tools or technologies. It may also compete with Deployment Speed & Scope if extensive testing is required."
+    },
+    {
+      "lever_id": "f372f21a-3905-474e-aed0-3f2ca7d0e8bb",
+      "name": "Procurement Reform Strategy",
+      "consequences": "Weak procurement standards perpetuate vulnerabilities in future acquisitions. Immediate: Continued risk exposure. \u2192 Systemic: Recurring security incidents due to insecure systems. \u2192 Strategic: Long-term financial losses and reputational damage from repeated breaches.",
+      "options": [
+        "Incorporate basic cybersecurity requirements into existing procurement processes.",
+        "Establish a dedicated cybersecurity review board to evaluate vendor proposals and enforce security standards.",
+        "Implement a 'security-by-design' procurement framework, requiring vendors to demonstrate verifiable security throughout the entire product lifecycle, including threat modeling, secure coding practices, and continuous vulnerability monitoring, with penalties for non-compliance."
+      ],
+      "review": "Controls Short-Term Cost vs. Long-Term Security. Weakness: The options fail to address the challenge of maintaining up-to-date security standards in a rapidly evolving threat landscape.",
+      "deduplication_justification": "This lever focuses on reforming the procurement process to prioritize security. It's distinct because it addresses the entire lifecycle of acquiring new systems and ensuring they meet security standards from the outset.",
+      "description": "The Procurement Reform Strategy aims to enhance cybersecurity considerations in the acquisition of e-buses and related systems. It controls the security standards and vendor selection criteria. The objective is to ensure that future procurements prioritize security and minimize vulnerabilities. Key success metrics include the adoption rate of secure-by-design principles and the reduction of security flaws in new buses.",
+      "synergy_text": "Procurement Reform Strategy synergizes strongly with Vendor Relationship Strategy. A firm approach can enforce stricter security standards in future procurements. It also supports Vendor Dependency Management by diversifying the vendor pool.",
+      "conflict_text": "A stringent Procurement Reform Strategy can conflict with Deployment Speed & Scope, as it may take longer to evaluate and select vendors. It also creates tension with existing Vendor Relationship Strategy if current vendors cannot meet the new standards."
+    },
+    {
+      "lever_id": "d2f49a86-971c-45e8-9ddf-dc2b0d5d91e7",
+      "name": "Deployment Speed & Scope",
+      "consequences": "Rapid deployment can address immediate threats but risks overlooking unforeseen issues. Immediate: Quick risk reduction. \u2192 Systemic: Increased chance of implementation errors and system vulnerabilities. \u2192 Strategic: Potential for widespread system failures and reputational damage.",
+      "options": [
+        "Phased Rollout: Implement security measures incrementally across the fleet, starting with a small subset of buses.",
+        "Parallel Implementation: Simultaneously deploy security measures across the entire fleet, prioritizing speed of execution.",
+        "Staged & Adaptive: Deploy in Copenhagen, then adapt nationally based on real-time threat intelligence and iterative security testing, delaying full rollout until confidence is high."
+      ],
+      "review": "Controls Speed vs. Thoroughness. Weakness: The options don't account for the logistical challenges of retrofitting the entire bus fleet within the given timeframe.",
+      "deduplication_justification": "This lever focuses on the speed and scope of deployment, balancing rapid risk reduction with thoroughness. It's distinct because it directly addresses the practical considerations of implementing security measures across the entire fleet.",
+      "description": "The Deployment Speed & Scope lever determines the pace and extent to which security measures are implemented across the e-bus fleet. It controls the rollout strategy, from phased to parallel. The objective is to balance rapid risk reduction with minimal disruption to operations. Key success metrics include the percentage of buses secured within the project timeline and the overall impact on service availability.",
+      "synergy_text": "Deployment Speed & Scope works well with Operator Training & Response. A phased rollout allows for more focused training and adaptation. It also complements Rollback and Recovery Strategy by providing opportunities to test and refine recovery procedures.",
+      "conflict_text": "A parallel implementation, a high Deployment Speed & Scope strategy, can conflict with Isolation Depth Strategy if thorough isolation is time-consuming. It also creates tension with Procurement Reform Strategy if new security requirements delay vendor selection."
+    },
+    {
+      "lever_id": "eb9bf5f9-1fdf-4f4c-96a9-ded04df342f8",
+      "name": "Operator Training & Response",
+      "consequences": "Well-trained operators are crucial for incident response. Immediate: Improved incident detection. \u2192 Systemic: Reduced downtime and faster recovery from attacks. \u2192 Strategic: Enhanced resilience and minimized impact of potential security breaches.",
+      "options": [
+        "Basic Awareness: Provide basic cybersecurity awareness training to e-bus operators.",
+        "Incident Response Drills: Conduct regular incident response drills to prepare operators for potential security breaches.",
+        "Cybersecurity Integration: Embed cybersecurity experts within the e-bus operator teams, empowering them to proactively identify and mitigate threats, and develop custom rollback procedures."
+      ],
+      "review": "Controls Preparedness vs. Cost. Weakness: The options don't address the potential for human error in incident response, even with extensive training.",
+      "deduplication_justification": "This lever focuses on operator training and response, emphasizing the human element in incident management. It's distinct because it directly addresses the preparedness of personnel to handle security breaches.",
+      "description": "This lever focuses on enhancing the cybersecurity capabilities of e-bus operators. It controls the level of training and preparedness operators have to respond to security incidents. Objectives include improving threat detection, incident response time, and overall security awareness. Key success metrics are the frequency of successful incident response drills, the number of operators trained, and the reduction in security incidents attributed to operator error. This lever aims to create a human firewall, complementing technical security measures.",
+      "synergy_text": "Operator Training & Response strongly synergizes with Rollback and Recovery Strategy. Well-trained operators can effectively execute rollback procedures, minimizing downtime and impact during a security breach. It also enhances the effectiveness of Isolation Depth Strategy by ensuring operators understand and adhere to isolation protocols.",
+      "conflict_text": "Operator Training & Response can conflict with Deployment Speed & Scope. Extensive training programs may slow down the initial deployment or expansion of the e-bus fleet. It also presents a trade-off with Vendor Dependency Management, as operators may become reliant on vendor-provided training materials."
+    },
+    {
+      "lever_id": "227aae77-1987-4c4d-b9db-1a66e55d6512",
+      "name": "Vendor Dependency Management",
+      "consequences": "The approach to vendor dependency impacts long-term maintenance costs and security risks. Immediate: Diversification of vendor base \u2192 Systemic: 15% increase in initial procurement costs due to smaller order volumes per vendor \u2192 Strategic: Reduced reliance on single vendors and increased bargaining power.",
+      "options": [
+        "Maintain existing vendor relationships while implementing stricter security requirements and monitoring their compliance.",
+        "Diversify the vendor base by sourcing components and services from multiple suppliers, reducing reliance on any single vendor.",
+        "Develop open-source alternatives for critical e-bus components and systems, fostering a community of developers and reducing long-term vendor lock-in."
+      ],
+      "review": "Controls Cost vs. Vendor Lock-in. Weakness: The options don't consider the potential for increased complexity in managing a diverse vendor ecosystem.",
+      "deduplication_justification": "This lever focuses on managing vendor dependency to reduce lock-in and increase bargaining power. It's distinct because it addresses the strategic aspect of diversifying the vendor base and potentially developing open-source alternatives.",
+      "description": "This lever addresses the risks associated with relying on a single vendor for critical e-bus components and systems. It controls the level of vendor diversification and the development of alternative solutions. Objectives include reducing vendor lock-in, increasing supply chain resilience, and mitigating the impact of vendor-related security vulnerabilities. Key success metrics are the number of vendors used for critical components, the percentage of components sourced from open-source alternatives, and the reduction in vendor-related security incidents.",
+      "synergy_text": "Vendor Dependency Management has strong synergy with Procurement Reform Strategy. Diversifying the vendor base requires changes to procurement processes and criteria. It also amplifies the impact of Isolation Depth Strategy by reducing the attack surface associated with any single vendor's vulnerabilities.",
+      "conflict_text": "Vendor Dependency Management can conflict with Vendor Relationship Strategy, especially if diversification leads to strained relationships with existing vendors. It also creates a trade-off with Deployment Speed & Scope, as sourcing from multiple vendors or developing open-source alternatives may increase development time."
+    }
+  ]
+}

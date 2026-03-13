@@ -1,0 +1,2292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Crate Recovery Campaign</title>
+  <style>
+    body {
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        margin: 2rem;
+    }
+  </style>
+  <!--HTML_HEAD_START-->
+  <!-- 
+  Versions available at:
+  https://www.jsdelivr.com/package/npm/dhtmlx-gantt 
+  Version 9.1.0 breaks the zoom in/out/fit buttons.
+  Version 9.0.15 normal. The zoom in/out/fit buttons works.
+  -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dhtmlx-gantt@9.0.15/codebase/dhtmlxgantt.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/dhtmlx-gantt@9.0.15/codebase/dhtmlxgantt.min.js"></script>
+  <style>
+    .gantt_container_with_controls {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+    .gantt_container {
+        width: 100%;
+        height: 80vh;
+        margin-bottom: 1rem;
+    }
+    .gantt_tooltip {
+        max-width: 30rem;
+        white-space: break-spaces;
+    }
+    .gantt-controls {
+        display: flex;
+        gap: 0.5rem;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 1rem;
+        position: relative;
+    }
+    .zoom-buttons {
+        display: flex;
+        gap: 0.5rem;
+        justify-content: center;
+    }
+    .export-button {
+        position: absolute;
+        right: 0;
+    }
+    .gantt-controls button {
+        padding: 0.5rem 1rem;
+        border: 1px solid #ccc;
+        border-radius: 0.25rem;
+        background: white;
+        cursor: pointer;
+        font-size: 0.9rem;
+    }
+    .gantt-controls button:hover {
+        background: #f5f5f5;
+    }
+    .project-task.gantt_task_line {
+        background-color: #b67134;
+        border-color: #f57c00;
+    }
+    .project-task .gantt_task_content {
+        color: white;
+    }
+    .project-task.gantt_project.gantt_task_line {
+        border-radius: 0;
+    }
+  </style>
+  <!--HTML_HEAD_END-->
+</head>
+<body>
+    <h1>Crate Recovery Campaign</h1>
+<!--HTML_BODY_CONTENT_START-->
+<div class="gantt_container_with_controls">
+    <div class="gantt-controls">
+        <div class="zoom-buttons">
+            <button id="zoomFitButton">Zoom Fit</button>
+            <button id="zoomInButton">Zoom In</button>
+            <button id="zoomOutButton">Zoom Out</button>
+        </div>
+        <button id="exportToCSVButton" class="export-button">Export to CSV</button>
+    </div>
+    <div id="gantt_container" class="gantt_container"></div>
+</div>
+<!--HTML_BODY_CONTENT_END-->
+
+<!--HTML_BODY_SCRIPT_START-->
+<script type="module">
+    // When `null`, the "Export to CSV" button is hidden.
+    // When a string, it's the CSV data, eg: `"hello;csv;world"` and the button is shown.
+    const GANTT_DATA_CSV = "project_key,project_name,project_description,project_start_date,project_end_date,project_progress,project_parent,originating_department\n83e3eb61-0e53-4a94-9e79-281eec7ead03,Crate Recovery Campaign,\"Crate Recovery Campaign\n\nFinal deliverable:\n40% Crate Recovery\",3/3/2026,5/27/2028,0,,PlanExe\nd29e4196-ef8f-4c4f-93e5-e95381348182,Decision Finalization and Regulatory Frontloading,,3/3/2026,6/4/2026,0,83e3eb61-0e53-4a94-9e79-281eec7ead03,PlanExe\n192d2a61-1575-431b-b9c9-a41531164aae,Finalize Strategic Build Decisions (Level 2 Selection),,3/3/2026,3/12/2026,0,d29e4196-ef8f-4c4f-93e5-e95381348182,PlanExe\nf28f9370-fe37-4ee6-bbfc-2651801d5249,Finalize 'Builder' logistical framework approval,\"Finalize 'Builder' logistical framework approval\n\nDescription:\nThe core task is to secure executive sign-off on the chosen 'Builder' strategy, which defines the balance between municipal and retail collection channels. This involves presenting a final, detailed comparative analysis of the Builder vs. Challenger logistical paths, highlighting recovery projections, budget burn rates, and mitigation effectiveness against key identified risks (e.g., municipal overload).\n\nResources needed:\n\u2022 Senior Steering Committee Members (Decision Makers)\n\u2022 Financial Modeler\n\u2022 Risk Analysis Lead\",3/3/2026,3/6/2026,0,192d2a61-1575-431b-b9c9-a41531164aae,PlanExe\ncb4828bc-0621-4842-9c95-dbc22429d430,Develop builder path impact assessment documentation,\"Develop builder path impact assessment documentation\n\nDescription:\nCreate the comprehensive document package required for the final decision workshop. This package must include detailed financial modeling (Budget Line 1.8M DKK vs. anticipated impact), refined operational load maps for QA Hubs based on the Builder scenario, and a finalized stakeholder commitment matrix showing required approvals for the Q2/Q3 transition.\n\nResources needed:\n\u2022 Project Manager\n\u2022 Logistics Planning Team\n\u2022 Budget Steward\",3/6/2026,3/9/2026,0,f28f9370-fe37-4ee6-bbfc-2651801d5249,PlanExe\n037f290d-5f7e-4e2e-ae64-daa5a5a52128,Present and defend logistical design to leadership,\"Present and defend logistical design to leadership\n\nDescription:\nConduct the formal presentation and Q&A session with the executive steering committee to obtain the final, binding commitment to the 'Builder' logistical strategy. This stage requires successfully defending the proposed reliance on municipal SLAs and the required staffing coefficients for the QA Hubs.\n\nResources needed:\n\u2022 Project Sponsor\n\u2022 Logistics Lead\n\u2022 Executive Committee Time\",3/9/2026,3/12/2026,0,192d2a61-1575-431b-b9c9-a41531164aae,PlanExe\nfb5542d6-0bd3-4d26-b44a-7ca51ec411af,Submit Cleaning Agents to Danish EPA for Reuse Certification,,3/12/2026,4/17/2026,0,192d2a61-1575-431b-b9c9-a41531164aae,PlanExe\nc725382a-a951-4e96-9295-ec881cc35fa9,Define RTSDR Schema with Procurement,\"Define RTSDR Schema with Procurement\n\nDescription:\nEstablish the exact data fields, format, and transfer mechanism for the 'Ready-to-Deploy Stock Report' (RTSDR) that will inform Arla Procurement's 2027 production forecast. This ensures recovered crates are accounted for as reusable assets.\n\nResources needed:\n\u2022 Reverse Logistics Lead\n\u2022 Arla Procurement Data Analyst\n\u2022 QA Hub Operations Lead\",3/12/2026,3/24/2026,0,fb5542d6-0bd3-4d26-b44a-7ca51ec411af,PlanExe\n96a0e611-4bf5-4871-9734-419b4a8e02ba,Develop Data Transfer Integration Protocol,\"Develop Data Transfer Integration Protocol\n\nDescription:\nBuild and test the technical pipeline (API or secure file transfer) allowing QA Hub system output to reliably push the finalized RTSDR data into Arla's ERP/forecasting system. This must be tested end-to-end before the September 3rd deadline.\n\nResources needed:\n\u2022 IT Systems Integrator\n\u2022 Arla ERP Specialist\n\u2022 QA Systems Administrator\",3/24/2026,4/5/2026,0,c725382a-a951-4e96-9295-ec881cc35fa9,PlanExe\n9ff74296-2178-49eb-b380-689cc0b37507,Formalize Synchronization Meeting Cadence,\"Formalize Synchronization Meeting Cadence\n\nDescription:\nSchedule and confirm the standing monthly meeting cadence between QA Hub Logistics and Procurement/Asset Lifecycle starting September 3rd. Document the meeting structure, required attendees, and official minute-taking responsibilities.\n\nResources needed:\n\u2022 Project Coordinator\n\u2022 Procurement Manager\n\u2022 QA Hub Manager\",4/5/2026,4/17/2026,0,fb5542d6-0bd3-4d26-b44a-7ca51ec411af,PlanExe\n3481d2ff-433f-4bd3-938e-61333a8127a3,Finalize KPI Baseline Reporting Structure with Procurement,,4/17/2026,5/5/2026,0,fb5542d6-0bd3-4d26-b44a-7ca51ec411af,PlanExe\n84e88124-b0ef-486d-a790-60f5ec2ca6ed,Define RTSDR Schema and Data Flow,\"Define RTSDR Schema and Data Flow\n\nDescription:\nWork with Procurement to finalize the exact structure ('Ready-to-Deploy Stock Report' schema) needed to convey recovered crate volumes, quality status, and reintegration readiness metrics. This defines the 'what' of the data exchange.\n\nResources needed:\n\u2022 Procurement Systems Analyst\n\u2022 QA Hub Operations Lead\n\u2022 RTSDR Design Template\",4/17/2026,4/23/2026,0,3481d2ff-433f-4bd3-938e-61333a8127a3,PlanExe\nd0eb2c7e-32f9-4531-8d2e-2fa565260502,Establish Data Exchange Protocol,\"Establish Data Exchange Protocol\n\nDescription:\nDefine the technical mechanism (e.g., SFTP, API hook) Procurement will use to receive the RTSDR data, ensuring security and automated reconciliation capability. This defines the 'how' of the delivery.\n\nResources needed:\n\u2022 IT Integration Specialist\n\u2022 Arla ERP Contact\n\u2022 Security Officer\",4/23/2026,4/29/2026,0,84e88124-b0ef-486d-a790-60f5ec2ca6ed,PlanExe\n3e322b3d-0735-40c5-becc-6f46fb148a03,Conduct Mandatory Synchronization Kick-off,\"Conduct Mandatory Synchronization Kick-off\n\nDescription:\nExecute the first formal planning meeting between the QA Hub Logistics team and Arla Procurement to officially commit to the September 3rd data exchange deadline and review the final integration plan.\n\nResources needed:\n\u2022 Program Manager\n\u2022 Procurement Signatory\n\u2022 QA Logistics Lead\",4/29/2026,5/5/2026,0,3481d2ff-433f-4bd3-938e-61333a8127a3,PlanExe\na0a73a0d-316d-4429-8646-573e37b03197,Obtain Internal Legal Approval for Stakeholder Contracts,,5/5/2026,6/4/2026,0,d29e4196-ef8f-4c4f-93e5-e95381348182,PlanExe\n4692a102-4390-4562-8065-dfe856f56fe4,Draft preemptive contracts with simplified terms,\"Draft preemptive contracts with simplified terms\n\nDescription:\nDevelop initial, simplified contract templates specifically for the reverse logistics agreements needed for QA hubs and municipal cooperation, focusing on liability and scope definitions to reduce review time.\n\nResources needed:\n\u2022 Internal Legal Counsel\n\u2022 Reverse Logistics Lead\n\u2022 Contract Management Specialist\",5/5/2026,5/15/2026,0,a0a73a0d-316d-4429-8646-573e37b03197,PlanExe\n8cb0ba8b-14d2-42cd-895e-f7fd5151ef66,Engage Legal Counsel early on indemnity clauses,\"Engage Legal Counsel early on indemnity clauses\n\nDescription:\nSchedule dedicated meetings with Internal Legal/Compliance team to obtain preliminary sign-off on critical indemnity and contamination liability clauses before engaging external parties. This addresses risks associated with cleaning processes.\n\nResources needed:\n\u2022 Internal Legal Counsel (Mandatory Signatory)\n\u2022 QA Hub Operations Lead\",5/15/2026,5/25/2026,0,4692a102-4390-4562-8065-dfe856f56fe4,PlanExe\n1a08f86b-2c95-47fc-b385-aad9c4374a4a,Establish Stakeholder Review Fast Track,\"Establish Stakeholder Review Fast Track\n\nDescription:\nFormalize a 'fast-track' sign-off process with Legal and Brand teams for all contract documentation, allocating specific review slots to ensure compliance reviews do not exceed a 10-day turnaround time during the Q1 critical path.\n\nResources needed:\n\u2022 Project Manager\n\u2022 Brand Compliance Officer\n\u2022 Legal Review Coordinator\",5/25/2026,6/4/2026,0,a0a73a0d-316d-4429-8646-573e37b03197,PlanExe\n94d4816f-2ce3-4f94-baa3-7f1acef211a9,Logistics and Infrastructure Setup (Builder Path Execution),,6/4/2026,3/13/2027,0,d29e4196-ef8f-4c4f-93e5-e95381348182,PlanExe\nb8947dc5-fa5b-4b23-a8e7-a85ec30fa7bc,Negotiate and Execute SLAs with Municipal Waste Authorities (60% Capacity Target),,6/4/2026,8/3/2026,0,94d4816f-2ce3-4f94-baa3-7f1acef211a9,PlanExe\nfc2ae84e-8bed-4d02-9ea4-948ab9705ad0,Draft tiered SLA proposals,\"Draft tiered SLA proposals\n\nDescription:\nDevelop three distinct Service Level Agreement (SLA) proposals for municipal partners, ranging from the minimum acceptable level to an optimized proposal including financial incentives for staffing guarantees. These tiers will inform the negotiation strategy.\n\nResources needed:\n\u2022 Legal Counsel Support\n\u2022 Financial Controller\n\u2022 Municipal Relations Manager\",6/4/2026,6/19/2026,0,b8947dc5-fa5b-4b23-a8e7-a85ec30fa7bc,PlanExe\n680a9c8b-3c41-4461-9f45-f1daa5adcc6b,Initiate direct municipal negotiations,\"Initiate direct municipal negotiations\n\nDescription:\nBegin formal discussions with the 10 municipalities identified as handling the majority of the expected 60% volume allocation. The focus is securing early commitment on staffing coefficients and penalty clauses based on the drafted tiered proposals.\n\nResources needed:\n\u2022 Municipal Relations Manager\n\u2022 Expert 5 (Municipal Negotiator)\n\u2022 Contract Templates\",6/19/2026,7/4/2026,0,fc2ae84e-8bed-4d02-9ea4-948ab9705ad0,PlanExe\n97ddc5a3-3703-4d8e-9ac3-2814729b5302,Conduct regulatory compliance audit of SLAs,\"Conduct regulatory compliance audit of SLAs\n\nDescription:\nEngage the Circular Economy Consultant to audit the drafted SLAs against current Danish EPR and waste tax regulations, focusing specifically on mitigating commercial waste classification risk associated with the collected crates.\n\nResources needed:\n\u2022 Circular Economy Consultant (Expert 1)\n\u2022 Legal Counsel Support\n\u2022 Draft SLA Documents\",7/4/2026,7/19/2026,0,680a9c8b-3c41-4461-9f45-f1daa5adcc6b,PlanExe\nf2641ec3-7c04-4098-a5fd-cfe8eb4607f5,Secure final binding municipal SLA documents,\"Secure final binding municipal SLA documents\n\nDescription:\nFinalize all negotiations, incorporate required legal amendments following the regulatory audit, and secure legally binding signatures for all target municipalities, ensuring the 60% capacity dependency target is met.\n\nResources needed:\n\u2022 Municipal Relations Manager\n\u2022 Internal Legal Counsel\n\u2022 Project Sponsor Sign-off\",7/19/2026,8/3/2026,0,b8947dc5-fa5b-4b23-a8e7-a85ec30fa7bc,PlanExe\na7a17900-40ad-4c3d-ab8a-93e253ddadb2,Secure and Establish Three Centralized Temporary Quality Assessment (QA) Hubs,,8/3/2026,11/3/2026,0,b8947dc5-fa5b-4b23-a8e7-a85ec30fa7bc,PlanExe\n691806b5-68aa-4212-a7a5-7f9cffb00615,Scout and shortlist QA hub sites,\"Scout and shortlist QA hub sites\n\nDescription:\nIdentify and evaluate potential industrial or warehouse spaces that meet the logistical flow requirements, size constraints, and preliminary environmental safety standards for the cleaning and quality assessment process.\n\nResources needed:\n\u2022 Site Scout Team\n\u2022 Logistics Architect\n\u2022 Preliminary Budget Allocation\",8/3/2026,8/26/2026,0,a7a17900-40ad-4c3d-ab8a-93e253ddadb2,PlanExe\nb616484d-db4e-4f73-854a-629bb25b5485,Finalize Lease Agreements for 3 hubs,\"Finalize Lease Agreements for 3 hubs\n\nDescription:\nNegotiate final lease terms, including start dates, cost ceilings, and necessary site preparation allowances, for the three selected hub locations. Secure Letters of Intent (LOI) or binding leases.\n\nResources needed:\n\u2022 Real Estate Negotiator\n\u2022 Legal Counsel\n\u2022 Financial Controller\",8/26/2026,9/18/2026,0,691806b5-68aa-4212-a7a5-7f9cffb00615,PlanExe\n5b9a765d-cee4-42a1-a5ad-9a6488c665da,Execute Site Preparation and Fit-Out,\"Execute Site Preparation and Fit-Out\n\nDescription:\nConduct all necessary site modifications (e.g., flooring reinforcement, utility upgrades, dedicated cleaning zones) required to receive the specialized QA equipment and meet pre-operation checklists.\n\nResources needed:\n\u2022 Site Preparation Contractor\n\u2022 Facilities Manager\n\u2022 Budget Contingency Funds\",9/18/2026,10/11/2026,0,b616484d-db4e-4f73-854a-629bb25b5485,PlanExe\n57c30a73-e010-41b4-b5d5-12c88ee5b187,Secure Local Regulatory Clearances for Hubs,\"Secure Local Regulatory Clearances for Hubs\n\nDescription:\nObtain all necessary local building permits, fire safety certifications, and initial environmental permissions required by municipal authorities to commence operational setup at the three secured sites.\n\nResources needed:\n\u2022 Regulatory & Compliance Assessor\n\u2022 Local Municipality Liaisons\",10/11/2026,11/3/2026,0,a7a17900-40ad-4c3d-ab8a-93e253ddadb2,PlanExe\n4c29ddbb-de0d-4655-9ddb-fa2a32ab52f2,Procure and Deploy QA Hub Operational Resources (Staffing & Equipment),,11/3/2026,2/11/2027,0,a7a17900-40ad-4c3d-ab8a-93e253ddadb2,PlanExe\na30d8ad9-73b0-41af-b32a-3e0540814374,Initiate HR pipeline sourcing campaigns,\"Initiate HR pipeline sourcing campaigns\n\nDescription:\nBegin proactive recruitment and candidate pipeline development for the 27 FTEs required per QA hub location, focusing on logistics, cleaning supervision, and triage roles. This must begin urgently due to anticipated long lead times in specialized industrial HR sourcing.\n\nResources needed:\n\u2022 Dedicated HR Recruitment Lead\n\u2022 Contingency budget for expedited background checks\",11/3/2026,11/28/2026,0,4c29ddbb-de0d-4655-9ddb-fa2a32ab52f2,PlanExe\n43f9d5b0-57a3-41e7-a562-6b3c26b56ebe,Place binding orders for critical QA equipment,\"Place binding orders for critical QA equipment\n\nDescription:\nGenerate and issue binding purchase orders for all necessary, long-lead time capital equipment required for cleaning, drying, inspection, and crating within the QA hubs. Orders must be based on initial site surveys and projected capacity needs.\n\nResources needed:\n\u2022 Procurement Specialist\n\u2022 Head of QA Operations\n\u2022 Capital Expenditure Budget\",11/28/2026,12/23/2026,0,a30d8ad9-73b0-41af-b32a-3e0540814374,PlanExe\nf6bbf484-3f02-43d4-b2c0-178e3f476950,Finalize 3rd Party Logistics (3PL) RFP process,\"Finalize 3rd Party Logistics (3PL) RFP process\n\nDescription:\nManage the competitive Requests for Proposal (RFP) process for contracted 3rd-party logistics services responsible for conveying recovered crates from collection points to the QA Hubs, and processed crates to onward use/recycling centers. Ensure volume surge clauses are clearly defined.\n\nResources needed:\n\u2022 Logistics Manager\n\u2022 Legal Counsel (for contract review)\n\u2022 3BL Vendor Shortlist\",12/23/2026,1/17/2027,0,43f9d5b0-57a3-41e7-a562-6b3c26b56ebe,PlanExe\n8ec31568-beeb-4315-8020-47364531b0ab,Negotiate 3PL contracts with defined service levels,\"Negotiate 3PL contracts with defined service levels\n\nDescription:\nReview bids received from the RFP, conduct final negotiations focused on cost caps, service time windows, and contingency route planning, leading to the execution of legally binding conveyance contracts.\n\nResources needed:\n\u2022 Procurement Specialist\n\u2022 Financial Controller\n\u2022 Signed 3PL Contracts\",1/17/2027,2/11/2027,0,4c29ddbb-de0d-4655-9ddb-fa2a32ab52f2,PlanExe\n8be90d69-43af-42e4-a26b-f098bb2ddea7,Finalize 3rd Party Logistics Contracts for QA Hub Conveyance,,2/11/2027,3/13/2027,0,94d4816f-2ce3-4f94-baa3-7f1acef211a9,PlanExe\nb0256885-365e-40b6-9e9a-e4b63af0f217,RFP for Logistics Capacity,\"RFP for Logistics Capacity\n\nDescription:\nInitiate a competitive Request for Proposal (RFP) process to vet and select at least three pre-qualified specialty 3rd-party logistics (3PL) firms capable of handling the specialized conveyance requirements for Arla crates between QA hubs and final processing centers.\n\nResources needed:\n\u2022 Procurement Specialist\n\u2022 Reverse Logistics Lead\n\u2022 Legal Counsel\",2/11/2027,2/21/2027,0,8be90d69-43af-42e4-a26b-f098bb2ddea7,PlanExe\n14d6daa9-c409-49d2-bd23-e540802dec15,Finalize Volume & Contingency Contracts,\"Finalize Volume & Contingency Contracts\n\nDescription:\nNegotiate comprehensive contracts with selected 3PL partners. Crucially, ensure clear clauses define pricing stability for predicted Q3/Q4 volumes, and stipulate penalty/response times for surge capacity needs or emergency rerouting due to QA hub overloads.\n\nResources needed:\n\u2022 Procurement Specialist\n\u2022 Financial Controller\n\u2022 Legal Counsel\",2/21/2027,3/3/2027,0,b0256885-365e-40b6-9e9a-e4b63af0f217,PlanExe\nb77a265c-aaf3-4ce1-9006-237d0ba6e872,Pre-Launch Logistics Data Synchronization,\"Pre-Launch Logistics Data Synchronization\n\nDescription:\nConduct a dry-run data exchange between the 3PL scheduling system (or proposed interface) and the internal Arla logistics tracking system to confirm real-time visibility and accurate cost reporting are established before the national rollout begins.\n\nResources needed:\n\u2022 IT Systems Analyst\n\u2022 Logistics Operations Lead\n\u2022 3rd-Party Logistics Vendor\",3/3/2027,3/13/2027,0,8be90d69-43af-42e4-a26b-f098bb2ddea7,PlanExe\n92725e98-ad52-4f5d-b14e-9051701f1db3,Stakeholder Integration and Incentive Framework Development,,3/13/2027,5/22/2027,0,94d4816f-2ce3-4f94-baa3-7f1acef211a9,PlanExe\nd1d8b3bc-a93f-4deb-b965-258a5ba39c75,Define and Communicate Retailer Compliance Floor and Subsidy Structure,,3/13/2027,3/29/2027,0,92725e98-ad52-4f5d-b14e-9051701f1db3,PlanExe\n839b4ff8-8a78-487d-813e-7a70ae54d070,Design Retailer Participation Fee Structure,\"Design Retailer Participation Fee Structure\n\nDescription:\nDevelop the fixed, low-level 'Compliance Floor' fee proposal that all participating supermarkets must agree to. This fee covers operational setup costs (like providing bins/signage) and acts as a commitment mechanism, separate from the performance subsidy.\n\nResources needed:\n\u2022 Financial Analyst\n\u2022 Stakeholder Integration Manager\",3/13/2027,3/17/2027,0,d1d8b3bc-a93f-4deb-b965-258a5ba39c75,PlanExe\n766edad4-3123-468f-b0c0-4a3be75e0b83,Calculate Performance Subsidy Tiers,\"Calculate Performance Subsidy Tiers\n\nDescription:\nAnalyze Q2 pilot data to mathematically derive the optimal structure for the performance-based subsidy (e.g., 50 DKK for achieving >100 returns/week). This must maximize staff compliance without causing significant budget deviation.\n\nResources needed:\n\u2022 Data Analyst\n\u2022 Behavioral Economics Modeler\",3/17/2027,3/21/2027,0,839b4ff8-8a78-487d-813e-7a70ae54d070,PlanExe\nbc1a8a0b-0d9c-4d51-8779-5350f5696706,Secure Retailer Agreement on Dual Structure,\"Secure Retailer Agreement on Dual Structure\n\nDescription:\nPresent the finalized dual structure (Fixed Floor + Performance Subsidy) to major retail groups (Salling, Coop, Rema 1000). Obtain written acknowledgment that they accept the structure and the related operational responsibilities.\n\nResources needed:\n\u2022 Retail Supply Chain Specialist\n\u2022 Legal Counsel\",3/21/2027,3/25/2027,0,766edad4-3123-468f-b0c0-4a3be75e0b83,PlanExe\nb66077fd-eddc-4df4-afaf-875f2805cc28,Define Escalation Path for Non-Compliance,\"Define Escalation Path for Non-Compliance\n\nDescription:\nDocument clear, tiered actions the project team will take against store managers or locations that fail to maintain the minimum 'Compliance Floor' commitment, including communication frequency and ultimate withdrawal of support materials.\n\nResources needed:\n\u2022 Stakeholder Integration Manager\n\u2022 Retail Account Managers\",3/25/2027,3/29/2027,0,d1d8b3bc-a93f-4deb-b965-258a5ba39c75,PlanExe\n4552f201-d162-46bc-a432-b6b33e2af4e8,Secure Retailer Acknowledgment for Collateral Placement,,3/29/2027,4/16/2027,0,d1d8b3bc-a93f-4deb-b965-258a5ba39c75,PlanExe\nb14a5eda-f515-4b8c-b797-0232dd380914,Draft retail collateral for pre-approval,\"Draft retail collateral for pre-approval\n\nDescription:\nDevelop final versions of all in-store signage, Bins, and visual guides which are intended for placement at supermarket collection points, ensuring Arla Foundation branding consistency.\n\nResources needed:\n\u2022 Marketing Design Team\n\u2022 Brand Compliance Officer\",3/29/2027,4/4/2027,0,4552f201-d162-46bc-a432-b6b33e2af4e8,PlanExe\n25ed83b8-dffc-458f-97d3-b4eafdf55cd8,Coordinate pre-approval review cycle,\"Coordinate pre-approval review cycle\n\nDescription:\nSubmit all finalized marketing and signage collateral to the three major retailer groups (Salling Group, Coop, Rema 1000) within the required 30-day window prior to intended Q3 placement.\n\nResources needed:\n\u2022 Retail Supply Chain Specialist\n\u2022 Project Coordinator\",4/4/2027,4/10/2027,0,b14a5eda-f515-4b8c-b797-0232dd380914,PlanExe\n7a1a9192-580e-4eec-bc78-4f64729da7cc,Secure formal written retailer sign-off,\"Secure formal written retailer sign-off\n\nDescription:\nTrack progress across all three major retail partners, manage feedback loops for minor revisions, and secure the final, explicit written approval to proceed with collateral deployment according to the national rollout schedule.\n\nResources needed:\n\u2022 Stakeholder Integration Manager\n\u2022 Legal Counsel\",4/10/2027,4/16/2027,0,4552f201-d162-46bc-a432-b6b33e2af4e8,PlanExe\n8cef95be-1bd9-42ae-b3bb-97c69db0e37a,Finalize Donation Budget Cap and Sweep Trigger Documentation with Finance,,4/16/2027,4/25/2027,0,4552f201-d162-46bc-a432-b6b33e2af4e8,PlanExe\nc83828b1-7385-4f0f-abe5-b637d9fa0dfc,Define Donation Sweep Thresholds,\"Define Donation Sweep Thresholds\n\nDescription:\nEstablish the exact quantitative metrics and conditions under which the project team is authorized to deploy the contingency budget (up to DKK 200,000) to increase the consumer donation incentive above the baseline DKK 5 rate during Q4. This requires aligning consumer elasticity data with the overall budget ceiling.\n\nResources needed:\n\u2022 Behavioral Economics Modeler\n\u2022 Financial Controller\n\u2022 Incentive & Consumer Compliance Specialist\",4/16/2027,4/19/2027,0,8cef95be-1bd9-42ae-b3bb-97c69db0e37a,PlanExe\na0cd386a-8ee3-4c6b-9460-0663cb4d3f0f,Finance Sign-Off on Sweep Mechanism,\"Finance Sign-Off on Sweep Mechanism\n\nDescription:\nPresent the two pre-modeled donation sweep scenarios (based on achieved Q3 recovery rates) to Arla Finance leadership. Secure formal, written commitment and authorization for the mechanism, specifying the process for accessing the contingency funds without requiring emergency re-approval.\n\nResources needed:\n\u2022 Financial Controller\n\u2022 Arla Foods Programme Owner\n\u2022 Legal Counsel\",4/19/2027,4/22/2027,0,c83828b1-7385-4f0f-abe5-b637d9fa0dfc,PlanExe\nb4fda2db-b228-4ae5-b06a-5273349e23ef,Document Final Donation Calculation Formula,\"Document Final Donation Calculation Formula\n\nDescription:\nProduce the final, legally binding documentation detailing how the total DKK 500,000 minimum donation (and any subsequent authorized uplift funds) will be calculated based on validated crate returns and transferred to the Arla Foundation at year-end. This must align with Foundation reporting requirements.\n\nResources needed:\n\u2022 Arla Foundation Liaison\n\u2022 Financial Controller\n\u2022 Legal Counsel\",4/22/2027,4/25/2027,0,8cef95be-1bd9-42ae-b3bb-97c69db0e37a,PlanExe\nd30717a3-8191-4821-9a8c-0b98fb224bda,Calibrate Tiered Incentive Structure Based on Q2 Pilot Results,,4/25/2027,5/22/2027,0,92725e98-ad52-4f5d-b14e-9051701f1db3,PlanExe\n19c81ef9-e251-4a6f-92c5-338a9a353ce2,Define Q2 pilot success thresholds,\"Define Q2 pilot success thresholds\n\nDescription:\nEstablish clear, quantitative 'pass/fail' benchmarks for consumer participation rate, contamination levels, and digital tool usage based on defined Q1 targets. These thresholds will determine if the incentive structure is validated or requires immediate high-level revision.\n\nResources needed:\n\u2022 Incentive Specialist\n\u2022 Financial Controller\n\u2022 Data Analyst\",4/25/2027,5/4/2027,0,d30717a3-8191-4821-9a8c-0b98fb224bda,PlanExe\n09180184-b66d-42a1-86a1-58f6e0a5bd0f,Develop backup incentive strategy contingency,\"Develop backup incentive strategy contingency\n\nDescription:\nDesign two pre-modeled alternative incentive structures (e.g., increasing the donation amount or adding a secondary reward mechanism) that can be swiftly deployed if pilot results indicate the static DKK 5 incentive fails critically.\n\nResources needed:\n\u2022 Behavioral Economics Modeler\n\u2022 Legal Counsel\n\u2022 Arla Foundation Liaison\",5/4/2027,5/13/2027,0,19c81ef9-e251-4a6f-92c5-338a9a353ce2,PlanExe\n447af68b-69fb-4a29-bb2f-1fb37897a9b6,Formalize budget sweep authorization trigger,\"Formalize budget sweep authorization trigger\n\nDescription:\nDefine the precise, documented trigger (e.g., volume tracking falling X% below forecast for Y consecutive weeks) that authorizes the immediate unlocking of contingency funds to boost the consumer incentive during Q3/Q4.\n\nResources needed:\n\u2022 Financial Controller\n\u2022 Project Sponsor\n\u2022 Legal Counsel\",5/13/2027,5/22/2027,0,d30717a3-8191-4821-9a8c-0b98fb224bda,PlanExe\n19334c50-dd99-4e21-bcd2-38f3a6bb115e,Consumer Engagement and Identification Tools Deployment,,5/22/2027,9/30/2027,0,92725e98-ad52-4f5d-b14e-9051701f1db3,PlanExe\n1a7d5d1d-2381-4787-b332-6b19bb9cbb2b,Develop Provocative Marketing Collateral ('Garden Furniture' Narrative),,5/22/2027,6/21/2027,0,19334c50-dd99-4e21-bcd2-38f3a6bb115e,PlanExe\n8aa7ae63-f693-49dd-9960-f97465aafb2b,Focus group testing of core narrative,\"Focus group testing of core narrative\n\nDescription:\nConduct focus groups using diverse consumer segments to rigorously test the 'Garden Furniture' narrative's impact, clarity, and potential for negative backlash, ensuring alignment with Arla Foundation values.\n\nResources needed:\n\u2022 External Focus Group Moderator\n\u2022 Consumer Panel Access\n\u2022 Pre-tested Messaging Scripts\",5/22/2027,6/1/2027,0,1a7d5d1d-2381-4787-b332-6b19bb9cbb2b,PlanExe\n8e0cf02a-d2da-42f0-8ffe-d210e96bae67,Secure legal/brand collateral sign-off,\"Secure legal/brand collateral sign-off\n\nDescription:\nObtain formal, written sign-off from Arla Legal and Brand teams on the final provocative marketing creative and all associated public-facing content, ensuring regulatory compliance prior to production.\n\nResources needed:\n\u2022 Arla Legal Counsel Time\n\u2022 Arla Brand Manager Time\n\u2022 Finalized Creative Assets (Print/Digital)\",6/1/2027,6/11/2027,0,8aa7ae63-f693-49dd-9960-f97465aafb2b,PlanExe\n68009c1c-1c29-416a-8d82-8c0b179ac837,Pre-order/pre-production of physical assets,\"Pre-order/pre-production of physical assets\n\nDescription:\nPlace final binding orders for all required physical campaign materials (signage, drop-off bins, instructional posters) based on finalized content, adhering to long lead times for high-volume outdoor printing.\n\nResources needed:\n\u2022 Procurement Specialist\n\u2022 Printing and Signage Vendor Contracts\",6/11/2027,6/21/2027,0,1a7d5d1d-2381-4787-b332-6b19bb9cbb2b,PlanExe\nee6c7642-152f-4384-872f-7fe2430e229b,Design and Build Social Media Comparative Visual Identification Guide,,6/21/2027,7/19/2027,0,1a7d5d1d-2381-4787-b332-6b19bb9cbb2b,PlanExe\n78969824-b731-4682-9f22-99167558d9ce,Design high-contrast visual guide,\"Design high-contrast visual guide\n\nDescription:\nDevelop the structure and visual assets for the digital identification guide. This must focus on high-contrast, easy-to-read graphical representation of acceptable vs. unacceptable crates, optimized for smartphone viewing to ensure clarity across diverse consumer and retail staff segments.\n\nResources needed:\n\u2022 Digital Designer\n\u2022 Content Strategist\n\u2022 Brand Reviewer\",6/21/2027,6/28/2027,0,ee6c7642-152f-4384-872f-7fe2430e229b,PlanExe\ncffa7f3b-c678-414c-95ed-d0a6c5e3b3a3,Test guide readability with users,\"Test guide readability with users\n\nDescription:\nConduct usability testing focused on visual clarity and comprehension speed. Test the guide with both target consumers and frontline supermarket staff to identify and resolve comprehension friction points before national launch.\n\nResources needed:\n\u2022 Usability Testing Panel (Consumers + Staff)\n\u2022 Digital Engagement Architect\",6/28/2027,7/5/2027,0,78969824-b731-4682-9f22-99167558d9ce,PlanExe\n11c7e598-f87b-4bc2-b2e7-339bcd7fb53b,Integrate guide with QR verification tool,\"Integrate guide with QR verification tool\n\nDescription:\nEnsure the finalized visual guide is seamlessly integrated into the user flow of the QR-code 'Killer Application.' The guide should be the default resource presented immediately after a user scans an unsuccessful code or before the final return confirmation.\n\nResources needed:\n\u2022 Software Developer\n\u2022 Systems Integrator\n\u2022 UX Tester\",7/5/2027,7/12/2027,0,cffa7f3b-c678-414c-95ed-d0a6c5e3b3a3,PlanExe\n319c368e-640b-4a87-9a9d-f83fab4eb7e0,Final compliance sign-off for assets,\"Final compliance sign-off for assets\n\nDescription:\nSecure final written approval from Legal, Brand, and the Arla Foundation communications team confirming that the visual identification guide meets all regulatory, branding, and partnership messaging standards prior to mass production/deployment.\n\nResources needed:\n\u2022 Legal Counsel\n\u2022 Brand Manager\n\u2022 Arla Foundation Liaison\",7/12/2027,7/19/2027,0,ee6c7642-152f-4384-872f-7fe2430e229b,PlanExe\n47f7b204-8bd2-4102-800c-0ba25703a213,Develop and Test QR-Code 'Killer Application' Verification Tool,,7/19/2027,8/16/2027,0,ee6c7642-152f-4384-872f-7fe2430e229b,PlanExe\n4e3975fc-48fe-49bf-914e-92120a3bd5d5,Integrate QR code verification tool APIs,\"Integrate QR code verification tool APIs\n\nDescription:\nIdentify and secure necessary API access documentation from major retail partners (e.g., POS or loyalty system providers) required for the QR code verification system's technical hook-in. This must be done before full development commences.\n\nResources needed:\n\u2022 System Architect\n\u2022 Retail Technical Liaisons\n\u2022 Preliminary API documentation from retailers\",7/19/2027,7/26/2027,0,47f7b204-8bd2-4102-800c-0ba25703a213,PlanExe\n1021f5c9-3f27-4c29-9940-65d1c4879d72,Develop frictionless verification software,\"Develop frictionless verification software\n\nDescription:\nDesign and build the web-app or SMS-based verification workflow accessible via the QR code. Focus on a 'no-download' path achieving a high success rate for immediate logging of the return.\n\nResources needed:\n\u2022 Lead Developer\n\u2022 UX/UI Designer\n\u2022 Cloud hosting infrastructure\",7/26/2027,8/2/2027,0,4e3975fc-48fe-49bf-914e-92120a3bd5d5,PlanExe\n9212fcfa-f36f-42b4-b2e1-5d98dc7d1441,Run integration spike and feasibility test,\"Run integration spike and feasibility test\n\nDescription:\nConduct a dedicated one-week technical spike session where the verification tool is tested end-to-end against simulated retail back-ends using secured credentials, focusing solely on data integrity and latency.\n\nResources needed:\n\u2022 System Architect\n\u2022 QA Tester\n\u2022 Simulated retail environment access\",8/2/2027,8/9/2027,0,1021f5c9-3f27-4c29-9940-65d1c4879d72,PlanExe\ne553d045-393d-49d7-abfc-44ee9a7cce81,Finalize tool readiness for Q2 Pilot,\"Finalize tool readiness for Q2 Pilot\n\nDescription:\nEnsure the integrated QR code verification tool meets all internal standards for stability, security, and user-friendliness, preparing all deployment artifacts for the Q2 pilot launch.\n\nResources needed:\n\u2022 Reverse Logistics Lead\n\u2022 Digital Engagement Architect\n\u2022 Security Auditor\",8/9/2027,8/16/2027,0,47f7b204-8bd2-4102-800c-0ba25703a213,PlanExe\n8b8827b2-6a9c-4678-a06e-7afc516cbaf4,Execute Q2 Pilot Launch of Marketing Campaign and Digital Tools,,8/16/2027,9/30/2027,0,19334c50-dd99-4e21-bcd2-38f3a6bb115e,PlanExe\n7a5ca5c5-5e0f-4580-bb8c-910aa34eaaad,Pilot incentive testing and communication,\"Pilot incentive testing and communication\n\nDescription:\nExecute the collection and incentive mechanism within the Q2 pilot zones. This involves tracking consumer participation, monitoring the use of the physical and digital guides, and ensuring the local communication strategy is effective at driving initial volume.\n\nResources needed:\n\u2022 Pilot Zone Field Support Teams\n\u2022 Local Marketing Coordinators\n\u2022 Tracking software for DKK 5 donations\",8/16/2027,8/31/2027,0,8b8827b2-6a9c-4678-a06e-7afc516cbaf4,PlanExe\n5dd33bdd-97f8-47cf-89d5-795ac67b1451,Audit pilot performance metrics,\"Audit pilot performance metrics\n\nDescription:\nConduct a detailed audit of data collected during the Q2 pilot. Focus on key measurements: consumer participation rate, contamination levels, efficacy of the in-store collection points, and consumer feedback on ease-of-use for digital tools.\n\nResources needed:\n\u2022 QA Triage Auditors\n\u2022 Data Analyst\n\u2022 Consumer Feedback Specialist\",8/31/2027,9/15/2027,0,7a5ca5c5-5e0f-4580-bb8c-910aa34eaaad,PlanExe\n3087b439-2407-4fdb-8f01-f6eba01d10af,Adjust national rollout strategy,\"Adjust national rollout strategy\n\nDescription:\nImplement mandatory procedural changes and strategy calibration based on the quantitative and qualitative findings from the pilot audit. This includes finalizing the incentive structure, revising training materials for retail partners, and approving the final national marketing rollout plan.\n\nResources needed:\n\u2022 Cross-functional Learning Review Board\n\u2022 Training Material Developer\n\u2022 Project Manager\",9/15/2027,9/30/2027,0,8b8827b2-6a9c-4678-a06e-7afc516cbaf4,PlanExe\n39caf833-1344-49b6-a26a-b40e7dae4903,Pilot Operation and Pre-Rollout Readiness,,9/30/2027,1/16/2028,0,19334c50-dd99-4e21-bcd2-38f3a6bb115e,PlanExe\neadd23e5-1511-4e5d-9d97-fcc014b09729,Conduct Q2 Pilot Collection Across Sample Municipal/Retail Zones,,9/30/2027,11/1/2027,0,39caf833-1344-49b6-a26a-b40e7dae4903,PlanExe\nff1917c9-bf8d-4233-97e1-c65e620445fe,Hyper-local pilot communication,\"Hyper-local pilot communication\n\nDescription:\nDevelop and execute hyper-local digital communication campaigns targeting consumers exclusively within the defined Q2 pilot zones to ensure high initial awareness and participation rates in collection activities.\n\nResources needed:\n\u2022 Digital Marketing Specialist\n\u2022 Local Campaign Budget (Pilot)\n\u2022 Pilot Zone Mapping Data\",9/30/2027,10/8/2027,0,eadd23e5-1511-4e5d-9d97-fcc014b09729,PlanExe\n19914bc4-82ad-4815-90f7-f8aa5414b4f3,Small-scale collection setup,\"Small-scale collection setup\n\nDescription:\nEstablish the initial, small-scale reverse logistics network tailored for the pilot, including temporary micro-sort locations and scheduling high-frequency collection runs using minimal, dedicated contracted transport.\n\nResources needed:\n\u2022 Logistics Coordinator\n\u2022 Dedicated Small-Volume Transport Contract\n\u2022 Pilot Area Site Permits\",10/8/2027,10/16/2027,0,ff1917c9-bf8d-4233-97e1-c65e620445fe,PlanExe\n1046a863-9f18-4aa5-a47e-e709cc4ef863,Rigorous pilot QA auditing,\"Rigorous pilot QA auditing\n\nDescription:\nImplement immediate and rigorous contamination auditing on all pilot volume using designated QA personnel. Establish daily synchronization meetings between pilot logistics and QA hub management to adjust throughput rates based on initial contamination findings.\n\nResources needed:\n\u2022 QA Triage Personnel\n\u2022 Contamination Audit Checklists\n\u2022 Pilot Logistics Lead\",10/16/2027,10/24/2027,0,19914bc4-82ad-4815-90f7-f8aa5414b4f3,PlanExe\nc833a5bb-48e1-4438-b984-7716dc46d357,Pilot procedural refinement,\"Pilot procedural refinement\n\nDescription:\nConduct a formal 'Lessons Learned' review board immediately after the pilot phase. This must result in defined procedural changes for identification or sorting, authorized for national rollout implementation with a potential one-week pause in national ramp-up if critical changes are mandated.\n\nResources needed:\n\u2022 Cross-functional Review Board (Operations, QA, Legal)\n\u2022 Procedural Manual Template\n\u2022 Decision Sign-off Authority\",10/24/2027,11/1/2027,0,eadd23e5-1511-4e5d-9d97-fcc014b09729,PlanExe\n7163ed2b-a81e-4861-9ced-76b06e1b001b,Audit Pilot Performance Against Identification and Compliance Metrics,,11/1/2027,11/21/2027,0,eadd23e5-1511-4e5d-9d97-fcc014b09729,PlanExe\nb4280465-7485-4d3c-a055-caac0678ca12,Quantify Pilot Contamination Rates,\"Quantify Pilot Contamination Rates\n\nDescription:\nEstablish precise contamination levels found in pilot returns, categorizing by source (e.g., foreign material, unacceptable cleaning residues). This requires immediate, rigorous QA triage auditing on all pilot volume using designated Level 1 sorting personnel.\n\nResources needed:\n\u2022 Designated QA Triage Personnel\n\u2022 QA Hub Contamination Audit Forms\n\u2022 Basic Sorting Equipment\",11/1/2027,11/6/2027,0,7163ed2b-a81e-4861-9ced-76b06e1b001b,PlanExe\n90558c06-7979-4005-bce7-765079554975,Audit QA Throughput Versus Plan,\"Audit QA Throughput Versus Plan\n\nDescription:\nCompare the actual processing speed (crates cleaned/inspected per hour) achieved during the pilot against the required throughput rates necessary for the full national launch to meet volume targets. Identify the primary bottleneck (cleaning, inspection, or storage).\n\nResources needed:\n\u2022 Reverse Logistics Lead\n\u2022 QA Hub Operations Manager\n\u2022 Pilot Throughput Monitoring Dashboard\",11/6/2027,11/11/2027,0,b4280465-7485-4d3c-a055-caac0678ca12,PlanExe\n5e737590-fd36-4b23-9d45-6737cb56e3ec,Adjust Operational Procedures Based on Audit,\"Adjust Operational Procedures Based on Audit\n\nDescription:\nBased on the throughput audit and contamination findings, formulate mandatory procedural adjustments for QA Hub management, including revised cleaning protocols or staffing coefficients required for the national scale-up.\n\nResources needed:\n\u2022 Circular Economy Consultant\n\u2022 QA Hub System Architect\n\u2022 Cleaning Agent Certification Lead\",11/11/2027,11/16/2027,0,90558c06-7979-4005-bce7-765079554975,PlanExe\n58c954cf-09de-43a4-9c44-a8864335cb90,Formalize Learning Sign-off,\"Formalize Learning Sign-off\n\nDescription:\nConduct a documented review meeting with all workstream leads (Logistics, QA, Consumer Incentive) to formally approve the revised operational procedures and sign off that all critical pilot shortcomings have been addressed prior to commencing national rollout preparation.\n\nResources needed:\n\u2022 Project Manager\n\u2022 Workstream Leads (cross-functional)\n\u2022 Meeting Minutes & Action Tracker\",11/16/2027,11/21/2027,0,7163ed2b-a81e-4861-9ced-76b06e1b001b,PlanExe\nec07c54a-ea0b-4218-81d0-6bb1fb2d9010,Obtain EPA Reuse Certification (Dependency Check),,11/21/2027,12/27/2027,0,7163ed2b-a81e-4861-9ced-76b06e1b001b,PlanExe\nd6aafd2e-c08e-441d-80e3-223e877bc5a2,Submit pilot cleaning data proactively,\"Submit pilot cleaning data proactively\n\nDescription:\nProactively submit the preliminary data documenting the efficiency and efficacy of the utilized cleaning agents during the Q2 pilot phase to the Danish EPA. This aims to preemptively address potential queries or requests for supplementary testing data related to contamination efficacy, ensuring the reuse certification stays on track.\n\nResources needed:\n\u2022 Regulatory & Compliance Assessor\n\u2022 Circular Economy Consultant (Expert 1)\n\u2022 Pilot Cleaning Performance Data\",11/21/2027,12/3/2027,0,ec07c54a-ea0b-4218-81d0-6bb1fb2d9010,PlanExe\ncc2ab9b4-7e7c-4955-b1a8-b11156e4cfe3,Prepare contingency cleaning protocol,\"Prepare contingency cleaning protocol\n\nDescription:\nDevelop an alternative, low-volume cleaning protocol suitable only for pilot-scale material processing. This is a contingency measure designed to ensure the operational audit (QA Hub processing) can still proceed even if the final, preferred EPA reuse certification is delayed past the dependency date.\n\nResources needed:\n\u2022 Reverse Logistics & QA Operations Lead\n\u2022 Cleaning Agents Technical Specialist\n\u2022 QA Hub Operations Team\",12/3/2027,12/15/2027,0,d6aafd2e-c08e-441d-80e3-223e877bc5a2,PlanExe\nb275357e-84e6-4c9f-ac82-e17311e9638c,Address EPA feedback and secure certification,\"Address EPA feedback and secure certification\n\nDescription:\nManage all subsequent communication and documentation required by the Danish EPA following the initial submission review. This includes responding to requests for clarification and securing the final, written reuse certification sign-off by the established dependency date.\n\nResources needed:\n\u2022 Regulatory & Compliance Assessor\n\u2022 Legal Counsel\n\u2022 Danish Environmental Protection Agency (EPA)\",12/15/2027,12/27/2027,0,ec07c54a-ea0b-4218-81d0-6bb1fb2d9010,PlanExe\n99ff4470-1682-46cc-b8e9-57d8575ffd1a,Implement Q2 Learnings into Full National Rollout Procedures,,12/27/2027,1/16/2028,0,39caf833-1344-49b6-a26a-b40e7dae4903,PlanExe\nae2a8b3e-1cbc-4be3-a252-ebfa0cc2115e,Finalize Pilot Learning Review Board,\"Finalize Pilot Learning Review Board\n\nDescription:\nConvene a dedicated, cross-functional review board including leads from Logistics, QA, Marketing, and Finance. The board's mandate is to analyze all data collected during the Q2 pilot phase to synthesize actionable insights regarding consumer behavior, operational efficiency, and contamination rates. This must include members authorized to mandate changes to national rollout procedures.\n\nResources needed:\n\u2022 Cross-functional management team (Director/Senior Manager Level)\n\u2022 Pilot Data Analyst Report\n\u2022 Steering Committee Authority\",12/27/2027,1/1/2028,0,99ff4470-1682-46cc-b8e9-57d8575ffd1a,PlanExe\n5af77046-4602-4a35-a3f7-a8242a3fe9b2,Implement Critical Procedural Changes,\"Implement Critical Procedural Changes\n\nDescription:\nBased on the Review Board's findings, immediately revise and update all standard operating procedures (SOPs), training manuals, and visual guides for the national rollout. Focus on incorporating necessary adjustments to identification clarity, triage protocols, and logistics handoffs to prevent recurrence of pilot-identified errors. Ensure all changes are cost-assessed before approval.\n\nResources needed:\n\u2022 SOP Writers/Technical Manual Authors\n\u2022 QA Hub Operations Lead\n\u2022 Budget Steward (for cost assessment)\",1/1/2028,1/6/2028,0,ae2a8b3e-1cbc-4be3-a252-ebfa0cc2115e,PlanExe\n27934b0d-4102-49d1-b209-4b43aeec826f,Mandate and Execute Rollout Pause Decision,\"Mandate and Execute Rollout Pause Decision\n\nDescription:\nIf the Review Board identifies any Tier 1 critical procedural flaws that fundamentally compromise the 40% recovery target or regulatory compliance (e.g., unexpected contamination risk), the Project Manager must formally recommend and enforce a mandatory pause on the national launch timeline. This task includes formal communication of the timeline slip and the required corrective actions to all upper management sponsors.\n\nResources needed:\n\u2022 Project Manager\n\u2022 Executive Sponsor Approval\n\u2022 Formal Communication Templates\",1/6/2028,1/11/2028,0,5af77046-4602-4a35-a3f7-a8242a3fe9b2,PlanExe\n8f3afa96-115d-438c-8e98-c43f26786093,Validate Updated Training Materials,\"Validate Updated Training Materials\n\nDescription:\nDistribute the revised SOPs and training materials to all contracted QA Hub staff, 3rd-party logistics partners, and key retail liaisons. Conduct rapid refresher training sessions (virtual or on-site) to ensure 100% compliance with new procedures before the Q3 national launch moves forward. Track completion rates per stakeholder group.\n\nResources needed:\n\u2022 Training Coordinator\n\u2022 HSE/Compliance Officer\n\u2022 Digital Training Platform Access\",1/11/2028,1/16/2028,0,99ff4470-1682-46cc-b8e9-57d8575ffd1a,PlanExe\ncb2483f9-ffd0-4d69-9d07-3d4a6bd34b93,National Rollout and Supply Chain Integration,,1/16/2028,5/27/2028,0,83e3eb61-0e53-4a94-9e79-281eec7ead03,PlanExe\ne693acfa-75f3-4dfe-97cb-f4525f476b67,Execute Nationwide Campaign Launch (Q3 Start),,1/16/2028,1/24/2028,0,cb2483f9-ffd0-4d69-9d07-3d4a6bd34b93,PlanExe\nbcc2257a-8980-48f9-b6e4-fbf0ff4a2b36,Pre-schedule National Launch Communications,\"Pre-schedule National Launch Communications\n\nDescription:\nFinalize deadlines and required data exchange formats for all distribution centers and key retail/municipal partners 14 days prior to the official Q3 national launch kickoff date. This ensures logistical readiness across all collection channels simultaneously.\n\nResources needed:\n\u2022 Logistics Coordinator\n\u2022 Stakeholder Relations Manager\n\u2022 Distribution Center Contacts\",1/16/2028,1/18/2028,0,e693acfa-75f3-4dfe-97cb-f4525f476b67,PlanExe\nb9052ee0-9040-4a54-80b7-8c6f157f9ef1,Buffer Initial Retailer Onboarding Support,\"Buffer Initial Retailer Onboarding Support\n\nDescription:\nMobilize Field Support teams in high-visibility launch zones to provide immediate, on-site assistance to supermarket staff managing the initial influx of returns and validating in-store signage setup. This mitigates initial operational friction.\n\nResources needed:\n\u2022 Field Support Specialists (3 Teams)\n\u2022 Training Manuals\n\u2022 Travel Budget\",1/18/2028,1/20/2028,0,bcc2257a-8980-48f9-b6e4-fbf0ff4a2b36,PlanExe\ne74137b4-ab10-47bd-b8fa-da3dccde967d,Monitor Q3 Initial Recovery Rate Against Forecast,\"Monitor Q3 Initial Recovery Rate Against Forecast\n\nDescription:\nEstablish a daily tracking dashboard to compare actual crate volumes collected from Municipal and Retail channels against the pre-launch quarterly recovery forecast. Set clear escalation paths for immediate management notification if tracking falls below 90% of the target rate.\n\nResources needed:\n\u2022 Data Analyst\n\u2022 Project Management Software\n\u2022 Executive Reporting Template\",1/20/2028,1/22/2028,0,b9052ee0-9040-4a54-80b7-8c6f157f9ef1,PlanExe\n0a2b6aef-e65d-431d-ba44-4cd2862525c2,Execute Initial Retailer Compliance Audits,\"Execute Initial Retailer Compliance Audits\n\nDescription:\nConduct rapid, remote compliance checks on a sample (30%) of participating supermarkets one week post-launch to verify correct application of in-store signage and proper handling procedures, addressing early signs of non-adherence.\n\nResources needed:\n\u2022 Field Support Specialists\n\u2022 Compliance Checklist Tool\",1/22/2028,1/24/2028,0,e693acfa-75f3-4dfe-97cb-f4525f476b67,PlanExe\nd9f2ecd3-a68a-4f2c-bcb1-e174cc06b745,Manage Daily QA Hub Triage and Cleaning Operations,,1/24/2028,4/9/2028,0,e693acfa-75f3-4dfe-97cb-f4525f476b67,PlanExe\ncfbd6002-5214-45cc-8236-2e4955a1a12f,Daily QA Triage Auditing Protocol,\"Daily QA Triage Auditing Protocol\n\nDescription:\nEstablish a daily, structured audit schedule specifically for material received from different collection streams (municipal vs. retail) to pinpoint sources of contamination immediately post-pilot. Objective: Maintain contamination below 2% to ensure processing efficiency.\n\nResources needed:\n\u2022 QA Hub Lead\n\u2022 Dedicated Triage Auditors\n\u2022 Contamination Tracking Spreadsheet\",1/24/2028,2/12/2028,0,d9f2ecd3-a68a-4f2c-bcb1-e174cc06b745,PlanExe\n02780fa3-4b84-4df2-bbb1-a02bdf39dabf,Adjust Cleaning Protocols Post-Audit,\"Adjust Cleaning Protocols Post-Audit\n\nDescription:\nBased on daily contamination reports, revise the concentration of cleaning agents or the frequency of manual sorting for high-risk batches. This requires rapid decision-making power integrated into the daily shift structure.\n\nResources needed:\n\u2022 Chemical Engineer Consultant\n\u2022 QA Hub Supervisors\n\u2022 Inventory of Cleaning Agents\",2/12/2028,3/2/2028,0,cfbd6002-5214-45cc-8236-2e4955a1a12f,PlanExe\n3e87c714-69ae-4b82-a978-02109e5d1d9f,Synchronization Meetings for Throughput,\"Synchronization Meetings for Throughput\n\nDescription:\nHold mandatory, brief (15-minute) weekly synchronization meetings between the Logistics Lead and the QA Hub Management team to compare actual material throughput against the required daily processing rate needed to meet the annual target.\n\nResources needed:\n\u2022 Logistics Manager\n\u2022 QA Operations Coordinator\n\u2022 Performance Dashboard Access\",3/2/2028,3/21/2028,0,02780fa3-4b84-4df2-bbb1-a02bdf39dabf,PlanExe\n391bd96a-5c7f-4458-8946-54610aaeeafa,Adjusting Sorting Capacity Ratios,\"Adjusting Sorting Capacity Ratios\n\nDescription:\nIf contamination or volume variance persists over three consecutive weeks, adjust the internal labor allocation within the QA hubs (shifting staff from inspection to primary cleaning) to align with the reality of inbound material quality.\n\nResources needed:\n\u2022 FTE Staffing Coordinator\n\u2022 HR Liaison\n\u2022 Weekly Performance Reports\",3/21/2028,4/9/2028,0,d9f2ecd3-a68a-4f2c-bcb1-e174cc06b745,PlanExe\nb9e28795-8991-4145-b354-7d7b2ea8caf9,Conduct System Integration Test: RTSDR to Arla Procurement,,4/9/2028,4/21/2028,0,d9f2ecd3-a68a-4f2c-bcb1-e174cc06b745,PlanExe\n6846f830-ded4-44b6-87c9-c414d308cf92,Define RTSDR Data Structure,\"Define RTSDR Data Structure\n\nDescription:\nCollaborate with Procurement to finalize the exact data fields, format (e.g., CSV, API structure), and required metadata for the 'Ready-to-Deploy Stock Report' (RTSDR) based on recovered crate volume readiness.\n\nResources needed:\n\u2022 QA Hub Logistics Lead\n\u2022 Procurement & Asset Lifecycle Liaison\n\u2022 Data Architect\",4/9/2028,4/12/2028,0,b9e28795-8991-4145-b354-7d7b2ea8caf9,PlanExe\nd5d71f9c-5ae6-413d-adfe-4f0e005c573f,Integrate RTSDR with ERP System,\"Integrate RTSDR with ERP System\n\nDescription:\nConduct technical spike/dry run to integrate the output of the QA Hub tracking system with Arla Procurement's main ERP forecasting software, ensuring data mapping accuracy for production planning.\n\nResources needed:\n\u2022 IT Systems Integrator\n\u2022 Procurement ERP Specialist\n\u2022 QA Hub Data Manager\",4/12/2028,4/15/2028,0,6846f830-ded4-44b6-87c9-c414d308cf92,PlanExe\n6a1a2d4a-40a7-426e-a8e8-9e2ca41517b9,Finalize Data Exchange Protocol,\"Finalize Data Exchange Protocol\n\nDescription:\nFormally establish, document, and secure written agreement on the exact timing, frequency (monthly), and error handling protocol for the 'Ready-to-Deploy Stock Report' exchange, meeting the September 3rd dependency.\n\nResources needed:\n\u2022 Financial Controller\n\u2022 Procurement Liaison\n\u2022 Legal Counsel\",4/15/2028,4/18/2028,0,d5d71f9c-5ae6-413d-adfe-4f0e005c573f,PlanExe\nad46bca7-9090-441e-9869-cba52f7aaa67,Conduct Synchronization Meeting,\"Conduct Synchronization Meeting\n\nDescription:\nHold the first formal, mandatory monthly synchronization meeting between QA Hub Logistics and Arla Procurement post-protocol signing to review initial Q3 data integrity and confirm readiness for Q4 supply chain adjustments.\n\nResources needed:\n\u2022 Project Manager\n\u2022 Logistics Team Lead\n\u2022 Procurement Manager\",4/18/2028,4/21/2028,0,b9e28795-8991-4145-b354-7d7b2ea8caf9,PlanExe\n4f81ea08-6155-44f0-adbe-b70b203b85d5,Execute Q4 Incentive Uplift if Volume Targets are Lagging,,4/21/2028,5/19/2028,0,b9e28795-8991-4145-b354-7d7b2ea8caf9,PlanExe\nd688aaad-d17c-4755-9b40-196da168ba4c,Set volume performance thresholds now,\"Set volume performance thresholds now\n\nDescription:\nEstablish clear quantitative volume performance thresholds for the end of Q3. These thresholds must define the exact level of recovery (e.g., 34% target vs. 30% actual) that triggers the need for an immediate incentive adjustment. This requires defining success metrics derived from the pilot phase.\n\nResources needed:\n\u2022 Financial Controller\n\u2022 Incentive Specialist\n\u2022 Quantitative Analyst\",4/21/2028,4/28/2028,0,4f81ea08-6155-44f0-adbe-b70b203b85d5,PlanExe\ndff2f63e-4db0-4383-b1ec-463833f360f4,Model and pre-approve Q4 incentive uplift scenarios,\"Model and pre-approve Q4 incentive uplift scenarios\n\nDescription:\nDevelop two distinct, pre-tested financial scenarios for boosting the DKK 5 incentive (e.g., Scenario A: Increase to DKK 7; Scenario B: Introduce match voucher). These scenarios should project the required budget increase and expected volume lift to ensure they are ready for instantaneous deployment.\n\nResources needed:\n\u2022 Behavioral Economist\n\u2022 Financial Controller\n\u2022 Legal Counsel\",4/28/2028,5/5/2028,0,d688aaad-d17c-4755-9b40-196da168ba4c,PlanExe\nafa03ddf-0436-4f2a-8bd2-4c71be2c65c8,Secure leadership authorization for potential deployment,\"Secure leadership authorization for potential deployment\n\nDescription:\nPresent the modeled Q4 uplift scenarios (set in Step 2) to Arla Finance and Executive Steering Committee by October 1st. Obtain explicit, binding authorization to deploy the necessary contingency budget funds immediately if the Q3 performance threshold is breached.\n\nResources needed:\n\u2022 Project Director\n\u2022 Executive Sponsor\n\u2022 Budget Steward\",5/5/2028,5/12/2028,0,dff2f63e-4db0-4383-b1ec-463833f360f4,PlanExe\n752e1f04-196b-467e-bfd1-cef9dc8b36a5,Execute confirmed Q4 incentive increase rapidly,\"Execute confirmed Q4 incentive increase rapidly\n\nDescription:\nIf the Q3 performance threshold is breached (as documented in Step 1), immediately activate the pre-approved Q4 incentive uplift scenario chosen in Step 2. Communicate the temporary incentive increase across all channels and implement within 7 days.\n\nResources needed:\n\u2022 Incentive Specialist\n\u2022 PR & Marketing Team\n\u2022 Retail Supply Chain Specialist\",5/12/2028,5/19/2028,0,4f81ea08-6155-44f0-adbe-b70b203b85d5,PlanExe\ndf1b9848-2f4a-4c93-858d-4261e3d6f6e1,Complete Final Donation Transfer to Arla Foundation (Year-End),,5/19/2028,5/27/2028,0,cb2483f9-ffd0-4d69-9d07-3d4a6bd34b93,PlanExe\ned46fbc4-9377-4209-8795-91a96e2bc91a,Finalize Q4 Performance Data,\"Finalize Q4 Performance Data\n\nDescription:\nCompile all official performance metrics from the campaign, including finalized crate recovery volume, verified CO2 reduction data, and audited social media impression counts, ensuring all data sources are reconciled.\n\nResources needed:\n\u2022 QA Hub Audit Lead\n\u2022 Financial Controller\n\u2022 Digital Analytics Specialist\",5/19/2028,5/21/2028,0,df1b9848-2f4a-4c93-858d-4261e3d6f6e1,PlanExe\n7aa43b70-4220-43cc-a91f-160beba5ca00,Conduct Final Donation Calculation Audit,\"Conduct Final Donation Calculation Audit\n\nDescription:\nVerify the total invoiced donation amount based on the final, audited volume and the fixed 5 DKK per-unit rate. This requires reconciliation between the QA Hub output report and the Financial ledger to prevent discrepancies.\n\nResources needed:\n\u2022 Financial Controller\n\u2022 Arla Foundation Liaison\",5/21/2028,5/23/2028,0,ed46fbc4-9377-4209-8795-91a96e2bc91a,PlanExe\na6f12988-2e8f-4224-8a5f-723eb5273240,Approve Final Transfer Documentation,\"Approve Final Transfer Documentation\n\nDescription:\nSecure mandatory sign-off from Arla Finance and the Head of CSR on the final donation figure and the required legal documentation for the transfer of funds to the Arla Foundation.\n\nResources needed:\n\u2022 Head of CSR\n\u2022 Arla Finance Signatory\n\u2022 Legal Counsel\",5/23/2028,5/25/2028,0,7aa43b70-4220-43cc-a91f-160beba5ca00,PlanExe\n895f67dc-940a-4815-a7bb-23b71f2715b1,Execute Funds Transfer and Acknowledge Receipt,\"Execute Funds Transfer and Acknowledge Receipt\n\nDescription:\nInitiate the official banking transfer of the finalized DKK amount to the Arla Foundation account, and obtain formal written acknowledgment confirming successful receipt and allocation.\n\nResources needed:\n\u2022 Treasury Department\n\u2022 Arla Foundation Accounting Team\",5/25/2028,5/27/2028,0,df1b9848-2f4a-4c93-858d-4261e3d6f6e1,PlanExe\n";
+
+    // This must be a string, eg: `"planexe_export.csv"`
+    const GANTT_FILENAME_CSV = "PlanExe_Export_Crate_Recovery_Campaign.csv";
+
+    // This must be json. It's not a string.
+    const GANTT_DATA_DHTMLX = {
+  "tasks": [
+    {
+      "id": "83e3eb61-0e53-4a94-9e79-281eec7ead03",
+      "text": "Crate Recovery Campaign",
+      "custom_tooltip": "<b>Crate Recovery Campaign</b><br><b>Final deliverable:</b><br>40% Crate Recovery",
+      "progress": 0,
+      "open": true,
+      "meta": "",
+      "type": "project"
+    },
+    {
+      "id": "d29e4196-ef8f-4c4f-93e5-e95381348182",
+      "text": "Decision Finalization and Regulatory Frontloading",
+      "custom_tooltip": "<b>Decision Finalization and Regulatory Frontloading</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "83e3eb61-0e53-4a94-9e79-281eec7ead03 SS",
+      "parent": "83e3eb61-0e53-4a94-9e79-281eec7ead03",
+      "type": "project"
+    },
+    {
+      "id": "192d2a61-1575-431b-b9c9-a41531164aae",
+      "text": "Finalize Strategic Build Decisions (Level 2 Selection)",
+      "custom_tooltip": "<b>Finalize Strategic Build Decisions (Level 2 Selection)</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "d29e4196-ef8f-4c4f-93e5-e95381348182 SS",
+      "parent": "d29e4196-ef8f-4c4f-93e5-e95381348182",
+      "type": "project"
+    },
+    {
+      "id": "f28f9370-fe37-4ee6-bbfc-2651801d5249",
+      "text": "Finalize 'Builder' logistical framework approval",
+      "custom_tooltip": "<b>Finalize &#x27;Builder&#x27; logistical framework approval</b><br>The core task is to secure executive sign-off on the chosen &#x27;Builder&#x27; strategy, which defines the balance between municipal and retail collection channels. This involves presenting a final, detailed comparative analysis of the Builder vs. Challenger logistical paths, highlighting recovery projections, budget burn rates, and mitigation effectiveness against key identified risks (e.g., municipal overload).<br><b>Resources needed:</b><br><ul><li>Senior Steering Committee Members (Decision Makers)</li><li>Financial Modeler</li><li>Risk Analysis Lead</li></ul>",
+      "start_date": "2026-03-03",
+      "duration": 3.0,
+      "progress": 0,
+      "open": true,
+      "meta": "192d2a61-1575-431b-b9c9-a41531164aae SS",
+      "parent": "192d2a61-1575-431b-b9c9-a41531164aae"
+    },
+    {
+      "id": "cb4828bc-0621-4842-9c95-dbc22429d430",
+      "text": "Develop builder path impact assessment documentation",
+      "custom_tooltip": "<b>Develop builder path impact assessment documentation</b><br>Create the comprehensive document package required for the final decision workshop. This package must include detailed financial modeling (Budget Line 1.8M DKK vs. anticipated impact), refined operational load maps for QA Hubs based on the Builder scenario, and a finalized stakeholder commitment matrix showing required approvals for the Q2/Q3 transition.<br><b>Resources needed:</b><br><ul><li>Project Manager</li><li>Logistics Planning Team</li><li>Budget Steward</li></ul>",
+      "start_date": "2026-03-06",
+      "duration": 3.0,
+      "progress": 0,
+      "open": true,
+      "meta": "f28f9370-fe37-4ee6-bbfc-2651801d5249 FS",
+      "parent": "192d2a61-1575-431b-b9c9-a41531164aae"
+    },
+    {
+      "id": "037f290d-5f7e-4e2e-ae64-daa5a5a52128",
+      "text": "Present and defend logistical design to leadership",
+      "custom_tooltip": "<b>Present and defend logistical design to leadership</b><br>Conduct the formal presentation and Q&amp;A session with the executive steering committee to obtain the final, binding commitment to the &#x27;Builder&#x27; logistical strategy. This stage requires successfully defending the proposed reliance on municipal SLAs and the required staffing coefficients for the QA Hubs.<br><b>Resources needed:</b><br><ul><li>Project Sponsor</li><li>Logistics Lead</li><li>Executive Committee Time</li></ul>",
+      "start_date": "2026-03-09",
+      "duration": 3.0,
+      "progress": 0,
+      "open": true,
+      "meta": "192d2a61-1575-431b-b9c9-a41531164aae FF, cb4828bc-0621-4842-9c95-dbc22429d430 FS",
+      "parent": "192d2a61-1575-431b-b9c9-a41531164aae"
+    },
+    {
+      "id": "fb5542d6-0bd3-4d26-b44a-7ca51ec411af",
+      "text": "Submit Cleaning Agents to Danish EPA for Reuse Certification",
+      "custom_tooltip": "<b>Submit Cleaning Agents to Danish EPA for Reuse Certification</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "192d2a61-1575-431b-b9c9-a41531164aae FS",
+      "parent": "d29e4196-ef8f-4c4f-93e5-e95381348182",
+      "type": "project"
+    },
+    {
+      "id": "c725382a-a951-4e96-9295-ec881cc35fa9",
+      "text": "Define RTSDR Schema with Procurement",
+      "custom_tooltip": "<b>Define RTSDR Schema with Procurement</b><br>Establish the exact data fields, format, and transfer mechanism for the &#x27;Ready-to-Deploy Stock Report&#x27; (RTSDR) that will inform Arla Procurement&#x27;s 2027 production forecast. This ensures recovered crates are accounted for as reusable assets.<br><b>Resources needed:</b><br><ul><li>Reverse Logistics Lead</li><li>Arla Procurement Data Analyst</li><li>QA Hub Operations Lead</li></ul>",
+      "start_date": "2026-03-12",
+      "duration": 12.0,
+      "progress": 0,
+      "open": true,
+      "meta": "fb5542d6-0bd3-4d26-b44a-7ca51ec411af SS",
+      "parent": "fb5542d6-0bd3-4d26-b44a-7ca51ec411af"
+    },
+    {
+      "id": "96a0e611-4bf5-4871-9734-419b4a8e02ba",
+      "text": "Develop Data Transfer Integration Protocol",
+      "custom_tooltip": "<b>Develop Data Transfer Integration Protocol</b><br>Build and test the technical pipeline (API or secure file transfer) allowing QA Hub system output to reliably push the finalized RTSDR data into Arla&#x27;s ERP/forecasting system. This must be tested end-to-end before the September 3rd deadline.<br><b>Resources needed:</b><br><ul><li>IT Systems Integrator</li><li>Arla ERP Specialist</li><li>QA Systems Administrator</li></ul>",
+      "start_date": "2026-03-24",
+      "duration": 12.0,
+      "progress": 0,
+      "open": true,
+      "meta": "c725382a-a951-4e96-9295-ec881cc35fa9 FS",
+      "parent": "fb5542d6-0bd3-4d26-b44a-7ca51ec411af"
+    },
+    {
+      "id": "9ff74296-2178-49eb-b380-689cc0b37507",
+      "text": "Formalize Synchronization Meeting Cadence",
+      "custom_tooltip": "<b>Formalize Synchronization Meeting Cadence</b><br>Schedule and confirm the standing monthly meeting cadence between QA Hub Logistics and Procurement/Asset Lifecycle starting September 3rd. Document the meeting structure, required attendees, and official minute-taking responsibilities.<br><b>Resources needed:</b><br><ul><li>Project Coordinator</li><li>Procurement Manager</li><li>QA Hub Manager</li></ul>",
+      "start_date": "2026-04-05",
+      "duration": 12.0,
+      "progress": 0,
+      "open": true,
+      "meta": "fb5542d6-0bd3-4d26-b44a-7ca51ec411af FF, 96a0e611-4bf5-4871-9734-419b4a8e02ba FS",
+      "parent": "fb5542d6-0bd3-4d26-b44a-7ca51ec411af"
+    },
+    {
+      "id": "3481d2ff-433f-4bd3-938e-61333a8127a3",
+      "text": "Finalize KPI Baseline Reporting Structure with Procurement",
+      "custom_tooltip": "<b>Finalize KPI Baseline Reporting Structure with Procurement</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "fb5542d6-0bd3-4d26-b44a-7ca51ec411af FS",
+      "parent": "d29e4196-ef8f-4c4f-93e5-e95381348182",
+      "type": "project"
+    },
+    {
+      "id": "84e88124-b0ef-486d-a790-60f5ec2ca6ed",
+      "text": "Define RTSDR Schema and Data Flow",
+      "custom_tooltip": "<b>Define RTSDR Schema and Data Flow</b><br>Work with Procurement to finalize the exact structure (&#x27;Ready-to-Deploy Stock Report&#x27; schema) needed to convey recovered crate volumes, quality status, and reintegration readiness metrics. This defines the &#x27;what&#x27; of the data exchange.<br><b>Resources needed:</b><br><ul><li>Procurement Systems Analyst</li><li>QA Hub Operations Lead</li><li>RTSDR Design Template</li></ul>",
+      "start_date": "2026-04-17",
+      "duration": 6.0,
+      "progress": 0,
+      "open": true,
+      "meta": "3481d2ff-433f-4bd3-938e-61333a8127a3 SS",
+      "parent": "3481d2ff-433f-4bd3-938e-61333a8127a3"
+    },
+    {
+      "id": "d0eb2c7e-32f9-4531-8d2e-2fa565260502",
+      "text": "Establish Data Exchange Protocol",
+      "custom_tooltip": "<b>Establish Data Exchange Protocol</b><br>Define the technical mechanism (e.g., SFTP, API hook) Procurement will use to receive the RTSDR data, ensuring security and automated reconciliation capability. This defines the &#x27;how&#x27; of the delivery.<br><b>Resources needed:</b><br><ul><li>IT Integration Specialist</li><li>Arla ERP Contact</li><li>Security Officer</li></ul>",
+      "start_date": "2026-04-23",
+      "duration": 6.0,
+      "progress": 0,
+      "open": true,
+      "meta": "84e88124-b0ef-486d-a790-60f5ec2ca6ed FS",
+      "parent": "3481d2ff-433f-4bd3-938e-61333a8127a3"
+    },
+    {
+      "id": "3e322b3d-0735-40c5-becc-6f46fb148a03",
+      "text": "Conduct Mandatory Synchronization Kick-off",
+      "custom_tooltip": "<b>Conduct Mandatory Synchronization Kick-off</b><br>Execute the first formal planning meeting between the QA Hub Logistics team and Arla Procurement to officially commit to the September 3rd data exchange deadline and review the final integration plan.<br><b>Resources needed:</b><br><ul><li>Program Manager</li><li>Procurement Signatory</li><li>QA Logistics Lead</li></ul>",
+      "start_date": "2026-04-29",
+      "duration": 6.0,
+      "progress": 0,
+      "open": true,
+      "meta": "3481d2ff-433f-4bd3-938e-61333a8127a3 FF, d0eb2c7e-32f9-4531-8d2e-2fa565260502 FS",
+      "parent": "3481d2ff-433f-4bd3-938e-61333a8127a3"
+    },
+    {
+      "id": "a0a73a0d-316d-4429-8646-573e37b03197",
+      "text": "Obtain Internal Legal Approval for Stakeholder Contracts",
+      "custom_tooltip": "<b>Obtain Internal Legal Approval for Stakeholder Contracts</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "d29e4196-ef8f-4c4f-93e5-e95381348182 FF, 3481d2ff-433f-4bd3-938e-61333a8127a3 FS",
+      "parent": "d29e4196-ef8f-4c4f-93e5-e95381348182",
+      "type": "project"
+    },
+    {
+      "id": "4692a102-4390-4562-8065-dfe856f56fe4",
+      "text": "Draft preemptive contracts with simplified terms",
+      "custom_tooltip": "<b>Draft preemptive contracts with simplified terms</b><br>Develop initial, simplified contract templates specifically for the reverse logistics agreements needed for QA hubs and municipal cooperation, focusing on liability and scope definitions to reduce review time.<br><b>Resources needed:</b><br><ul><li>Internal Legal Counsel</li><li>Reverse Logistics Lead</li><li>Contract Management Specialist</li></ul>",
+      "start_date": "2026-05-05",
+      "duration": 10.0,
+      "progress": 0,
+      "open": true,
+      "meta": "a0a73a0d-316d-4429-8646-573e37b03197 SS",
+      "parent": "a0a73a0d-316d-4429-8646-573e37b03197"
+    },
+    {
+      "id": "8cb0ba8b-14d2-42cd-895e-f7fd5151ef66",
+      "text": "Engage Legal Counsel early on indemnity clauses",
+      "custom_tooltip": "<b>Engage Legal Counsel early on indemnity clauses</b><br>Schedule dedicated meetings with Internal Legal/Compliance team to obtain preliminary sign-off on critical indemnity and contamination liability clauses before engaging external parties. This addresses risks associated with cleaning processes.<br><b>Resources needed:</b><br><ul><li>Internal Legal Counsel (Mandatory Signatory)</li><li>QA Hub Operations Lead</li></ul>",
+      "start_date": "2026-05-15",
+      "duration": 10.0,
+      "progress": 0,
+      "open": true,
+      "meta": "4692a102-4390-4562-8065-dfe856f56fe4 FS",
+      "parent": "a0a73a0d-316d-4429-8646-573e37b03197"
+    },
+    {
+      "id": "1a08f86b-2c95-47fc-b385-aad9c4374a4a",
+      "text": "Establish Stakeholder Review Fast Track",
+      "custom_tooltip": "<b>Establish Stakeholder Review Fast Track</b><br>Formalize a &#x27;fast-track&#x27; sign-off process with Legal and Brand teams for all contract documentation, allocating specific review slots to ensure compliance reviews do not exceed a 10-day turnaround time during the Q1 critical path.<br><b>Resources needed:</b><br><ul><li>Project Manager</li><li>Brand Compliance Officer</li><li>Legal Review Coordinator</li></ul>",
+      "start_date": "2026-05-25",
+      "duration": 10.0,
+      "progress": 0,
+      "open": true,
+      "meta": "a0a73a0d-316d-4429-8646-573e37b03197 FF, 8cb0ba8b-14d2-42cd-895e-f7fd5151ef66 FS",
+      "parent": "a0a73a0d-316d-4429-8646-573e37b03197"
+    },
+    {
+      "id": "94d4816f-2ce3-4f94-baa3-7f1acef211a9",
+      "text": "Logistics and Infrastructure Setup (Builder Path Execution)",
+      "custom_tooltip": "<b>Logistics and Infrastructure Setup (Builder Path Execution)</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "d29e4196-ef8f-4c4f-93e5-e95381348182 FS",
+      "parent": "83e3eb61-0e53-4a94-9e79-281eec7ead03",
+      "type": "project"
+    },
+    {
+      "id": "b8947dc5-fa5b-4b23-a8e7-a85ec30fa7bc",
+      "text": "Negotiate and Execute SLAs with Municipal Waste Authorities (60% Capacity Target)",
+      "custom_tooltip": "<b>Negotiate and Execute SLAs with Municipal Waste Authorities (60% Capacity Target)</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "94d4816f-2ce3-4f94-baa3-7f1acef211a9 SS",
+      "parent": "94d4816f-2ce3-4f94-baa3-7f1acef211a9",
+      "type": "project"
+    },
+    {
+      "id": "fc2ae84e-8bed-4d02-9ea4-948ab9705ad0",
+      "text": "Draft tiered SLA proposals",
+      "custom_tooltip": "<b>Draft tiered SLA proposals</b><br>Develop three distinct Service Level Agreement (SLA) proposals for municipal partners, ranging from the minimum acceptable level to an optimized proposal including financial incentives for staffing guarantees. These tiers will inform the negotiation strategy.<br><b>Resources needed:</b><br><ul><li>Legal Counsel Support</li><li>Financial Controller</li><li>Municipal Relations Manager</li></ul>",
+      "start_date": "2026-06-04",
+      "duration": 15.0,
+      "progress": 0,
+      "open": true,
+      "meta": "b8947dc5-fa5b-4b23-a8e7-a85ec30fa7bc SS",
+      "parent": "b8947dc5-fa5b-4b23-a8e7-a85ec30fa7bc"
+    },
+    {
+      "id": "680a9c8b-3c41-4461-9f45-f1daa5adcc6b",
+      "text": "Initiate direct municipal negotiations",
+      "custom_tooltip": "<b>Initiate direct municipal negotiations</b><br>Begin formal discussions with the 10 municipalities identified as handling the majority of the expected 60% volume allocation. The focus is securing early commitment on staffing coefficients and penalty clauses based on the drafted tiered proposals.<br><b>Resources needed:</b><br><ul><li>Municipal Relations Manager</li><li>Expert 5 (Municipal Negotiator)</li><li>Contract Templates</li></ul>",
+      "start_date": "2026-06-19",
+      "duration": 15.0,
+      "progress": 0,
+      "open": true,
+      "meta": "fc2ae84e-8bed-4d02-9ea4-948ab9705ad0 FS",
+      "parent": "b8947dc5-fa5b-4b23-a8e7-a85ec30fa7bc"
+    },
+    {
+      "id": "97ddc5a3-3703-4d8e-9ac3-2814729b5302",
+      "text": "Conduct regulatory compliance audit of SLAs",
+      "custom_tooltip": "<b>Conduct regulatory compliance audit of SLAs</b><br>Engage the Circular Economy Consultant to audit the drafted SLAs against current Danish EPR and waste tax regulations, focusing specifically on mitigating commercial waste classification risk associated with the collected crates.<br><b>Resources needed:</b><br><ul><li>Circular Economy Consultant (Expert 1)</li><li>Legal Counsel Support</li><li>Draft SLA Documents</li></ul>",
+      "start_date": "2026-07-04",
+      "duration": 15.0,
+      "progress": 0,
+      "open": true,
+      "meta": "680a9c8b-3c41-4461-9f45-f1daa5adcc6b FS",
+      "parent": "b8947dc5-fa5b-4b23-a8e7-a85ec30fa7bc"
+    },
+    {
+      "id": "f2641ec3-7c04-4098-a5fd-cfe8eb4607f5",
+      "text": "Secure final binding municipal SLA documents",
+      "custom_tooltip": "<b>Secure final binding municipal SLA documents</b><br>Finalize all negotiations, incorporate required legal amendments following the regulatory audit, and secure legally binding signatures for all target municipalities, ensuring the 60% capacity dependency target is met.<br><b>Resources needed:</b><br><ul><li>Municipal Relations Manager</li><li>Internal Legal Counsel</li><li>Project Sponsor Sign-off</li></ul>",
+      "start_date": "2026-07-19",
+      "duration": 15.0,
+      "progress": 0,
+      "open": true,
+      "meta": "b8947dc5-fa5b-4b23-a8e7-a85ec30fa7bc FF, 97ddc5a3-3703-4d8e-9ac3-2814729b5302 FS",
+      "parent": "b8947dc5-fa5b-4b23-a8e7-a85ec30fa7bc"
+    },
+    {
+      "id": "a7a17900-40ad-4c3d-ab8a-93e253ddadb2",
+      "text": "Secure and Establish Three Centralized Temporary Quality Assessment (QA) Hubs",
+      "custom_tooltip": "<b>Secure and Establish Three Centralized Temporary Quality Assessment (QA) Hubs</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "b8947dc5-fa5b-4b23-a8e7-a85ec30fa7bc FS",
+      "parent": "94d4816f-2ce3-4f94-baa3-7f1acef211a9",
+      "type": "project"
+    },
+    {
+      "id": "691806b5-68aa-4212-a7a5-7f9cffb00615",
+      "text": "Scout and shortlist QA hub sites",
+      "custom_tooltip": "<b>Scout and shortlist QA hub sites</b><br>Identify and evaluate potential industrial or warehouse spaces that meet the logistical flow requirements, size constraints, and preliminary environmental safety standards for the cleaning and quality assessment process.<br><b>Resources needed:</b><br><ul><li>Site Scout Team</li><li>Logistics Architect</li><li>Preliminary Budget Allocation</li></ul>",
+      "start_date": "2026-08-03",
+      "duration": 23.0,
+      "progress": 0,
+      "open": true,
+      "meta": "a7a17900-40ad-4c3d-ab8a-93e253ddadb2 SS",
+      "parent": "a7a17900-40ad-4c3d-ab8a-93e253ddadb2"
+    },
+    {
+      "id": "b616484d-db4e-4f73-854a-629bb25b5485",
+      "text": "Finalize Lease Agreements for 3 hubs",
+      "custom_tooltip": "<b>Finalize Lease Agreements for 3 hubs</b><br>Negotiate final lease terms, including start dates, cost ceilings, and necessary site preparation allowances, for the three selected hub locations. Secure Letters of Intent (LOI) or binding leases.<br><b>Resources needed:</b><br><ul><li>Real Estate Negotiator</li><li>Legal Counsel</li><li>Financial Controller</li></ul>",
+      "start_date": "2026-08-26",
+      "duration": 23.0,
+      "progress": 0,
+      "open": true,
+      "meta": "691806b5-68aa-4212-a7a5-7f9cffb00615 FS",
+      "parent": "a7a17900-40ad-4c3d-ab8a-93e253ddadb2"
+    },
+    {
+      "id": "5b9a765d-cee4-42a1-a5ad-9a6488c665da",
+      "text": "Execute Site Preparation and Fit-Out",
+      "custom_tooltip": "<b>Execute Site Preparation and Fit-Out</b><br>Conduct all necessary site modifications (e.g., flooring reinforcement, utility upgrades, dedicated cleaning zones) required to receive the specialized QA equipment and meet pre-operation checklists.<br><b>Resources needed:</b><br><ul><li>Site Preparation Contractor</li><li>Facilities Manager</li><li>Budget Contingency Funds</li></ul>",
+      "start_date": "2026-09-18",
+      "duration": 23.0,
+      "progress": 0,
+      "open": true,
+      "meta": "b616484d-db4e-4f73-854a-629bb25b5485 FS",
+      "parent": "a7a17900-40ad-4c3d-ab8a-93e253ddadb2"
+    },
+    {
+      "id": "57c30a73-e010-41b4-b5d5-12c88ee5b187",
+      "text": "Secure Local Regulatory Clearances for Hubs",
+      "custom_tooltip": "<b>Secure Local Regulatory Clearances for Hubs</b><br>Obtain all necessary local building permits, fire safety certifications, and initial environmental permissions required by municipal authorities to commence operational setup at the three secured sites.<br><b>Resources needed:</b><br><ul><li>Regulatory &amp; Compliance Assessor</li><li>Local Municipality Liaisons</li></ul>",
+      "start_date": "2026-10-11",
+      "duration": 23.0,
+      "progress": 0,
+      "open": true,
+      "meta": "a7a17900-40ad-4c3d-ab8a-93e253ddadb2 FF, 5b9a765d-cee4-42a1-a5ad-9a6488c665da FS",
+      "parent": "a7a17900-40ad-4c3d-ab8a-93e253ddadb2"
+    },
+    {
+      "id": "4c29ddbb-de0d-4655-9ddb-fa2a32ab52f2",
+      "text": "Procure and Deploy QA Hub Operational Resources (Staffing & Equipment)",
+      "custom_tooltip": "<b>Procure and Deploy QA Hub Operational Resources (Staffing &amp; Equipment)</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "a7a17900-40ad-4c3d-ab8a-93e253ddadb2 FS",
+      "parent": "94d4816f-2ce3-4f94-baa3-7f1acef211a9",
+      "type": "project"
+    },
+    {
+      "id": "a30d8ad9-73b0-41af-b32a-3e0540814374",
+      "text": "Initiate HR pipeline sourcing campaigns",
+      "custom_tooltip": "<b>Initiate HR pipeline sourcing campaigns</b><br>Begin proactive recruitment and candidate pipeline development for the 27 FTEs required per QA hub location, focusing on logistics, cleaning supervision, and triage roles. This must begin urgently due to anticipated long lead times in specialized industrial HR sourcing.<br><b>Resources needed:</b><br><ul><li>Dedicated HR Recruitment Lead</li><li>Contingency budget for expedited background checks</li></ul>",
+      "start_date": "2026-11-03",
+      "duration": 25.0,
+      "progress": 0,
+      "open": true,
+      "meta": "4c29ddbb-de0d-4655-9ddb-fa2a32ab52f2 SS",
+      "parent": "4c29ddbb-de0d-4655-9ddb-fa2a32ab52f2"
+    },
+    {
+      "id": "43f9d5b0-57a3-41e7-a562-6b3c26b56ebe",
+      "text": "Place binding orders for critical QA equipment",
+      "custom_tooltip": "<b>Place binding orders for critical QA equipment</b><br>Generate and issue binding purchase orders for all necessary, long-lead time capital equipment required for cleaning, drying, inspection, and crating within the QA hubs. Orders must be based on initial site surveys and projected capacity needs.<br><b>Resources needed:</b><br><ul><li>Procurement Specialist</li><li>Head of QA Operations</li><li>Capital Expenditure Budget</li></ul>",
+      "start_date": "2026-11-28",
+      "duration": 25.0,
+      "progress": 0,
+      "open": true,
+      "meta": "a30d8ad9-73b0-41af-b32a-3e0540814374 FS",
+      "parent": "4c29ddbb-de0d-4655-9ddb-fa2a32ab52f2"
+    },
+    {
+      "id": "f6bbf484-3f02-43d4-b2c0-178e3f476950",
+      "text": "Finalize 3rd Party Logistics (3PL) RFP process",
+      "custom_tooltip": "<b>Finalize 3rd Party Logistics (3PL) RFP process</b><br>Manage the competitive Requests for Proposal (RFP) process for contracted 3rd-party logistics services responsible for conveying recovered crates from collection points to the QA Hubs, and processed crates to onward use/recycling centers. Ensure volume surge clauses are clearly defined.<br><b>Resources needed:</b><br><ul><li>Logistics Manager</li><li>Legal Counsel (for contract review)</li><li>3BL Vendor Shortlist</li></ul>",
+      "start_date": "2026-12-23",
+      "duration": 25.0,
+      "progress": 0,
+      "open": true,
+      "meta": "43f9d5b0-57a3-41e7-a562-6b3c26b56ebe FS",
+      "parent": "4c29ddbb-de0d-4655-9ddb-fa2a32ab52f2"
+    },
+    {
+      "id": "8ec31568-beeb-4315-8020-47364531b0ab",
+      "text": "Negotiate 3PL contracts with defined service levels",
+      "custom_tooltip": "<b>Negotiate 3PL contracts with defined service levels</b><br>Review bids received from the RFP, conduct final negotiations focused on cost caps, service time windows, and contingency route planning, leading to the execution of legally binding conveyance contracts.<br><b>Resources needed:</b><br><ul><li>Procurement Specialist</li><li>Financial Controller</li><li>Signed 3PL Contracts</li></ul>",
+      "start_date": "2027-01-17",
+      "duration": 25.0,
+      "progress": 0,
+      "open": true,
+      "meta": "4c29ddbb-de0d-4655-9ddb-fa2a32ab52f2 FF, f6bbf484-3f02-43d4-b2c0-178e3f476950 FS",
+      "parent": "4c29ddbb-de0d-4655-9ddb-fa2a32ab52f2"
+    },
+    {
+      "id": "8be90d69-43af-42e4-a26b-f098bb2ddea7",
+      "text": "Finalize 3rd Party Logistics Contracts for QA Hub Conveyance",
+      "custom_tooltip": "<b>Finalize 3rd Party Logistics Contracts for QA Hub Conveyance</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "94d4816f-2ce3-4f94-baa3-7f1acef211a9 FF, 4c29ddbb-de0d-4655-9ddb-fa2a32ab52f2 FS",
+      "parent": "94d4816f-2ce3-4f94-baa3-7f1acef211a9",
+      "type": "project"
+    },
+    {
+      "id": "b0256885-365e-40b6-9e9a-e4b63af0f217",
+      "text": "RFP for Logistics Capacity",
+      "custom_tooltip": "<b>RFP for Logistics Capacity</b><br>Initiate a competitive Request for Proposal (RFP) process to vet and select at least three pre-qualified specialty 3rd-party logistics (3PL) firms capable of handling the specialized conveyance requirements for Arla crates between QA hubs and final processing centers.<br><b>Resources needed:</b><br><ul><li>Procurement Specialist</li><li>Reverse Logistics Lead</li><li>Legal Counsel</li></ul>",
+      "start_date": "2027-02-11",
+      "duration": 10.0,
+      "progress": 0,
+      "open": true,
+      "meta": "8be90d69-43af-42e4-a26b-f098bb2ddea7 SS",
+      "parent": "8be90d69-43af-42e4-a26b-f098bb2ddea7"
+    },
+    {
+      "id": "14d6daa9-c409-49d2-bd23-e540802dec15",
+      "text": "Finalize Volume & Contingency Contracts",
+      "custom_tooltip": "<b>Finalize Volume &amp; Contingency Contracts</b><br>Negotiate comprehensive contracts with selected 3PL partners. Crucially, ensure clear clauses define pricing stability for predicted Q3/Q4 volumes, and stipulate penalty/response times for surge capacity needs or emergency rerouting due to QA hub overloads.<br><b>Resources needed:</b><br><ul><li>Procurement Specialist</li><li>Financial Controller</li><li>Legal Counsel</li></ul>",
+      "start_date": "2027-02-21",
+      "duration": 10.0,
+      "progress": 0,
+      "open": true,
+      "meta": "b0256885-365e-40b6-9e9a-e4b63af0f217 FS",
+      "parent": "8be90d69-43af-42e4-a26b-f098bb2ddea7"
+    },
+    {
+      "id": "b77a265c-aaf3-4ce1-9006-237d0ba6e872",
+      "text": "Pre-Launch Logistics Data Synchronization",
+      "custom_tooltip": "<b>Pre-Launch Logistics Data Synchronization</b><br>Conduct a dry-run data exchange between the 3PL scheduling system (or proposed interface) and the internal Arla logistics tracking system to confirm real-time visibility and accurate cost reporting are established before the national rollout begins.<br><b>Resources needed:</b><br><ul><li>IT Systems Analyst</li><li>Logistics Operations Lead</li><li>3rd-Party Logistics Vendor</li></ul>",
+      "start_date": "2027-03-03",
+      "duration": 10.0,
+      "progress": 0,
+      "open": true,
+      "meta": "8be90d69-43af-42e4-a26b-f098bb2ddea7 FF, 14d6daa9-c409-49d2-bd23-e540802dec15 FS",
+      "parent": "8be90d69-43af-42e4-a26b-f098bb2ddea7"
+    },
+    {
+      "id": "92725e98-ad52-4f5d-b14e-9051701f1db3",
+      "text": "Stakeholder Integration and Incentive Framework Development",
+      "custom_tooltip": "<b>Stakeholder Integration and Incentive Framework Development</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "94d4816f-2ce3-4f94-baa3-7f1acef211a9 FS",
+      "parent": "83e3eb61-0e53-4a94-9e79-281eec7ead03",
+      "type": "project"
+    },
+    {
+      "id": "d1d8b3bc-a93f-4deb-b965-258a5ba39c75",
+      "text": "Define and Communicate Retailer Compliance Floor and Subsidy Structure",
+      "custom_tooltip": "<b>Define and Communicate Retailer Compliance Floor and Subsidy Structure</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "92725e98-ad52-4f5d-b14e-9051701f1db3 SS",
+      "parent": "92725e98-ad52-4f5d-b14e-9051701f1db3",
+      "type": "project"
+    },
+    {
+      "id": "839b4ff8-8a78-487d-813e-7a70ae54d070",
+      "text": "Design Retailer Participation Fee Structure",
+      "custom_tooltip": "<b>Design Retailer Participation Fee Structure</b><br>Develop the fixed, low-level &#x27;Compliance Floor&#x27; fee proposal that all participating supermarkets must agree to. This fee covers operational setup costs (like providing bins/signage) and acts as a commitment mechanism, separate from the performance subsidy.<br><b>Resources needed:</b><br><ul><li>Financial Analyst</li><li>Stakeholder Integration Manager</li></ul>",
+      "start_date": "2027-03-13",
+      "duration": 4.0,
+      "progress": 0,
+      "open": true,
+      "meta": "d1d8b3bc-a93f-4deb-b965-258a5ba39c75 SS",
+      "parent": "d1d8b3bc-a93f-4deb-b965-258a5ba39c75"
+    },
+    {
+      "id": "766edad4-3123-468f-b0c0-4a3be75e0b83",
+      "text": "Calculate Performance Subsidy Tiers",
+      "custom_tooltip": "<b>Calculate Performance Subsidy Tiers</b><br>Analyze Q2 pilot data to mathematically derive the optimal structure for the performance-based subsidy (e.g., 50 DKK for achieving &gt;100 returns/week). This must maximize staff compliance without causing significant budget deviation.<br><b>Resources needed:</b><br><ul><li>Data Analyst</li><li>Behavioral Economics Modeler</li></ul>",
+      "start_date": "2027-03-17",
+      "duration": 4.0,
+      "progress": 0,
+      "open": true,
+      "meta": "839b4ff8-8a78-487d-813e-7a70ae54d070 FS",
+      "parent": "d1d8b3bc-a93f-4deb-b965-258a5ba39c75"
+    },
+    {
+      "id": "bc1a8a0b-0d9c-4d51-8779-5350f5696706",
+      "text": "Secure Retailer Agreement on Dual Structure",
+      "custom_tooltip": "<b>Secure Retailer Agreement on Dual Structure</b><br>Present the finalized dual structure (Fixed Floor + Performance Subsidy) to major retail groups (Salling, Coop, Rema 1000). Obtain written acknowledgment that they accept the structure and the related operational responsibilities.<br><b>Resources needed:</b><br><ul><li>Retail Supply Chain Specialist</li><li>Legal Counsel</li></ul>",
+      "start_date": "2027-03-21",
+      "duration": 4.0,
+      "progress": 0,
+      "open": true,
+      "meta": "766edad4-3123-468f-b0c0-4a3be75e0b83 FS",
+      "parent": "d1d8b3bc-a93f-4deb-b965-258a5ba39c75"
+    },
+    {
+      "id": "b66077fd-eddc-4df4-afaf-875f2805cc28",
+      "text": "Define Escalation Path for Non-Compliance",
+      "custom_tooltip": "<b>Define Escalation Path for Non-Compliance</b><br>Document clear, tiered actions the project team will take against store managers or locations that fail to maintain the minimum &#x27;Compliance Floor&#x27; commitment, including communication frequency and ultimate withdrawal of support materials.<br><b>Resources needed:</b><br><ul><li>Stakeholder Integration Manager</li><li>Retail Account Managers</li></ul>",
+      "start_date": "2027-03-25",
+      "duration": 4.0,
+      "progress": 0,
+      "open": true,
+      "meta": "d1d8b3bc-a93f-4deb-b965-258a5ba39c75 FF, bc1a8a0b-0d9c-4d51-8779-5350f5696706 FS",
+      "parent": "d1d8b3bc-a93f-4deb-b965-258a5ba39c75"
+    },
+    {
+      "id": "4552f201-d162-46bc-a432-b6b33e2af4e8",
+      "text": "Secure Retailer Acknowledgment for Collateral Placement",
+      "custom_tooltip": "<b>Secure Retailer Acknowledgment for Collateral Placement</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "d1d8b3bc-a93f-4deb-b965-258a5ba39c75 FS",
+      "parent": "92725e98-ad52-4f5d-b14e-9051701f1db3",
+      "type": "project"
+    },
+    {
+      "id": "b14a5eda-f515-4b8c-b797-0232dd380914",
+      "text": "Draft retail collateral for pre-approval",
+      "custom_tooltip": "<b>Draft retail collateral for pre-approval</b><br>Develop final versions of all in-store signage, Bins, and visual guides which are intended for placement at supermarket collection points, ensuring Arla Foundation branding consistency.<br><b>Resources needed:</b><br><ul><li>Marketing Design Team</li><li>Brand Compliance Officer</li></ul>",
+      "start_date": "2027-03-29",
+      "duration": 6.0,
+      "progress": 0,
+      "open": true,
+      "meta": "4552f201-d162-46bc-a432-b6b33e2af4e8 SS",
+      "parent": "4552f201-d162-46bc-a432-b6b33e2af4e8"
+    },
+    {
+      "id": "25ed83b8-dffc-458f-97d3-b4eafdf55cd8",
+      "text": "Coordinate pre-approval review cycle",
+      "custom_tooltip": "<b>Coordinate pre-approval review cycle</b><br>Submit all finalized marketing and signage collateral to the three major retailer groups (Salling Group, Coop, Rema 1000) within the required 30-day window prior to intended Q3 placement.<br><b>Resources needed:</b><br><ul><li>Retail Supply Chain Specialist</li><li>Project Coordinator</li></ul>",
+      "start_date": "2027-04-04",
+      "duration": 6.0,
+      "progress": 0,
+      "open": true,
+      "meta": "b14a5eda-f515-4b8c-b797-0232dd380914 FS",
+      "parent": "4552f201-d162-46bc-a432-b6b33e2af4e8"
+    },
+    {
+      "id": "7a1a9192-580e-4eec-bc78-4f64729da7cc",
+      "text": "Secure formal written retailer sign-off",
+      "custom_tooltip": "<b>Secure formal written retailer sign-off</b><br>Track progress across all three major retail partners, manage feedback loops for minor revisions, and secure the final, explicit written approval to proceed with collateral deployment according to the national rollout schedule.<br><b>Resources needed:</b><br><ul><li>Stakeholder Integration Manager</li><li>Legal Counsel</li></ul>",
+      "start_date": "2027-04-10",
+      "duration": 6.0,
+      "progress": 0,
+      "open": true,
+      "meta": "4552f201-d162-46bc-a432-b6b33e2af4e8 FF, 25ed83b8-dffc-458f-97d3-b4eafdf55cd8 FS",
+      "parent": "4552f201-d162-46bc-a432-b6b33e2af4e8"
+    },
+    {
+      "id": "8cef95be-1bd9-42ae-b3bb-97c69db0e37a",
+      "text": "Finalize Donation Budget Cap and Sweep Trigger Documentation with Finance",
+      "custom_tooltip": "<b>Finalize Donation Budget Cap and Sweep Trigger Documentation with Finance</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "4552f201-d162-46bc-a432-b6b33e2af4e8 FS",
+      "parent": "92725e98-ad52-4f5d-b14e-9051701f1db3",
+      "type": "project"
+    },
+    {
+      "id": "c83828b1-7385-4f0f-abe5-b637d9fa0dfc",
+      "text": "Define Donation Sweep Thresholds",
+      "custom_tooltip": "<b>Define Donation Sweep Thresholds</b><br>Establish the exact quantitative metrics and conditions under which the project team is authorized to deploy the contingency budget (up to DKK 200,000) to increase the consumer donation incentive above the baseline DKK 5 rate during Q4. This requires aligning consumer elasticity data with the overall budget ceiling.<br><b>Resources needed:</b><br><ul><li>Behavioral Economics Modeler</li><li>Financial Controller</li><li>Incentive &amp; Consumer Compliance Specialist</li></ul>",
+      "start_date": "2027-04-16",
+      "duration": 3.0,
+      "progress": 0,
+      "open": true,
+      "meta": "8cef95be-1bd9-42ae-b3bb-97c69db0e37a SS",
+      "parent": "8cef95be-1bd9-42ae-b3bb-97c69db0e37a"
+    },
+    {
+      "id": "a0cd386a-8ee3-4c6b-9460-0663cb4d3f0f",
+      "text": "Finance Sign-Off on Sweep Mechanism",
+      "custom_tooltip": "<b>Finance Sign-Off on Sweep Mechanism</b><br>Present the two pre-modeled donation sweep scenarios (based on achieved Q3 recovery rates) to Arla Finance leadership. Secure formal, written commitment and authorization for the mechanism, specifying the process for accessing the contingency funds without requiring emergency re-approval.<br><b>Resources needed:</b><br><ul><li>Financial Controller</li><li>Arla Foods Programme Owner</li><li>Legal Counsel</li></ul>",
+      "start_date": "2027-04-19",
+      "duration": 3.0,
+      "progress": 0,
+      "open": true,
+      "meta": "c83828b1-7385-4f0f-abe5-b637d9fa0dfc FS",
+      "parent": "8cef95be-1bd9-42ae-b3bb-97c69db0e37a"
+    },
+    {
+      "id": "b4fda2db-b228-4ae5-b06a-5273349e23ef",
+      "text": "Document Final Donation Calculation Formula",
+      "custom_tooltip": "<b>Document Final Donation Calculation Formula</b><br>Produce the final, legally binding documentation detailing how the total DKK 500,000 minimum donation (and any subsequent authorized uplift funds) will be calculated based on validated crate returns and transferred to the Arla Foundation at year-end. This must align with Foundation reporting requirements.<br><b>Resources needed:</b><br><ul><li>Arla Foundation Liaison</li><li>Financial Controller</li><li>Legal Counsel</li></ul>",
+      "start_date": "2027-04-22",
+      "duration": 3.0,
+      "progress": 0,
+      "open": true,
+      "meta": "8cef95be-1bd9-42ae-b3bb-97c69db0e37a FF, a0cd386a-8ee3-4c6b-9460-0663cb4d3f0f FS",
+      "parent": "8cef95be-1bd9-42ae-b3bb-97c69db0e37a"
+    },
+    {
+      "id": "d30717a3-8191-4821-9a8c-0b98fb224bda",
+      "text": "Calibrate Tiered Incentive Structure Based on Q2 Pilot Results",
+      "custom_tooltip": "<b>Calibrate Tiered Incentive Structure Based on Q2 Pilot Results</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "92725e98-ad52-4f5d-b14e-9051701f1db3 FF, 8cef95be-1bd9-42ae-b3bb-97c69db0e37a FS",
+      "parent": "92725e98-ad52-4f5d-b14e-9051701f1db3",
+      "type": "project"
+    },
+    {
+      "id": "19c81ef9-e251-4a6f-92c5-338a9a353ce2",
+      "text": "Define Q2 pilot success thresholds",
+      "custom_tooltip": "<b>Define Q2 pilot success thresholds</b><br>Establish clear, quantitative &#x27;pass/fail&#x27; benchmarks for consumer participation rate, contamination levels, and digital tool usage based on defined Q1 targets. These thresholds will determine if the incentive structure is validated or requires immediate high-level revision.<br><b>Resources needed:</b><br><ul><li>Incentive Specialist</li><li>Financial Controller</li><li>Data Analyst</li></ul>",
+      "start_date": "2027-04-25",
+      "duration": 9.0,
+      "progress": 0,
+      "open": true,
+      "meta": "d30717a3-8191-4821-9a8c-0b98fb224bda SS",
+      "parent": "d30717a3-8191-4821-9a8c-0b98fb224bda"
+    },
+    {
+      "id": "09180184-b66d-42a1-86a1-58f6e0a5bd0f",
+      "text": "Develop backup incentive strategy contingency",
+      "custom_tooltip": "<b>Develop backup incentive strategy contingency</b><br>Design two pre-modeled alternative incentive structures (e.g., increasing the donation amount or adding a secondary reward mechanism) that can be swiftly deployed if pilot results indicate the static DKK 5 incentive fails critically.<br><b>Resources needed:</b><br><ul><li>Behavioral Economics Modeler</li><li>Legal Counsel</li><li>Arla Foundation Liaison</li></ul>",
+      "start_date": "2027-05-04",
+      "duration": 9.0,
+      "progress": 0,
+      "open": true,
+      "meta": "19c81ef9-e251-4a6f-92c5-338a9a353ce2 FS",
+      "parent": "d30717a3-8191-4821-9a8c-0b98fb224bda"
+    },
+    {
+      "id": "447af68b-69fb-4a29-bb2f-1fb37897a9b6",
+      "text": "Formalize budget sweep authorization trigger",
+      "custom_tooltip": "<b>Formalize budget sweep authorization trigger</b><br>Define the precise, documented trigger (e.g., volume tracking falling X% below forecast for Y consecutive weeks) that authorizes the immediate unlocking of contingency funds to boost the consumer incentive during Q3/Q4.<br><b>Resources needed:</b><br><ul><li>Financial Controller</li><li>Project Sponsor</li><li>Legal Counsel</li></ul>",
+      "start_date": "2027-05-13",
+      "duration": 9.0,
+      "progress": 0,
+      "open": true,
+      "meta": "d30717a3-8191-4821-9a8c-0b98fb224bda FF, 09180184-b66d-42a1-86a1-58f6e0a5bd0f FS",
+      "parent": "d30717a3-8191-4821-9a8c-0b98fb224bda"
+    },
+    {
+      "id": "19334c50-dd99-4e21-bcd2-38f3a6bb115e",
+      "text": "Consumer Engagement and Identification Tools Deployment",
+      "custom_tooltip": "<b>Consumer Engagement and Identification Tools Deployment</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "92725e98-ad52-4f5d-b14e-9051701f1db3 FS",
+      "parent": "83e3eb61-0e53-4a94-9e79-281eec7ead03",
+      "type": "project"
+    },
+    {
+      "id": "1a7d5d1d-2381-4787-b332-6b19bb9cbb2b",
+      "text": "Develop Provocative Marketing Collateral ('Garden Furniture' Narrative)",
+      "custom_tooltip": "<b>Develop Provocative Marketing Collateral (&#x27;Garden Furniture&#x27; Narrative)</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "19334c50-dd99-4e21-bcd2-38f3a6bb115e SS",
+      "parent": "19334c50-dd99-4e21-bcd2-38f3a6bb115e",
+      "type": "project"
+    },
+    {
+      "id": "8aa7ae63-f693-49dd-9960-f97465aafb2b",
+      "text": "Focus group testing of core narrative",
+      "custom_tooltip": "<b>Focus group testing of core narrative</b><br>Conduct focus groups using diverse consumer segments to rigorously test the &#x27;Garden Furniture&#x27; narrative&#x27;s impact, clarity, and potential for negative backlash, ensuring alignment with Arla Foundation values.<br><b>Resources needed:</b><br><ul><li>External Focus Group Moderator</li><li>Consumer Panel Access</li><li>Pre-tested Messaging Scripts</li></ul>",
+      "start_date": "2027-05-22",
+      "duration": 10.0,
+      "progress": 0,
+      "open": true,
+      "meta": "1a7d5d1d-2381-4787-b332-6b19bb9cbb2b SS",
+      "parent": "1a7d5d1d-2381-4787-b332-6b19bb9cbb2b"
+    },
+    {
+      "id": "8e0cf02a-d2da-42f0-8ffe-d210e96bae67",
+      "text": "Secure legal/brand collateral sign-off",
+      "custom_tooltip": "<b>Secure legal/brand collateral sign-off</b><br>Obtain formal, written sign-off from Arla Legal and Brand teams on the final provocative marketing creative and all associated public-facing content, ensuring regulatory compliance prior to production.<br><b>Resources needed:</b><br><ul><li>Arla Legal Counsel Time</li><li>Arla Brand Manager Time</li><li>Finalized Creative Assets (Print/Digital)</li></ul>",
+      "start_date": "2027-06-01",
+      "duration": 10.0,
+      "progress": 0,
+      "open": true,
+      "meta": "8aa7ae63-f693-49dd-9960-f97465aafb2b FS",
+      "parent": "1a7d5d1d-2381-4787-b332-6b19bb9cbb2b"
+    },
+    {
+      "id": "68009c1c-1c29-416a-8d82-8c0b179ac837",
+      "text": "Pre-order/pre-production of physical assets",
+      "custom_tooltip": "<b>Pre-order/pre-production of physical assets</b><br>Place final binding orders for all required physical campaign materials (signage, drop-off bins, instructional posters) based on finalized content, adhering to long lead times for high-volume outdoor printing.<br><b>Resources needed:</b><br><ul><li>Procurement Specialist</li><li>Printing and Signage Vendor Contracts</li></ul>",
+      "start_date": "2027-06-11",
+      "duration": 10.0,
+      "progress": 0,
+      "open": true,
+      "meta": "1a7d5d1d-2381-4787-b332-6b19bb9cbb2b FF, 8e0cf02a-d2da-42f0-8ffe-d210e96bae67 FS",
+      "parent": "1a7d5d1d-2381-4787-b332-6b19bb9cbb2b"
+    },
+    {
+      "id": "ee6c7642-152f-4384-872f-7fe2430e229b",
+      "text": "Design and Build Social Media Comparative Visual Identification Guide",
+      "custom_tooltip": "<b>Design and Build Social Media Comparative Visual Identification Guide</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "1a7d5d1d-2381-4787-b332-6b19bb9cbb2b FS",
+      "parent": "19334c50-dd99-4e21-bcd2-38f3a6bb115e",
+      "type": "project"
+    },
+    {
+      "id": "78969824-b731-4682-9f22-99167558d9ce",
+      "text": "Design high-contrast visual guide",
+      "custom_tooltip": "<b>Design high-contrast visual guide</b><br>Develop the structure and visual assets for the digital identification guide. This must focus on high-contrast, easy-to-read graphical representation of acceptable vs. unacceptable crates, optimized for smartphone viewing to ensure clarity across diverse consumer and retail staff segments.<br><b>Resources needed:</b><br><ul><li>Digital Designer</li><li>Content Strategist</li><li>Brand Reviewer</li></ul>",
+      "start_date": "2027-06-21",
+      "duration": 7.0,
+      "progress": 0,
+      "open": true,
+      "meta": "ee6c7642-152f-4384-872f-7fe2430e229b SS",
+      "parent": "ee6c7642-152f-4384-872f-7fe2430e229b"
+    },
+    {
+      "id": "cffa7f3b-c678-414c-95ed-d0a6c5e3b3a3",
+      "text": "Test guide readability with users",
+      "custom_tooltip": "<b>Test guide readability with users</b><br>Conduct usability testing focused on visual clarity and comprehension speed. Test the guide with both target consumers and frontline supermarket staff to identify and resolve comprehension friction points before national launch.<br><b>Resources needed:</b><br><ul><li>Usability Testing Panel (Consumers + Staff)</li><li>Digital Engagement Architect</li></ul>",
+      "start_date": "2027-06-28",
+      "duration": 7.0,
+      "progress": 0,
+      "open": true,
+      "meta": "78969824-b731-4682-9f22-99167558d9ce FS",
+      "parent": "ee6c7642-152f-4384-872f-7fe2430e229b"
+    },
+    {
+      "id": "11c7e598-f87b-4bc2-b2e7-339bcd7fb53b",
+      "text": "Integrate guide with QR verification tool",
+      "custom_tooltip": "<b>Integrate guide with QR verification tool</b><br>Ensure the finalized visual guide is seamlessly integrated into the user flow of the QR-code &#x27;Killer Application.&#x27; The guide should be the default resource presented immediately after a user scans an unsuccessful code or before the final return confirmation.<br><b>Resources needed:</b><br><ul><li>Software Developer</li><li>Systems Integrator</li><li>UX Tester</li></ul>",
+      "start_date": "2027-07-05",
+      "duration": 7.0,
+      "progress": 0,
+      "open": true,
+      "meta": "cffa7f3b-c678-414c-95ed-d0a6c5e3b3a3 FS",
+      "parent": "ee6c7642-152f-4384-872f-7fe2430e229b"
+    },
+    {
+      "id": "319c368e-640b-4a87-9a9d-f83fab4eb7e0",
+      "text": "Final compliance sign-off for assets",
+      "custom_tooltip": "<b>Final compliance sign-off for assets</b><br>Secure final written approval from Legal, Brand, and the Arla Foundation communications team confirming that the visual identification guide meets all regulatory, branding, and partnership messaging standards prior to mass production/deployment.<br><b>Resources needed:</b><br><ul><li>Legal Counsel</li><li>Brand Manager</li><li>Arla Foundation Liaison</li></ul>",
+      "start_date": "2027-07-12",
+      "duration": 7.0,
+      "progress": 0,
+      "open": true,
+      "meta": "ee6c7642-152f-4384-872f-7fe2430e229b FF, 11c7e598-f87b-4bc2-b2e7-339bcd7fb53b FS",
+      "parent": "ee6c7642-152f-4384-872f-7fe2430e229b"
+    },
+    {
+      "id": "47f7b204-8bd2-4102-800c-0ba25703a213",
+      "text": "Develop and Test QR-Code 'Killer Application' Verification Tool",
+      "custom_tooltip": "<b>Develop and Test QR-Code &#x27;Killer Application&#x27; Verification Tool</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "ee6c7642-152f-4384-872f-7fe2430e229b FS",
+      "parent": "19334c50-dd99-4e21-bcd2-38f3a6bb115e",
+      "type": "project"
+    },
+    {
+      "id": "4e3975fc-48fe-49bf-914e-92120a3bd5d5",
+      "text": "Integrate QR code verification tool APIs",
+      "custom_tooltip": "<b>Integrate QR code verification tool APIs</b><br>Identify and secure necessary API access documentation from major retail partners (e.g., POS or loyalty system providers) required for the QR code verification system&#x27;s technical hook-in. This must be done before full development commences.<br><b>Resources needed:</b><br><ul><li>System Architect</li><li>Retail Technical Liaisons</li><li>Preliminary API documentation from retailers</li></ul>",
+      "start_date": "2027-07-19",
+      "duration": 7.0,
+      "progress": 0,
+      "open": true,
+      "meta": "47f7b204-8bd2-4102-800c-0ba25703a213 SS",
+      "parent": "47f7b204-8bd2-4102-800c-0ba25703a213"
+    },
+    {
+      "id": "1021f5c9-3f27-4c29-9940-65d1c4879d72",
+      "text": "Develop frictionless verification software",
+      "custom_tooltip": "<b>Develop frictionless verification software</b><br>Design and build the web-app or SMS-based verification workflow accessible via the QR code. Focus on a &#x27;no-download&#x27; path achieving a high success rate for immediate logging of the return.<br><b>Resources needed:</b><br><ul><li>Lead Developer</li><li>UX/UI Designer</li><li>Cloud hosting infrastructure</li></ul>",
+      "start_date": "2027-07-26",
+      "duration": 7.0,
+      "progress": 0,
+      "open": true,
+      "meta": "4e3975fc-48fe-49bf-914e-92120a3bd5d5 FS",
+      "parent": "47f7b204-8bd2-4102-800c-0ba25703a213"
+    },
+    {
+      "id": "9212fcfa-f36f-42b4-b2e1-5d98dc7d1441",
+      "text": "Run integration spike and feasibility test",
+      "custom_tooltip": "<b>Run integration spike and feasibility test</b><br>Conduct a dedicated one-week technical spike session where the verification tool is tested end-to-end against simulated retail back-ends using secured credentials, focusing solely on data integrity and latency.<br><b>Resources needed:</b><br><ul><li>System Architect</li><li>QA Tester</li><li>Simulated retail environment access</li></ul>",
+      "start_date": "2027-08-02",
+      "duration": 7.0,
+      "progress": 0,
+      "open": true,
+      "meta": "1021f5c9-3f27-4c29-9940-65d1c4879d72 FS",
+      "parent": "47f7b204-8bd2-4102-800c-0ba25703a213"
+    },
+    {
+      "id": "e553d045-393d-49d7-abfc-44ee9a7cce81",
+      "text": "Finalize tool readiness for Q2 Pilot",
+      "custom_tooltip": "<b>Finalize tool readiness for Q2 Pilot</b><br>Ensure the integrated QR code verification tool meets all internal standards for stability, security, and user-friendliness, preparing all deployment artifacts for the Q2 pilot launch.<br><b>Resources needed:</b><br><ul><li>Reverse Logistics Lead</li><li>Digital Engagement Architect</li><li>Security Auditor</li></ul>",
+      "start_date": "2027-08-09",
+      "duration": 7.0,
+      "progress": 0,
+      "open": true,
+      "meta": "47f7b204-8bd2-4102-800c-0ba25703a213 FF, 9212fcfa-f36f-42b4-b2e1-5d98dc7d1441 FS",
+      "parent": "47f7b204-8bd2-4102-800c-0ba25703a213"
+    },
+    {
+      "id": "8b8827b2-6a9c-4678-a06e-7afc516cbaf4",
+      "text": "Execute Q2 Pilot Launch of Marketing Campaign and Digital Tools",
+      "custom_tooltip": "<b>Execute Q2 Pilot Launch of Marketing Campaign and Digital Tools</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "19334c50-dd99-4e21-bcd2-38f3a6bb115e FF, 47f7b204-8bd2-4102-800c-0ba25703a213 FS",
+      "parent": "19334c50-dd99-4e21-bcd2-38f3a6bb115e",
+      "type": "project"
+    },
+    {
+      "id": "7a5ca5c5-5e0f-4580-bb8c-910aa34eaaad",
+      "text": "Pilot incentive testing and communication",
+      "custom_tooltip": "<b>Pilot incentive testing and communication</b><br>Execute the collection and incentive mechanism within the Q2 pilot zones. This involves tracking consumer participation, monitoring the use of the physical and digital guides, and ensuring the local communication strategy is effective at driving initial volume.<br><b>Resources needed:</b><br><ul><li>Pilot Zone Field Support Teams</li><li>Local Marketing Coordinators</li><li>Tracking software for DKK 5 donations</li></ul>",
+      "start_date": "2027-08-16",
+      "duration": 15.0,
+      "progress": 0,
+      "open": true,
+      "meta": "8b8827b2-6a9c-4678-a06e-7afc516cbaf4 SS",
+      "parent": "8b8827b2-6a9c-4678-a06e-7afc516cbaf4"
+    },
+    {
+      "id": "5dd33bdd-97f8-47cf-89d5-795ac67b1451",
+      "text": "Audit pilot performance metrics",
+      "custom_tooltip": "<b>Audit pilot performance metrics</b><br>Conduct a detailed audit of data collected during the Q2 pilot. Focus on key measurements: consumer participation rate, contamination levels, efficacy of the in-store collection points, and consumer feedback on ease-of-use for digital tools.<br><b>Resources needed:</b><br><ul><li>QA Triage Auditors</li><li>Data Analyst</li><li>Consumer Feedback Specialist</li></ul>",
+      "start_date": "2027-08-31",
+      "duration": 15.0,
+      "progress": 0,
+      "open": true,
+      "meta": "7a5ca5c5-5e0f-4580-bb8c-910aa34eaaad FS",
+      "parent": "8b8827b2-6a9c-4678-a06e-7afc516cbaf4"
+    },
+    {
+      "id": "3087b439-2407-4fdb-8f01-f6eba01d10af",
+      "text": "Adjust national rollout strategy",
+      "custom_tooltip": "<b>Adjust national rollout strategy</b><br>Implement mandatory procedural changes and strategy calibration based on the quantitative and qualitative findings from the pilot audit. This includes finalizing the incentive structure, revising training materials for retail partners, and approving the final national marketing rollout plan.<br><b>Resources needed:</b><br><ul><li>Cross-functional Learning Review Board</li><li>Training Material Developer</li><li>Project Manager</li></ul>",
+      "start_date": "2027-09-15",
+      "duration": 15.0,
+      "progress": 0,
+      "open": true,
+      "meta": "8b8827b2-6a9c-4678-a06e-7afc516cbaf4 FF, 5dd33bdd-97f8-47cf-89d5-795ac67b1451 FS",
+      "parent": "8b8827b2-6a9c-4678-a06e-7afc516cbaf4"
+    },
+    {
+      "id": "39caf833-1344-49b6-a26a-b40e7dae4903",
+      "text": "Pilot Operation and Pre-Rollout Readiness",
+      "custom_tooltip": "<b>Pilot Operation and Pre-Rollout Readiness</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "19334c50-dd99-4e21-bcd2-38f3a6bb115e FS",
+      "parent": "83e3eb61-0e53-4a94-9e79-281eec7ead03",
+      "type": "project"
+    },
+    {
+      "id": "eadd23e5-1511-4e5d-9d97-fcc014b09729",
+      "text": "Conduct Q2 Pilot Collection Across Sample Municipal/Retail Zones",
+      "custom_tooltip": "<b>Conduct Q2 Pilot Collection Across Sample Municipal/Retail Zones</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "39caf833-1344-49b6-a26a-b40e7dae4903 SS",
+      "parent": "39caf833-1344-49b6-a26a-b40e7dae4903",
+      "type": "project"
+    },
+    {
+      "id": "ff1917c9-bf8d-4233-97e1-c65e620445fe",
+      "text": "Hyper-local pilot communication",
+      "custom_tooltip": "<b>Hyper-local pilot communication</b><br>Develop and execute hyper-local digital communication campaigns targeting consumers exclusively within the defined Q2 pilot zones to ensure high initial awareness and participation rates in collection activities.<br><b>Resources needed:</b><br><ul><li>Digital Marketing Specialist</li><li>Local Campaign Budget (Pilot)</li><li>Pilot Zone Mapping Data</li></ul>",
+      "start_date": "2027-09-30",
+      "duration": 8.0,
+      "progress": 0,
+      "open": true,
+      "meta": "eadd23e5-1511-4e5d-9d97-fcc014b09729 SS",
+      "parent": "eadd23e5-1511-4e5d-9d97-fcc014b09729"
+    },
+    {
+      "id": "19914bc4-82ad-4815-90f7-f8aa5414b4f3",
+      "text": "Small-scale collection setup",
+      "custom_tooltip": "<b>Small-scale collection setup</b><br>Establish the initial, small-scale reverse logistics network tailored for the pilot, including temporary micro-sort locations and scheduling high-frequency collection runs using minimal, dedicated contracted transport.<br><b>Resources needed:</b><br><ul><li>Logistics Coordinator</li><li>Dedicated Small-Volume Transport Contract</li><li>Pilot Area Site Permits</li></ul>",
+      "start_date": "2027-10-08",
+      "duration": 8.0,
+      "progress": 0,
+      "open": true,
+      "meta": "ff1917c9-bf8d-4233-97e1-c65e620445fe FS",
+      "parent": "eadd23e5-1511-4e5d-9d97-fcc014b09729"
+    },
+    {
+      "id": "1046a863-9f18-4aa5-a47e-e709cc4ef863",
+      "text": "Rigorous pilot QA auditing",
+      "custom_tooltip": "<b>Rigorous pilot QA auditing</b><br>Implement immediate and rigorous contamination auditing on all pilot volume using designated QA personnel. Establish daily synchronization meetings between pilot logistics and QA hub management to adjust throughput rates based on initial contamination findings.<br><b>Resources needed:</b><br><ul><li>QA Triage Personnel</li><li>Contamination Audit Checklists</li><li>Pilot Logistics Lead</li></ul>",
+      "start_date": "2027-10-16",
+      "duration": 8.0,
+      "progress": 0,
+      "open": true,
+      "meta": "19914bc4-82ad-4815-90f7-f8aa5414b4f3 FS",
+      "parent": "eadd23e5-1511-4e5d-9d97-fcc014b09729"
+    },
+    {
+      "id": "c833a5bb-48e1-4438-b984-7716dc46d357",
+      "text": "Pilot procedural refinement",
+      "custom_tooltip": "<b>Pilot procedural refinement</b><br>Conduct a formal &#x27;Lessons Learned&#x27; review board immediately after the pilot phase. This must result in defined procedural changes for identification or sorting, authorized for national rollout implementation with a potential one-week pause in national ramp-up if critical changes are mandated.<br><b>Resources needed:</b><br><ul><li>Cross-functional Review Board (Operations, QA, Legal)</li><li>Procedural Manual Template</li><li>Decision Sign-off Authority</li></ul>",
+      "start_date": "2027-10-24",
+      "duration": 8.0,
+      "progress": 0,
+      "open": true,
+      "meta": "eadd23e5-1511-4e5d-9d97-fcc014b09729 FF, 1046a863-9f18-4aa5-a47e-e709cc4ef863 FS",
+      "parent": "eadd23e5-1511-4e5d-9d97-fcc014b09729"
+    },
+    {
+      "id": "7163ed2b-a81e-4861-9ced-76b06e1b001b",
+      "text": "Audit Pilot Performance Against Identification and Compliance Metrics",
+      "custom_tooltip": "<b>Audit Pilot Performance Against Identification and Compliance Metrics</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "eadd23e5-1511-4e5d-9d97-fcc014b09729 FS",
+      "parent": "39caf833-1344-49b6-a26a-b40e7dae4903",
+      "type": "project"
+    },
+    {
+      "id": "b4280465-7485-4d3c-a055-caac0678ca12",
+      "text": "Quantify Pilot Contamination Rates",
+      "custom_tooltip": "<b>Quantify Pilot Contamination Rates</b><br>Establish precise contamination levels found in pilot returns, categorizing by source (e.g., foreign material, unacceptable cleaning residues). This requires immediate, rigorous QA triage auditing on all pilot volume using designated Level 1 sorting personnel.<br><b>Resources needed:</b><br><ul><li>Designated QA Triage Personnel</li><li>QA Hub Contamination Audit Forms</li><li>Basic Sorting Equipment</li></ul>",
+      "start_date": "2027-11-01",
+      "duration": 5.0,
+      "progress": 0,
+      "open": true,
+      "meta": "7163ed2b-a81e-4861-9ced-76b06e1b001b SS",
+      "parent": "7163ed2b-a81e-4861-9ced-76b06e1b001b"
+    },
+    {
+      "id": "90558c06-7979-4005-bce7-765079554975",
+      "text": "Audit QA Throughput Versus Plan",
+      "custom_tooltip": "<b>Audit QA Throughput Versus Plan</b><br>Compare the actual processing speed (crates cleaned/inspected per hour) achieved during the pilot against the required throughput rates necessary for the full national launch to meet volume targets. Identify the primary bottleneck (cleaning, inspection, or storage).<br><b>Resources needed:</b><br><ul><li>Reverse Logistics Lead</li><li>QA Hub Operations Manager</li><li>Pilot Throughput Monitoring Dashboard</li></ul>",
+      "start_date": "2027-11-06",
+      "duration": 5.0,
+      "progress": 0,
+      "open": true,
+      "meta": "b4280465-7485-4d3c-a055-caac0678ca12 FS",
+      "parent": "7163ed2b-a81e-4861-9ced-76b06e1b001b"
+    },
+    {
+      "id": "5e737590-fd36-4b23-9d45-6737cb56e3ec",
+      "text": "Adjust Operational Procedures Based on Audit",
+      "custom_tooltip": "<b>Adjust Operational Procedures Based on Audit</b><br>Based on the throughput audit and contamination findings, formulate mandatory procedural adjustments for QA Hub management, including revised cleaning protocols or staffing coefficients required for the national scale-up.<br><b>Resources needed:</b><br><ul><li>Circular Economy Consultant</li><li>QA Hub System Architect</li><li>Cleaning Agent Certification Lead</li></ul>",
+      "start_date": "2027-11-11",
+      "duration": 5.0,
+      "progress": 0,
+      "open": true,
+      "meta": "90558c06-7979-4005-bce7-765079554975 FS",
+      "parent": "7163ed2b-a81e-4861-9ced-76b06e1b001b"
+    },
+    {
+      "id": "58c954cf-09de-43a4-9c44-a8864335cb90",
+      "text": "Formalize Learning Sign-off",
+      "custom_tooltip": "<b>Formalize Learning Sign-off</b><br>Conduct a documented review meeting with all workstream leads (Logistics, QA, Consumer Incentive) to formally approve the revised operational procedures and sign off that all critical pilot shortcomings have been addressed prior to commencing national rollout preparation.<br><b>Resources needed:</b><br><ul><li>Project Manager</li><li>Workstream Leads (cross-functional)</li><li>Meeting Minutes &amp; Action Tracker</li></ul>",
+      "start_date": "2027-11-16",
+      "duration": 5.0,
+      "progress": 0,
+      "open": true,
+      "meta": "7163ed2b-a81e-4861-9ced-76b06e1b001b FF, 5e737590-fd36-4b23-9d45-6737cb56e3ec FS",
+      "parent": "7163ed2b-a81e-4861-9ced-76b06e1b001b"
+    },
+    {
+      "id": "ec07c54a-ea0b-4218-81d0-6bb1fb2d9010",
+      "text": "Obtain EPA Reuse Certification (Dependency Check)",
+      "custom_tooltip": "<b>Obtain EPA Reuse Certification (Dependency Check)</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "7163ed2b-a81e-4861-9ced-76b06e1b001b FS",
+      "parent": "39caf833-1344-49b6-a26a-b40e7dae4903",
+      "type": "project"
+    },
+    {
+      "id": "d6aafd2e-c08e-441d-80e3-223e877bc5a2",
+      "text": "Submit pilot cleaning data proactively",
+      "custom_tooltip": "<b>Submit pilot cleaning data proactively</b><br>Proactively submit the preliminary data documenting the efficiency and efficacy of the utilized cleaning agents during the Q2 pilot phase to the Danish EPA. This aims to preemptively address potential queries or requests for supplementary testing data related to contamination efficacy, ensuring the reuse certification stays on track.<br><b>Resources needed:</b><br><ul><li>Regulatory &amp; Compliance Assessor</li><li>Circular Economy Consultant (Expert 1)</li><li>Pilot Cleaning Performance Data</li></ul>",
+      "start_date": "2027-11-21",
+      "duration": 12.0,
+      "progress": 0,
+      "open": true,
+      "meta": "ec07c54a-ea0b-4218-81d0-6bb1fb2d9010 SS",
+      "parent": "ec07c54a-ea0b-4218-81d0-6bb1fb2d9010"
+    },
+    {
+      "id": "cc2ab9b4-7e7c-4955-b1a8-b11156e4cfe3",
+      "text": "Prepare contingency cleaning protocol",
+      "custom_tooltip": "<b>Prepare contingency cleaning protocol</b><br>Develop an alternative, low-volume cleaning protocol suitable only for pilot-scale material processing. This is a contingency measure designed to ensure the operational audit (QA Hub processing) can still proceed even if the final, preferred EPA reuse certification is delayed past the dependency date.<br><b>Resources needed:</b><br><ul><li>Reverse Logistics &amp; QA Operations Lead</li><li>Cleaning Agents Technical Specialist</li><li>QA Hub Operations Team</li></ul>",
+      "start_date": "2027-12-03",
+      "duration": 12.0,
+      "progress": 0,
+      "open": true,
+      "meta": "d6aafd2e-c08e-441d-80e3-223e877bc5a2 FS",
+      "parent": "ec07c54a-ea0b-4218-81d0-6bb1fb2d9010"
+    },
+    {
+      "id": "b275357e-84e6-4c9f-ac82-e17311e9638c",
+      "text": "Address EPA feedback and secure certification",
+      "custom_tooltip": "<b>Address EPA feedback and secure certification</b><br>Manage all subsequent communication and documentation required by the Danish EPA following the initial submission review. This includes responding to requests for clarification and securing the final, written reuse certification sign-off by the established dependency date.<br><b>Resources needed:</b><br><ul><li>Regulatory &amp; Compliance Assessor</li><li>Legal Counsel</li><li>Danish Environmental Protection Agency (EPA)</li></ul>",
+      "start_date": "2027-12-15",
+      "duration": 12.0,
+      "progress": 0,
+      "open": true,
+      "meta": "ec07c54a-ea0b-4218-81d0-6bb1fb2d9010 FF, cc2ab9b4-7e7c-4955-b1a8-b11156e4cfe3 FS",
+      "parent": "ec07c54a-ea0b-4218-81d0-6bb1fb2d9010"
+    },
+    {
+      "id": "99ff4470-1682-46cc-b8e9-57d8575ffd1a",
+      "text": "Implement Q2 Learnings into Full National Rollout Procedures",
+      "custom_tooltip": "<b>Implement Q2 Learnings into Full National Rollout Procedures</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "39caf833-1344-49b6-a26a-b40e7dae4903 FF, ec07c54a-ea0b-4218-81d0-6bb1fb2d9010 FS",
+      "parent": "39caf833-1344-49b6-a26a-b40e7dae4903",
+      "type": "project"
+    },
+    {
+      "id": "ae2a8b3e-1cbc-4be3-a252-ebfa0cc2115e",
+      "text": "Finalize Pilot Learning Review Board",
+      "custom_tooltip": "<b>Finalize Pilot Learning Review Board</b><br>Convene a dedicated, cross-functional review board including leads from Logistics, QA, Marketing, and Finance. The board&#x27;s mandate is to analyze all data collected during the Q2 pilot phase to synthesize actionable insights regarding consumer behavior, operational efficiency, and contamination rates. This must include members authorized to mandate changes to national rollout procedures.<br><b>Resources needed:</b><br><ul><li>Cross-functional management team (Director/Senior Manager Level)</li><li>Pilot Data Analyst Report</li><li>Steering Committee Authority</li></ul>",
+      "start_date": "2027-12-27",
+      "duration": 5.0,
+      "progress": 0,
+      "open": true,
+      "meta": "99ff4470-1682-46cc-b8e9-57d8575ffd1a SS",
+      "parent": "99ff4470-1682-46cc-b8e9-57d8575ffd1a"
+    },
+    {
+      "id": "5af77046-4602-4a35-a3f7-a8242a3fe9b2",
+      "text": "Implement Critical Procedural Changes",
+      "custom_tooltip": "<b>Implement Critical Procedural Changes</b><br>Based on the Review Board&#x27;s findings, immediately revise and update all standard operating procedures (SOPs), training manuals, and visual guides for the national rollout. Focus on incorporating necessary adjustments to identification clarity, triage protocols, and logistics handoffs to prevent recurrence of pilot-identified errors. Ensure all changes are cost-assessed before approval.<br><b>Resources needed:</b><br><ul><li>SOP Writers/Technical Manual Authors</li><li>QA Hub Operations Lead</li><li>Budget Steward (for cost assessment)</li></ul>",
+      "start_date": "2028-01-01",
+      "duration": 5.0,
+      "progress": 0,
+      "open": true,
+      "meta": "ae2a8b3e-1cbc-4be3-a252-ebfa0cc2115e FS",
+      "parent": "99ff4470-1682-46cc-b8e9-57d8575ffd1a"
+    },
+    {
+      "id": "27934b0d-4102-49d1-b209-4b43aeec826f",
+      "text": "Mandate and Execute Rollout Pause Decision",
+      "custom_tooltip": "<b>Mandate and Execute Rollout Pause Decision</b><br>If the Review Board identifies any Tier 1 critical procedural flaws that fundamentally compromise the 40% recovery target or regulatory compliance (e.g., unexpected contamination risk), the Project Manager must formally recommend and enforce a mandatory pause on the national launch timeline. This task includes formal communication of the timeline slip and the required corrective actions to all upper management sponsors.<br><b>Resources needed:</b><br><ul><li>Project Manager</li><li>Executive Sponsor Approval</li><li>Formal Communication Templates</li></ul>",
+      "start_date": "2028-01-06",
+      "duration": 5.0,
+      "progress": 0,
+      "open": true,
+      "meta": "5af77046-4602-4a35-a3f7-a8242a3fe9b2 FS",
+      "parent": "99ff4470-1682-46cc-b8e9-57d8575ffd1a"
+    },
+    {
+      "id": "8f3afa96-115d-438c-8e98-c43f26786093",
+      "text": "Validate Updated Training Materials",
+      "custom_tooltip": "<b>Validate Updated Training Materials</b><br>Distribute the revised SOPs and training materials to all contracted QA Hub staff, 3rd-party logistics partners, and key retail liaisons. Conduct rapid refresher training sessions (virtual or on-site) to ensure 100% compliance with new procedures before the Q3 national launch moves forward. Track completion rates per stakeholder group.<br><b>Resources needed:</b><br><ul><li>Training Coordinator</li><li>HSE/Compliance Officer</li><li>Digital Training Platform Access</li></ul>",
+      "start_date": "2028-01-11",
+      "duration": 5.0,
+      "progress": 0,
+      "open": true,
+      "meta": "99ff4470-1682-46cc-b8e9-57d8575ffd1a FF, 27934b0d-4102-49d1-b209-4b43aeec826f FS",
+      "parent": "99ff4470-1682-46cc-b8e9-57d8575ffd1a"
+    },
+    {
+      "id": "cb2483f9-ffd0-4d69-9d07-3d4a6bd34b93",
+      "text": "National Rollout and Supply Chain Integration",
+      "custom_tooltip": "<b>National Rollout and Supply Chain Integration</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "83e3eb61-0e53-4a94-9e79-281eec7ead03 FF, 39caf833-1344-49b6-a26a-b40e7dae4903 FS",
+      "parent": "83e3eb61-0e53-4a94-9e79-281eec7ead03",
+      "type": "project"
+    },
+    {
+      "id": "e693acfa-75f3-4dfe-97cb-f4525f476b67",
+      "text": "Execute Nationwide Campaign Launch (Q3 Start)",
+      "custom_tooltip": "<b>Execute Nationwide Campaign Launch (Q3 Start)</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "cb2483f9-ffd0-4d69-9d07-3d4a6bd34b93 SS",
+      "parent": "cb2483f9-ffd0-4d69-9d07-3d4a6bd34b93",
+      "type": "project"
+    },
+    {
+      "id": "bcc2257a-8980-48f9-b6e4-fbf0ff4a2b36",
+      "text": "Pre-schedule National Launch Communications",
+      "custom_tooltip": "<b>Pre-schedule National Launch Communications</b><br>Finalize deadlines and required data exchange formats for all distribution centers and key retail/municipal partners 14 days prior to the official Q3 national launch kickoff date. This ensures logistical readiness across all collection channels simultaneously.<br><b>Resources needed:</b><br><ul><li>Logistics Coordinator</li><li>Stakeholder Relations Manager</li><li>Distribution Center Contacts</li></ul>",
+      "start_date": "2028-01-16",
+      "duration": 2.0,
+      "progress": 0,
+      "open": true,
+      "meta": "e693acfa-75f3-4dfe-97cb-f4525f476b67 SS",
+      "parent": "e693acfa-75f3-4dfe-97cb-f4525f476b67"
+    },
+    {
+      "id": "b9052ee0-9040-4a54-80b7-8c6f157f9ef1",
+      "text": "Buffer Initial Retailer Onboarding Support",
+      "custom_tooltip": "<b>Buffer Initial Retailer Onboarding Support</b><br>Mobilize Field Support teams in high-visibility launch zones to provide immediate, on-site assistance to supermarket staff managing the initial influx of returns and validating in-store signage setup. This mitigates initial operational friction.<br><b>Resources needed:</b><br><ul><li>Field Support Specialists (3 Teams)</li><li>Training Manuals</li><li>Travel Budget</li></ul>",
+      "start_date": "2028-01-18",
+      "duration": 2.0,
+      "progress": 0,
+      "open": true,
+      "meta": "bcc2257a-8980-48f9-b6e4-fbf0ff4a2b36 FS",
+      "parent": "e693acfa-75f3-4dfe-97cb-f4525f476b67"
+    },
+    {
+      "id": "e74137b4-ab10-47bd-b8fa-da3dccde967d",
+      "text": "Monitor Q3 Initial Recovery Rate Against Forecast",
+      "custom_tooltip": "<b>Monitor Q3 Initial Recovery Rate Against Forecast</b><br>Establish a daily tracking dashboard to compare actual crate volumes collected from Municipal and Retail channels against the pre-launch quarterly recovery forecast. Set clear escalation paths for immediate management notification if tracking falls below 90% of the target rate.<br><b>Resources needed:</b><br><ul><li>Data Analyst</li><li>Project Management Software</li><li>Executive Reporting Template</li></ul>",
+      "start_date": "2028-01-20",
+      "duration": 2.0,
+      "progress": 0,
+      "open": true,
+      "meta": "b9052ee0-9040-4a54-80b7-8c6f157f9ef1 FS",
+      "parent": "e693acfa-75f3-4dfe-97cb-f4525f476b67"
+    },
+    {
+      "id": "0a2b6aef-e65d-431d-ba44-4cd2862525c2",
+      "text": "Execute Initial Retailer Compliance Audits",
+      "custom_tooltip": "<b>Execute Initial Retailer Compliance Audits</b><br>Conduct rapid, remote compliance checks on a sample (30%) of participating supermarkets one week post-launch to verify correct application of in-store signage and proper handling procedures, addressing early signs of non-adherence.<br><b>Resources needed:</b><br><ul><li>Field Support Specialists</li><li>Compliance Checklist Tool</li></ul>",
+      "start_date": "2028-01-22",
+      "duration": 2.0,
+      "progress": 0,
+      "open": true,
+      "meta": "e693acfa-75f3-4dfe-97cb-f4525f476b67 FF, e74137b4-ab10-47bd-b8fa-da3dccde967d FS",
+      "parent": "e693acfa-75f3-4dfe-97cb-f4525f476b67"
+    },
+    {
+      "id": "d9f2ecd3-a68a-4f2c-bcb1-e174cc06b745",
+      "text": "Manage Daily QA Hub Triage and Cleaning Operations",
+      "custom_tooltip": "<b>Manage Daily QA Hub Triage and Cleaning Operations</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "e693acfa-75f3-4dfe-97cb-f4525f476b67 FS",
+      "parent": "cb2483f9-ffd0-4d69-9d07-3d4a6bd34b93",
+      "type": "project"
+    },
+    {
+      "id": "cfbd6002-5214-45cc-8236-2e4955a1a12f",
+      "text": "Daily QA Triage Auditing Protocol",
+      "custom_tooltip": "<b>Daily QA Triage Auditing Protocol</b><br>Establish a daily, structured audit schedule specifically for material received from different collection streams (municipal vs. retail) to pinpoint sources of contamination immediately post-pilot. Objective: Maintain contamination below 2% to ensure processing efficiency.<br><b>Resources needed:</b><br><ul><li>QA Hub Lead</li><li>Dedicated Triage Auditors</li><li>Contamination Tracking Spreadsheet</li></ul>",
+      "start_date": "2028-01-24",
+      "duration": 19.0,
+      "progress": 0,
+      "open": true,
+      "meta": "d9f2ecd3-a68a-4f2c-bcb1-e174cc06b745 SS",
+      "parent": "d9f2ecd3-a68a-4f2c-bcb1-e174cc06b745"
+    },
+    {
+      "id": "02780fa3-4b84-4df2-bbb1-a02bdf39dabf",
+      "text": "Adjust Cleaning Protocols Post-Audit",
+      "custom_tooltip": "<b>Adjust Cleaning Protocols Post-Audit</b><br>Based on daily contamination reports, revise the concentration of cleaning agents or the frequency of manual sorting for high-risk batches. This requires rapid decision-making power integrated into the daily shift structure.<br><b>Resources needed:</b><br><ul><li>Chemical Engineer Consultant</li><li>QA Hub Supervisors</li><li>Inventory of Cleaning Agents</li></ul>",
+      "start_date": "2028-02-12",
+      "duration": 19.0,
+      "progress": 0,
+      "open": true,
+      "meta": "cfbd6002-5214-45cc-8236-2e4955a1a12f FS",
+      "parent": "d9f2ecd3-a68a-4f2c-bcb1-e174cc06b745"
+    },
+    {
+      "id": "3e87c714-69ae-4b82-a978-02109e5d1d9f",
+      "text": "Synchronization Meetings for Throughput",
+      "custom_tooltip": "<b>Synchronization Meetings for Throughput</b><br>Hold mandatory, brief (15-minute) weekly synchronization meetings between the Logistics Lead and the QA Hub Management team to compare actual material throughput against the required daily processing rate needed to meet the annual target.<br><b>Resources needed:</b><br><ul><li>Logistics Manager</li><li>QA Operations Coordinator</li><li>Performance Dashboard Access</li></ul>",
+      "start_date": "2028-03-02",
+      "duration": 19.0,
+      "progress": 0,
+      "open": true,
+      "meta": "02780fa3-4b84-4df2-bbb1-a02bdf39dabf FS",
+      "parent": "d9f2ecd3-a68a-4f2c-bcb1-e174cc06b745"
+    },
+    {
+      "id": "391bd96a-5c7f-4458-8946-54610aaeeafa",
+      "text": "Adjusting Sorting Capacity Ratios",
+      "custom_tooltip": "<b>Adjusting Sorting Capacity Ratios</b><br>If contamination or volume variance persists over three consecutive weeks, adjust the internal labor allocation within the QA hubs (shifting staff from inspection to primary cleaning) to align with the reality of inbound material quality.<br><b>Resources needed:</b><br><ul><li>FTE Staffing Coordinator</li><li>HR Liaison</li><li>Weekly Performance Reports</li></ul>",
+      "start_date": "2028-03-21",
+      "duration": 19.0,
+      "progress": 0,
+      "open": true,
+      "meta": "d9f2ecd3-a68a-4f2c-bcb1-e174cc06b745 FF, 3e87c714-69ae-4b82-a978-02109e5d1d9f FS",
+      "parent": "d9f2ecd3-a68a-4f2c-bcb1-e174cc06b745"
+    },
+    {
+      "id": "b9e28795-8991-4145-b354-7d7b2ea8caf9",
+      "text": "Conduct System Integration Test: RTSDR to Arla Procurement",
+      "custom_tooltip": "<b>Conduct System Integration Test: RTSDR to Arla Procurement</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "d9f2ecd3-a68a-4f2c-bcb1-e174cc06b745 FS",
+      "parent": "cb2483f9-ffd0-4d69-9d07-3d4a6bd34b93",
+      "type": "project"
+    },
+    {
+      "id": "6846f830-ded4-44b6-87c9-c414d308cf92",
+      "text": "Define RTSDR Data Structure",
+      "custom_tooltip": "<b>Define RTSDR Data Structure</b><br>Collaborate with Procurement to finalize the exact data fields, format (e.g., CSV, API structure), and required metadata for the &#x27;Ready-to-Deploy Stock Report&#x27; (RTSDR) based on recovered crate volume readiness.<br><b>Resources needed:</b><br><ul><li>QA Hub Logistics Lead</li><li>Procurement &amp; Asset Lifecycle Liaison</li><li>Data Architect</li></ul>",
+      "start_date": "2028-04-09",
+      "duration": 3.0,
+      "progress": 0,
+      "open": true,
+      "meta": "b9e28795-8991-4145-b354-7d7b2ea8caf9 SS",
+      "parent": "b9e28795-8991-4145-b354-7d7b2ea8caf9"
+    },
+    {
+      "id": "d5d71f9c-5ae6-413d-adfe-4f0e005c573f",
+      "text": "Integrate RTSDR with ERP System",
+      "custom_tooltip": "<b>Integrate RTSDR with ERP System</b><br>Conduct technical spike/dry run to integrate the output of the QA Hub tracking system with Arla Procurement&#x27;s main ERP forecasting software, ensuring data mapping accuracy for production planning.<br><b>Resources needed:</b><br><ul><li>IT Systems Integrator</li><li>Procurement ERP Specialist</li><li>QA Hub Data Manager</li></ul>",
+      "start_date": "2028-04-12",
+      "duration": 3.0,
+      "progress": 0,
+      "open": true,
+      "meta": "6846f830-ded4-44b6-87c9-c414d308cf92 FS",
+      "parent": "b9e28795-8991-4145-b354-7d7b2ea8caf9"
+    },
+    {
+      "id": "6a1a2d4a-40a7-426e-a8e8-9e2ca41517b9",
+      "text": "Finalize Data Exchange Protocol",
+      "custom_tooltip": "<b>Finalize Data Exchange Protocol</b><br>Formally establish, document, and secure written agreement on the exact timing, frequency (monthly), and error handling protocol for the &#x27;Ready-to-Deploy Stock Report&#x27; exchange, meeting the September 3rd dependency.<br><b>Resources needed:</b><br><ul><li>Financial Controller</li><li>Procurement Liaison</li><li>Legal Counsel</li></ul>",
+      "start_date": "2028-04-15",
+      "duration": 3.0,
+      "progress": 0,
+      "open": true,
+      "meta": "d5d71f9c-5ae6-413d-adfe-4f0e005c573f FS",
+      "parent": "b9e28795-8991-4145-b354-7d7b2ea8caf9"
+    },
+    {
+      "id": "ad46bca7-9090-441e-9869-cba52f7aaa67",
+      "text": "Conduct Synchronization Meeting",
+      "custom_tooltip": "<b>Conduct Synchronization Meeting</b><br>Hold the first formal, mandatory monthly synchronization meeting between QA Hub Logistics and Arla Procurement post-protocol signing to review initial Q3 data integrity and confirm readiness for Q4 supply chain adjustments.<br><b>Resources needed:</b><br><ul><li>Project Manager</li><li>Logistics Team Lead</li><li>Procurement Manager</li></ul>",
+      "start_date": "2028-04-18",
+      "duration": 3.0,
+      "progress": 0,
+      "open": true,
+      "meta": "b9e28795-8991-4145-b354-7d7b2ea8caf9 FF, 6a1a2d4a-40a7-426e-a8e8-9e2ca41517b9 FS",
+      "parent": "b9e28795-8991-4145-b354-7d7b2ea8caf9"
+    },
+    {
+      "id": "4f81ea08-6155-44f0-adbe-b70b203b85d5",
+      "text": "Execute Q4 Incentive Uplift if Volume Targets are Lagging",
+      "custom_tooltip": "<b>Execute Q4 Incentive Uplift if Volume Targets are Lagging</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "b9e28795-8991-4145-b354-7d7b2ea8caf9 FS",
+      "parent": "cb2483f9-ffd0-4d69-9d07-3d4a6bd34b93",
+      "type": "project"
+    },
+    {
+      "id": "d688aaad-d17c-4755-9b40-196da168ba4c",
+      "text": "Set volume performance thresholds now",
+      "custom_tooltip": "<b>Set volume performance thresholds now</b><br>Establish clear quantitative volume performance thresholds for the end of Q3. These thresholds must define the exact level of recovery (e.g., 34% target vs. 30% actual) that triggers the need for an immediate incentive adjustment. This requires defining success metrics derived from the pilot phase.<br><b>Resources needed:</b><br><ul><li>Financial Controller</li><li>Incentive Specialist</li><li>Quantitative Analyst</li></ul>",
+      "start_date": "2028-04-21",
+      "duration": 7.0,
+      "progress": 0,
+      "open": true,
+      "meta": "4f81ea08-6155-44f0-adbe-b70b203b85d5 SS",
+      "parent": "4f81ea08-6155-44f0-adbe-b70b203b85d5"
+    },
+    {
+      "id": "dff2f63e-4db0-4383-b1ec-463833f360f4",
+      "text": "Model and pre-approve Q4 incentive uplift scenarios",
+      "custom_tooltip": "<b>Model and pre-approve Q4 incentive uplift scenarios</b><br>Develop two distinct, pre-tested financial scenarios for boosting the DKK 5 incentive (e.g., Scenario A: Increase to DKK 7; Scenario B: Introduce match voucher). These scenarios should project the required budget increase and expected volume lift to ensure they are ready for instantaneous deployment.<br><b>Resources needed:</b><br><ul><li>Behavioral Economist</li><li>Financial Controller</li><li>Legal Counsel</li></ul>",
+      "start_date": "2028-04-28",
+      "duration": 7.0,
+      "progress": 0,
+      "open": true,
+      "meta": "d688aaad-d17c-4755-9b40-196da168ba4c FS",
+      "parent": "4f81ea08-6155-44f0-adbe-b70b203b85d5"
+    },
+    {
+      "id": "afa03ddf-0436-4f2a-8bd2-4c71be2c65c8",
+      "text": "Secure leadership authorization for potential deployment",
+      "custom_tooltip": "<b>Secure leadership authorization for potential deployment</b><br>Present the modeled Q4 uplift scenarios (set in Step 2) to Arla Finance and Executive Steering Committee by October 1st. Obtain explicit, binding authorization to deploy the necessary contingency budget funds immediately if the Q3 performance threshold is breached.<br><b>Resources needed:</b><br><ul><li>Project Director</li><li>Executive Sponsor</li><li>Budget Steward</li></ul>",
+      "start_date": "2028-05-05",
+      "duration": 7.0,
+      "progress": 0,
+      "open": true,
+      "meta": "dff2f63e-4db0-4383-b1ec-463833f360f4 FS",
+      "parent": "4f81ea08-6155-44f0-adbe-b70b203b85d5"
+    },
+    {
+      "id": "752e1f04-196b-467e-bfd1-cef9dc8b36a5",
+      "text": "Execute confirmed Q4 incentive increase rapidly",
+      "custom_tooltip": "<b>Execute confirmed Q4 incentive increase rapidly</b><br>If the Q3 performance threshold is breached (as documented in Step 1), immediately activate the pre-approved Q4 incentive uplift scenario chosen in Step 2. Communicate the temporary incentive increase across all channels and implement within 7 days.<br><b>Resources needed:</b><br><ul><li>Incentive Specialist</li><li>PR &amp; Marketing Team</li><li>Retail Supply Chain Specialist</li></ul>",
+      "start_date": "2028-05-12",
+      "duration": 7.0,
+      "progress": 0,
+      "open": true,
+      "meta": "4f81ea08-6155-44f0-adbe-b70b203b85d5 FF, afa03ddf-0436-4f2a-8bd2-4c71be2c65c8 FS",
+      "parent": "4f81ea08-6155-44f0-adbe-b70b203b85d5"
+    },
+    {
+      "id": "df1b9848-2f4a-4c93-858d-4261e3d6f6e1",
+      "text": "Complete Final Donation Transfer to Arla Foundation (Year-End)",
+      "custom_tooltip": "<b>Complete Final Donation Transfer to Arla Foundation (Year-End)</b>",
+      "progress": 0,
+      "open": true,
+      "meta": "cb2483f9-ffd0-4d69-9d07-3d4a6bd34b93 FF, 4f81ea08-6155-44f0-adbe-b70b203b85d5 FS",
+      "parent": "cb2483f9-ffd0-4d69-9d07-3d4a6bd34b93",
+      "type": "project"
+    },
+    {
+      "id": "ed46fbc4-9377-4209-8795-91a96e2bc91a",
+      "text": "Finalize Q4 Performance Data",
+      "custom_tooltip": "<b>Finalize Q4 Performance Data</b><br>Compile all official performance metrics from the campaign, including finalized crate recovery volume, verified CO2 reduction data, and audited social media impression counts, ensuring all data sources are reconciled.<br><b>Resources needed:</b><br><ul><li>QA Hub Audit Lead</li><li>Financial Controller</li><li>Digital Analytics Specialist</li></ul>",
+      "start_date": "2028-05-19",
+      "duration": 2.0,
+      "progress": 0,
+      "open": true,
+      "meta": "df1b9848-2f4a-4c93-858d-4261e3d6f6e1 SS",
+      "parent": "df1b9848-2f4a-4c93-858d-4261e3d6f6e1"
+    },
+    {
+      "id": "7aa43b70-4220-43cc-a91f-160beba5ca00",
+      "text": "Conduct Final Donation Calculation Audit",
+      "custom_tooltip": "<b>Conduct Final Donation Calculation Audit</b><br>Verify the total invoiced donation amount based on the final, audited volume and the fixed 5 DKK per-unit rate. This requires reconciliation between the QA Hub output report and the Financial ledger to prevent discrepancies.<br><b>Resources needed:</b><br><ul><li>Financial Controller</li><li>Arla Foundation Liaison</li></ul>",
+      "start_date": "2028-05-21",
+      "duration": 2.0,
+      "progress": 0,
+      "open": true,
+      "meta": "ed46fbc4-9377-4209-8795-91a96e2bc91a FS",
+      "parent": "df1b9848-2f4a-4c93-858d-4261e3d6f6e1"
+    },
+    {
+      "id": "a6f12988-2e8f-4224-8a5f-723eb5273240",
+      "text": "Approve Final Transfer Documentation",
+      "custom_tooltip": "<b>Approve Final Transfer Documentation</b><br>Secure mandatory sign-off from Arla Finance and the Head of CSR on the final donation figure and the required legal documentation for the transfer of funds to the Arla Foundation.<br><b>Resources needed:</b><br><ul><li>Head of CSR</li><li>Arla Finance Signatory</li><li>Legal Counsel</li></ul>",
+      "start_date": "2028-05-23",
+      "duration": 2.0,
+      "progress": 0,
+      "open": true,
+      "meta": "7aa43b70-4220-43cc-a91f-160beba5ca00 FS",
+      "parent": "df1b9848-2f4a-4c93-858d-4261e3d6f6e1"
+    },
+    {
+      "id": "895f67dc-940a-4815-a7bb-23b71f2715b1",
+      "text": "Execute Funds Transfer and Acknowledge Receipt",
+      "custom_tooltip": "<b>Execute Funds Transfer and Acknowledge Receipt</b><br>Initiate the official banking transfer of the finalized DKK amount to the Arla Foundation account, and obtain formal written acknowledgment confirming successful receipt and allocation.<br><b>Resources needed:</b><br><ul><li>Treasury Department</li><li>Arla Foundation Accounting Team</li></ul>",
+      "start_date": "2028-05-25",
+      "duration": 2.0,
+      "progress": 0,
+      "open": true,
+      "meta": "df1b9848-2f4a-4c93-858d-4261e3d6f6e1 FF, a6f12988-2e8f-4224-8a5f-723eb5273240 FS",
+      "parent": "df1b9848-2f4a-4c93-858d-4261e3d6f6e1"
+    }
+  ],
+  "links": [
+    {
+      "id": "link_1",
+      "source": "83e3eb61-0e53-4a94-9e79-281eec7ead03",
+      "target": "d29e4196-ef8f-4c4f-93e5-e95381348182",
+      "type": "1",
+      "lag": 0.0
+    },
+    {
+      "id": "link_2",
+      "source": "d29e4196-ef8f-4c4f-93e5-e95381348182",
+      "target": "192d2a61-1575-431b-b9c9-a41531164aae",
+      "type": "1",
+      "lag": 0.0
+    },
+    {
+      "id": "link_3",
+      "source": "f28f9370-fe37-4ee6-bbfc-2651801d5249",
+      "target": "cb4828bc-0621-4842-9c95-dbc22429d430",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_4",
+      "source": "cb4828bc-0621-4842-9c95-dbc22429d430",
+      "target": "037f290d-5f7e-4e2e-ae64-daa5a5a52128",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_5",
+      "source": "192d2a61-1575-431b-b9c9-a41531164aae",
+      "target": "fb5542d6-0bd3-4d26-b44a-7ca51ec411af",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_6",
+      "source": "c725382a-a951-4e96-9295-ec881cc35fa9",
+      "target": "96a0e611-4bf5-4871-9734-419b4a8e02ba",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_7",
+      "source": "96a0e611-4bf5-4871-9734-419b4a8e02ba",
+      "target": "9ff74296-2178-49eb-b380-689cc0b37507",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_8",
+      "source": "fb5542d6-0bd3-4d26-b44a-7ca51ec411af",
+      "target": "3481d2ff-433f-4bd3-938e-61333a8127a3",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_9",
+      "source": "84e88124-b0ef-486d-a790-60f5ec2ca6ed",
+      "target": "d0eb2c7e-32f9-4531-8d2e-2fa565260502",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_10",
+      "source": "d0eb2c7e-32f9-4531-8d2e-2fa565260502",
+      "target": "3e322b3d-0735-40c5-becc-6f46fb148a03",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_11",
+      "source": "d29e4196-ef8f-4c4f-93e5-e95381348182",
+      "target": "a0a73a0d-316d-4429-8646-573e37b03197",
+      "type": "2",
+      "lag": 0.0
+    },
+    {
+      "id": "link_12",
+      "source": "3481d2ff-433f-4bd3-938e-61333a8127a3",
+      "target": "a0a73a0d-316d-4429-8646-573e37b03197",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_13",
+      "source": "4692a102-4390-4562-8065-dfe856f56fe4",
+      "target": "8cb0ba8b-14d2-42cd-895e-f7fd5151ef66",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_14",
+      "source": "8cb0ba8b-14d2-42cd-895e-f7fd5151ef66",
+      "target": "1a08f86b-2c95-47fc-b385-aad9c4374a4a",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_15",
+      "source": "d29e4196-ef8f-4c4f-93e5-e95381348182",
+      "target": "94d4816f-2ce3-4f94-baa3-7f1acef211a9",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_16",
+      "source": "94d4816f-2ce3-4f94-baa3-7f1acef211a9",
+      "target": "b8947dc5-fa5b-4b23-a8e7-a85ec30fa7bc",
+      "type": "1",
+      "lag": 0.0
+    },
+    {
+      "id": "link_17",
+      "source": "fc2ae84e-8bed-4d02-9ea4-948ab9705ad0",
+      "target": "680a9c8b-3c41-4461-9f45-f1daa5adcc6b",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_18",
+      "source": "680a9c8b-3c41-4461-9f45-f1daa5adcc6b",
+      "target": "97ddc5a3-3703-4d8e-9ac3-2814729b5302",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_19",
+      "source": "97ddc5a3-3703-4d8e-9ac3-2814729b5302",
+      "target": "f2641ec3-7c04-4098-a5fd-cfe8eb4607f5",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_20",
+      "source": "b8947dc5-fa5b-4b23-a8e7-a85ec30fa7bc",
+      "target": "a7a17900-40ad-4c3d-ab8a-93e253ddadb2",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_21",
+      "source": "691806b5-68aa-4212-a7a5-7f9cffb00615",
+      "target": "b616484d-db4e-4f73-854a-629bb25b5485",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_22",
+      "source": "b616484d-db4e-4f73-854a-629bb25b5485",
+      "target": "5b9a765d-cee4-42a1-a5ad-9a6488c665da",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_23",
+      "source": "5b9a765d-cee4-42a1-a5ad-9a6488c665da",
+      "target": "57c30a73-e010-41b4-b5d5-12c88ee5b187",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_24",
+      "source": "a7a17900-40ad-4c3d-ab8a-93e253ddadb2",
+      "target": "4c29ddbb-de0d-4655-9ddb-fa2a32ab52f2",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_25",
+      "source": "a30d8ad9-73b0-41af-b32a-3e0540814374",
+      "target": "43f9d5b0-57a3-41e7-a562-6b3c26b56ebe",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_26",
+      "source": "43f9d5b0-57a3-41e7-a562-6b3c26b56ebe",
+      "target": "f6bbf484-3f02-43d4-b2c0-178e3f476950",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_27",
+      "source": "f6bbf484-3f02-43d4-b2c0-178e3f476950",
+      "target": "8ec31568-beeb-4315-8020-47364531b0ab",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_28",
+      "source": "94d4816f-2ce3-4f94-baa3-7f1acef211a9",
+      "target": "8be90d69-43af-42e4-a26b-f098bb2ddea7",
+      "type": "2",
+      "lag": 0.0
+    },
+    {
+      "id": "link_29",
+      "source": "4c29ddbb-de0d-4655-9ddb-fa2a32ab52f2",
+      "target": "8be90d69-43af-42e4-a26b-f098bb2ddea7",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_30",
+      "source": "b0256885-365e-40b6-9e9a-e4b63af0f217",
+      "target": "14d6daa9-c409-49d2-bd23-e540802dec15",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_31",
+      "source": "14d6daa9-c409-49d2-bd23-e540802dec15",
+      "target": "b77a265c-aaf3-4ce1-9006-237d0ba6e872",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_32",
+      "source": "94d4816f-2ce3-4f94-baa3-7f1acef211a9",
+      "target": "92725e98-ad52-4f5d-b14e-9051701f1db3",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_33",
+      "source": "92725e98-ad52-4f5d-b14e-9051701f1db3",
+      "target": "d1d8b3bc-a93f-4deb-b965-258a5ba39c75",
+      "type": "1",
+      "lag": 0.0
+    },
+    {
+      "id": "link_34",
+      "source": "839b4ff8-8a78-487d-813e-7a70ae54d070",
+      "target": "766edad4-3123-468f-b0c0-4a3be75e0b83",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_35",
+      "source": "766edad4-3123-468f-b0c0-4a3be75e0b83",
+      "target": "bc1a8a0b-0d9c-4d51-8779-5350f5696706",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_36",
+      "source": "bc1a8a0b-0d9c-4d51-8779-5350f5696706",
+      "target": "b66077fd-eddc-4df4-afaf-875f2805cc28",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_37",
+      "source": "d1d8b3bc-a93f-4deb-b965-258a5ba39c75",
+      "target": "4552f201-d162-46bc-a432-b6b33e2af4e8",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_38",
+      "source": "b14a5eda-f515-4b8c-b797-0232dd380914",
+      "target": "25ed83b8-dffc-458f-97d3-b4eafdf55cd8",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_39",
+      "source": "25ed83b8-dffc-458f-97d3-b4eafdf55cd8",
+      "target": "7a1a9192-580e-4eec-bc78-4f64729da7cc",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_40",
+      "source": "4552f201-d162-46bc-a432-b6b33e2af4e8",
+      "target": "8cef95be-1bd9-42ae-b3bb-97c69db0e37a",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_41",
+      "source": "c83828b1-7385-4f0f-abe5-b637d9fa0dfc",
+      "target": "a0cd386a-8ee3-4c6b-9460-0663cb4d3f0f",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_42",
+      "source": "a0cd386a-8ee3-4c6b-9460-0663cb4d3f0f",
+      "target": "b4fda2db-b228-4ae5-b06a-5273349e23ef",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_43",
+      "source": "92725e98-ad52-4f5d-b14e-9051701f1db3",
+      "target": "d30717a3-8191-4821-9a8c-0b98fb224bda",
+      "type": "2",
+      "lag": 0.0
+    },
+    {
+      "id": "link_44",
+      "source": "8cef95be-1bd9-42ae-b3bb-97c69db0e37a",
+      "target": "d30717a3-8191-4821-9a8c-0b98fb224bda",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_45",
+      "source": "19c81ef9-e251-4a6f-92c5-338a9a353ce2",
+      "target": "09180184-b66d-42a1-86a1-58f6e0a5bd0f",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_46",
+      "source": "09180184-b66d-42a1-86a1-58f6e0a5bd0f",
+      "target": "447af68b-69fb-4a29-bb2f-1fb37897a9b6",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_47",
+      "source": "92725e98-ad52-4f5d-b14e-9051701f1db3",
+      "target": "19334c50-dd99-4e21-bcd2-38f3a6bb115e",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_48",
+      "source": "19334c50-dd99-4e21-bcd2-38f3a6bb115e",
+      "target": "1a7d5d1d-2381-4787-b332-6b19bb9cbb2b",
+      "type": "1",
+      "lag": 0.0
+    },
+    {
+      "id": "link_49",
+      "source": "8aa7ae63-f693-49dd-9960-f97465aafb2b",
+      "target": "8e0cf02a-d2da-42f0-8ffe-d210e96bae67",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_50",
+      "source": "8e0cf02a-d2da-42f0-8ffe-d210e96bae67",
+      "target": "68009c1c-1c29-416a-8d82-8c0b179ac837",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_51",
+      "source": "1a7d5d1d-2381-4787-b332-6b19bb9cbb2b",
+      "target": "ee6c7642-152f-4384-872f-7fe2430e229b",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_52",
+      "source": "78969824-b731-4682-9f22-99167558d9ce",
+      "target": "cffa7f3b-c678-414c-95ed-d0a6c5e3b3a3",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_53",
+      "source": "cffa7f3b-c678-414c-95ed-d0a6c5e3b3a3",
+      "target": "11c7e598-f87b-4bc2-b2e7-339bcd7fb53b",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_54",
+      "source": "11c7e598-f87b-4bc2-b2e7-339bcd7fb53b",
+      "target": "319c368e-640b-4a87-9a9d-f83fab4eb7e0",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_55",
+      "source": "ee6c7642-152f-4384-872f-7fe2430e229b",
+      "target": "47f7b204-8bd2-4102-800c-0ba25703a213",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_56",
+      "source": "4e3975fc-48fe-49bf-914e-92120a3bd5d5",
+      "target": "1021f5c9-3f27-4c29-9940-65d1c4879d72",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_57",
+      "source": "1021f5c9-3f27-4c29-9940-65d1c4879d72",
+      "target": "9212fcfa-f36f-42b4-b2e1-5d98dc7d1441",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_58",
+      "source": "9212fcfa-f36f-42b4-b2e1-5d98dc7d1441",
+      "target": "e553d045-393d-49d7-abfc-44ee9a7cce81",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_59",
+      "source": "19334c50-dd99-4e21-bcd2-38f3a6bb115e",
+      "target": "8b8827b2-6a9c-4678-a06e-7afc516cbaf4",
+      "type": "2",
+      "lag": 0.0
+    },
+    {
+      "id": "link_60",
+      "source": "47f7b204-8bd2-4102-800c-0ba25703a213",
+      "target": "8b8827b2-6a9c-4678-a06e-7afc516cbaf4",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_61",
+      "source": "7a5ca5c5-5e0f-4580-bb8c-910aa34eaaad",
+      "target": "5dd33bdd-97f8-47cf-89d5-795ac67b1451",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_62",
+      "source": "5dd33bdd-97f8-47cf-89d5-795ac67b1451",
+      "target": "3087b439-2407-4fdb-8f01-f6eba01d10af",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_63",
+      "source": "19334c50-dd99-4e21-bcd2-38f3a6bb115e",
+      "target": "39caf833-1344-49b6-a26a-b40e7dae4903",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_64",
+      "source": "39caf833-1344-49b6-a26a-b40e7dae4903",
+      "target": "eadd23e5-1511-4e5d-9d97-fcc014b09729",
+      "type": "1",
+      "lag": 0.0
+    },
+    {
+      "id": "link_65",
+      "source": "ff1917c9-bf8d-4233-97e1-c65e620445fe",
+      "target": "19914bc4-82ad-4815-90f7-f8aa5414b4f3",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_66",
+      "source": "19914bc4-82ad-4815-90f7-f8aa5414b4f3",
+      "target": "1046a863-9f18-4aa5-a47e-e709cc4ef863",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_67",
+      "source": "1046a863-9f18-4aa5-a47e-e709cc4ef863",
+      "target": "c833a5bb-48e1-4438-b984-7716dc46d357",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_68",
+      "source": "eadd23e5-1511-4e5d-9d97-fcc014b09729",
+      "target": "7163ed2b-a81e-4861-9ced-76b06e1b001b",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_69",
+      "source": "b4280465-7485-4d3c-a055-caac0678ca12",
+      "target": "90558c06-7979-4005-bce7-765079554975",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_70",
+      "source": "90558c06-7979-4005-bce7-765079554975",
+      "target": "5e737590-fd36-4b23-9d45-6737cb56e3ec",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_71",
+      "source": "5e737590-fd36-4b23-9d45-6737cb56e3ec",
+      "target": "58c954cf-09de-43a4-9c44-a8864335cb90",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_72",
+      "source": "7163ed2b-a81e-4861-9ced-76b06e1b001b",
+      "target": "ec07c54a-ea0b-4218-81d0-6bb1fb2d9010",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_73",
+      "source": "d6aafd2e-c08e-441d-80e3-223e877bc5a2",
+      "target": "cc2ab9b4-7e7c-4955-b1a8-b11156e4cfe3",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_74",
+      "source": "cc2ab9b4-7e7c-4955-b1a8-b11156e4cfe3",
+      "target": "b275357e-84e6-4c9f-ac82-e17311e9638c",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_75",
+      "source": "39caf833-1344-49b6-a26a-b40e7dae4903",
+      "target": "99ff4470-1682-46cc-b8e9-57d8575ffd1a",
+      "type": "2",
+      "lag": 0.0
+    },
+    {
+      "id": "link_76",
+      "source": "ec07c54a-ea0b-4218-81d0-6bb1fb2d9010",
+      "target": "99ff4470-1682-46cc-b8e9-57d8575ffd1a",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_77",
+      "source": "ae2a8b3e-1cbc-4be3-a252-ebfa0cc2115e",
+      "target": "5af77046-4602-4a35-a3f7-a8242a3fe9b2",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_78",
+      "source": "5af77046-4602-4a35-a3f7-a8242a3fe9b2",
+      "target": "27934b0d-4102-49d1-b209-4b43aeec826f",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_79",
+      "source": "27934b0d-4102-49d1-b209-4b43aeec826f",
+      "target": "8f3afa96-115d-438c-8e98-c43f26786093",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_80",
+      "source": "83e3eb61-0e53-4a94-9e79-281eec7ead03",
+      "target": "cb2483f9-ffd0-4d69-9d07-3d4a6bd34b93",
+      "type": "2",
+      "lag": 0.0
+    },
+    {
+      "id": "link_81",
+      "source": "39caf833-1344-49b6-a26a-b40e7dae4903",
+      "target": "cb2483f9-ffd0-4d69-9d07-3d4a6bd34b93",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_82",
+      "source": "cb2483f9-ffd0-4d69-9d07-3d4a6bd34b93",
+      "target": "e693acfa-75f3-4dfe-97cb-f4525f476b67",
+      "type": "1",
+      "lag": 0.0
+    },
+    {
+      "id": "link_83",
+      "source": "bcc2257a-8980-48f9-b6e4-fbf0ff4a2b36",
+      "target": "b9052ee0-9040-4a54-80b7-8c6f157f9ef1",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_84",
+      "source": "b9052ee0-9040-4a54-80b7-8c6f157f9ef1",
+      "target": "e74137b4-ab10-47bd-b8fa-da3dccde967d",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_85",
+      "source": "e74137b4-ab10-47bd-b8fa-da3dccde967d",
+      "target": "0a2b6aef-e65d-431d-ba44-4cd2862525c2",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_86",
+      "source": "e693acfa-75f3-4dfe-97cb-f4525f476b67",
+      "target": "d9f2ecd3-a68a-4f2c-bcb1-e174cc06b745",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_87",
+      "source": "cfbd6002-5214-45cc-8236-2e4955a1a12f",
+      "target": "02780fa3-4b84-4df2-bbb1-a02bdf39dabf",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_88",
+      "source": "02780fa3-4b84-4df2-bbb1-a02bdf39dabf",
+      "target": "3e87c714-69ae-4b82-a978-02109e5d1d9f",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_89",
+      "source": "3e87c714-69ae-4b82-a978-02109e5d1d9f",
+      "target": "391bd96a-5c7f-4458-8946-54610aaeeafa",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_90",
+      "source": "d9f2ecd3-a68a-4f2c-bcb1-e174cc06b745",
+      "target": "b9e28795-8991-4145-b354-7d7b2ea8caf9",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_91",
+      "source": "6846f830-ded4-44b6-87c9-c414d308cf92",
+      "target": "d5d71f9c-5ae6-413d-adfe-4f0e005c573f",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_92",
+      "source": "d5d71f9c-5ae6-413d-adfe-4f0e005c573f",
+      "target": "6a1a2d4a-40a7-426e-a8e8-9e2ca41517b9",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_93",
+      "source": "6a1a2d4a-40a7-426e-a8e8-9e2ca41517b9",
+      "target": "ad46bca7-9090-441e-9869-cba52f7aaa67",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_94",
+      "source": "b9e28795-8991-4145-b354-7d7b2ea8caf9",
+      "target": "4f81ea08-6155-44f0-adbe-b70b203b85d5",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_95",
+      "source": "d688aaad-d17c-4755-9b40-196da168ba4c",
+      "target": "dff2f63e-4db0-4383-b1ec-463833f360f4",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_96",
+      "source": "dff2f63e-4db0-4383-b1ec-463833f360f4",
+      "target": "afa03ddf-0436-4f2a-8bd2-4c71be2c65c8",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_97",
+      "source": "afa03ddf-0436-4f2a-8bd2-4c71be2c65c8",
+      "target": "752e1f04-196b-467e-bfd1-cef9dc8b36a5",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_98",
+      "source": "cb2483f9-ffd0-4d69-9d07-3d4a6bd34b93",
+      "target": "df1b9848-2f4a-4c93-858d-4261e3d6f6e1",
+      "type": "2",
+      "lag": 0.0
+    },
+    {
+      "id": "link_99",
+      "source": "4f81ea08-6155-44f0-adbe-b70b203b85d5",
+      "target": "df1b9848-2f4a-4c93-858d-4261e3d6f6e1",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_100",
+      "source": "ed46fbc4-9377-4209-8795-91a96e2bc91a",
+      "target": "7aa43b70-4220-43cc-a91f-160beba5ca00",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_101",
+      "source": "7aa43b70-4220-43cc-a91f-160beba5ca00",
+      "target": "a6f12988-2e8f-4224-8a5f-723eb5273240",
+      "type": "0",
+      "lag": 0.0
+    },
+    {
+      "id": "link_102",
+      "source": "a6f12988-2e8f-4224-8a5f-723eb5273240",
+      "target": "895f67dc-940a-4815-a7bb-23b71f2715b1",
+      "type": "0",
+      "lag": 0.0
+    }
+  ]
+};
+
+    function zoomFit() {
+        const tasks = gantt.getTaskByTime();
+        if (tasks.length > 0) {
+            const firstTask = tasks[0];
+            const lastTask = tasks[tasks.length - 1];
+            gantt.showDate(firstTask.start_date);
+            
+            // Calculate total duration in days
+            const startDate = new Date(firstTask.start_date);
+            const endDate = new Date(lastTask.end_date);
+            const durationDays = (endDate - startDate) / (1000 * 60 * 60 * 24);
+            
+            // Choose appropriate scale based on duration
+            if (durationDays > 3650) { // More than 10 years
+                gantt.config.scale_unit = "year";
+                gantt.config.step = 10;
+                gantt.config.subscales = [
+                    {unit: "year", step: 1, date: "%Y"}
+                ];
+            } else if (durationDays > 365) { // More than 1 year
+                gantt.config.scale_unit = "year";
+                gantt.config.step = 1;
+                gantt.config.subscales = [
+                    {unit: "month", step: 1, date: "%M"}
+                ];
+            } else if (durationDays > 30) { // More than 1 month
+                gantt.config.scale_unit = "month";
+                gantt.config.step = 1;
+                gantt.config.subscales = [
+                    {unit: "day", step: 1, date: "%d"}
+                ];
+            } else if (durationDays > 7) { // More than 1 week
+                gantt.config.scale_unit = "week";
+                gantt.config.step = 1;
+                gantt.config.subscales = [
+                    {unit: "day", step: 1, date: "%d"}
+                ];
+            } else {
+                gantt.config.scale_unit = "day";
+                gantt.config.step = 1;
+                gantt.config.subscales = [];
+            }
+            gantt.render();
+        }
+    }
+
+    function zoomIn() {
+        const currentUnit = gantt.config.scale_unit;
+        const currentStep = gantt.config.step;
+        
+        if (currentUnit === "year" && currentStep === 10) {
+            gantt.config.scale_unit = "year";
+            gantt.config.step = 1;
+            gantt.config.subscales = [
+                {unit: "month", step: 1, date: "%M"}
+            ];
+        } else if (currentUnit === "year") {
+            gantt.config.scale_unit = "month";
+            gantt.config.step = 1;
+            gantt.config.subscales = [
+                {unit: "day", step: 1, date: "%d"}
+            ];
+        } else if (currentUnit === "month") {
+            gantt.config.scale_unit = "week";
+            gantt.config.step = 1;
+            gantt.config.subscales = [
+                {unit: "day", step: 1, date: "%d"}
+            ];
+        } else if (currentUnit === "week") {
+            gantt.config.scale_unit = "day";
+            gantt.config.step = 1;
+            gantt.config.subscales = [];
+        }
+        gantt.render();
+    }
+
+    function zoomOut() {
+        const currentUnit = gantt.config.scale_unit;
+        const currentStep = gantt.config.step;
+        
+        if (currentUnit === "day") {
+            gantt.config.scale_unit = "week";
+            gantt.config.step = 1;
+            gantt.config.subscales = [
+                {unit: "day", step: 1, date: "%d"}
+            ];
+        } else if (currentUnit === "week") {
+            gantt.config.scale_unit = "month";
+            gantt.config.step = 1;
+            gantt.config.subscales = [
+                {unit: "day", step: 1, date: "%d"}
+            ];
+        } else if (currentUnit === "month") {
+            gantt.config.scale_unit = "year";
+            gantt.config.step = 1;
+            gantt.config.subscales = [
+                {unit: "month", step: 1, date: "%M"}
+            ];
+        } else if (currentUnit === "year") {
+            gantt.config.scale_unit = "year";
+            gantt.config.step = 10;
+            gantt.config.subscales = [
+                {unit: "year", step: 1, date: "%Y"}
+            ];
+        }
+        gantt.render();
+    }
+
+    function downloadCSV() {
+        if (GANTT_DATA_CSV === null) {
+            return;
+        }
+        const blob = new Blob([GANTT_DATA_CSV], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        const url = URL.createObjectURL(blob);
+        link.setAttribute('href', url);
+        link.setAttribute('download', GANTT_FILENAME_CSV);
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+    // Gantt Initialization
+    gantt.config.readonly = true;
+    gantt.config.date_format = "%Y-%m-%d";
+    gantt.config.scale_unit = "month";
+    gantt.config.step = 1;
+    gantt.config.subscales = [
+        {unit: "day", step: 1, date: "%d"}
+    ];
+
+    gantt.config.columns = [
+        {name:"text", label:"Task name", width:"*", tree:true},
+        // {name:"start_date", label:"Start time", align: "center"},
+        // {name:"duration", label:"Duration", align: "center"}
+    ];
+
+    gantt.templates.task_class = function(start, end, task) {
+        if (task.type === "project") {
+            return "project-task";
+        }
+        return "";
+    };
+
+    gantt.templates.tooltip_text = function(start, end, task) {
+        return task.custom_tooltip || "No tooltip";
+    };
+    
+	gantt.plugins({
+		tooltip: true
+	});
+	gantt.attachEvent("onGanttReady", function(){
+		var tooltips = gantt.ext.tooltips;
+		tooltips.tooltip.setViewport(gantt.$task_data);
+	});
+    gantt.init("gantt_container");
+    gantt.parse(GANTT_DATA_DHTMLX);
+
+    // Hide the export to CSV button if there is no CSV data
+    if (GANTT_DATA_CSV === null) {
+        document.getElementById('exportToCSVButton').style.display = 'none';
+    }
+
+    document.getElementById('zoomFitButton').addEventListener('click', zoomFit);
+    document.getElementById('zoomInButton').addEventListener('click', zoomIn);
+    document.getElementById('zoomOutButton').addEventListener('click', zoomOut);
+    document.getElementById('exportToCSVButton').addEventListener('click', downloadCSV);
+</script>
+<!--HTML_BODY_SCRIPT_END-->
+</body>
+</html>

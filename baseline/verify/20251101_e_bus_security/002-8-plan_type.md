@@ -1,0 +1,3 @@
+This plan requires one or more physical locations. It cannot be executed digitally.
+
+**Explanation:** This plan focuses on mitigating cybersecurity risks in public transportation e-buses. It involves physically isolating critical systems, which requires physical access to the buses and their systems. The plan also includes tightening procurement practices, which may involve physical meetings and inspections. Therefore, the plan is classified as physical.

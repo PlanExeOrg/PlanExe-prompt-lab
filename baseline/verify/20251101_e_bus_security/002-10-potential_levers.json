@@ -1,0 +1,167 @@
+[
+  {
+    "lever_id": "5a89331f-135d-4fa2-abbc-b0fc6451cfca",
+    "name": "Vendor Relationship Strategy",
+    "consequences": "Choosing a confrontational approach risks vendor non-cooperation. Immediate: Delayed access to system information. \u2192 Systemic: 30% slower vulnerability patching due to vendor resistance. \u2192 Strategic: Increased long-term costs and potential legal battles.",
+    "options": [
+      "Maintain cordial relations, seeking voluntary vendor cooperation and information sharing.",
+      "Adopt a firm but fair approach, demanding full access and compliance under existing contracts, with threat of legal action.",
+      "Implement aggressive legal and regulatory pressure, including potential blacklisting and retroactive liability claims, to force vendor compliance and set a precedent."
+    ],
+    "review": "Controls Cooperation vs. Conflict. Weakness: The options don't consider the potential for international trade disputes."
+  },
+  {
+    "lever_id": "6516a0b8-e774-4aa1-9be5-e694029411b1",
+    "name": "Isolation Depth Strategy",
+    "consequences": "Deeper isolation increases security but can cripple essential maintenance. Immediate: Reduced remote diagnostics capabilities. \u2192 Systemic: 40% increase in on-site maintenance costs due to limited remote access. \u2192 Strategic: Potential for service disruptions and higher operational expenses.",
+    "options": [
+      "Implement minimal isolation, focusing on severing only the most critical remote access pathways while retaining some vendor diagnostic capabilities.",
+      "Implement moderate isolation, creating a secure operator-controlled gateway for essential remote diagnostics and updates, with strict access controls.",
+      "Implement complete air-gapping of drive/brake/steer systems, eliminating all remote access and relying solely on on-site maintenance and diagnostics."
+    ],
+    "review": "Controls Security vs. Maintainability. Weakness: The options fail to account for the evolving threat landscape and the need for adaptable security measures."
+  },
+  {
+    "lever_id": "5cca304b-445e-4c74-8a9d-2e1c18a6b568",
+    "name": "Cybersecurity Attestation Strategy",
+    "consequences": "Stringent attestation requirements can limit vendor options and increase procurement costs. Immediate: Fewer qualified vendors. \u2192 Systemic: 20% increase in procurement costs due to limited competition. \u2192 Strategic: Potential delays in fleet upgrades and higher overall project expenses.",
+    "options": [
+      "Accept existing vendor cybersecurity certifications with minimal independent verification.",
+      "Require independent cybersecurity audits and penetration testing based on established industry standards.",
+      "Mandate formal verification of 'no-remote-kill' designs using advanced techniques like formal methods and hardware security modules, with ongoing red-teaming exercises."
+    ],
+    "review": "Controls Thoroughness vs. Cost. Weakness: The options don't address the challenge of verifying the security of complex, interconnected systems."
+  },
+  {
+    "lever_id": "ebcb1f34-0fa8-4572-b7f3-1e60c428ff73",
+    "name": "Rollback and Recovery Strategy",
+    "consequences": "A slow rollback process can lead to prolonged service disruptions. Immediate: Extended downtime during incidents. \u2192 Systemic: 50% longer recovery times due to inefficient rollback procedures. \u2192 Strategic: Damage to public trust and potential economic losses from service interruptions.",
+    "options": [
+      "Develop a basic rollback playbook focused on manual system restoration procedures.",
+      "Create a comprehensive rollback playbook with automated scripts for rapid system restoration and data recovery.",
+      "Implement a fully automated, resilient rollback system with redundant backups and failover capabilities, leveraging containerization and infrastructure-as-code principles for near-instantaneous recovery."
+    ],
+    "review": "Controls Speed vs. Complexity. Weakness: The options don't consider the human element in incident response and the need for well-trained personnel."
+  },
+  {
+    "lever_id": "f372f21a-3905-474e-aed0-3f2ca7d0e8bb",
+    "name": "Procurement Reform Strategy",
+    "consequences": "Weak procurement standards perpetuate vulnerabilities in future acquisitions. Immediate: Continued risk exposure. \u2192 Systemic: Recurring security incidents due to insecure systems. \u2192 Strategic: Long-term financial losses and reputational damage from repeated breaches.",
+    "options": [
+      "Incorporate basic cybersecurity requirements into existing procurement processes.",
+      "Establish a dedicated cybersecurity review board to evaluate vendor proposals and enforce security standards.",
+      "Implement a 'security-by-design' procurement framework, requiring vendors to demonstrate verifiable security throughout the entire product lifecycle, including threat modeling, secure coding practices, and continuous vulnerability monitoring, with penalties for non-compliance."
+    ],
+    "review": "Controls Short-Term Cost vs. Long-Term Security. Weakness: The options fail to address the challenge of maintaining up-to-date security standards in a rapidly evolving threat landscape."
+  },
+  {
+    "lever_id": "08297f72-9cd3-4b09-a1b6-6c8e3f59adc7",
+    "name": "System Modification Depth",
+    "consequences": "Modifying deeper systems risks unintended consequences. Immediate: System instability. \u2192 Systemic: Increased maintenance costs and downtime. \u2192 Strategic: Eroded public trust in e-bus reliability and safety.",
+    "options": [
+      "Gateway Isolation: Isolate vendor access at the network gateway level, limiting access to non-critical systems.",
+      "Component Air-Gapping: Physically air-gap critical drive/brake/steer components, while maintaining remote access for diagnostics and non-critical updates.",
+      "Full System Redesign: Redesign the entire e-bus control system with open-source, independently audited software and hardware, eliminating all vendor remote access."
+    ],
+    "review": "Controls Security vs. Operational Disruption. Weakness: The options don't fully address the potential for supply chain vulnerabilities in the redesigned system."
+  },
+  {
+    "lever_id": "0e7654cd-4952-42fb-ab8b-af4b68334f2b",
+    "name": "Vendor Engagement Strategy",
+    "consequences": "Vendor collaboration can speed up the process but introduces trust concerns. Immediate: Faster vulnerability identification. \u2192 Systemic: Potential for vendor lock-in and continued remote access pathways. \u2192 Strategic: Compromised long-term security posture and increased dependence on potentially untrustworthy vendors.",
+    "options": [
+      "Vendor Audit & Patch: Work with existing vendors to audit and patch vulnerabilities, accepting their proposed solutions.",
+      "Cooperative Development: Collaborate with vendors to develop secure, jointly-managed remote access solutions with strict access controls.",
+      "Vendor Independence: Exclude existing vendors, relying on independent security researchers and open-source solutions for vulnerability remediation and system hardening."
+    ],
+    "review": "Controls Speed vs. Trust. Weakness: The options don't consider the legal implications of modifying vendor-supplied systems without their explicit consent."
+  },
+  {
+    "lever_id": "d2f49a86-971c-45e8-9ddf-dc2b0d5d91e7",
+    "name": "Deployment Speed & Scope",
+    "consequences": "Rapid deployment can address immediate threats but risks overlooking unforeseen issues. Immediate: Quick risk reduction. \u2192 Systemic: Increased chance of implementation errors and system vulnerabilities. \u2192 Strategic: Potential for widespread system failures and reputational damage.",
+    "options": [
+      "Phased Rollout: Implement security measures incrementally across the fleet, starting with a small subset of buses.",
+      "Parallel Implementation: Simultaneously deploy security measures across the entire fleet, prioritizing speed of execution.",
+      "Staged & Adaptive: Deploy in Copenhagen, then adapt nationally based on real-time threat intelligence and iterative security testing, delaying full rollout until confidence is high."
+    ],
+    "review": "Controls Speed vs. Thoroughness. Weakness: The options don't account for the logistical challenges of retrofitting the entire bus fleet within the given timeframe."
+  },
+  {
+    "lever_id": "6f1c60a2-ee07-4a8c-95b7-054954d8f2af",
+    "name": "Security Attestation Rigor",
+    "consequences": "Stringent security audits increase confidence but add cost and time. Immediate: Higher assurance of security. \u2192 Systemic: Increased project costs and potential delays. \u2192 Strategic: Enhanced public trust and reduced long-term security risks.",
+    "options": [
+      "Basic Compliance: Meet minimum industry standards for cybersecurity attestation.",
+      "Independent Audit: Conduct independent security audits by certified cybersecurity firms, focusing on key vulnerabilities.",
+      "Formal Verification: Employ formal verification methods to mathematically prove the absence of remote access vulnerabilities, using advanced static analysis tools."
+    ],
+    "review": "Controls Cost vs. Confidence. Weakness: The options don't specify the criteria for selecting cybersecurity firms or the scope of their audits."
+  },
+  {
+    "lever_id": "eb9bf5f9-1fdf-4f4c-96a9-ded04df342f8",
+    "name": "Operator Training & Response",
+    "consequences": "Well-trained operators are crucial for incident response. Immediate: Improved incident detection. \u2192 Systemic: Reduced downtime and faster recovery from attacks. \u2192 Strategic: Enhanced resilience and minimized impact of potential security breaches.",
+    "options": [
+      "Basic Awareness: Provide basic cybersecurity awareness training to e-bus operators.",
+      "Incident Response Drills: Conduct regular incident response drills to prepare operators for potential security breaches.",
+      "Cybersecurity Integration: Embed cybersecurity experts within the e-bus operator teams, empowering them to proactively identify and mitigate threats, and develop custom rollback procedures."
+    ],
+    "review": "Controls Preparedness vs. Cost. Weakness: The options don't address the potential for human error in incident response, even with extensive training."
+  },
+  {
+    "lever_id": "a370442f-4e44-4bdb-b1b7-e8734e21c8c3",
+    "name": "Remote Access Mitigation Strategy",
+    "consequences": "Choosing a stringent mitigation strategy impacts operational costs and update frequency. Immediate: Reduced remote support capabilities \u2192 Systemic: 15% increase in maintenance downtime due to physical access requirements \u2192 Strategic: Potential delays in service and increased operational expenditure.",
+    "options": [
+      "Implement segmented network access with strict authentication and authorization protocols, allowing limited remote diagnostics.",
+      "Establish a secure, operator-controlled gateway for all vendor remote access, requiring multi-factor authentication and session monitoring.",
+      "Completely eliminate all vendor remote access pathways, relying solely on physical on-site maintenance and updates, with a focus on robust local diagnostic tools."
+    ],
+    "review": "Controls Security vs. Operational Efficiency. Weakness: The options don't fully address the complexity of managing software updates in a completely air-gapped environment."
+  },
+  {
+    "lever_id": "26782bd2-033f-41ce-b1c2-4a8765076118",
+    "name": "Cybersecurity Attestation Rigor",
+    "consequences": "The level of rigor in cybersecurity attestation impacts procurement costs and vendor selection. Immediate: Increased scrutiny of vendor security practices \u2192 Systemic: 20% reduction in successful vendor bids due to stringent requirements \u2192 Strategic: Higher initial procurement costs but reduced long-term risk exposure.",
+    "options": [
+      "Require vendors to provide standard industry cybersecurity certifications (e.g., ISO 27001) and penetration testing reports.",
+      "Mandate independent third-party cybersecurity audits and penetration testing of e-bus systems, with detailed vulnerability assessments.",
+      "Establish a national cybersecurity testing lab to conduct comprehensive 'red team' exercises on e-bus systems, simulating advanced attack scenarios and requiring vendors to remediate all identified vulnerabilities."
+    ],
+    "review": "Controls Cost vs. Risk Reduction. Weakness: The options don't specify the criteria for evaluating the 'independence' of third-party audits."
+  },
+  {
+    "lever_id": "42e9fded-e64c-4edb-9c70-6c55d8a12612",
+    "name": "Isolation Architecture Strategy",
+    "consequences": "The chosen isolation architecture impacts the complexity of system integration and maintenance. Immediate: Redesign of critical system interfaces \u2192 Systemic: 10% increase in integration complexity and testing effort \u2192 Strategic: Enhanced security posture but potentially slower deployment timelines.",
+    "options": [
+      "Implement basic network segmentation to isolate critical systems (drive/brake/steer) from the internet-connected infotainment system.",
+      "Create a hardware-based air gap between critical systems and all external communication channels, using physical separation and data diodes.",
+      "Employ a microkernel-based operating system with mandatory access control to enforce strict isolation between critical system components, preventing lateral movement of attackers even if one component is compromised."
+    ],
+    "review": "Controls Security vs. Integration Complexity. Weakness: The options lack detail on how to handle necessary data exchange between isolated systems for operational purposes."
+  },
+  {
+    "lever_id": "d1f2b5a3-e4b5-4934-9aaa-247e7597022c",
+    "name": "Rollback and Recovery Protocol",
+    "consequences": "The robustness of the rollback protocol impacts recovery time and service disruption. Immediate: Development of detailed recovery procedures \u2192 Systemic: 30% reduction in potential downtime during a security incident \u2192 Strategic: Improved resilience and public trust in the transportation system.",
+    "options": [
+      "Develop a basic rollback procedure for restoring systems to a known good configuration in case of a security incident.",
+      "Create a comprehensive rollback playbook with automated scripts and detailed instructions for isolating affected systems and restoring service within hours.",
+      "Implement a 'shadow fleet' of identical e-buses that can be rapidly deployed to replace compromised vehicles, ensuring minimal service disruption while forensic analysis and remediation are performed."
+    ],
+    "review": "Controls Speed of Recovery vs. Cost of Redundancy. Weakness: The options don't address the challenge of verifying the integrity of backups used for rollback."
+  },
+  {
+    "lever_id": "227aae77-1987-4c4d-b9db-1a66e55d6512",
+    "name": "Vendor Dependency Management",
+    "consequences": "The approach to vendor dependency impacts long-term maintenance costs and security risks. Immediate: Diversification of vendor base \u2192 Systemic: 15% increase in initial procurement costs due to smaller order volumes per vendor \u2192 Strategic: Reduced reliance on single vendors and increased bargaining power.",
+    "options": [
+      "Maintain existing vendor relationships while implementing stricter security requirements and monitoring their compliance.",
+      "Diversify the vendor base by sourcing components and services from multiple suppliers, reducing reliance on any single vendor.",
+      "Develop open-source alternatives for critical e-bus components and systems, fostering a community of developers and reducing long-term vendor lock-in."
+    ],
+    "review": "Controls Cost vs. Vendor Lock-in. Weakness: The options don't consider the potential for increased complexity in managing a diverse vendor ecosystem."
+  }
+]

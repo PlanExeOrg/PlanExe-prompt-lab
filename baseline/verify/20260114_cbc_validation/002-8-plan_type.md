@@ -1,0 +1,3 @@
+This plan requires one or more physical locations. It cannot be executed digitally.
+
+**Explanation:** This plan *unequivocally requires* physical construction, testing, and validation of hardware in a laboratory setting. The description explicitly mentions physical components like a 'seven-tile optical engine,' 'mechanical mount,' 'heat-rejection interface,' and 'vibration spectra.' It also involves 'bakeout and contamination certification,' 'high-power operation,' and 'in-vacuum targets.' The entire project revolves around physical experimentation and measurement, making it a *clear* physical endeavor.

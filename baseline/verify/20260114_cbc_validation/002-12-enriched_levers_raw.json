@@ -1,0 +1,183 @@
+{
+  "metadata": [
+    {
+      "context_window": 3900,
+      "num_output": 8192,
+      "is_chat_model": true,
+      "is_function_calling_model": false,
+      "model_name": "google/gemini-2.0-flash-001",
+      "system_role": "system",
+      "llm_classname": "OpenRouter_LLM"
+    },
+    {
+      "context_window": 3900,
+      "num_output": 8192,
+      "is_chat_model": true,
+      "is_function_calling_model": false,
+      "model_name": "google/gemini-2.0-flash-001",
+      "system_role": "system",
+      "llm_classname": "OpenRouter_LLM"
+    },
+    {
+      "context_window": 3900,
+      "num_output": 8192,
+      "is_chat_model": true,
+      "is_function_calling_model": false,
+      "model_name": "google/gemini-2.0-flash-001",
+      "system_role": "system",
+      "llm_classname": "OpenRouter_LLM"
+    }
+  ],
+  "characterized_levers": [
+    {
+      "lever_id": "a983b7b0-6e82-499f-bd38-043e583bce36",
+      "name": "Performance Target Aggressiveness",
+      "consequences": "Adjusting performance targets affects the stringency of validation. Immediate: Relaxed targets reduce the risk of test failure. \u2192 Systemic: Lower performance thresholds result in 10% less competitive system performance. \u2192 Strategic: Impacts the potential for future mission applications and market adoption.",
+      "options": [
+        "Set minimum acceptable Strehl ratio and wall-plug efficiency targets based on current technology benchmarks, prioritizing risk mitigation.",
+        "Define ambitious but achievable Strehl ratio and wall-plug efficiency targets based on projected technology advancements, balancing risk and reward.",
+        "Establish stretch Strehl ratio and wall-plug efficiency targets exceeding state-of-the-art performance, incentivizing innovation but increasing the risk of not meeting requirements."
+      ],
+      "review": "Controls Risk vs. Reward. Weakness: The options fail to consider the impact of target selection on the system's operational lifetime and reliability.",
+      "deduplication_justification": "This lever is distinct. It focuses on the aggressiveness of performance targets (Strehl ratio and wall-plug efficiency), which is a separate concern from other levers.",
+      "description": "This lever defines the ambition level for the project's key performance indicators: Strehl ratio and wall-plug efficiency. It controls the degree of innovation and risk the project is willing to accept. Setting aggressive targets can drive innovation but increases the likelihood of not meeting requirements, while conservative targets prioritize risk mitigation and proven technologies. Success is measured by achieving the defined Strehl ratio and wall-plug efficiency within budget and schedule.",
+      "synergy_text": "This lever strongly synergizes with `Validation Scope Strategy` (fa612354-b19a-4aac-b771-8848466fc3cb). More aggressive performance targets necessitate a broader validation scope to ensure the system meets requirements under various conditions. It also enhances `Component Qualification Strategy` (12e7b5fe-9f07-4299-877b-9f17b8d81d1e).",
+      "conflict_text": "Setting highly aggressive performance targets can conflict with `Metrology Resource Allocation` (b8e49527-10a7-4c93-b3a3-f5d71e193d5d). Achieving ambitious targets may require significantly more metrology resources for precise measurement and control, potentially exceeding the allocated budget. It also constrains `Performance Target Aggressiveness`."
+    },
+    {
+      "lever_id": "a1163812-90bd-44f1-9938-ef0fdad30eaa",
+      "name": "Automation and Control Strategy",
+      "consequences": "The level of automation influences operational efficiency and data quality. Immediate: Increased automation requires higher initial investment. \u2192 Systemic: Automated data acquisition reduces human error by 20% and accelerates analysis. \u2192 Strategic: Impacts the speed of iteration and the robustness of the validation process.",
+      "options": [
+        "Employ manual data acquisition and control with limited automation, minimizing upfront costs but increasing operational overhead.",
+        "Implement semi-automated data acquisition and control with scripting for routine tasks, balancing cost and efficiency.",
+        "Develop a fully automated, closed-loop control system with real-time data analysis and adaptive testing, maximizing efficiency and data quality."
+      ],
+      "review": "Controls Cost vs. Efficiency. Weakness: The options do not address the complexity of integrating automation with existing lab infrastructure.",
+      "deduplication_justification": "This lever is distinct. It focuses on the level of automation in data acquisition and control, which is a separate concern from other levers.",
+      "description": "This lever determines the level of automation in data acquisition, control, and testing. It ranges from manual operation to a fully automated, closed-loop system. The objective is to balance cost, efficiency, and data quality. A fully automated system maximizes efficiency and data quality but requires significant upfront investment. Success is measured by reduced operational overhead, improved data accuracy, and faster testing cycles.",
+      "synergy_text": "This lever has strong synergy with `Metrology and Phasing Accuracy` (916e611b-5a38-468c-9301-74ba8a2c306a). Higher levels of automation enable more precise and repeatable metrology, leading to improved phasing accuracy. It also enhances `Thermal Simulation Fidelity Strategy` (3840b9a3-a867-4fe3-b487-23716dad7fc5).",
+      "conflict_text": "A fully automated system can conflict with `Component Qualification Strategy` (12e7b5fe-9f07-4299-877b-9f17b8d81d1e) if COTS components are used. The increased stress from automated testing may expose weaknesses in lower-quality components, leading to premature failures. It also constrains `Metrology Resource Allocation` (b8e49527-10a7-4c93-b3a3-f5d71e193d5d)."
+    },
+    {
+      "lever_id": "fa612354-b19a-4aac-b771-8848466fc3cb",
+      "name": "Validation Scope Strategy",
+      "consequences": "The breadth of validation determines the confidence in system robustness. Immediate: Narrower scope reduces testing time and cost. \u2192 Systemic: Limited validation increases the risk of uncovering unforeseen failure modes by 30% during deployment. \u2192 Strategic: Impacts the overall reliability and mission success rate.",
+      "options": [
+        "Focus validation on nominal operating conditions and a limited set of failure modes, minimizing testing scope.",
+        "Expand validation to include a wider range of operating conditions and potential failure modes, balancing scope and resources.",
+        "Conduct comprehensive validation encompassing all foreseeable operating conditions, failure modes, and edge cases, maximizing system robustness and confidence."
+      ],
+      "review": "Controls Cost vs. Robustness. Weakness: The options don't consider the use of digital twins or virtual validation to augment the physical testing scope.",
+      "deduplication_justification": "This lever is distinct. It focuses on the breadth of validation, which is a separate concern from other levers.",
+      "description": "This lever defines the breadth and depth of the validation effort. It controls the range of operating conditions, failure modes, and edge cases that are tested. A comprehensive validation maximizes system robustness and confidence but requires significant resources. The objective is to balance scope, resources, and risk. Success is measured by the level of confidence in the system's performance under various conditions.",
+      "synergy_text": "This lever synergizes with `Vibration Qualification Rigor` (e79da74e-fe8d-48a7-b1be-d00bbcb1af29). A wider validation scope necessitates more rigorous vibration testing to cover a broader range of potential failure modes. It also enhances `Thermal Simulation Fidelity Strategy` (3840b9a3-a867-4fe3-b487-23716dad7fc5).",
+      "conflict_text": "A comprehensive validation scope can conflict with `Metrology Resource Allocation` (b8e49527-10a7-4c93-b3a3-f5d71e193d5d). Extensive testing requires more metrology resources for data acquisition and analysis, potentially exceeding the allocated budget. It also constrains `Validation Phasing Strategy` (1b49fed0-aee1-4c99-8bed-cb9d031e2f69)."
+    },
+    {
+      "lever_id": "12e7b5fe-9f07-4299-877b-9f17b8d81d1e",
+      "name": "Component Qualification Strategy",
+      "consequences": "The rigor of component qualification impacts system reliability. Immediate: Stringent qualification increases component costs. \u2192 Systemic: Higher component reliability reduces system downtime by 15% and maintenance costs. \u2192 Strategic: Impacts the long-term operational cost and mission lifespan.",
+      "options": [
+        "Utilize commercial-off-the-shelf (COTS) components with minimal qualification, minimizing upfront costs but increasing risk of failure.",
+        "Employ enhanced-reliability components with standard qualification procedures, balancing cost and reliability.",
+        "Implement custom-designed, radiation-hardened components with extensive qualification testing, maximizing reliability and performance in harsh environments."
+      ],
+      "review": "Controls Cost vs. Reliability. Weakness: The options fail to address the potential for supply chain disruptions and the availability of qualified components.",
+      "deduplication_justification": "This lever is distinct. It focuses on the rigor of component qualification, which is a separate concern from other levers.",
+      "description": "This lever determines the quality and reliability of the components used in the system. It ranges from COTS components to custom-designed, radiation-hardened components. The objective is to balance cost, reliability, and performance in harsh environments. Using higher-quality components increases upfront costs but reduces the risk of failure. Success is measured by the system's overall reliability and lifespan.",
+      "synergy_text": "This lever has strong synergy with `Vibration Qualification Rigor` (e79da74e-fe8d-48a7-b1be-d00bbcb1af29). Higher-quality components can withstand more rigorous vibration testing, leading to improved system reliability. It also enhances `Performance Target Aggressiveness` (a983b7b0-6e82-499f-bd38-043e583bce36).",
+      "conflict_text": "Using custom-designed, radiation-hardened components can conflict with `Metrology Resource Allocation` (b8e49527-10a7-4c93-b3a3-f5d71e193d5d). Qualifying these components requires specialized metrology equipment and expertise, potentially exceeding the allocated budget. It also constrains `Automation and Control Strategy` (a1163812-90bd-44f1-9938-ef0fdad30eaa)."
+    },
+    {
+      "lever_id": "3840b9a3-a867-4fe3-b487-23716dad7fc5",
+      "name": "Thermal Simulation Fidelity Strategy",
+      "consequences": "Lower fidelity reduces cost but risks underestimating thermal effects. Immediate: Faster initial testing \u2192 Systemic: Reduced accuracy in TSO model \u2192 Strategic: Potential for in-flight performance degradation and mission failure.",
+      "options": [
+        "Employ simplified, steady-state thermal modeling with limited transient analysis.",
+        "Implement spatially resolved, transient heat injection calibrated to representative electronics heat maps and time constants.",
+        "Integrate high-fidelity, multi-physics thermal modeling incorporating computational fluid dynamics and radiation transport, validated with extensive sensor networks."
+      ],
+      "review": "Controls Cost vs. Accuracy. Weakness: The options don't explicitly address the trade-off between simulation complexity and computational resources/time.",
+      "deduplication_justification": "This lever is distinct. It focuses on the fidelity of thermal simulation, which is a separate concern from other levers.",
+      "description": "This lever defines the level of detail and accuracy in the thermal modeling of the system. It ranges from simplified, steady-state models to high-fidelity, multi-physics simulations. The objective is to accurately predict the system's thermal behavior under various operating conditions. High-fidelity modeling requires significant computational resources and validation data. Success is measured by the accuracy of the thermal predictions.",
+      "synergy_text": "This lever synergizes with `Metrology and Phasing Accuracy` (916e611b-5a38-468c-9301-74ba8a2c306a). Accurate thermal modeling informs the metrology and phasing strategy, allowing for compensation of thermally induced distortions. It also enhances `Boundary Condition Modeling Strategy` (28697061-f5e2-431d-9c09-57724baed3c1).",
+      "conflict_text": "High-fidelity thermal modeling can conflict with `Metrology Resource Allocation` (b8e49527-10a7-4c93-b3a3-f5d71e193d5d). Validating complex thermal models requires extensive sensor networks and data acquisition, potentially exceeding the allocated budget. It also constrains `Validation Phasing Strategy` (1b49fed0-aee1-4c99-8bed-cb9d031e2f69)."
+    },
+    {
+      "lever_id": "e79da74e-fe8d-48a7-b1be-d00bbcb1af29",
+      "name": "Vibration Qualification Rigor",
+      "consequences": "Reduced vibration testing saves time and money but increases the risk of structural failure. Immediate: Lower initial equipment costs \u2192 Systemic: Increased risk of resonant amplification during flight \u2192 Strategic: Potential for catastrophic hardware failure and mission loss.",
+      "options": [
+        "Perform basic swept-sine vibration testing at limited amplitudes and frequencies.",
+        "Subject the payload to injected flight-representative vibration spectra at the bench interface, including reaction-wheel bands and broadband microvibration.",
+        "Implement a closed-loop, multi-axis vibration control system with real-time adaptive filtering based on in-situ sensor feedback, simulating worst-case flight dynamics."
+      ],
+      "review": "Controls Cost vs. Risk. Weakness: The options don't consider the impact of vibration testing on the lifespan of sensitive optical components.",
+      "deduplication_justification": "This lever is distinct. It focuses on the rigor of vibration qualification, which is a separate concern from other levers.",
+      "description": "This lever controls the rigor of vibration qualification testing. It determines the level of realism and comprehensiveness in simulating flight-representative vibration environments. Higher rigor involves more complex vibration profiles, multi-axis control, and real-time adaptation. The objective is to ensure the payload can withstand flight dynamics. Key success metrics include maintaining alignment, phasing, and beam quality (Strehl ratio) under vibration, and avoiding control-structure interaction instabilities.",
+      "synergy_text": "Increased vibration qualification rigor strongly synergizes with `Component Qualification Strategy`. Thoroughly qualified components are essential for surviving rigorous vibration tests. It also enhances `Automation and Control Strategy`, as robust control systems are needed to maintain performance under dynamic loads.",
+      "conflict_text": "Higher vibration qualification rigor can conflict with `Performance Target Aggressiveness`. More stringent vibration requirements may necessitate design compromises that reduce overall performance. It also increases the demands on `Metrology Resource Allocation` to accurately measure performance under vibration."
+    },
+    {
+      "lever_id": "916e611b-5a38-468c-9301-74ba8a2c306a",
+      "name": "Metrology and Phasing Accuracy",
+      "consequences": "Lower accuracy reduces initial cost but compromises beam quality. Immediate: Reduced sensor costs \u2192 Systemic: Lower Strehl ratio and beam quality \u2192 Strategic: Failure to meet operational beam quality targets and mission objectives.",
+      "options": [
+        "Utilize basic interferometry for seam phasing with limited wavefront sensing.",
+        "Employ co-wavelength pilot tones that are frequency-shifted and orthogonally code-modulated, with balanced heterodyne/lock-in detection.",
+        "Integrate advanced wavefront sensing techniques such as Shack-Hartmann or phase diversity with real-time adaptive optics for dynamic aberration correction."
+      ],
+      "review": "Controls Cost vs. Performance. Weakness: The options fail to address the calibration and maintenance requirements of the metrology systems.",
+      "deduplication_justification": "This lever is distinct. It focuses on the accuracy of metrology and phasing, which is a separate concern from other levers.",
+      "description": "This lever governs the accuracy and sophistication of metrology and phasing techniques used to align and maintain coherence of the optical system. It ranges from basic interferometry to advanced wavefront sensing with real-time adaptive optics. The objective is to achieve and maintain high beam quality (Strehl ratio). Key success metrics include phasing accuracy, wavefront error, and the stability of the optical system under thermal and dynamic loads.",
+      "synergy_text": "Enhanced metrology and phasing accuracy strongly synergizes with `Automation and Control Strategy`. Precise metrology provides the necessary feedback for effective control. It also amplifies the benefits of a robust `Thermal Simulation Fidelity Strategy`, allowing for more accurate correlation between simulations and experimental results.",
+      "conflict_text": "Higher metrology and phasing accuracy can conflict with `Performance Target Aggressiveness`. Achieving extremely high accuracy may require design choices that limit overall power or efficiency. It also increases the demands on `Metrology Resource Allocation`, requiring more sophisticated and expensive equipment."
+    },
+    {
+      "lever_id": "0443690e-f73e-4227-b7d7-194545a65af3",
+      "name": "Scaling Model Validation Scope",
+      "consequences": "Limited validation reduces confidence in scaling predictions. Immediate: Faster model development \u2192 Systemic: Increased uncertainty in 19+ tile performance predictions \u2192 Strategic: Potential for inaccurate scaling and costly redesigns for larger apertures.",
+      "options": [
+        "Validate the TSO scaling parameters with uncertainty bounds under only constrained boundary conditions.",
+        "Validate the TSO scaling parameters with uncertainty bounds under constrained and unconstrained boundary conditions.",
+        "Develop a physics-based digital twin of the optical engine, continuously updated with real-time sensor data and validated against experimental results, enabling predictive scaling analysis and anomaly detection."
+      ],
+      "review": "Controls Speed vs. Scalability. Weakness: The options do not consider the cost and time associated with developing and maintaining a high-fidelity digital twin.",
+      "deduplication_justification": "This lever is distinct. It focuses on the scope of scaling model validation, which is a separate concern from other levers.",
+      "description": "This lever defines the scope and fidelity of the scaling model validation effort. It determines the range of boundary conditions (constrained vs. unconstrained) and the level of model complexity (empirical vs. physics-based digital twin). The objective is to create a reliable model for predicting performance at larger aperture sizes. Key success metrics include the accuracy of the scaling model in predicting Strehl ratio and wall-plug efficiency.",
+      "synergy_text": "A broader scaling model validation scope synergizes with `Thermal Simulation Fidelity Strategy`. Accurate thermal simulations provide valuable data for validating the scaling model. It also benefits from a comprehensive `Validation Scope Strategy`, ensuring that the model is tested against a wide range of operating conditions.",
+      "conflict_text": "A more comprehensive scaling model validation scope can conflict with `Performance Target Aggressiveness`. Focusing on model validation may divert resources from optimizing performance. It also increases the demands on `Metrology Resource Allocation` to gather sufficient data for model validation."
+    },
+    {
+      "lever_id": "b8e49527-10a7-4c93-b3a3-f5d71e193d5d",
+      "name": "Metrology Resource Allocation",
+      "consequences": "The distribution of metrology resources impacts measurement accuracy and cost. Immediate: Reduced metrology costs \u2192 Systemic: Increased uncertainty in performance metrics \u2192 Strategic: Difficulty in demonstrating compliance with Strehl and WPE targets. Trade-off between cost and measurement precision.",
+      "options": [
+        "Utilize existing metrology equipment and standard calibration procedures, accepting potential limitations in accuracy and resolution.",
+        "Invest in enhanced metrology equipment and refined calibration procedures to improve measurement accuracy and resolution, balancing cost and precision.",
+        "Develop and deploy custom, in-situ metrology solutions with real-time data analysis and feedback control, maximizing measurement precision and enabling adaptive testing, but increasing cost and complexity."
+      ],
+      "review": "Controls Cost vs. Measurement Precision. Weakness: The options fail to address the *spatial and temporal resolution* requirements of the metrology, which are critical for capturing transient thermal and vibration effects.",
+      "deduplication_justification": "This lever is distinct. It focuses on the allocation of metrology resources, which is a separate concern from other levers.",
+      "description": "This lever controls the resources allocated to metrology equipment, calibration procedures, and personnel. It ranges from utilizing existing resources to developing custom, in-situ metrology solutions. The objective is to achieve the required measurement accuracy and resolution for validating performance. Key success metrics include measurement uncertainty, calibration accuracy, and the availability of metrology data.",
+      "synergy_text": "Increased metrology resource allocation strongly synergizes with `Metrology and Phasing Accuracy`. Better equipment and procedures enable more accurate measurements. It also enhances `Thermal Simulation Fidelity Strategy`, allowing for more precise correlation between simulations and experimental data.",
+      "conflict_text": "Higher metrology resource allocation can conflict with `Performance Target Aggressiveness`. Investing in advanced metrology may divert resources from optimizing performance. It also creates a trade-off with `Component Qualification Strategy`, as resources spent on metrology may reduce the budget for component testing."
+    },
+    {
+      "lever_id": "28697061-f5e2-431d-9c09-57724baed3c1",
+      "name": "Boundary Condition Modeling Strategy",
+      "consequences": "The fidelity of boundary condition modeling impacts the accuracy of the TSO scaling model. Immediate: Simplified modeling \u2192 Systemic: Inaccurate scaling parameters \u2192 Strategic: Poor performance prediction for 19+ tile apertures. Trade-off between model complexity and predictive power.",
+      "options": [
+        "Model the perimeter constraint stiffness as a fixed parameter, neglecting hysteresis and micro-slip effects, accepting reduced model accuracy.",
+        "Characterize and model the perimeter constraint stiffness with hysteresis and micro-slip effects, balancing model complexity and accuracy.",
+        "Employ a physics-informed neural network to model the complex, nonlinear behavior of the perimeter constraint stiffness, leveraging machine learning to capture subtle effects and improve model accuracy, but increasing computational cost and requiring extensive training data."
+      ],
+      "review": "Controls Model Complexity vs. Predictive Power. Weakness: The options don't address how the boundary condition model will be *validated* against experimental data, which is crucial for ensuring its accuracy.",
+      "deduplication_justification": "This lever is distinct. It focuses on the boundary condition modeling strategy, which is a separate concern from other levers.",
+      "description": "This lever defines the approach to modeling the boundary conditions, specifically the perimeter constraint stiffness of the mechanical mount. It ranges from simplified fixed-parameter models to complex physics-informed neural networks. The objective is to accurately represent the mechanical environment's impact on thermal-structural-optical performance. Success is measured by the scaling model's predictive accuracy, particularly its ability to extrapolate to 19+ tile apertures, and the fidelity with which it captures the impact of boundary conditions on system Strehl.",
+      "synergy_text": "A more sophisticated `Boundary Condition Modeling Strategy` strongly enhances the `Thermal Simulation Fidelity Strategy`. Accurately capturing the boundary conditions allows for more realistic and predictive thermal simulations, leading to a better understanding of the system's behavior under stress.",
+      "conflict_text": "A highly complex `Boundary Condition Modeling Strategy`, such as using a neural network, can conflict with `Scaling Model Validation Scope`. Extensive training data and computational resources may limit the number of boundary conditions and test cases that can be validated within budget and schedule."
+    }
+  ]
+}

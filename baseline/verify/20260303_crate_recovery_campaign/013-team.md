@@ -1,0 +1,283 @@
+*Roles Needed & Example People*
+
+# Roles
+
+## 1. Reverse Logistics & QA Operations Lead
+
+**Contract Type**: `independent_contractor`
+
+**Contract Type Justification**: This role owns the end-to-end physical logistics (Hub Ops) which is a specialized, defined process stream involving contracted cleaning and transport. It fits an external specialist needed for a temporary infrastructure build-out (3 hubs).
+
+**Explanation**:
+Responsible for designing and managing the end-to-end physical flow of collected crates: collection conveyance, inspection, cleaning protocols, and routing to reuse or recycling channels. Directly manages the three centralized QA hubs.
+
+**Consequences**:
+Failure to recover crates efficiently, high contamination rates leading to budget overrun (Risk 3), inability to certify cleaned crates for reuse, directly undermining the CO2 reduction goal.
+
+**People Count**:
+min 1, max 2, depending on project scale and workload.
+
+**Typical Activities**:
+Designing the spatial layout and workflow for the three centralized Quality Assessment Hubs; setting performance KPIs for third-party cleaning and sorting contractors; developing the detailed standard operating procedures (SOPs) for inspecting, cleaning, and verifying Arla crates for food-contact reuse; managing the contracted transport logistics between collection points and the hubs; conducting post-pilot simulation runs to stress-test cleaning bottlenecks.
+
+**Background Story**:
+Dr. Elias Vogel, originally from Hamburg, Germany, built his career optimizing complex international supply chains for high-volume perishable goods. After earning a Ph.D. in Industrial Engineering with a specialization in Closed-Loop Logistics from RWTH Aachen University, Elias spent a decade consulting for large-scale European food producers, mastering the intricate dance between just-in-time delivery and sustainable reverse logistics. His unique skill set combines predictive modeling for throughput, risk assessment for handling contaminated materials, and hands-on experience designing and commissioning large-scale automated cleaning and sorting facilities, making him intimately familiar with the operational challenges of the QA Hub modality chosen for this project.
+
+**Equipment Needs**:
+Industrial engineering simulation software for throughput modeling; access to CAD/layout design tools for QA Hub commissioning; chemical safety data sheets (SDS) library for cleaning agent validation.
+
+**Facility Needs**:
+Designated office space for logistics modeling; access to potential site leases/blueprints for three centralized Quality Assessment Hubs (near Copenhagen, Aarhus, Odense); secure data storage for contractor performance metrics.
+
+## 2. Stakeholder Integration & Municipal Relations Manager
+
+**Contract Type**: `independent_contractor`
+
+**Contract Type Justification**: Managing relationships with non-employee entities (Municipalities, Supermarkets) requires vendor/consultant management focused on negotiation and compliance SLAs rather than internal employment duties.
+
+**Explanation**:
+Focuses on securing and maintaining operational compliance from non-Arla partners, primarily the municipal recycling stations (60% volume) and ensuring supermarket compliance via performance-based incentives and training.
+
+**Consequences**:
+Municipal stations overwhelmed (Risk 1), leading to operational bottlenecks and consumer frustration. Supermarkets failing to enforce drop-off procedures (Risk 2), causing low in-store return rates and damaged retail partnerships.
+
+**People Count**:
+2
+
+**Typical Activities**:
+Negotiating and finalizing legally binding SLAs with Danish municipal waste management authorities to guarantee capacity for the 60% volume share; designing the framework for the performance-based subsidy model (50 DKK/week) for high-performing supermarkets; serving as the primary liaison for the three major retail chains to ensure their staff compliance meets the low-friction operational standard; conducting formal partner training sessions on drop-off protocols.
+
+**Background Story**:
+Astrid Møller, hailing from Odense, Denmark, is a seasoned relationship manager whose career has been dedicated to bridging the operational gaps between large corporations and diverse governmental or retail bodies. With a background in Public Administration, Astrid spent years managing service contracts for a national utility provider, where she became adept at negotiating Service Level Agreements (SLAs) with municipal waste authorities and standardizing procedures across disparate retail franchise locations. Her deep cultural fluency in Danish professional conduct and her knack for designing incentive structures that motivate compliance without escalating partner resentment make her essential for managing the supermarket and recycling station components of the return infrastructure.
+
+**Equipment Needs**:
+Contract management software for SLA tracking; materials for creating standardized supermarket procedural guides (e.g., presentation equipment, laminated templates); performance tracking dashboard for monitoring store subsidy compliance.
+
+**Facility Needs**:
+Dedicated office space for stakeholder liaison management; secure meeting facilities for negotiating high-level SLAs with municipal authorities and retail chain headquarters.
+
+## 3. Public Engagement & PR Narrative Architect
+
+**Contract Type**: `independent_contractor`
+
+**Contract Type Justification**: This is a highly specialized creative/narrative role crucial for achieving earned media success. PR/Narrative Architects are typically hired on a consulting or project-basis to define and execute a communication strategy.
+
+**Explanation**:
+Designs and directs the campaign's core messaging ('Garden Furniture' provocative narrative) to maximize earned media and organic social impressions (20M goal). Ensures messaging aligns with charitable focus while insulating against backlash (Risk 6).
+
+**Consequences**:
+Messaging fails to cut through noise, resulting in missed organic impression targets and reliance on costly paid media. Provocative tone may backfire without pre-testing and counter-messaging preparation.
+
+**People Count**:
+1
+
+**Typical Activities**:
+Developing the core creative brief for the 'Your Garden Furniture is Costing Denmark CO2' campaign; advising PR teams on optimal timing for narrative deployment to maximize earned media coverage; creating the comparative visual guides for consumers (Lever 3, Option 2); monitoring social media sentiment in real-time during the Q2 pilot to draft responsive PR statements balancing environmental and charitable threads.
+
+**Background Story**:
+Freja Jensen, a communications strategist based in Copenhagen, possesses an almost unparalleled ability to tap into Danish cultural sentiment, turning mundane subjects into viral sensations. With a degree in Media & Cultural Studies, Freja specialized in crafting CSR narratives that prioritize earned media over paid spend, often employing provocative but humorous angles that resonate strongly with the public. Her experience launching several high-profile, environment-focused campaigns for major Danish NGOs means she is perfectly equipped to drive the 'Garden Furniture' narrative, ensuring it achieves the 20 million organic impression target while simultaneously preparing measured counter-messaging to protect the Arla Foundation's association.
+
+**Equipment Needs**:
+High-resolution design software for creating comparative visual identification guides; social media monitoring and sentiment analysis tools (non-banned, established platforms); professional video/graphic design software for high-impact marketing assets.
+
+**Facility Needs**:
+Dedicated creative workspace for narrative development; access to focus group facilities for pre-testing provocative messaging, potentially linked to Arla Foundation channels.
+
+## 4. Incentive & Consumer Compliance Specialist
+
+**Contract Type**: `independent_contractor`
+
+**Contract Type Justification**: Managing the incentive financial structure and consumer compliance guidance (ID guides/markers) is a discrete analytical and execution stream, well-suited for a specialist consultant focused on behavioral economics and budgetary control.
+
+**Explanation**:
+Manages the DKK 5 donation structure, monitors real-time return volume against financial thresholds (1.35M DKK ceiling), and oversees the design and distribution of consumer identification guidance (visual guides/backup physical markers) to minimize crate contamination.
+
+**Consequences**:
+Incentive structure fails to motivate sufficient return volumes (failing 40% target), or the incentive budget is accidentally overspent. High contamination rates (Risk 4) due to poor communication, straining QA hubs.
+
+**People Count**:
+min 1, max 3, depending on project scale and workload.
+
+**Typical Activities**:
+Modeling the expected return volume elasticity based on the fixed DKK 5 incentive; designing the visual/digital collateral required for consumer crate identification guidance (e.g., the comparative photoshopped guides); establishing the operational trigger points for escalating incentive value (if needed); monitoring real-time return rates versus donation spend to flag potential budget threshold breaches.
+
+**Background Story**:
+Mikkel Hansen, a specialist in behavioral economics and consumer incentives, operates out of Aarhus. Mikkel's expertise lies in translating budgetary constraints into effective public motivation tools, ensuring maximum impact from minimal financial outlay. He previously optimized point-of-sale promotion structures for a large Nordic grocery chain, achieving significant uplift in low-margin product sales simply by calibrating rebate levels and promotional visibility. For this project, Mikkel is tasked with ensuring the DKK 5 donation incentive is the most powerful motivator possible without breaching the 1.35M DKK maximum commitment, while also designing the clear identification system to keep contamination low.
+
+**Equipment Needs**:
+Behavioral economics modeling software to forecast incentive elasticity; digital asset management system for storing and distributing visual/backup identification guides; real-time dashboard for monitoring DKK donation spend vs. crate return volume.
+
+**Facility Needs**:
+Secure analytical workspace for tracking budget thresholds (1.35M DKK donation cap); access to digital channels for rapid consumer feedback loop management.
+
+## 5. Financial Controller & Budget Steward
+
+**Contract Type**: `full_time_employee`
+
+**Contract Type Justification**: Budget control and financial oversight against the 4M DKK ceiling, especially tracking complex cost centers like logistics spend vs. fixed donation budget, requires an internal fiduciary role deeply embedded in the project ownership (Arla Foods).
+
+**Explanation**:
+Tracks all expenditures against the 4 million DKK ceiling, manages the donation budget outflow (1.35M DKK), monitors Logistics cost-per-unit recovery projections, and oversees the mandatory data synchronization with Arla Procurement for 2027 forecasting.
+
+**Consequences**:
+Logistics costs spiral (Risk 3) due to lack of contract oversight, consuming operational budget intended for marketing or QA staffing. Procurement misalignment (Risk 7) leads to unnecessary new crate ordering, negating environmental ROI.
+
+**People Count**:
+1
+
+**Typical Activities**:
+Tracking weekly burn rate across the Logistics/QA budget (1.8M DKK estimate) against milestones; reconciling contracted 3rd-party conveyance costs with predicted transport distance/volume data; validating that the 'Ready-to-Deploy Stock Report' data aligns directly with Procurement's reduced 2027 new-crate ordering figures; managing contingency funds for identified risks (e.g., cleaning agent testing, municipal penalty clauses).
+
+**Background Story**:
+Sofie Lundgren, a highly analytical and staunchly pragmatic financial controller from Aarhus, has spent her career ensuring large capital projects adhere strictly to budgetary caps. Sofie's value lies in her meticulous tracking of cost variance across multi-vendor environments, specifically managing complex 3rd-party logistics contracts against fixed price models. She brings the rigor necessary to manage the 4 Million DKK ceiling, ensuring the aggressive 45% logistics allocation does not erode the marketing or operational buffers, and is the designated guardian of the Procurement linkage necessary to validate the success of the CO2 substitution objective.
+
+**Equipment Needs**:
+Enterprise Resource Planning (ERP) access or dedicated cost-tracking software (e.g., SAP/Oracle module) for monitoring logistics expenditure vs. budget overhead; secure server access for hosting standardized 'Ready-to-Deploy Stock Report' data exchange platform.
+
+**Facility Needs**:
+Private office space within Arla Foods' premises to interface directly with Procurement and Finance departments; secure lines of communication for financial reporting.
+
+## 6. Regulatory & Compliance Assessor
+
+**Contract Type**: `independent_contractor`
+
+**Contract Type Justification**: Regulatory assessment, especially concerning external EPA certification deadlines for food-contact reuse, is a compliance specialty often sourced externally due to specific regulatory expertise required for this short-term approval.
+
+**Explanation**:
+Ensures all physical processes involving material handling meet external non-Arla mandates. Critical for submitting cleaning agents to the Danish EPA for reuse certification by the required deadline and ensuring tracking methodology aligns with CO2 reporting standards.
+
+**Consequences**:
+Failure to certify cleaning agents delays the Q3 launch, invalidating reuse goals (Risk 7). Legal issues or fines stemming from non-compliance regarding food-contact plastic handling.
+
+**People Count**:
+1
+
+**Typical Activities**:
+Overseeing the submission documentation for industrial cleaning agents to the Danish Environmental Protection Agency (EPA) for food-contact reuse certification; verifying the methodology used by the QA Lead to calculate CO2 tonnage equivalence from material substitution; conducting mandatory audits of the hub cleaning protocols (post-pilot) to ensure they meet the 2026-07-10 internal hold-point requirement; advising on waste segregation compliance for unrecoverable crates routed for recycling.
+
+**Background Story**:
+Professor Lars Kristensen, formerly of the Technical University of Denmark, serves as the project's independent compliance and environmental assurance expert. While not involved in day-to-day operations, Lars's career has centered on Danish and EU environmental law, specializing in the certification of material handling and food-grade plastic reprocessing standards (HDPE). He is responsible for ensuring Arla's chosen cleaning agents will meet the Danish EPA requirements for reusing food-contact packaging, thereby safeguarding the entire environmental credibility and CO2 reduction claim of the campaign, which requires action before Q3 launch.
+
+**Equipment Needs**:
+Access to Danish EPA regulatory circulars and guidelines for food-contact plastic reuse; analytical spreadsheets for verifying CO2 tonnage accounting methodologies; documentation management system for certifying cleaning agent submissions and process validation reports.
+
+**Facility Needs**:
+Secure, confidential office space for handling legal/regulatory documentation; dedicated meeting slots with internal Legal/Compliance teams for Q2 review deadlines.
+
+## 7. Pilot Program Coordinator & Field Test Lead
+
+**Contract Type**: `part_time_employee`
+
+**Contract Type Justification**: The Pilot Coordinator role is essential for Q2 execution but might scale down significantly post-national rollout in Q4. This suggests a dedicated, but potentially reduced commitment after the initial sprint phase.
+
+**Explanation**:
+Owns the Q2 pilot execution phase, implementing controlled tests in select regions. Manages the mobilization of mobile testing units if needed (though not primary strategy) and synthesizes pilot feedback to adjust operational models (Hub location finalization, SLA adjustments) before the Q3 national launch.
+
+**Consequences**:
+Failure to identify friction points during the pilot phase leads to catastrophic operational failure or cost overruns upon nationwide launch, jeopardizing the tight Q3 timeline.
+
+**People Count**:
+1
+
+**Typical Activities**:
+Managing the deployment and monitoring of temporary collection points in pilot regions during Q2; collecting daily performance data (return volume, staff feedback, contamination reports) from pilot sites; coordinating with warehouse teams to confirm the efficiency of initial crate conveyance to temporary staging areas; synthesizing pilot findings into a formal recommendation report for Q3 rollout adjustments due by 2026-06-30.
+
+**Background Story**:
+Kasper Nielsen, based near Kolding, is the on-the-ground executor responsible for stress-testing the chosen 'Builder' strategy during the Q2 pilot phase. Kasper has a background in field service deployment, specializing in setting up temporary infrastructure in varying urban and municipal environments quickly and efficiently. His primary objective is to provide concrete, empirical data from the pilot regions—testing the friction at high-visibility supermarket drop-offs versus lower-visibility municipal sites—to validate the 60/40 load split and provide actionable intelligence to the QA Hub designers before the national scale-up is finalized by July 15th.
+
+**Equipment Needs**:
+Fleet tracking and telematics capability (if required for limited mobile testing units); detailed data capture tools (digital forms, temporary local servers) for logging Q2 pilot friction points; presentation suite for delivering pilot findings to steering committee.
+
+**Facility Needs**:
+Temporary staging area or secure lock-up for pilot collection points during Q2; access to communication channels for immediate coordination with all three contractor types (logistics, retail, municipal).
+
+## 8. Procurement & Asset Lifecycle Liaison
+
+**Contract Type**: `full_time_employee`
+
+**Contract Type Justification**: This role acts as the critical bridge into Arla's internal systems (Procurement, 2027 forecasting). Ensuring reliable data exchange and system integration necessitates an internal employee with long-term organizational knowledge.
+
+**Explanation**:
+Acts as the direct bridge between the recovered, cleaned crates and Arla's internal supply chain systems. Designs the 'Ready-to-Deploy Stock Report' and ensures timely communication with Procurement to directly influence 2027 production ordering, maximizing the material substitution benefit.
+
+**Consequences**:
+Recovered crates become 'stranded inventory' because Procurement does not trust the quality or timeline, forcing Arla to generate unnecessary new stock, thereby nullifying the CO2 reduction metric.
+
+**People Count**:
+1
+
+**Typical Activities**:
+Designing the definitive 'Ready-to-Deploy Stock Report' format required by Arla Procurement; setting up and managing the mandatory monthly synchronization meetings between the QA Hub Logistics Lead and internal procurement stakeholders (starting Sept 2026); verifying that the reintroduction timeline of cleaned crates aligns with production schedules to maximize replacement of virgin material orders; ensuring all recovered assets are correctly logged into Arla's internal inventory management system.
+
+**Background Story**:
+Pia Sørensen, an internal operational specialist from Arla Foods' main office in Aarhus, serves as the critical internal liaison bridging the externally contracted project team with Arla's core supply chain planning. Pia's deep institutional knowledge of Arla's existing B2B logistics, inventory systems, and procurement workflows ensures that the recycled volume does not become 'stranded inventory.' She is the architect of the mandatory data exchange protocol, ensuring that every crate cleaned and approved at the QA hubs is immediately accounted for when Procurement forecasts the 2027 needs, directly translating operational success into supply chain impact.
+
+**Equipment Needs**:
+Access to Arla Procurement's inventory forecasting software; data visualization tools to map recovered stock rate against projected new crate orders; standardized reporting template generation software.
+
+**Facility Needs**:
+Dedicated workstation within Arla's main office complex to facilitate seamless, secure monthly synchronization meetings with the QA Hub Logistics Lead.
+
+---
+
+# Omissions
+
+## 1. Missing Regulatory Compliance Sign-off Role
+
+The project relies critically on adhering to Danish EPA standards for cleaning agents and food-contact reuse certification (Dependency/Risk 7). While a Regulatory & Compliance Assessor is listed, their deliverables (e.g., EPA submission deadlines) override standard day-to-day project management, suggesting a critical stakeholder interface is missing from the core team structure responsible for *driving* external sign-off.
+
+**Recommendation**:
+Elevate the 'Regulatory & Compliance Assessor' role (Lars Kristensen) to a mandatory pre-June 30th deliverable owner. If the team cannot secure the necessary EPA certification sign-off by the dependency date (May 30th), the team must cease moving into large-scale cleaning operations until certification is secured, flagging this as a Phase Gate failure.
+
+## 2. Lack of Dedicated Quality Assurance (QA) Triage Oversight
+
+The Reverse Logistics Lead manages the entire physical flow, but the QA function itself—the inspection, cleaning, and routing executed at the three centralized hubs—is massive and complex (45% of the budget). Managing contamination risk (Risk 4) and ensuring the 98% reintroduction rate requires dedicated, real-time oversight separate from overall logistics scheduling.
+
+**Recommendation**:
+If staffing allows, the 'Reverse Logistics & QA Operations Lead' role should split, or a dedicated 'QA Hub Supervisor' (potentially a contractor FTE listed in the assumptions) should be formally integrated to manage hub staffing, contamination audits, and adherence to the specific cleaning SOPs daily, reporting directly to the Logistics Lead.
+
+## 3. No Dedicated Procurement/Internal Integration Point
+
+Risk 7 explicitly highlights the failure mode where recovered crates become stranded inventory because Procurement doesn't trust the output or timing. While an 'Asset Lifecycle Liaison' exists, their role appears focused primarily on reporting status *out* to Procurement, not actively integrating the QA pipeline *into* Procurement's planning/forecasting systems.
+
+**Recommendation**:
+Mandate the 'Procurement & Asset Lifecycle Liaison' (Pia Sørensen) to dedicate 50% of her initial time (Q1/Q2) to ensuring the Arla ERP/forecasting system is programmed to accept input from the 'Ready-to-Deploy Stock Report' format, rather than just designing the report, ensuring system integration precedes the September 2026 data exchange requirement.
+
+## 4. Missing Contingency/Sweep Budget Steward
+
+The project analysis suggests potential overruns in logistics (Risk 3) and underperformance of incentives causing need for budget sweeps (Missing Assumption 1). While the Financial Controller tracks burn rate, there is no specific team member designated, supported by budget, to quickly deploy risk contingency funds without derailing necessary operational spending.
+
+**Recommendation**:
+The 'Financial Controller & Budget Steward' role must formally ring-fence 200,000 DKK of the operational budget (from the 1.8M Logistics pool) as an immediate 'Risk Management Contingency Fund' that can be rapidly deployed based on verifiable triggers (e.g., contamination spikes, municipal staffing penalties) before requiring steering committee approval for budget revision.
+
+---
+
+# Potential Improvements
+
+## 1. Clarify Municipal vs. Supermarket Staffing Burden Management
+
+The team has two distinct roles managing stakeholder friction: Stakeholder Integration handles the broad SLA/subsidy framework, but the Pilot Coordinator is responsible for field testing friction. The mitigation strategies for Risk 1 (Municipal Penalties) and Risk 2 (Supermarket Subsidies) need tighter integration between the strategic framework setter and the on-the-ground tester.
+
+**Recommendation**:
+Require the 'Stakeholder Integration & Municipal Relations Manager' (Astrid Møller) to provide the 'Pilot Program Coordinator' (Kasper Nielsen) with a detailed breakdown of the *minimum compliance floor* requirement (the non-subsidized duty) for both retail and municipal partners two weeks before the Q2 pilot begins, ensuring Kasper tests compliance against this baseline, not just the incentive structure.
+
+## 2. Standardize Identification Contingency Deployment Trigger
+
+Risk 4 mandates a contingency physical ID strategy if the social media visual guide fails during the pilot. The incentive specialist manages the guides, but the trigger for switching to the cumbersome physical marker deployment is currently vague.
+
+**Recommendation**:
+Define a clear quantitative trigger for the 'Incentive & Consumer Compliance Specialist' (Mikkel Hansen) to initiate the physical ID contingency: If the post-collection inspection failure rate (contamination) exceeds 10% for two consecutive weeks during the Q2 pilot, immediately authorize the printing/distribution of the backup physical markers.
+
+## 3. Streamline QA Hub Location Finalization Timeline
+
+Hub location finalization (based on pilot findings) is due July 15th, which is incredibly tight, given the Q3 national launch and the dependency on Q2 pilot completion (June 30th). This leaves only two weeks for final location confirmation, leasing contracts, and initial setup based on the recommendations provided in 'pre-project-assessment.json'.
+
+**Recommendation**:
+The 'Reverse Logistics & QA Operations Lead' (Elias Vogel) should utilize the Q1 Q2 window to provisionally secure site leases for the three hub locations based on the generic three population centers cited in the assumptions, making the contracts contingent on the final Q2 pilot results but locking in the real estate availability by May 30th, 2026.
+
+## 4. Messaging Conflict Resolution Protocol
+
+There is a fundamental tension between the provocative marketing narrative (Lever 4) and the need to maintain good relationships with retailers and focus on the charitable angle (Risk 6 mitigation). The PR Architect is responsible for the narrative, but the Stakeholder Manager must manage retail reaction.
+
+**Recommendation**:
+Establish a 'Narrative Review & Buffer' step where any external proposed social media or PR campaign asset deviating more than 20% in tone from the officially pre-approved messaging (required by retail partners) must receive joint sign-off from both the 'Public Engagement & PR Narrative Architect' and the 'Stakeholder Integration & Municipal Relations Manager' before deployment.
