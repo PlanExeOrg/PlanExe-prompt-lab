@@ -126,10 +126,6 @@ def get_prompt_file() -> Path:
     return prompt_files[-1]
 
 
-def get_prompt_ref(prompt_file: Path) -> str:
-    """Get the prompt reference string (relative to prompts/)."""
-    return f"{STEP_NAME}/{prompt_file.name}"
-
 
 def collect_new_runs(start_counter: int) -> list[str]:
     """Collect history run paths created after start_counter."""
@@ -150,16 +146,6 @@ def collect_new_runs(start_counter: int) -> list[str]:
                     runs.append(rel)
     return runs
 
-
-def get_next_analysis_index() -> int:
-    """Find the next available analysis directory index."""
-    analysis_root = PROMPT_LAB_DIR / "analysis"
-    existing = sorted(analysis_root.glob(f"*_{STEP_NAME}"))
-    if not existing:
-        return 0
-    last_name = existing[-1].name
-    parts = last_name.split("_", 1)
-    return int(parts[0]) + 1
 
 
 def resolve_models(models_arg: str | None) -> list[str]:
@@ -276,23 +262,31 @@ def step_runner(models: list[str], prompt_file: Path) -> list[str]:
 # Step 3: Analysis pipeline
 # ---------------------------------------------------------------------------
 
-def create_analysis_dir(new_runs: list[str], prompt_ref: str) -> Path:
-    """Create a new analysis directory with meta.json."""
-    index = get_next_analysis_index()
-    analysis_dir = PROMPT_LAB_DIR / "analysis" / f"{index}_{STEP_NAME}"
-    analysis_dir.mkdir(parents=True, exist_ok=True)
+def create_analysis_dir() -> Path:
+    """Run create_analysis_dir.py to create a new analysis directory with meta.json.
 
-    meta = {
-        "prompt": prompt_ref,
-        "history": new_runs,
-    }
-    meta_path = analysis_dir / "meta.json"
-    meta_path.write_text(json.dumps(meta, indent=2) + "\n")
+    The script diffs all history runs against previously analyzed runs to ensure
+    nothing is missed.
+    """
+    script = PROMPT_LAB_DIR / "analysis" / "create_analysis_dir.py"
+    result = subprocess.run(
+        [sys.executable, str(script), STEP_NAME],
+        cwd=PROMPT_LAB_DIR,
+        capture_output=True,
+        text=True,
+    )
+    print(result.stdout)
+    if result.returncode != 0:
+        if result.stderr:
+            print(result.stderr, file=sys.stderr)
+        sys.exit(f"ERROR: create_analysis_dir.py exited with code {result.returncode}")
 
-    print(f"\nCreated analysis directory: {analysis_dir.relative_to(PROMPT_LAB_DIR)}")
-    print(f"  meta.json references {len(new_runs)} new runs")
-
-    return analysis_dir
+    # Find the newly created directory (highest index for this step).
+    analysis_root = PROMPT_LAB_DIR / "analysis"
+    dirs = sorted(analysis_root.glob(f"*_{STEP_NAME}"))
+    if not dirs:
+        sys.exit("ERROR: No analysis directory found after create_analysis_dir.py")
+    return dirs[-1]
 
 
 def step_analysis(analysis_dir: Path) -> None:
@@ -380,30 +374,20 @@ def main():
         print("\n[Skipping implementation step]")
 
     # Step 2: Run experiments.
-    new_runs: list[str] = []
     if not args.skip_runner:
         prompt_file = get_prompt_file()
-        new_runs = step_runner(models, prompt_file)
+        step_runner(models, prompt_file)
     else:
         print("\n[Skipping runner step]")
 
     # Step 3: Analysis pipeline.
     if not args.skip_analysis:
-        if not new_runs:
-            sys.exit(
-                "ERROR: No new runs to analyze. "
-                "Run without --skip-runner first, or re-run the runner step."
-            )
-
-        prompt_file = get_prompt_file()
-        prompt_ref = get_prompt_ref(prompt_file)
-        new_analysis_dir = create_analysis_dir(new_runs, prompt_ref)
-
         print()
         print("=" * 60)
         print("Step 3: Analysis pipeline")
         print("=" * 60)
 
+        new_analysis_dir = create_analysis_dir()
         step_analysis(new_analysis_dir)
     else:
         print("\n[Skipping analysis step]")

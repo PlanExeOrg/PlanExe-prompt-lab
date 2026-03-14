@@ -43,8 +43,24 @@ grounded, auditable evaluations that a synthesis agent can compare.
 
 ## Running the Scripts
 
-Analysis is a two-phase process. Each phase runs Claude Code and Codex in
-parallel to produce independent files.
+Analysis is a three-phase process, preceded by a setup step. Each analysis
+phase runs Claude Code and Codex in parallel to produce independent files.
+
+### Phase 0: Create analysis directory
+
+```bash
+python analysis/create_analysis_dir.py identify_potential_levers
+```
+
+Scans all existing analysis directories for the step, collects the union of
+history runs already referenced in their `meta.json` files, then diffs against
+the full set of history runs on disk. Creates a new auto-incremented analysis
+directory containing a `meta.json` with only the unanalyzed runs.
+
+This must run before Phase 1. It ensures every history run is accounted for
+— no runs are accidentally skipped.
+
+Use `--dry-run` to preview without writing anything.
 
 ### Phase 1: Insight files
 
