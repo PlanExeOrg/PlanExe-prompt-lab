@@ -97,9 +97,12 @@ It should explain what was examined, what worked, what failed, and what to try n
 Recommended sections:
 
 - `# Insight <Agent>`
+- `## Rankings` (optional, but useful when comparing many runs)
 - `## Negative Things`
 - `## Positive Things`
 - `## Comparison`
+- `## Quantitative Metrics`
+- `## Evidence Notes`
 - `## Questions For Later Synthesis`
 - `## Reflect`
 - `## Potential Code Changes` (if code-level causes are relevant)
@@ -110,6 +113,9 @@ The exact headings may vary, but the file should cover:
 - negative findings
 - positive findings
 - comparison to baseline or prior reference outputs
+- rankings or tiering, when helpful
+- quantitative metrics in tables
+- evidence examples that justify the main claims
 - hypotheses for prompt changes
 - hypotheses for code changes, if relevant
 - open questions that a later synthesis step should resolve
@@ -160,10 +166,25 @@ Present metrics in tables so runs can be compared at a glance.
 Always explain what the numbers mean — a perfect uniqueness score can still
 hide content problems (e.g. unique names but identical consequences).
 
+Useful minimums for insight files:
+
+- at least one uniqueness table
+- at least one length/depth table or equivalent quantitative signal
+- at least one constraint-violation or template-leakage count when relevant
+
 ## Hypothesis Format
 
 Each insight file should propose concrete, testable hypotheses for improvement.
-Label them (H1, H2, …) and for each:
+
+Prompt or workflow hypotheses:
+
+- label them `H1`, `H2`, …
+
+Code-level hypotheses:
+
+- label them `C1`, `C2`, …
+
+For each:
 
 - State the change (prompt wording, code fix, or workflow change).
 - Cite the evidence that motivates it (specific runs, metrics, examples).
@@ -173,6 +194,10 @@ Distinguish prompt-level hypotheses (change the system prompt text) from
 code-level hypotheses (change `runner.py`, the pipeline step, or validation
 logic). Code changes that affect all models are generally higher-leverage than
 prompt tweaks that help one model.
+
+If an insight file revises or disagrees with an earlier analysis, verify the
+disputed point directly from repository artifacts before writing the claim.
+Do not copy another agent's metric or conclusion without re-checking it.
 
 ## Neutrality and Synthesis
 
@@ -197,7 +222,8 @@ Write insight files so that synthesis is easy:
 - keep claims auditable
 - call out caveats and ambiguity
 - distinguish facts from hypotheses
-- label hypotheses consistently (H1, H2, …) so synthesis can cross-reference
+- label hypotheses consistently (`H*` and `C*`) so synthesis can cross-reference
+- if you rank runs, explain the basis for the ranking
 
 ## Key Paths
 
