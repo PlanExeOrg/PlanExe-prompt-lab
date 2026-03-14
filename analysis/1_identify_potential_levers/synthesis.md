@@ -2,127 +2,156 @@
 
 ## Cross-Agent Agreement
 
-All four analysis files agree on the following:
+All four analysis files (insight_claude, insight_codex, code_claude, code_codex) agree on the following:
 
-1. **Template leakage** — The literal string `"Systemic: 25% faster scaling through..."` in the production system prompt (`identify_potential_levers.py:95`) causes most models to copy or paraphrase it. Both insight files document this; both code reviews confirm the string is baked into the constant.
+1. **Bare "more" prompt causes cross-call thematic redundancy.** Every successful model repeats governance, resource, and information themes across the three LLM calls because the second and third turns carry no record of what was already generated. This is confirmed in source lines 155–158.
 
-2. **No cardinality enforcement** — `DocumentDetails.levers` and `Lever.options` are unvalidated `list[...]` fields. The description says "exactly 5" but there is no `max_length` constraint. Both code reviews flag this as the direct cause of run 16's inflated lever count.
+2. **The concrete metric example in the system prompt causes template leakage.** `"Systemic: 25% faster scaling through..."` at line 95 of `identify_potential_levers.py` is the phrase gpt-5-nano copied in 11 of 15 levers (73%). All agents identify this as a prompt-construction defect, not a model quirk.
 
-3. **"more" prompts have no deduplication pressure** — The three sequential calls use bare `"more"` as follow-up text (`identify_potential_levers.py:155-159`), giving models no instruction to avoid lever names from prior calls. All agents flag this as the root cause of cross-batch duplicates.
+3. **No per-call or post-merge lever count validation.** Lines 203–206 blindly flatten all responses with `levers_raw.extend(response.levers)` and no count check. This is confirmed to produce 20-lever outputs (llama3.1) and a malformed 16-item file (gpt-5-nano, gta_game plan).
 
-4. **Race condition on `set_usage_metrics_path`** — `runner.py:106` calls `set_usage_metrics_path` before the `with _file_lock:` block at line 108. Both code reviews identify this as a confirmed data-corruption bug under `workers > 1`.
+4. **Run 09 preflight failure wastes all five plans.** The model name validation happens per-plan inside `run_single_plan()` rather than once at run start. One missing alias produces five identical failures.
 
-5. **Assistant turn passed as `dict` not `str`** — `identify_potential_levers.py:196` passes `result["chat_response"].raw.model_dump()` (a Python dict) as `ChatMessage.content`. Both code reviews flag this as a latent correctness issue that degrades multi-turn context fidelity.
+5. **claude-haiku (run 12) produces the best quality output.** Confirmed across both insight files: zero duplicates, plan-specific levers, rich consequences.
+
+6. **gpt-4o-mini (run 15) and llama3.1 (run 16) produce the weakest output.** Both have duplicate lever names, generic content, and in llama3.1's case prefix leakage and bracket placeholders.
 
 ---
 
 ## Cross-Agent Disagreements
 
-### Disagreement 1: Cause of run 16's 20-lever output
+### Bug numbering collision: code_claude B1 vs code_codex B1
 
-**insight_claude** hypothesized that `workers=1` triggers an extra LLM call batch (4 calls × 5 levers = 20).
+These are different bugs assigned the same label:
 
-**code_codex** refutes this by reading the raw artifact: `history/0/16_identify_potential_levers/outputs/20250321_silo/002-9-potential_levers_raw.json` shows three responses with lever counts `[5, 5, 10]`, not four batches. The code always makes exactly three turns (`identify_potential_levers.py:155-159`); worker count only affects plan-level parallelism in the ThreadPoolExecutor (`runner.py:375-389`).
+- **code_claude B1** (line 193–198): The assistant's `ChatMessage.content` is set to `result["chat_response"].raw.model_dump()` — a Python `dict`. When LlamaIndex serializes this for the next API call, it produces Python repr syntax (`{'strategic_rationale': ...}`) not JSON. Turns 2 and 3 receive malformed continuation context.
+- **code_codex B1** (line 93–96): The prompt contains the literal metric phrase that leaks into weaker model outputs.
 
-**Verdict: code_codex is correct.** The cause is llama3.1 over-generating 10 levers in one structured call, which the schema silently accepts. Worker count is irrelevant to batch count.
+**Verdict**: Both are real. The naming collision is an artifact of independent labeling. In this synthesis, these are called **BUG-A** (dict content) and **BUG-B** (metric exemplar) to avoid confusion.
 
-### Disagreement 2: `review_lever` vs `review` as cause of run 13 failure
+### Is BUG-A (dict content) high-impact?
 
-**insight_claude** identified the field name mismatch (`review_lever` in prompt vs `review` in schema) as the cause of the run 13 parasomnia JSON extraction failure.
+code_claude rates it High; code_codex rates it as a suspect pattern (S1). Reading the source confirms the dict is passed at line 196:
 
-**code_claude (S1) and code_codex** both refute this. The `Lever` Pydantic class at `identify_potential_levers.py:36` uses `review_lever`, matching the prompt at line 109. The `review` name is in `LeverCleaned` (line 81), the cleaned export layer — an intentional two-layer design documented in the class docstring at line 64. The run 13 failure was caused by the model wrapping its entire output in a `strategic_rationale` outer key (visible in the error trace in `history/0/13_identify_potential_levers/outputs.jsonl`), which is a structured-output recovery failure, not a field-name mismatch.
+```python
+content=result["chat_response"].raw.model_dump(),
+```
 
-**Verdict: code_claude/code_codex are correct.** The `review_lever` naming is intentional. The run 13 failure is a brittle parse-recovery issue (all-or-nothing `raise` at `identify_potential_levers.py:191`).
+`model_dump()` returns a Python dict. LlamaIndex's `ChatMessage` has a `content: Any` field, but downstream serialization to the API expects a string. The actual JSON string the model produced is available at `result["chat_response"].message.content`. The dict-vs-string mismatch is real and affects every multi-turn run.
 
-### Disagreement 3: Quality ranking
+code_codex (S1) is right to flag provider-dependent coercion as a risk, but understates the severity. code_claude (B1) is correct that this is a confirmed code bug.
 
-**insight_claude** ranks run 12 (claude-haiku) #1 for contextual depth and zero template leakage.
-**insight_codex** ranks run 13 (gpt-oss-20b) #1 for prompt-shape adherence (lowest constraint violations: 0.2 average) and run 12 last among compliant runs due to verbosity and 0/15 summary format score.
+### Is run 12 (claude-haiku) too verbose?
 
-**Verdict: both are right in different frames.** For *content quality and downstream usability* (option depth, project specificity), run 12 wins. For *formal schema compliance* (exact marker syntax, review format, summary format), run 13 wins when it succeeds. Run 12's high `avg constraint violations` (13.4) reflects missing `%` metrics (37 violations) and missing arrows (30) — real format gaps even though the content is richer.
+insight_codex identifies verbosity (consequence avg 657 chars vs baseline 279) as a negative. insight_claude considers it a strength ("plan-specific, high-depth"). Both are correct from different perspectives: for ideation richness it is excellent; for token efficiency and truncation risk it is a liability. This is not a real disagreement — it is a trade-off the prompt currently does not constrain.
+
+### Runner.py race condition
+
+code_claude B2 identifies a race on `set_usage_metrics_path` when `workers > 1`. Reading lines 106–143 confirms: `set_usage_metrics_path` is called before the lock (line 106) and `IdentifyPotentialLevers.execute()` runs without the lock (line 114). The `finally` block at line 140 cleans up afterward, which partially mitigates writes to the wrong path — but Thread B can still overwrite Thread A's path during execution. The bug is real. code_codex does not flag it, so this is an agreement gap, not a true disagreement. The bug is confirmed.
 
 ---
 
 ## Top 5 Directions
 
-### 1. Enforce `max_length=5` on `DocumentDetails.levers` and `max_length=3` (or `max_length=5`) on `Lever.options`
+### 1. Fix assistant turn: use raw string content instead of model_dump() dict
+
 - **Type**: code fix
-- **Evidence**: Both code reviews (code_claude B2/I2, code_codex B2/I1); confirmed in `identify_potential_levers.py:33-35,57-59`. Directly caused run 16's 20-lever output and accepts >3 options silently across all runs.
-- **Impact**: All models. Converts silent over-generation into explicit validation errors at parse time. Stops inflated lever counts from reaching `002-10-potential_levers.json`. Also catches wrong-option-count violations currently logged as `ok` runs.
-- **Effort**: Low — 2 field declarations changed.
-- **Risk**: A model that reliably returns 6 levers will now fail that call instead of silently inflating output. This surfaces a latent failure more visibly. Could increase error rates for llama3.1 and similar weak models until prompts are also improved.
+- **Evidence**: code_claude B1 (High). Confirmed in `identify_potential_levers.py:196`. `result["chat_response"].raw.model_dump()` produces a Python dict; `result["chat_response"].message.content` is the actual JSON string the model emitted.
+- **Impact**: Affects every multi-turn run, every model, every plan. Turns 2 and 3 currently receive malformed continuation context (Python repr instead of JSON). Structural compliance on turn 2 and 3 may improve for all models, especially weaker ones. This is the only code bug that corrupts the conversation history on 100% of runs.
+- **Effort**: Low — one line change in `identify_potential_levers.py:196`.
+- **Risk**: Very low. The fix makes the assistant history match what the model actually saw. No behavior change when the model's continuation is correct; only improvement when it is degraded by the dict repr.
 
-### 2. Replace the literal "25% faster scaling through" example with a format placeholder
-- **Type**: prompt change (also in hardcoded constant)
-- **Evidence**: insight_claude §1, H1; code_claude I1; code_codex B1. Confirmed at `identify_potential_levers.py:95`. Affects 5/6 runs (all except haiku). Run 10 has 4 literal copies in the silo output alone.
-- **Impact**: All models using the external prompt (`prompts/identify_potential_levers/prompt_0_fa5dfb88...txt`) AND the internal constant. Reduces verbatim copy rate, forces model-invented metrics, improves consequence diversity.
-- **Effort**: Low — change one line in the system prompt constant and/or the external prompt file.
-- **Risk**: Negligible. The placeholder `[N]% [measurable outcome] through [mechanism]` is semantically equivalent but non-copyable. No functional change to the pipeline.
+---
 
-### 3. Fix race condition: move `set_usage_metrics_path` inside the lock
+### 2. Make "more" turns stateful: include already-generated lever names
+
+- **Type**: code change (+ implicit prompt change in continuation messages)
+- **Evidence**: code_claude S1/I1, code_codex B3/I3, insight_claude N8/H3, insight_codex H1. Confirmed in `identify_potential_levers.py:155–158`. `user_prompt_list = [user_prompt, "more", "more"]` — no feedback to the model about covered topics.
+- **Impact**: Reduces cross-call thematic redundancy for all successful models. gpt-4o-mini has 3.8 average duplicate names per file; llama3.1 has 1.2; gpt-oss-20b has 0.8. All would benefit. This is the single highest-leverage change for output quality.
+- **Effort**: Low-medium. After each LLM call, collect lever names from `responses[-1].levers` and inject into the next user message: `f"Generate 5 more levers. Already covered: {names}. Do not repeat these topics."`. Requires modifying the loop at lines 163–200.
+- **Risk**: Low. The only risk is that the message becomes slightly longer, but it stays well within token limits for any model that successfully completes three turns.
+
+---
+
+### 3. Replace concrete metric exemplar with a structural placeholder
+
+- **Type**: prompt change
+- **Evidence**: code_claude S2/I6, code_codex B1/I1, insight_claude N3/H1. Confirmed in `identify_potential_levers.py:95`: `"Include measurable outcomes: 'Systemic: 25% faster scaling through...'"`. gpt-5-nano copies this phrase in 11/15 levers (73% leakage rate). claude-haiku copies it 0 times; weaker models are most affected.
+- **Impact**: Eliminates the template leakage vector for gpt-5-nano class models. No negative effect on stronger models (they ignore the example already). Fixes a structural defect in the prompt that is shipped to all users, not just in testing.
+- **Effort**: Low — single line replacement in the system prompt constant at line 95 of `identify_potential_levers.py`.
+- **Risk**: Very low. The changed line still communicates the same structural requirement; it just removes the concrete text that acts as a fill-in-the-blank template.
+
+---
+
+### 4. Add per-call and post-merge lever count validation
+
 - **Type**: code fix
-- **Evidence**: code_claude B1/I4; confirmed at `runner.py:106-109`. When `workers > 1`, Thread A and Thread B can interleave their `set_usage_metrics_path` calls, causing all token usage to be written to the last plan's file.
-- **Impact**: All multi-threaded runs (workers=4 for most models). Usage metrics are currently silently corrupted — one plan gets double-counts, others get none. Affects any downstream analysis of token spend per plan.
-- **Effort**: Low — move two lines inside the existing `with _file_lock:` block. The `finally` cleanup at line 140 should mirror the fix.
-- **Risk**: None. The lock already exists; this is a pure ordering fix.
+- **Evidence**: code_claude B3/I2/I3, code_codex B2/I2. Confirmed: `levers_raw.extend(response.levers)` at lines 203–206 performs no count check. Observed: llama3.1 produces 20 levers, gpt-5-nano produces 16 levers on one plan.
+- **Impact**: Makes contract violations explicit failures rather than silently malformed "successful" outputs. The schema field `list[Lever]` has no min/max constraint, so any count passes today. With validation, downstream steps receive either correct 15-lever outputs or a retryable error.
+- **Effort**: Low — two assertions: one inside the loop (assert `len(response.levers) == 5` per call) and one after merge (assert `len(levers_raw) == 15`). No retry logic required initially; surfacing the error is the first step.
+- **Risk**: Medium. Models that currently produce wrong counts will now fail explicitly. This may increase the visible error rate on weaker models (llama3.1, gpt-5-nano on edge cases), which is the correct outcome but requires callers to handle it.
 
-### 4. Replace bare `"more"` follow-up prompts with prior-lever-name injection
-- **Type**: code change + prompt change
-- **Evidence**: insight_claude §5-6, H4; code_claude I5; code_codex I3; confirmed at `identify_potential_levers.py:155-159`. All runs show semantic redundancy across batches; run 16 has exact-name duplicates.
-- **Impact**: All models. Reduces exact-name and near-name duplicates, lowering the deduplication burden in the downstream `deduplicate_levers.py` step. Improves diversity of the 15-lever pool.
-- **Effort**: Medium — requires building a dynamic message like `"Generate 5 more levers. Do not reuse any of these names: {', '.join(prior_names)}"` using lever names collected from prior responses.
-- **Risk**: Slightly longer prompt tokens per call. Weak models may still drift semantically even when prevented from reusing exact names.
+---
 
-### 5. Fix assistant turn serialization: `model_dump()` → `json.dumps(model_dump())`
+### 5. Preflight model availability check before plan loop
+
 - **Type**: code fix
-- **Evidence**: code_claude B3/I3; code_codex suspect pattern; confirmed at `identify_potential_levers.py:196`. The dict passed as `ChatMessage.content` is serialized inconsistently by different LLM backends — some use Python `repr()` with single-quoted keys, making the prior context unreadable to the model.
-- **Impact**: All models, second and third "more" calls. Gives models properly formatted JSON context of prior responses, strengthening their ability to avoid repeating lever concepts. Likely contributing to run 13's parasomnia failure (malformed context may have caused the model to re-emit the entire `DocumentDetails` structure instead of a bare response).
-- **Effort**: Low — change one expression on line 196.
-- **Risk**: Low. All well-formed LLM backends accept `str` content; the current `dict` path is backend-dependent.
+- **Evidence**: code_claude I4, code_codex B4/I4, insight_claude N1. Confirmed: `LLMModelFromName.from_names(model_names)` is called inside `run_single_plan()` at runner.py line 93, not once at run start. Run 09 (stepfun) failed all five plans identically because of a single missing model alias.
+- **Impact**: Converts five-plan wasted run into one immediate startup error. Saves time and prevents misleading "all plans failed" results when the cause is a configuration typo.
+- **Effort**: Low-medium. Move or duplicate the model resolution logic to run before the plan loop in `runner.py`, and raise an error if any model alias is not found in the config.
+- **Risk**: Low. The change only moves when the error fires, not whether it fires.
 
 ---
 
 ## Recommendation
 
-**Do direction 2 first: remove the "25% faster scaling through" literal from the system prompt.**
+**Pursue Direction 1 first: fix the assistant turn content from `model_dump()` dict to the raw string.**
 
-**File:** `worker_plan/worker_plan_internal/lever/identify_potential_levers.py`, line 95
-**Also update:** `prompts/identify_potential_levers/prompt_0_fa5dfb88099db534ef065c73c38934677aec67b938a4e0be7dfa8acd5497e316.txt` (same string, same line context)
+**File:** `identify_potential_levers.py`
+**Line:** 196
 
-**Current:**
+**Current code:**
+```python
+chat_message_list.append(
+    ChatMessage(
+        role=MessageRole.ASSISTANT,
+        content=result["chat_response"].raw.model_dump(),
+    )
+)
 ```
-     • Include measurable outcomes: "Systemic: 25% faster scaling through..."
+
+**Fixed code:**
+```python
+chat_message_list.append(
+    ChatMessage(
+        role=MessageRole.ASSISTANT,
+        content=result["chat_response"].message.content,
+    )
+)
 ```
 
-**Replace with:**
-```
-     • Include measurable outcomes: "Systemic: [N]% [measurable outcome] through [mechanism]"
-```
+**Why first:** This is the only bug that corrupts the conversation state on 100% of runs, 100% of models, for every turn after the first. The current code passes a Python dict as the assistant's message content. When LlamaIndex serializes `ChatMessage` for the next API call, a dict in `content` is coerced via Python repr (`{'strategic_rationale': 'some text', 'levers': [...]}`) rather than being emitted as valid JSON. The model on turn 2 therefore sees its own prior output in an unparseable format. This degrades structural compliance on turns 2 and 3 for all models and is the likely partial cause of the label drift observed in runs 14/15 (missing `Immediate:`/`Systemic:`/`Strategic:` chain labels) and the option format violations in run 16.
 
-**Rationale for doing this first:**
+The fix is `result["chat_response"].message.content`, which is the verbatim string the model emitted (already a valid JSON document). This is a one-line change with no side effects, and it makes the continuation context structurally correct for the first time.
 
-- It requires changing exactly one line in one place (plus the mirrored external prompt file). No functional risk, no schema changes, no failure modes introduced.
-- It affects output quality across 5 of 6 tested models. Every model except claude-haiku copies or paraphrases this string, flattening consequence diversity across *all* plans and *all* levers — this is the most widespread quality defect found.
-- Unlike direction 1 (Pydantic constraints), this change immediately improves output for models that are already succeeding (runs 10, 14, 15) rather than surfacing new failures.
-- Unlike direction 3 (race condition), this affects output quality that users and evaluators see directly, not just internal metrics bookkeeping.
-- Unlike directions 4 and 5, the change is a single-token substitution with zero moving parts.
-
-After this prompt fix is applied and re-evaluated, direction 1 (Pydantic `max_length=5` on levers) should be the next change — it hardens the pipeline against silent over-generation from any model and converts the run 16 behavior from a silent data quality issue into a visible, diagnosable validation error.
+After this fix, Direction 2 (stateful "more" turns) should be implemented next, as cross-call thematic redundancy is the dominant quality problem visible across all successful runs.
 
 ---
 
 ## Deferred Items
 
-- **Direction 3 (race condition in runner.py)**: Fix before the next batch of multi-threaded runs. The bug is confirmed and the fix is trivial, but it affects internal metrics rather than output quality, so it is not blocking prompt iteration work.
+- **Direction 3 (metric exemplar → structural placeholder)**: Small, safe prompt change worth doing in the same batch as Direction 2 but not blocking anything.
 
-- **Direction 4 (prior-lever-name injection)**: Worth implementing after the prompt and schema fixes are validated. The semantic redundancy it addresses is real but partially mitigated by the downstream `deduplicate_levers.py` step.
+- **Direction 5 (preflight model check)**: Operational improvement. Worth doing before the next large model comparison run, but does not affect output quality.
 
-- **Direction 5 (assistant turn serialization)**: Fix this alongside direction 4, since both affect multi-turn context fidelity and the fix is a one-line change.
+- **Runner.py race condition on `set_usage_metrics_path`** (code_claude B2): Only affects runs with `workers > 1`. The `finally` block partially mitigates it. Fix by moving `set_usage_metrics_path` inside the `_file_lock` block, and also acquiring the lock during `IdentifyPotentialLevers.execute()` if usage metric correctness matters. Low priority since the prompt-lab runs typically use a single worker.
 
-- **code_claude I6 / code_codex I4 (partial-result save on failure)**: Implement when run 13-style failures (single-call failure aborting an entire plan) recur in testing. Low priority while failure rate is 1/30 plans.
+- **Non-atomic history counter** (code_claude S4): Latent race condition in `runner.py` when two processes start simultaneously. Not observed in runs 09–16. Fix with a file-based lock or atomic directory creation if concurrent runner invocations become common.
 
-- **code_codex I5 (resolve worker count from selected profile)**: The `_resolve_workers` merge-all-configs approach is architecturally fragile but has not caused incorrect behavior in observed runs. Defer until profile-selection logic is centralized.
+- **Structured output fallback parsing** (code_claude I7, code_codex I5): If the model returns a `{"levers": [...]}` wrapper or a truncated response, a secondary parse attempt could recover partial results. Worth implementing once the higher-priority fixes are stable.
 
-- **insight_codex question: add downstream reduction steps to runner**: If the evaluation target shifts from the 15-lever intermediate artifact to the final "vital few" output, the runner should optionally chain into `deduplicate_levers.py`. Not needed while the prompt-lab is specifically optimizing the `identify_potential_levers` step in isolation.
+- **Per-model length guidance** (insight_codex H2, code_codex I7): Run 12 (claude-haiku) averages 657 chars per consequence vs baseline 279. Adding a length target like "Consequences: ~30 words" to the prompt would reduce token cost without sacrificing structure. The current `Lever.consequences` field description already says "30 words" but the system prompt does not enforce it. Enforcing it consistently would help.
 
-- **Run 12 (claude-haiku) verbosity**: The haiku model produces the highest-quality content but has 13.4 average constraint violations, mostly missing `%` metrics (37) and missing arrows in consequence chains (30). A targeted prompt addition that makes the `Immediate → Systemic → Strategic` arrow syntax and the `%` metric requirement more salient could bring haiku closer to full compliance without sacrificing content depth. Defer until the leakage fix is applied and re-evaluated.
+- **Global uniqueness instruction across all three turns** (insight_codex H1): Adding an explicit cross-turn uniqueness instruction to the system prompt (`"Across all three responses, the 15 lever names must be distinct"`) is complementary to Direction 2 but less precise than dynamically feeding already-covered names.
+
+- **Post-merge deduplication** (code_claude I5, insight_claude C2): A defensive deduplication or warning pass after merge is useful as a safety net even after Direction 2 is implemented. Not first priority because Direction 2 attacks the root cause.

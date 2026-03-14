@@ -1,310 +1,311 @@
 # Code Review (claude)
 
+Source files reviewed:
+- `worker_plan/worker_plan_internal/lever/identify_potential_levers.py`
+- `prompt_optimizer/runner.py`
+
+---
+
 ## Bugs Found
 
-### B1 — `set_usage_metrics_path` called outside the lock (race condition)
-**File:** `prompt_optimizer/runner.py:106–109`
-
-```python
-set_usage_metrics_path(plan_output_dir / "usage_metrics.jsonl")   # ← outside lock
-
-with _file_lock:
-    dispatcher.add_event_handler(track_activity)
-```
-
-The comment at lines 97–98 says "so we hold a lock while configuring and running", but
-`set_usage_metrics_path` is a call to global state that happens *before* the lock is
-acquired. When `workers > 1`, Thread A sets the path to plan-A's directory, then
-Thread B sets it to plan-B's directory before Thread A's LLM calls fire. Both threads
-end up recording token usage into plan-B's `usage_metrics.jsonl`. Plan-A gets no usage
-file; plan-B's file double-counts. The fix is to move `set_usage_metrics_path` inside
-the same `with _file_lock:` block as `add_event_handler`.
-
----
-
-### B2 — `DocumentDetails.levers` has no upper-bound constraint
-**File:** `worker_plan/worker_plan_internal/lever/identify_potential_levers.py:57–59`
-
-```python
-levers: list[Lever] = Field(
-    description="Propose exactly 5 levers."
-)
-```
-
-The Pydantic field description says "exactly 5" but there is no `max_length` (or
-`max_items`) validator. Any model that generates 6, 7, or 8 levers in a single
-structured response will have all of them silently accepted and appended to the final
-output. Because the loop runs 3 calls, even a single over-generating call produces more
-than 15 levers in `002-10-potential_levers.json`. The same gap applies to `options`:
-`list[str]` with description "2-5 options" but no enforced bound.
-
----
-
-### B3 — Assistant-turn content serialised as a Python dict, not JSON
-**File:** `worker_plan/worker_plan_internal/lever/identify_potential_levers.py:193–198`
+### B1 — Assistant turn content is a Python dict, not a string
+**File:** `identify_potential_levers.py:193–198`
 
 ```python
 chat_message_list.append(
     ChatMessage(
         role=MessageRole.ASSISTANT,
-        content=result["chat_response"].raw.model_dump(),  # ← dict, not str
+        content=result["chat_response"].raw.model_dump(),
     )
 )
 ```
 
-`ChatMessage.content` is typed as `str` (or a content-block union). Passing a raw
-`dict` relies on whatever implicit serialisation the LlamaIndex framework applies at
-send time. Different LLM backends handle this differently: some stringify it with
-Python's `repr()` (producing single-quoted keys), others may raise, and others may
-silently drop the field. When the follow-up "more" prompt is sent, the model sees an
-ambiguous or malformed assistant turn as prior context, degrading its ability to track
-what levers were already generated. The correct approach is
-`content=json.dumps(result["chat_response"].raw.model_dump())`.
+`result["chat_response"].raw` is the parsed `DocumentDetails` Pydantic object.
+`.model_dump()` produces a Python `dict`. When LlamaIndex serializes this
+`ChatMessage` for subsequent API calls it will stringify the dict using Python
+repr syntax (`{'strategic_rationale': ..., 'levers': [...]}`) rather than
+proper JSON. The LLM on the second and third "more" turns therefore sees
+malformed continuation context, not the JSON it originally emitted.
+
+The correct value is the raw assistant text, which is
+`result["chat_response"].message.content` (the actual JSON string the model
+produced), or alternatively `json.dumps(result["chat_response"].raw.model_dump())`.
+
+**Severity:** High — affects every multi-turn run. Models with strong
+instruction-following may cope; weaker models are likely confused by the
+Python-dict representation, which can cause worse structural compliance on
+turns 2 and 3.
 
 ---
 
-### B4 — Misleading comment: lock does NOT protect `set_usage_metrics_path`
-**File:** `prompt_optimizer/runner.py:96–109`
-
-The comment block says "we hold a lock while configuring and running to avoid
-cross-thread interference" but the lock only wraps `dispatcher.add_event_handler`. A
-future developer reading the comment could assume global state is safe here, masking
-the race described in B1. The comment should either be corrected or the code moved to
-match the stated intent.
-
----
-
-### B5 — All-or-nothing failure on multi-call loop
-**File:** `worker_plan/worker_plan_internal/lever/identify_potential_levers.py:182–191`
+### B2 — Race condition: `set_usage_metrics_path` called outside the file lock in multi-worker runs
+**File:** `runner.py:96–116`
 
 ```python
-except Exception as e:
-    llm_error = LLMChatError(cause=e)
+set_usage_metrics_path(plan_output_dir / "usage_metrics.jsonl")   # ← not locked
+
+with _file_lock:
+    dispatcher.add_event_handler(track_activity)                   # ← locked
+
+t0 = time.monotonic()
+try:
     ...
-    raise llm_error from e
+    result = IdentifyPotentialLevers.execute(...)                  # ← not locked
 ```
 
-If call 1 and call 2 both succeed (10 levers collected) but call 3 fails, the entire
-plan is marked as an error and all partial results are discarded. There is no
-checkpoint or partial-save path. For slow models like gpt-5-nano (~400 s/plan) this
-wastes substantial compute. A guard that continues with whatever levers were collected
-on prior calls — or at minimum saves the partial output before re-raising — would make
-the pipeline more resilient.
+The comment at line 97–98 says "so we hold a lock while configuring and
+running," but the lock covers only the `add_event_handler` call. The
+`set_usage_metrics_path` global write and the full `IdentifyPotentialLevers.execute()`
+call both run outside the lock. When `workers > 1`, two threads can interleave:
+
+1. Thread A: `set_usage_metrics_path(plan_A/usage_metrics.jsonl)`
+2. Thread B: `set_usage_metrics_path(plan_B/usage_metrics.jsonl)`  ← overwrites A's path
+3. Thread A: runs LLM — metrics now written to plan_B's directory
+
+**Severity:** Medium — only triggers when `luigi_workers > 1`. Corrupts
+per-plan usage metrics; does not corrupt lever outputs.
+
+---
+
+### B3 — No per-call lever count validation before appending to the merged list
+**File:** `identify_potential_levers.py:203–206`
+
+```python
+levers_raw: list[Lever] = []
+for response in responses:
+    levers_raw.extend(response.levers)
+```
+
+Each `DocumentDetails.levers` field is `list[Lever]` with no min/max
+enforcement. If a model returns 7 levers in one call the merged list silently
+grows to 17; if it returns 3 the list ends up at 13. The expected total is
+`3 calls × 5 levers = 15`.
+
+**Severity:** Medium — produces wrong-sized outputs that break downstream
+assumptions. Manifests in run 16 (llama3.1 → 20 levers) and run 10
+(15.2 levers average, one plan with 16).
 
 ---
 
 ## Suspect Patterns
 
-### S1 — `review_lever` in `Lever` schema vs. `review` in `LeverCleaned`
-**File:** `identify_potential_levers.py:36` and `:81`
-
-The LLM-facing Pydantic model (`Lever`) calls the field `review_lever`. The
-post-processed model (`LeverCleaned`) calls it `review`. The mapping at line 218
-(`review=lever.review_lever`) is correct and intentional (the docstring at line 64
-explains the split). However:
-
-- The *hardcoded* system prompt (line 109) says `` For `review_lever`: ``, consistent
-  with the Pydantic field.
-- The *external* prompt file used by the optimizer
-  (`prompt_0_fa5dfb88....txt`) also says `` For `review_lever`: `` (per
-  insight_claude.md), so they agree.
-- The inconsistency flagged in insight_claude.md ("schema uses `review`, not
-  `review_lever`") is technically about the *final output* field, not what the LLM is
-  asked to emit. The run-13 parasomnia failure was actually caused by the model
-  wrapping the entire response in the outer `DocumentDetails` field name
-  (`strategic_rationale`), not just by the `review_lever` field name alone.
-
-Action: the naming split is intentional, but a code comment on `Lever.review_lever`
-explaining the asymmetry would prevent future confusion and incorrect prompt edits.
-
----
-
-### S2 — `_file_lock` is a module-level threading lock used both in `runner.py`
-and implicitly assumed to guard global LlamaIndex dispatcher state
-**File:** `prompt_optimizer/runner.py:41,108,141`
-
-`_file_lock` was named for file writes (`_append_jsonl`) but was repurposed to
-guard dispatcher mutations. There is no guarantee that LlamaIndex's `dispatcher`
-itself is thread-safe; `dispatcher.event_handlers` is likely a plain list. Even with
-the lock around `add_event_handler` and `.remove()`, LlamaIndex may still iterate the
-handler list inside `chat()` calls without holding any external lock. If the dispatcher
-internally iterates the handlers list concurrently with a remove, a `RuntimeError:
-list changed size during iteration` is possible.
-
----
-
-### S3 — `_next_history_counter` silently skips non-numeric bucket names
-**File:** `prompt_optimizer/runner.py:262–272`
+### S1 — "more" prompt carries no context of already-generated levers
+**File:** `identify_potential_levers.py:155–158`
 
 ```python
-for bucket in history_dir.iterdir():
-    if not bucket.is_dir() or not bucket.name.isdigit():
-        continue
+user_prompt_list = [
+    user_prompt,
+    "more",
+    "more",
+]
 ```
 
-Any non-numeric directory under `history/` (e.g., a symlink, a `.DS_Store`, or a
-manually created directory named something descriptive) is silently skipped. This is
-probably the intended behaviour, but a stray directory with a numeric name at an
-unexpected level could corrupt the counter. Low severity, but worth noting.
+The second and third turns send only the bare string `"more"`. The model has
+no reminder of which lever names it already produced and is therefore free to
+generate the same themes again. The assistant history (even if serialized
+correctly) contains the full `DocumentDetails` wrapper including
+`strategic_rationale` and `summary`, not a compact list of lever names the
+model can easily reason about.
+
+This is the root cause of cross-call thematic redundancy observed across all
+successful models (N8 in insight_claude).
 
 ---
 
-## Improvement Opportunities
-
-### I1 — Remove / neutralise the "25% faster scaling through" example metric
+### S2 — System prompt embeds a concrete numeric example that gets copied verbatim
 **File:** `identify_potential_levers.py:95`
 
 ```
 "Include measurable outcomes: 'Systemic: 25% faster scaling through...'"
 ```
 
-This verbatim string is copied by every model except claude-haiku (0, 1, 2, or 4
-occurrences per run per insight_claude.md). Replacing it with a format placeholder:
-
-```
-"Include measurable outcomes: 'Systemic: [N]% [measurable outcome] through [mechanism]'"
-```
-
-would force models to invent their own figures and prevent the template from flattening
-output diversity.
+The prompt uses a literal worked example. Weaker models treat this as a
+template to fill in rather than an illustration of the required structure.
+Run 10 (gpt-5-nano) copies "25% faster scaling through" into 11 of 15 levers.
 
 ---
 
-### I2 — Enforce `min_length=3`, `max_length=5` on `levers` and `options` fields
-**File:** `identify_potential_levers.py:33–35,57–59`
+### S3 — `DocumentDetails` wrapper schema increases JSON extraction failure surface
+**File:** `identify_potential_levers.py:53–62`
 
-Pydantic supports `Field(min_length=..., max_length=...)` for lists. Adding:
+The structured output type requires `strategic_rationale`, `levers`, and
+`summary` at the top level. Models that cannot reliably emit the full wrapper
+(e.g. a truncated response, or a model that only returns the levers array)
+cause total plan failure rather than partial recovery. Run 13 (gpt-oss-20b)
+failed one plan because the response was cut off mid-lever; run 11 (nemotron)
+failed all plans because it returned non-JSON output rather than the
+structured schema.
+
+There is no fallback path that tries to extract just the `levers` array if the
+full `DocumentDetails` parse fails.
+
+---
+
+### S4 — `_history_run_dir` counter is not atomic across concurrent processes
+**File:** `runner.py:257–285`
+
+`_next_history_counter` scans the history directory and returns `max + 1`.
+Two `runner.py` processes started within milliseconds can observe the same max
+and produce the same run directory path. `mkdir(exist_ok=True)` silences the
+collision rather than detecting it, and both processes then write into the
+same run directory, overwriting each other's `meta.json`, `events.jsonl`, and
+`outputs.jsonl`.
+
+---
+
+## Improvement Opportunities
+
+### I1 — Feed prior lever names into "more" calls (addresses S1 / N8 / H3)
+**File:** `identify_potential_levers.py:163–170`
+
+After each LLM call, collect the names of generated levers and inject them
+into the next user message:
 
 ```python
-levers: list[Lever] = Field(..., min_length=5, max_length=5)
-options: list[str] = Field(..., min_length=2, max_length=5)
+# pseudo-code, not a patch
+already_names = ", ".join(r.name for resp in responses for r in resp.levers)
+next_user_content = f"more\n\nAlready covered: {already_names}. Do not repeat these topics."
 ```
 
-would make the 5-lever / 3-option requirement a hard validation constraint instead of
-a soft description, and would catch over-generating models at parse time rather than
-silently inflating lever counts in the output.
+Expected effect: reduces duplicate lever names and cross-call thematic
+clustering without changing the model or prompt preamble.
 
 ---
 
-### I3 — Serialise assistant turns as JSON strings, not raw dicts
-**File:** `identify_potential_levers.py:196`
+### I2 — Assert exactly 5 levers per response before accepting the batch (addresses B3 / N5)
+**File:** `identify_potential_levers.py:200`
+
+After `responses.append(result["chat_response"].raw)`, check:
+
+```python
+n = len(result["chat_response"].raw.levers)
+if n != 5:
+    raise ValueError(f"Expected 5 levers in turn {user_prompt_index}, got {n}")
+```
+
+This surfaces the overproduction problem (llama3.1 generating 6–7 per call)
+as an explicit failure rather than a silently inflated merged list.
+
+---
+
+### I3 — Add post-merge total count guard (addresses B3 / C3 in insight_codex)
+**File:** `identify_potential_levers.py:219`
+
+After building `levers_cleaned`, enforce:
+
+```python
+if len(levers_cleaned) != len(user_prompt_list) * 5:
+    raise ValueError(
+        f"Expected {len(user_prompt_list) * 5} levers after merge, "
+        f"got {len(levers_cleaned)}"
+    )
+```
+
+---
+
+### I4 — Add preflight model availability check before batch starts (addresses N1 / C1 in insight_codex)
+**File:** `runner.py:93–94`
+
+```python
+llm_models = LLMModelFromName.from_names(model_names)
+```
+
+Run 09 wasted all five plans because the model name was not registered.
+`LLMModelFromName.from_names` (or the underlying config loader) should be
+called once before the plan loop with an explicit existence check that raises
+immediately rather than failing per-plan.
+
+---
+
+### I5 — Add post-merge name deduplication or warning (addresses N4, N7 / C2 in insight_claude)
+**File:** `identify_potential_levers.py:208–219`
+
+After building `levers_cleaned`, detect exact duplicate names:
+
+```python
+seen_names: set[str] = set()
+for lever in levers_cleaned:
+    if lever.name in seen_names:
+        logger.warning(f"Duplicate lever name: {lever.name!r}")
+    seen_names.add(lever.name)
+```
+
+A stricter version would raise or trigger a retry rather than just logging.
+
+---
+
+### I6 — Replace worked-example metric with a structural placeholder (addresses S2 / N3 / H1)
+**File:** `identify_potential_levers.py:95`
 
 Change:
-```python
-content=result["chat_response"].raw.model_dump(),
+```
+"Include measurable outcomes: 'Systemic: 25% faster scaling through...'"
 ```
 to:
-```python
-content=json.dumps(result["chat_response"].raw.model_dump()),
+```
+"Include measurable outcomes: 'Systemic: [specific quantified impact, e.g. percentage change in X] through [mechanism]'"
 ```
 
-This ensures the assistant turn in the chat history is a valid JSON string that every
-model backend can parse unambiguously. It also lets subsequent "more" calls receive
-well-formed prior context, which is important for cross-call deduplication (B2/I5).
+This preserves the structural cue while removing the concrete text that
+weaker models copy verbatim.
 
 ---
 
-### I4 — Move `set_usage_metrics_path` inside the lock
-**File:** `runner.py:106–109`
+### I7 — Add graceful fallback: extract `levers` array from wrapper-shaped JSON (addresses S3 / N insight_codex C4)
+**File:** `identify_potential_levers.py` (in the `execute_function` closure or caller)
 
-```python
-# Before
-set_usage_metrics_path(plan_output_dir / "usage_metrics.jsonl")
-with _file_lock:
-    dispatcher.add_event_handler(track_activity)
-
-# After
-with _file_lock:
-    set_usage_metrics_path(plan_output_dir / "usage_metrics.jsonl")
-    dispatcher.add_event_handler(track_activity)
-```
-
-This fixes the race condition (B1) and makes the code match the existing comment.
-The `finally` block should mirror the change:
-
-```python
-with _file_lock:
-    set_usage_metrics_path(None)
-    dispatcher.event_handlers.remove(track_activity)
-```
-
----
-
-### I5 — Inject previously generated lever names into subsequent "more" calls
-**File:** `identify_potential_levers.py:155–159`
-
-The three calls use `["more", "more"]` as follow-up prompts. Models generating calls 2
-and 3 have no explicit instruction to avoid repeating lever names from prior responses.
-Replacing the bare "more" strings with a dynamically built message listing already-used
-lever names (e.g., "Generate 5 more levers. Do not reuse these names: {prior_names}")
-would reduce the exact-name and near-name duplicates observed in run 16 and the
-semantic redundancy in all runs.
-
----
-
-### I6 — Add partial-result save before re-raising on LLM failure
-**File:** `identify_potential_levers.py:182–191`
-
-Before re-raising `llm_error`, collect and save whatever levers were accumulated from
-prior successful calls. This avoids wasting fully-completed early calls when only a
-late call fails, and makes the pipeline more useful for debugging partial failures
-(as seen in run 13 parasomnia).
-
----
-
-### I7 — Runner should log a warning when lever count deviates from expected 15
-**File:** `runner.py:124`
-
-```python
-logger.info(f"{plan_name}: {len(result.levers)} levers in {duration:.1f}s")
-```
-
-Elevating this to a warning (or adding a separate warning) when `len(result.levers) != 15`
-would surface the over-generation issue (B2) in logs without requiring manual inspection
-of every output file.
+If `sllm.chat()` fails because the model returned `{"levers": [...]}` or a
+truncated response, a secondary parse attempt that extracts the `levers` field
+directly would recover otherwise-usable responses. Run 13's parasomnia failure
+was a truncation where content up to the truncation point was valid.
 
 ---
 
 ## Trace to Insight Findings
 
-| Insight finding | Root cause in code |
-|---|---|
-| **Run 16 produces 20 levers** (insight_claude §4, insight_codex table) | **B2**: `DocumentDetails.levers` has no `max_length=5` — llama3.1 generated >5 levers in one structured call; all were accepted. |
-| **"25% faster scaling through" template leakage** (insight_claude §1) | **I1**: The literal example string in `IDENTIFY_POTENTIAL_LEVERS_SYSTEM_PROMPT` line 95 acts as a fill-in target for weaker models. |
-| **Run 13 parasomnia JSON extraction failure** (insight_claude §2, insight_codex negative) | **S1** (partial) + **B3**: The model emitted an outer `strategic_rationale` wrapper and used `review_lever`. B3 (dict content in assistant turns) may have corrupted the model's prior-call context, making it wrap the output in the `DocumentDetails` field structure instead of returning a bare `DocumentDetails` JSON object. |
-| **Exact-name duplicates in run 16** (insight_claude §5) | **B3** + **I5**: Assistant turns passed as dicts give the model poor signal about what was previously generated. No instruction prevents name reuse across "more" calls. |
-| **Semantic redundancy across all runs** (insight_claude §6, insight_codex H5) | **I5**: No prior-lever-name injection; each "more" call is context-blind about earlier lever concepts. |
-| **Usage metrics written to wrong plan under workers>1** | **B1**: `set_usage_metrics_path` is outside the lock; concurrent threads overwrite the global path. |
-| **Missing `activity_overview.json` / instability in deduplication** (insight_claude Q1) | Not in the reviewed files — the runner does not invoke `deduplicate_levers.py`, so that step must be run separately. If the deduplication step is skipped or its output path is wrong, downstream artifacts are absent. |
-| **`review` vs `review_lever` confusion across prompt and schema** (insight_claude §2) | **S1**: The field split is intentional but undocumented; the insight's description of it as a "bug" reflects the naming asymmetry. The actual run-13 failure root cause is the structured-output wrapper issue, not just the field name. |
+| Code location | Bug/Pattern | Insight observation |
+|---|---|---|
+| `identify_potential_levers.py:193–198` | B1 — dict content in assistant turn | Potentially degrades model behaviour on turns 2 and 3 for all runs; hard to isolate but consistent with structural drift observed in runs 14/15 (insight_codex) |
+| `runner.py:106` | B2 — race on `set_usage_metrics_path` | Usage metrics files may contain wrong-plan data when `workers > 1` |
+| `identify_potential_levers.py:203–206` | B3 — no per-call count check | N5: llama3.1 produces 20 levers; run 10 averages 15.2 levers (insight_claude Table A; insight_codex Uniqueness table) |
+| `identify_potential_levers.py:155–158` | S1 — bare "more" prompt | N8: cross-call thematic redundancy (governance/resource/information themes repeated 2–3× across all models); insight_claude question 3; insight_codex cross-call duplication proxy table |
+| `identify_potential_levers.py:95` | S2 — concrete example metric | N3: gpt-5-nano copies "25% faster scaling through" in 11/15 levers (insight_claude Table C) |
+| `identify_potential_levers.py:53–62` | S3 — full wrapper schema, no fallback | Run 13 one plan failure (truncated JSON); run 11 total failure (no JSON at all); insight_codex C4 |
+| `runner.py:257–285` | S4 — non-atomic history counter | Concurrent process collision would corrupt run directories; not observed in runs 09–16 but a latent risk |
 
 ---
 
 ## Summary
 
-Two confirmed bugs stand out:
+Three confirmed bugs were found:
 
-- **B1** (race condition on `set_usage_metrics_path` outside lock) is the most
-  impactful operational bug: it silently corrupts token-usage accounting for every
-  parallel run.
+- **B1** (High): The assistant's `ChatMessage.content` is set to a Python dict
+  from `model_dump()` instead of the original JSON string the model produced.
+  This corrupts the conversation history passed to turns 2 and 3, giving the
+  model a Python-repr continuation rather than valid JSON. Fix: use
+  `result["chat_response"].message.content` (the raw string) or
+  `json.dumps(result["chat_response"].raw.model_dump())`.
 
-- **B2** (no list length constraint on `levers` or `options`) is the direct code-level
-  cause of run 16's 20-lever inflation. The insight correctly identified this as a
-  worker-count-related anomaly, but the actual mechanism is that llama3.1 over-generates
-  levers per call and the schema accepts them all.
+- **B2** (Medium): A race condition in `runner.py` when `workers > 1` — the
+  `set_usage_metrics_path` global is written outside the file lock, so
+  per-plan metrics can be written to the wrong plan's directory.
 
-- **B3** (dict passed to `ChatMessage.content` instead of a JSON string) is a latent
-  correctness bug that degrades multi-call context fidelity for all models, contributing
-  to cross-call name duplication.
+- **B3** (Medium): No per-call or post-merge lever count guard. Models that
+  return more or fewer than 5 levers per turn silently produce wrong-sized
+  merged outputs (observed: 20 levers for llama3.1, 16 for gpt-5-nano on one
+  plan).
 
-The two highest-value improvements for output quality are:
+Two structural patterns drive the majority of quality issues:
 
-- **I1** (remove the "25% faster scaling" example string) — immediate, measurable
-  reduction in template leakage across all weaker models.
-- **I5** (inject prior lever names into "more" calls) — reduces exact-name and
-  near-name duplicates that the downstream deduplication step has to clean up.
+- **S1** (bare "more" prompt) causes cross-call thematic redundancy across all
+  successful models. This is the single highest-leverage code change available:
+  injecting a list of already-generated lever names into turns 2 and 3.
 
-The `review_lever` / `review` naming split (**S1**) is intentional per the code
-comment, but the absence of explanation in the Pydantic schema or prompt is a
-documentation gap that caused the insight analysis to flag it as a schema mismatch
-when it is actually a deliberate two-layer design.
+- **S2** (concrete numeric example in the system prompt) directly causes
+  template leakage in run 10 (73% of levers copy "25% faster scaling through").
+  Replacing it with a structural placeholder costs nothing and eliminates the
+  leakage vector.
+
+The improvements most likely to improve output quality across all models are,
+in priority order: fix B1, implement I1 (lever-name context in "more" turns),
+implement I6 (remove concrete example), implement I2+I3 (count guards).

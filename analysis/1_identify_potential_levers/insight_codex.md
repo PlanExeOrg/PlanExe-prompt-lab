@@ -2,132 +2,164 @@
 
 ## Rankings
 
-1. **13 / gpt-oss-20b** — best prompt-shape adherence on successful plans, but one hard failure makes it risky overall.
-2. **15 / gpt-4o-mini** — best all-success run for prompt-following stability; strong summaries, but repeated lever names remain common.
-3. **14 / qwen3-30b-a3b** — concise and mostly on-topic, but it systematically drops exact consequence marker syntax.
-4. **12 / claude-haiku-4.5** — rich strategic content and high name diversity, but extreme verbosity and poor summary-format compliance.
-5. **10 / gpt-5-nano** — diverse lever naming, but it repeatedly substitutes `Trade-off:` for the required `Controls A vs. B.` review format.
-6. **16 / llama3.1** — lowest structural compliance; option-prefix leakage and one 10-lever response make it the weakest run.
+- **Tier A:** Run `12` (`claude-haiku-4.5`) and run `10` (`gpt-5-nano`). These are the only fully successful runs that stay close to the prompt contract on most files. Run `12` is cleaner structurally; run `10` is closer to baseline length.
+- **Tier B:** Run `14` (`qwen3-30b-a3b`), run `15` (`gpt-4o-mini`), and run `13` (`gpt-oss-20b`). They produce usable material, but each has a meaningful contract or reliability caveat.
+- **Tier C:** Run `16` (`llama3.1`). It completes all plans, but quality control is weak: extra levers, prefixed options, bracket placeholders, and widespread loss of measurable outcomes.
+- **Tier D:** Run `09` (`stepfun-step-3.5-flash`) and run `11` (`nemotron-3-nano-30b`). These are operational failures rather than content comparisons.
 
 ## Negative Things
 
-- The biggest issue is **not model-specific**: both baseline and almost every history run materialize **15 final levers** instead of a 5-lever deliverable, because the final artifact appears to flatten three 5-lever raw responses into one file. The prompt explicitly requires “EXACTLY 5 levers per response” and exactly 3 options per lever in `prompts/identify_potential_levers/prompt_0_fa5dfb88099db534ef065c73c38934677aec67b938a4e0be7dfa8acd5497e316.txt:4` and `prompts/identify_potential_levers/prompt_0_fa5dfb88099db534ef065c73c38934677aec67b938a4e0be7dfa8acd5497e316.txt:5`.
-- The **baseline training data is itself structurally non-compliant** with the prompt, so it is a weak oracle for “strict prompt adherence.” Example: `baseline/train/20260308_sovereign_identity/002-10-potential_levers.json:4`, `baseline/train/20260308_sovereign_identity/002-10-potential_levers.json:15`, `baseline/train/20260308_sovereign_identity/002-10-potential_levers.json:26`, `baseline/train/20260308_sovereign_identity/002-10-potential_levers.json:37`, and `baseline/train/20260308_sovereign_identity/002-10-potential_levers.json:48` introduce one 5-lever set, while repeated names reappear later at `baseline/train/20260308_sovereign_identity/002-10-potential_levers.json:136`, `baseline/train/20260308_sovereign_identity/002-10-potential_levers.json:147`, and `baseline/train/20260308_sovereign_identity/002-10-potential_levers.json:158`.
-- **H1:** tighten the review syntax instruction. `10 / gpt-5-nano` repeatedly emits `Trade-off:` instead of the required `Controls [Tension A] vs. [Tension B].`, as shown in `history/0/10_identify_potential_levers/outputs/20250321_silo/002-9-potential_levers_raw.json:15`. The prompt requirement is explicit at `prompts/identify_potential_levers/prompt_0_fa5dfb88099db534ef065c73c38934677aec67b938a4e0be7dfa8acd5497e316.txt:25`.
-- **H2:** tighten the consequence-string template. `14 / qwen3-30b-a3b` often keeps the semantic chain but drops the exact `Immediate:` / `Systemic:` / `Strategic:` formatting, e.g. `history/0/14_identify_potential_levers/outputs/20250321_silo/002-9-potential_levers_raw.json:9` and `history/0/14_identify_potential_levers/outputs/20250321_silo/002-9-potential_levers_raw.json:20`. The prompt asks for the literal marker sequence at `prompts/identify_potential_levers/prompt_0_fa5dfb88099db534ef065c73c38934677aec67b938a4e0be7dfa8acd5497e316.txt:9`.
-- **H3:** add a stronger summary-format instruction or few-shot example. `12 / claude-haiku-4.5` produces summaries that identify a missing dimension, but often phrase the addition as `Add to Governance Philosophy: '...'` rather than `Add '...' to [lever]`, e.g. `history/0/12_identify_potential_levers/outputs/20250321_silo/002-9-potential_levers_raw.json:62`. The prompt requires the exact pattern at `prompts/identify_potential_levers/prompt_0_fa5dfb88099db534ef065c73c38934677aec67b938a4e0be7dfa8acd5497e316.txt:29`.
-- **H4:** explicitly penalize option prefixes with a model-facing negative example. `16 / llama3.1` leaks `Option 1:`/`Option 2:`/`Option 3:` in generated fields at `history/0/16_identify_potential_levers/outputs/20260308_sovereign_identity/002-10-potential_levers.json:7`, `history/0/16_identify_potential_levers/outputs/20260308_sovereign_identity/002-10-potential_levers.json:8`, and `history/0/16_identify_potential_levers/outputs/20260308_sovereign_identity/002-10-potential_levers.json:9`, despite the prohibition in `prompts/identify_potential_levers/prompt_0_fa5dfb88099db534ef065c73c38934677aec67b938a4e0be7dfa8acd5497e316.txt:16` and `prompts/identify_potential_levers/prompt_0_fa5dfb88099db534ef065c73c38934677aec67b938a4e0be7dfa8acd5497e316.txt:32`.
-- **H5:** add an anti-duplication instruction for multi-response generation or final selection. `15 / gpt-4o-mini` is structurally strong but repeats names across responses in the final artifact; `Supplier Diversification Strategy` and `Coalition Building Strategy` recur in `history/0/15_identify_potential_levers/outputs/20260308_sovereign_identity/002-10-potential_levers.json:4`, `history/0/15_identify_potential_levers/outputs/20260308_sovereign_identity/002-10-potential_levers.json:37`, `history/0/15_identify_potential_levers/outputs/20260308_sovereign_identity/002-10-potential_levers.json:59`, `history/0/15_identify_potential_levers/outputs/20260308_sovereign_identity/002-10-potential_levers.json:92`, `history/0/15_identify_potential_levers/outputs/20260308_sovereign_identity/002-10-potential_levers.json:114`, and `history/0/15_identify_potential_levers/outputs/20260308_sovereign_identity/002-10-potential_levers.json:147`.
-- `13 / gpt-oss-20b` has the best field-level compliance, but its failure mode is severe: `history/0/13_identify_potential_levers/outputs.jsonl:4` shows a hard extraction failure for `20260311_parasomnia_research_unit` after emitting an apparently useful but incomplete JSON object.
+- Two runs produced no usable outputs at all. Run `09` failed all five plans because the configured model name was missing from the selected config, as shown in `history/0/09_identify_potential_levers/outputs.jsonl:1` and repeated through `:5`. Run `11` failed all five plans with `Could not extract json string from output` in `history/0/11_identify_potential_levers/outputs.jsonl:1` through `:5`.
+- Run `13` is only partially usable: `20260311_parasomnia_research_unit` failed because the model emitted a wrapped object with `strategic_rationale` and `levers`, then truncated mid-string, so extraction failed in `history/0/13_identify_potential_levers/outputs.jsonl:4`.
+- The prompt says each response must contain exactly 5 levers and each lever exactly 3 options (`prompts/identify_potential_levers/prompt_0_fa5dfb88099db534ef065c73c38934677aec67b938a4e0be7dfa8acd5497e316.txt:3`-`:5`), but run `10` still yields a malformed merged file with **16** items for `20250329_gta_game`. The last lever is split into a 2-option item plus a separate 1-option “Radical Option” item in `history/0/10_identify_potential_levers/outputs/20250329_gta_game/002-10-potential_levers.json:157`-`:173`.
+- The prompt requires the literal consequence chain `Immediate: ... → Systemic: ... → Strategic: ...` (`prompts/identify_potential_levers/prompt_0_fa5dfb88099db534ef065c73c38934677aec67b938a4e0be7dfa8acd5497e316.txt:8`-`:11`), but run `14` and run `15` frequently omit those exact labels. Example: run `14` opens with `Immediate reliance on conventional concrete → Systemic 25% faster scaling ...` in `history/0/14_identify_potential_levers/outputs/20250321_silo/002-10-potential_levers.json:5`, and run `15` opens with `Choosing a local director enhances cultural resonance → ...` in `history/0/15_identify_potential_levers/outputs/20260310_hong_kong_game/002-10-potential_levers.json:5`.
+- Run `16` breaks multiple prompt prohibitions at once. The prompt bans option prefixes and bracket placeholders (`prompts/identify_potential_levers/prompt_0_fa5dfb88099db534ef065c73c38934677aec67b938a4e0be7dfa8acd5497e316.txt:16`, `:31`-`:36`), yet `history/0/16_identify_potential_levers/outputs/20260308_sovereign_identity/002-10-potential_levers.json:7`-`:9` uses `Option 1:` / `Option 2:` / `Option 3:`, and `history/0/16_identify_potential_levers/outputs/20260310_hong_kong_game/002-10-potential_levers.json:119`-`:163` contains bracket placeholders such as `Controls [Financial Risks] vs. [Creative Freedom]`.
+- Run `16` also over-produces: `history/0/16_identify_potential_levers/outputs/20250321_silo/002-10-potential_levers.json` contains **20** levers, not 15. The last five items are additional generic levers such as `Social Dynamics Strategy` and `Economic Development Strategy`, visible after the fifteenth item.
+- Run `12` is structurally strong but extremely verbose. Its average consequence length is `657.4` characters per lever versus the baseline average `279.5`, average option length is `315.4` versus `150.2`, and average review length is `412.4` versus `152.3`. The first silo entry already shows the pattern in `history/0/12_identify_potential_levers/outputs/20250321_silo/002-10-potential_levers.json:4`-`:11`.
 
 ## Positive Things
 
-- The prompt does succeed at eliciting **strategic-concept lever names** and **three-option structures** from most models. `15 / gpt-4o-mini` is a clean example: `history/0/15_identify_potential_levers/outputs/20250321_silo/002-9-potential_levers_raw.json:8`, `history/0/15_identify_potential_levers/outputs/20250321_silo/002-9-potential_levers_raw.json:9`, `history/0/15_identify_potential_levers/outputs/20250321_silo/002-9-potential_levers_raw.json:10`, and `history/0/15_identify_potential_levers/outputs/20250321_silo/002-9-potential_levers_raw.json:15` show one lever with exact markers, three options, and a correctly formatted review.
-- `13 / gpt-oss-20b` demonstrates that the current prompt **can** induce near-exact compliance when the model stays inside the JSON rails. `history/0/13_identify_potential_levers/outputs/20250321_silo/002-9-potential_levers_raw.json:8`, `history/0/13_identify_potential_levers/outputs/20250321_silo/002-9-potential_levers_raw.json:9`, `history/0/13_identify_potential_levers/outputs/20250321_silo/002-9-potential_levers_raw.json:10`, and `history/0/13_identify_potential_levers/outputs/20250321_silo/002-9-potential_levers_raw.json:15` are close to the requested shape.
-- `15 / gpt-4o-mini` is also the strongest summary follower. Its first raw response closes with the required `Add '...' to ...` pattern at `history/0/15_identify_potential_levers/outputs/20250321_silo/002-9-potential_levers_raw.json:62`.
-- None of the runs showed **direct template leakage in generated fields**: no generated `Option A`, `Choice 1`, `[effect]`, `[impact]`, `[implication]`, or `[specific innovative option]` strings were found. The raw files do store the full system prompt as metadata, e.g. `baseline/train/20250321_silo/002-9-potential_levers_raw.json:383`, but that is metadata echo rather than model output leakage.
-- Baseline and several runs still surface useful strategic tensions even when format drifts. The problem is mainly **selection/validation fidelity**, not total content collapse.
+- Runs `10` and `12` both achieve full `5/5` plan coverage and average **15 unique lever names per file**, materially better than the baseline training average of `10.6` unique names per file.
+- Runs `10` and `12` also show **zero exact lever-name overlap** with the baseline files across all five plans, so they are not merely copying the training artifacts.
+- Run `10` is the best balance of quality and baseline-like brevity: consequence, option, and review lengths (`271.6`, `146.7`, `161.9`) stay close to baseline (`279.5`, `150.2`, `152.3`) while keeping zero average missing-chain and missing-number violations.
+- Run `12` is the cleanest high-compliance run on structure. Unlike the baseline average, it has zero option-count violations, zero prefix leakage, zero placeholder leakage, and zero missing chain labels.
+- Even the weaker successful runs generally improve on one baseline weakness: the baseline training set itself has substantial duplicate naming across merged turns. For example, `baseline/train/20260308_sovereign_identity/002-10-potential_levers.json` repeats the same five names three times (`Technical Feasibility Strategy`, `Policy Advocacy Strategy`, `Coalition Building Strategy`, `Procurement Influence Strategy`, `EU Standards Engagement Strategy`) at lines `4`, `15`, `26`, `37`, `48`, then again at `59`-`103`, and again at `114`-`158`.
+- Run `15` is operationally attractive even though content quality is mixed: it is the fastest fully successful run at `49.1` seconds average per plan according to `history/0/15_identify_potential_levers/outputs.jsonl`.
 
 ## Comparison
 
-- Relative to baseline, the history runs do **not** clearly improve the top-level deliverable shape. Baseline already returns 15 final levers for every plan, and most candidate runs do the same. This suggests the main lever is likely code-side aggregation or validation, not only prompt phrasing.
-- Relative to baseline’s duplicate-heavy outputs, `10 / gpt-5-nano` and `12 / claude-haiku-4.5` improve **name diversity** substantially: both average ~15 unique names per plan versus baseline’s 10.6.
-- Relative to baseline’s moderate verbosity, `12 / claude-haiku-4.5` overshoots badly: average consequence length is 657.4 characters and average option length is 315.4, more than 2× baseline. This likely hurts consistency and extractability.
-- Relative to baseline’s review compliance, `10 / gpt-5-nano` regresses because it systematically chooses `Trade-off:` over `Controls ... vs. ...`.
-- Relative to baseline’s duplication issue, `15 / gpt-4o-mini` is mixed: it keeps all five plans successful and has low formal-violation counts, but its final outputs still repeat lever names heavily in some plans.
-- Relative to all other successful runs, `13 / gpt-oss-20b` is the closest to the requested format on a per-lever basis, but its one failed plan is a serious reliability regression.
+- **Against baseline:** baseline files are moderately sized and always parse, but they are not perfect gold outputs. They average `4.4` duplicate lever names per file and still miss the exact `Immediate:/Systemic:/Strategic:` pattern in some plans. That matters because some history runs beat baseline on uniqueness without necessarily beating it on overall usefulness.
+- **Run `10` vs baseline:** run `10` is the closest overall match to baseline density while improving uniqueness and measurable consequence coverage. Its main defect is not genericity; it is malformed counting in one file (`20250329_gta_game`).
+- **Run `12` vs baseline:** run `12` is richer and more differentiated than baseline, but it overshoots the likely target length by roughly `2.3x` on consequences and `2.7x` on reviews. This may help ideation but likely hurts downstream readability and token efficiency.
+- **Run `14` and run `15` vs baseline:** both are concise and fast, but they drift away from the exact textual contract the prompt asks for. The content often feels like “good strategic prose” rather than “prompt-compliant serialized output.”
+- **Run `16` vs baseline:** run `16` has good novelty and sometimes strong topical relevance, but it is materially less controlled than baseline. Prefix leakage, bracket placeholders, missing measurable numbers, and total-lever overproduction all point to a model that needs either stronger runtime validation or a stricter prompt scaffold.
+- **Reliability split:** the key divide is no longer just “good model vs bad model”; it is “models that can stay inside a rigid serialization contract” versus “models that produce plausible strategic text but break the container.” Runs `09`, `11`, `13`, and `16` each fail in a different way.
 
 ## Quantitative Metrics
 
-### Metric definitions
+I treated each artifact as the final merged lever array because the stored outputs are JSON arrays, not wrapper objects.
 
-- **Constraint violations** count one point per violated rule in the final levers: wrong option count, missing `Immediate:`, missing `Systemic:`, missing `Strategic:`, missing arrow, missing `%` metric, malformed review trade-off, missing `Weakness:`, or banned option prefixes.
-- **Summary format ok** counts raw responses whose summary matched `Add '...' to [lever]` with exactly one quoted addition.
-- **Generated template leakage** excludes raw metadata fields such as `system_prompt` and scans only generated fields.
+### Reliability
 
-### Aggregate run metrics
+| Run | Model | OK plans | Error plans | Avg duration seconds |
+|---|---|---:|---:|---:|
+| Run 09 | stepfun-step-3.5-flash | 0 | 5 | 0.0 |
+| Run 10 | gpt-5-nano | 5 | 0 | 284.3 |
+| Run 11 | nemotron-3-nano-30b | 0 | 5 | 134.4 |
+| Run 12 | claude-haiku-4.5 | 5 | 0 | 109.3 |
+| Run 13 | gpt-oss-20b | 4 | 1 | 176.1 |
+| Run 14 | qwen3-30b-a3b | 5 | 0 | 121.0 |
+| Run 15 | gpt-4o-mini | 5 | 0 | 49.1 |
+| Run 16 | llama3.1 | 5 | 0 | 94.2 |
 
-| Run | Plans ok | Avg levers | Avg unique names | Avg unique options | Avg name len | Avg consequence len | Avg review len | Avg option len | Avg constraint violations | Summary format ok | Generated template leakage |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| Baseline | 5/5 | 15.0 | 10.6 | 45.0 | 27.7 | 279.5 | 152.3 | 150.2 | 5.2 | 9/15 | 0/5 |
-| 10 / gpt-5-nano | 5/5 | 15.2 | 15.2 | 45.0 | 41.4 | 271.6 | 161.9 | 146.7 | 16.8 | 15/15 | 0/5 |
-| 12 / claude-haiku-4.5 | 5/5 | 15.0 | 15.0 | 45.0 | 43.4 | 657.4 | 412.4 | 315.4 | 13.4 | 0/15 | 0/5 |
-| 13 / gpt-oss-20b | 4/5 | 15.0 | 14.2 | 45.2 | 32.1 | 217.2 | 133.6 | 94.8 | 0.2 | 7/12 | 0/5 |
-| 14 / qwen3-30b-a3b | 5/5 | 15.0 | 14.0 | 44.8 | 30.1 | 196.6 | 138.1 | 61.2 | 10.4 | 14/15 | 0/5 |
-| 15 / gpt-4o-mini | 5/5 | 15.0 | 11.2 | 45.0 | 30.7 | 209.3 | 141.3 | 109.4 | 4.0 | 15/15 | 0/5 |
-| 16 / llama3.1 | 5/5 | 16.0 | 14.8 | 45.8 | 29.3 | 176.5 | 143.8 | 86.5 | 21.0 | 5/15 | 0/5 |
+### Uniqueness And Length
 
-### Violation breakdown
+| Row | Coverage | Avg levers/file | Avg unique names/file | Avg consequence chars | Avg option chars | Avg review chars |
+|---|---:|---:|---:|---:|---:|---:|
+| Baseline train | 5/5 | 15 | 10.6 | 279.5 | 150.2 | 152.3 |
+| Run 09 (stepfun-step-3.5-flash) | 0/5 | — | — | — | — | — |
+| Run 10 (gpt-5-nano) | 5/5 | 15.2 | 15.2 | 271.6 | 146.7 | 161.9 |
+| Run 11 (nemotron-3-nano-30b) | 0/5 | — | — | — | — | — |
+| Run 12 (claude-haiku-4.5) | 5/5 | 15 | 15 | 657.4 | 315.4 | 412.4 |
+| Run 13 (gpt-oss-20b) | 4/5 | 15 | 14.2 | 217.2 | 94.8 | 133.6 |
+| Run 14 (qwen3-30b-a3b) | 5/5 | 15 | 14 | 196.6 | 61.2 | 138.1 |
+| Run 15 (gpt-4o-mini) | 5/5 | 15 | 11.2 | 209.3 | 109.4 | 141.4 |
+| Run 16 (llama3.1) | 5/5 | 16 | 14.8 | 176.5 | 86.5 | 143.8 |
 
-| Run | Wrong option count | Missing `Immediate:` | Missing `Systemic:` | Missing `Strategic:` | Missing arrow | Missing `%` | Bad review trade-off | Missing `Weakness:` | Option prefixes |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| Baseline | 0 | 5 | 0 | 0 | 0 | 21 | 0 | 0 | 0 |
-| 10 / gpt-5-nano | 2 | 0 | 0 | 0 | 32 | 0 | 50 | 0 | 0 |
-| 12 / claude-haiku-4.5 | 0 | 0 | 0 | 0 | 30 | 37 | 0 | 0 | 0 |
-| 13 / gpt-oss-20b | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| 14 / qwen3-30b-a3b | 0 | 15 | 15 | 15 | 5 | 2 | 0 | 0 | 0 |
-| 15 / gpt-4o-mini | 0 | 20 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| 16 / llama3.1 | 2 | 0 | 0 | 0 | 0 | 78 | 4 | 6 | 15 |
+### Constraint Violations And Template Leakage
 
-### Per-plan final lever counts
+| Row | Option-count viol. | Prefix viol. | Placeholder viol. | Missing chain labels | Missing measurable number | Review missing trade-off | Review missing weakness |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Baseline train | 0 | 0 | 0 | 1 | 4.2 | 0 | 0 |
+| Run 09 (stepfun-step-3.5-flash) | — | — | — | — | — | — | — |
+| Run 10 (gpt-5-nano) | 0.4 | 0 | 0 | 0 | 0 | 0 | 0 |
+| Run 11 (nemotron-3-nano-30b) | — | — | — | — | — | — | — |
+| Run 12 (claude-haiku-4.5) | 0 | 0 | 0 | 0 | 2.4 | 0 | 0 |
+| Run 13 (gpt-oss-20b) | 0.2 | 0 | 0 | 0 | 0 | 0 | 0 |
+| Run 14 (qwen3-30b-a3b) | 0 | 0 | 0 | 3 | 0.4 | 0 | 0 |
+| Run 15 (gpt-4o-mini) | 0 | 0 | 0 | 4 | 0 | 0 | 0 |
+| Run 16 (llama3.1) | 0.4 | 1 | 1 | 0 | 15.6 | 0.8 | 1.2 |
 
-| Run | `20250321_silo` | `20250329_gta_game` | `20260308_sovereign_identity` | `20260310_hong_kong_game` | `20260311_parasomnia_research_unit` |
-|---|---:|---:|---:|---:|---:|
-| Baseline | 15 | 15 | 15 | 15 | 15 |
-| 10 / gpt-5-nano | 15 | 16 | 15 | 15 | 15 |
-| 12 / claude-haiku-4.5 | 15 | 15 | 15 | 15 | 15 |
-| 13 / gpt-oss-20b | 15 | 15 | 15 | 15 | ERR |
-| 14 / qwen3-30b-a3b | 15 | 15 | 15 | 15 | 15 |
-| 15 / gpt-4o-mini | 15 | 15 | 15 | 15 | 15 |
-| 16 / llama3.1 | 20 | 15 | 15 | 15 | 15 |
+### Cross-Call Duplication Proxy
 
-### Per-plan unique lever names
+| Row | Avg duplicate-name excess/file | Avg duplicate-consequence excess/file |
+|---|---:|---:|
+| Baseline train | 4.4 | 0 |
+| Run 09 (stepfun-step-3.5-flash) | — | — |
+| Run 10 (gpt-5-nano) | 0 | 0.2 |
+| Run 11 (nemotron-3-nano-30b) | — | — |
+| Run 12 (claude-haiku-4.5) | 0 | 0 |
+| Run 13 (gpt-oss-20b) | 0.8 | 0 |
+| Run 14 (qwen3-30b-a3b) | 1 | 0 |
+| Run 15 (gpt-4o-mini) | 3.8 | 0 |
+| Run 16 (llama3.1) | 1.2 | 0 |
 
-| Run | `20250321_silo` | `20250329_gta_game` | `20260308_sovereign_identity` | `20260310_hong_kong_game` | `20260311_parasomnia_research_unit` |
-|---|---:|---:|---:|---:|---:|
-| Baseline | 11 | 14 | 5 | 12 | 11 |
-| 10 / gpt-5-nano | 15 | 16 | 15 | 15 | 15 |
-| 12 / claude-haiku-4.5 | 15 | 15 | 15 | 15 | 15 |
-| 13 / gpt-oss-20b | 14 | 15 | 13 | 15 | ERR |
-| 14 / qwen3-30b-a3b | 14 | 14 | 13 | 14 | 15 |
-| 15 / gpt-4o-mini | 13 | 13 | 8 | 10 | 12 |
-| 16 / llama3.1 | 19 | 15 | 13 | 13 | 14 |
+### Exact Lever-Name Overlap With Baseline
+
+| Row | Avg shared lever names with matching baseline plan |
+|---|---:|
+| Run 10 (gpt-5-nano) | 0.0 |
+| Run 12 (claude-haiku-4.5) | 0.0 |
+| Run 13 (gpt-oss-20b) | 0.2 |
+| Run 14 (qwen3-30b-a3b) | 0.6 |
+| Run 15 (gpt-4o-mini) | 1.6 |
+| Run 16 (llama3.1) | 0.0 |
+
+These numbers mean:
+
+- High uniqueness is achievable for this step; it is not inherently limited to the baseline’s repeated-name pattern.
+- Structural success and content quality are partially decoupled. Run `16` is highly novel but badly controlled; run `12` is highly controlled but overly long.
+- Template leakage is not a general problem across all runs; it is concentrated in run `16`.
 
 ## Evidence Notes
 
-- Prompt requirements live at `prompts/identify_potential_levers/prompt_0_fa5dfb88099db534ef065c73c38934677aec67b938a4e0be7dfa8acd5497e316.txt:4`, `prompts/identify_potential_levers/prompt_0_fa5dfb88099db534ef065c73c38934677aec67b938a4e0be7dfa8acd5497e316.txt:5`, `prompts/identify_potential_levers/prompt_0_fa5dfb88099db534ef065c73c38934677aec67b938a4e0be7dfa8acd5497e316.txt:9`, `prompts/identify_potential_levers/prompt_0_fa5dfb88099db534ef065c73c38934677aec67b938a4e0be7dfa8acd5497e316.txt:10`, `prompts/identify_potential_levers/prompt_0_fa5dfb88099db534ef065c73c38934677aec67b938a4e0be7dfa8acd5497e316.txt:25`, `prompts/identify_potential_levers/prompt_0_fa5dfb88099db534ef065c73c38934677aec67b938a4e0be7dfa8acd5497e316.txt:29`, and `prompts/identify_potential_levers/prompt_0_fa5dfb88099db534ef065c73c38934677aec67b938a4e0be7dfa8acd5497e316.txt:32`.
-- The raw artifacts clearly contain a multi-response structure beginning at `baseline/train/20250321_silo/002-9-potential_levers_raw.json:2` and include prompt metadata at `baseline/train/20250321_silo/002-9-potential_levers_raw.json:383`.
-- `15 / gpt-4o-mini` provides the clearest “prompt can work” example in `history/0/15_identify_potential_levers/outputs/20250321_silo/002-9-potential_levers_raw.json:8`, `history/0/15_identify_potential_levers/outputs/20250321_silo/002-9-potential_levers_raw.json:9`, `history/0/15_identify_potential_levers/outputs/20250321_silo/002-9-potential_levers_raw.json:15`, and `history/0/15_identify_potential_levers/outputs/20250321_silo/002-9-potential_levers_raw.json:62`.
-- `10 / gpt-5-nano` demonstrates a stable but wrong review prefix at `history/0/10_identify_potential_levers/outputs/20250321_silo/002-9-potential_levers_raw.json:15`.
-- `14 / qwen3-30b-a3b` demonstrates semantic compliance but exact-string drift in consequences at `history/0/14_identify_potential_levers/outputs/20250321_silo/002-9-potential_levers_raw.json:9`.
-- `16 / llama3.1` demonstrates direct option-prefix violations at `history/0/16_identify_potential_levers/outputs/20260308_sovereign_identity/002-10-potential_levers.json:7`.
-- `13 / gpt-oss-20b` demonstrates strong format fidelity in successful runs at `history/0/13_identify_potential_levers/outputs/20250321_silo/002-9-potential_levers_raw.json:9` and `history/0/13_identify_potential_levers/outputs/20250321_silo/002-9-potential_levers_raw.json:15`, but hard runtime failure at `history/0/13_identify_potential_levers/outputs.jsonl:4`.
+- The registered prompt is strong on contract rules but says nothing about **maximum field length**, **global uniqueness across all three turns**, or **top-level wrapper suppression**. See `prompts/identify_potential_levers/prompt_0_fa5dfb88099db534ef065c73c38934677aec67b938a4e0be7dfa8acd5497e316.txt:3`-`:41`.
+- Baseline data is useful but imperfect. The sovereign-identity baseline repeats the same five lever names three times in `baseline/train/20260308_sovereign_identity/002-10-potential_levers.json:4`-`:158`, so “matching baseline” should not be treated as the only success criterion.
+- Run `10` demonstrates that the system can get close to the desired target shape, but it also shows why post-merge validation matters: one split lever creates both an extra item and wrong option counts in `history/0/10_identify_potential_levers/outputs/20250329_gta_game/002-10-potential_levers.json:157`-`:173`.
+- Run `12` demonstrates that a model can satisfy most structural rules while still overspending tokens. The first silo item is coherent but already much denser than the baseline style in `history/0/12_identify_potential_levers/outputs/20250321_silo/002-10-potential_levers.json:4`-`:11`.
+- Run `14` and run `15` show that “close enough prose” is not enough for this step. Their missing literal labels are easy for a validator to detect from `history/0/14_identify_potential_levers/outputs/20250321_silo/002-10-potential_levers.json:5` and `history/0/15_identify_potential_levers/outputs/20260310_hong_kong_game/002-10-potential_levers.json:5`.
+- Run `16` shows both kinds of template leakage the prompt explicitly bans: prefixed options in `history/0/16_identify_potential_levers/outputs/20260308_sovereign_identity/002-10-potential_levers.json:7`-`:9` and bracket placeholders in `history/0/16_identify_potential_levers/outputs/20260310_hong_kong_game/002-10-potential_levers.json:119`, `:130`, `:141`, `:152`, and `:163`.
+- The operational failures are not all the same. Run `09` is a configuration/registry problem (`history/0/09_identify_potential_levers/outputs.jsonl:1`-`:5`), while runs `11` and `13` are extraction/serialization failures (`history/0/11_identify_potential_levers/outputs.jsonl:1`-`:5`, `history/0/13_identify_potential_levers/outputs.jsonl:4`).
 
 ## Questions For Later Synthesis
 
-- Is the real objective to optimize **raw response quality** or **final artifact quality**? The evidence suggests those are diverging because the final writer appears to flatten three raw responses.
-- Should baseline be treated as a target for imitation or only as incumbent behavior? It is valuable as “what the system currently produces,” but not as a strict-format gold standard.
-- Would a small validator/post-processor change outperform another prompt iteration here?
-- If multi-response generation is intentional, should the final step deduplicate to five “vital few” levers rather than concatenate all responses?
-- For summary format, is exact string syntax important downstream, or only semantic presence?
+- Should the optimization target prioritize **strict contract adherence** over **ideation richness**, or is some verbosity acceptable if a later step truncates or summarizes?
+- Is the correct comparator for this step the baseline training data, or should the baseline be treated only as a rough style/coverage reference because it contains repeated names?
+- Would a stronger prompt alone fix run `14`/`15` style drift, or do these runs show the need for hard validation plus retry?
+- Should models that cannot reliably emit strict JSON for this step be excluded entirely rather than repaired downstream?
+- Is the extra-lever problem in runs `10` and `16` happening inside a single turn or during merge logic after three turns? The stored artifacts only show the merged array.
 
 ## Reflect
 
-- The strongest synthesis candidate is probably **not** “rewrite the prompt from scratch.” The prompt already gets some models very close; the bigger leverage looks like downstream aggregation and validation.
-- The most telling signal is that the same 15-lever pattern exists in both baseline and almost every candidate run. That makes the issue look systemic.
-- If prompt-only work is pursued, I would focus on **precision instructions for review and consequence strings** plus **anti-duplication guidance**, because those are the most repeatable model-side misses.
-- If code changes are allowed later, I would prioritize them ahead of another broad prompt search.
+- My main takeaway is that the current prompt is already fairly demanding, so the remaining variation is less about “more instructions” and more about **which models can obey a rigid output contract**.
+- Baseline comparison is tricky here because the baseline itself contains duplicate lever names and some format drift. I therefore treat the baseline as a useful reference, not an untouchable gold standard.
+- The most actionable prompt gaps are about things the current prompt does **not** explicitly constrain: global uniqueness across turns, output length bounds, and top-level JSON shape.
+
+### Prompt Hypotheses
+
+- **H1:** Add a global uniqueness instruction for the merged three-turn result: “Across all three responses, produce 15 total levers with distinct names; never split one lever into a separate radical-only item.” Evidence: run `10` splits one lever into two items in `history/0/10_identify_potential_levers/outputs/20250329_gta_game/002-10-potential_levers.json:157`-`:173`, and run `15` regresses toward baseline-like duplicate naming.
+  - **Expected effect:** fewer duplicate names, fewer `16`/`20` lever files, and better cross-turn diversity.
+- **H2:** Add explicit length targets, e.g. one sentence for `consequences` around baseline scale and concise `review`/`options` bounds. Evidence: run `12` averages `657.4` consequence chars and `412.4` review chars versus baseline `279.5` and `152.3`.
+  - **Expected effect:** preserve run `12`’s structural quality while reducing token cost and truncation risk.
+- **H3:** Add a short compliant mini-example that uses the exact required literals: `Immediate:`, `Systemic:`, `Strategic:`, `Controls A vs. B. Weakness: ...`, plus an explicit self-check line: “No `Option 1:` prefixes; no bracket placeholders.” Evidence: run `14`/`15` omit literal chain labels, and run `16` leaks both prefixes and bracket placeholders despite the current bans.
+  - **Expected effect:** better literal compliance on weaker models without changing the conceptual task.
+- **H4:** Add a top-level schema reminder such as “Return only the raw JSON array of lever objects; do not include `strategic_rationale`, `summary`, or wrapper keys.” Evidence: run `13` fails on a wrapped object in `history/0/13_identify_potential_levers/outputs.jsonl:4`.
+  - **Expected effect:** fewer extraction failures from otherwise usable generations.
 
 ## Potential Code Changes
 
-- **C1:** The final artifact writer likely concatenates `responses[*].levers` instead of selecting one response or deduplicating to a 5-lever output. Evidence: every baseline plan and nearly every successful history plan has 15 final levers, while raw artifacts are visibly multi-response (`baseline/train/20250321_silo/002-9-potential_levers_raw.json:2`).
-- **C2:** Structural validation is probably too weak or too late. Runs marked `ok` still contain repeated violations of exact required syntax: `Trade-off:` instead of `Controls ... vs. ...` in `history/0/10_identify_potential_levers/outputs/20250321_silo/002-9-potential_levers_raw.json:15`, missing marker colons in `history/0/14_identify_potential_levers/outputs/20250321_silo/002-9-potential_levers_raw.json:9`, and prefixed options in `history/0/16_identify_potential_levers/outputs/20260308_sovereign_identity/002-10-potential_levers.json:7`.
-- **C3:** JSON extraction/recovery is brittle for long but near-valid outputs. `history/0/13_identify_potential_levers/outputs.jsonl:4` suggests the run had useful content but failed because the parser could not salvage it.
-- **C4:** A deduplication or re-ranking pass is missing before finalization. Repeated names in baseline and `15 / gpt-4o-mini` imply the system lacks a “pick the best five distinct levers” phase even though the step name suggests a vital-few style output.
+- **C1:** Add a preflight model-availability check before the batch starts, and fail or skip unsupported models immediately. Evidence: run `09` wastes all five plans on a missing model registration in `history/0/09_identify_potential_levers/outputs.jsonl:1`-`:5`.
+  - **Expected effect:** eliminate zero-signal runs caused by config drift.
+- **C2:** Add per-turn validation and retry before merge: exactly `5` lever objects, each with exactly `3` options, no prefixed options, no bracket placeholders, and exact consequence/review label checks. Evidence: run `10` malformed item split, run `14`/`15` chain-label drift, and run `16` prefix/placeholder leakage.
+  - **Expected effect:** convert many current “successful but contract-broken” files into either compliant outputs or explicit retries.
+- **C3:** Add a post-merge validator for the final file: enforce `15` total levers, optionally dedupe exact duplicate names, and reject totals like `16` or `20`. Evidence: run `10` averages `15.2` levers/file and run `16` averages `16`, including a `20`-lever silo file.
+  - **Expected effect:** catch merge-stage integrity problems even when individual turns seem acceptable.
+- **C4:** Strengthen structured-output parsing: if the model returns an object with a `levers` field, parse that field directly; if the JSON is truncated, surface a specific retryable error instead of treating the plan as a normal content miss. Evidence: run `13` emits a wrapper object, and run `11` repeatedly fails extraction.
+  - **Expected effect:** recover some partially valid responses and make parser failures easier to diagnose.
 
 ## Summary
 
-- The central insight is that **aggregation/validation looks like the dominant lever**, not just prompt wording.
-- `13 / gpt-oss-20b` shows the best prompt-shape compliance, but `15 / gpt-4o-mini` is the best all-success compromise.
-- Baseline is useful as incumbent behavior, but it is already non-compliant with the prompt, especially on final lever count and duplication.
-- The highest-value next moves are likely: fix final-response selection, enforce exact-string validation, and only then iterate on narrower prompt hypotheses H1-H5.
+- The best current candidates are run `12` for compliance and run `10` for balance.
+- The biggest residual problems are **runtime reliability** (`09`, `11`, `13`) and **contract enforcement** (`10`, `14`, `15`, `16`), not lack of creativity.
+- The prompt already covers many quality rules, but it likely needs additions around **global uniqueness**, **brevity targets**, and **raw-array-only output**.
+- The highest-leverage code opportunities are **preflight model validation**, **turn-level contract checks with retry**, and **post-merge total-count validation**.

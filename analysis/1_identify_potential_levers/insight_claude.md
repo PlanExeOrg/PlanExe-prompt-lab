@@ -1,278 +1,305 @@
 # Insight Claude
 
+Analysis of history runs `0/09` through `0/16` for the `identify_potential_levers` step.
 Prompt: `prompts/identify_potential_levers/prompt_0_fa5dfb88099db534ef065c73c38934677aec67b938a4e0be7dfa8acd5497e316.txt`
-Runs analyzed: `0/10`, `0/12`, `0/13`, `0/14`, `0/15`, `0/16` (all `identify_potential_levers`)
+Associated PR: [#268](https://github.com/PlanExeOrg/PlanExe/pull/268) — remove doubled user prompt in `identify_potential_levers` (B1)
 
 ---
 
-## Rankings
+## Operational Summary
 
-| Rank | Run | Model | Quality | Notes |
-|------|-----|-------|---------|-------|
-| 1 | 12 | anthropic-claude-haiku-4-5-pinned | High | Richest options, most project-specific, zero "25%" template |
-| 2 | 10 | openai-gpt-5-nano | Medium-High | Good depth, moderate template leakage |
-| 3 | 13 | openrouter-openai-gpt-oss-20b | Medium | 1 plan failure, good output when successful |
-| 4 | 14 | openrouter-qwen3-30b-a3b | Medium | Follows format, options shorter than run 12 |
-| 5 | 15 | openrouter-openai-gpt-4o-mini | Medium-Low | Generic lever names, moderate depth |
-| 6 | 16 | ollama-llama3.1 | Low | Label-style options, extra levers, name duplicates |
+Eight runs (09–16) each processed five plans: `20250321_silo`, `20250329_gta_game`, `20260308_sovereign_identity`, `20260310_hong_kong_game`, `20260311_parasomnia_research_unit`. One model per run was configured.
+
+| Run | Model | Plans OK | Plans Failed | Success Rate | Failure Cause |
+|-----|-------|----------|--------------|--------------|---------------|
+| 09 | openrouter-stepfun-step-3-5-flash | 0 | 5 | 0% | Model name not in llm_config |
+| 10 | openai-gpt-5-nano | 5 | 0 | 100% | — |
+| 11 | openrouter-nvidia-nemotron-3-nano-30b-a3b | 0 | 5 | 0% | JSON extraction returned empty string |
+| 12 | anthropic-claude-haiku-4-5-pinned | 5 | 0 | 100% | — |
+| 13 | openrouter-openai-gpt-oss-20b | 4 | 1 | 80% | Truncated JSON on parasomnia plan |
+| 14 | openrouter-qwen3-30b-a3b | 5 | 0 | 100% | — |
+| 15 | openrouter-openai-gpt-4o-mini | 5 | 0 | 100% | — |
+| 16 | ollama-llama3.1 | 5 | 0 | 100% | — |
+
+Sources: `history/0/09_identify_potential_levers/outputs.jsonl` through `history/0/16_identify_potential_levers/outputs.jsonl`.
 
 ---
 
 ## Negative Things
 
-### 1. Template leakage: "25% faster scaling through"
+### N1 — Two models fail 100% of plans for infrastructure reasons
 
-The prompt (§2 Lever Quality Standards) contains this example metric:
-> "Include measurable outcomes: 'Systemic: 25% faster scaling through...'"
+Run 09 (`stepfun-step-3-5-flash`) fails at the `create` stage with `ValueError("Cannot create LLM, the llm_name 'openrouter-stepfun-step-3-5-flash' is not found in the selected llm_config/<profile>.json.")`. No plan output is produced. This is a configuration issue, not a quality issue.
 
-Multiple models copy this phrase almost verbatim into their output. In `history/0/10_identify_potential_levers/outputs/20250321_silo/002-10-potential_levers.json`, four of fifteen levers contain the string "25% faster scaling through" (levers: Self-Sufficiency, Information Sovereignty, Modular Construction, Funding and Economic Sovereignty). Other models use "25% faster" or substitute "30%/40%" while keeping the same sentence skeleton. Run 12 (claude-haiku) is the only model that avoids the pattern entirely.
+Run 11 (`nvidia-nemotron-3-nano-30b-a3b`) completes the LLM calls (taking 90–196 s per plan) but fails at `execute` with `ValueError('Could not extract json string from output: ')`. The model responds but without parseable JSON. Source: `history/0/11_identify_potential_levers/outputs.jsonl`.
 
-### 2. Prompt field-name inconsistency → JSON parse failure
+### N2 — Run 13 parasomnia plan fails due to JSON truncation
 
-The prompt (§4 Validation Protocols) reads:
-> "For `review_lever`: • State the trade-off explicitly..."
+The `gpt-oss-20b` model produces a valid but truncated JSON string for `20260311_parasomnia_research_unit`. The error in `history/0/13_identify_potential_levers/outputs.jsonl` shows the response was cut off in the middle of a lever. The excerpt in the error message confirms the content was valid up to the truncation point. This may indicate the model's output hit a context or response-length limit on the first "more" turn.
 
-The output schema uses the field name `review`, not `review_lever`. In `history/0/13_identify_potential_levers/outputs.jsonl`, the parasomnia plan fails with:
+### N3 — gpt-5-nano (run 10) repeats prompt example verbatim in 11/15 levers
 
+The prompt includes the instruction: `"Include measurable outcomes: 'Systemic: 25% faster scaling through...'"`. In run 10's silo output (`history/0/10_identify_potential_levers/outputs/20250321_silo/002-10-potential_levers.json`), 11 out of 15 lever consequences contain `"25% faster scaling through"` in the systemic field — identical to the prompt's worked example. This is template leakage: the model is copying the prompt's illustration rather than deriving plan-specific metrics.
+
+Examples from that file:
+- Lever 1: `"Systemic: 25% faster scaling through modular, AI-optimized operations"`
+- Lever 6: `"Systemic: 25% faster scaling through modular standardization and AI-enabled logistics"`
+- Lever 7: `"Systemic: 25% faster scaling through real-time analytics and modular reuse"`
+
+### N4 — gpt-4o-mini (run 15) produces duplicate lever names
+
+In `history/0/15_identify_potential_levers/outputs/20250321_silo/002-10-potential_levers.json`, the following lever names appear twice with distinct but similar content:
+- `"Governance and Control Framework"` (levers at positions 2 and 7)
+- `"Resource Allocation Strategy"` (levers at positions 1 and 11)
+
+Additionally `"Information Control Strategy"` (position 4) and `"Information Management Strategy"` (position 10) share near-identical options. The prompt prohibits generic lever names, yet gpt-4o-mini recycles names across LLM calls without awareness of prior output.
+
+### N5 — llama3.1 (run 16) produces 20 levers instead of 15
+
+Run 16 (`ollama-llama3.1`) outputs 20 levers for the silo plan (`history/0/16_identify_potential_levers/outputs/20250321_silo/002-10-potential_levers.json`). The expected count is 15 (3 batches × 5). This indicates an extra LLM call or that the model generated more than 5 levers per call. Among the 20:
+- `"Material Adaptation Strategy"` appears at positions 1 and 6 (exact name duplicate)
+- `"Security and Surveillance Strategy"` (position 2) and `"Surveillance and Security Protocol"` (position 9) are near-semantic duplicates
+
+### N6 — qwen3 (run 14) options are short labels, not strategic descriptions
+
+The first batch of qwen3's silo output uses one-sentence options:
 ```
-LLM chat interaction failed [7659a74ce3e1]: Failed to run. Exhausted all LLMs.
-...ValueError('Could not extract json string from output:
-...\"review_lever\": \"Controls Safety vs. Naturalistic Environment...
+"Prioritize locally sourced, low-cost concrete for rapid deployment"
+"Adopt modular composite panels for incremental upgrades"
+"Implement 3D-printed bio-concrete with self-healing properties"
 ```
+The prompt requires options to "represent distinct strategic pathways (not just labels)" and be "self-contained descriptions." These are closer to labels than full strategic approaches. Source: `history/0/14_identify_potential_levers/outputs/20250321_silo/002-10-potential_levers.json`.
 
-The model (gpt-oss-20b) read `review_lever` from the prompt and emitted that field name, causing the JSON extractor to fail. The error also shows the model wrapped levers in a `strategic_rationale` outer object that the parser rejected.
+### N7 — gpt-oss-20b (run 13) duplicates a lever name within the same plan
 
-### 3. Label-style options violate the "full description" requirement
+`history/0/13_identify_potential_levers/outputs/20250321_silo/002-10-potential_levers.json` contains `"Governance Architecture Strategy"` at positions 6 and 11, with different lever IDs but semantically overlapping content (both address centralized vs. autonomous governance for the silo).
 
-Run 16 (llama3.1) consistently produces one- to four-word option labels instead of full strategic descriptions. From `history/0/16_identify_potential_levers/outputs/20250321_silo/002-10-potential_levers.json`:
+### N8 — Cross-call thematic redundancy across all models
 
-```json
-"options": [
-  "Domestic Material Sourcing",
-  "Strategic Partnerships for Supply Chain Optimization",
-  "Implementation of Advanced Recycling and Repurposing"
-]
-```
-
-The prompt explicitly prohibits "NO generic option labels (e.g., 'Optimize X', 'Tolerate Y')". Average option length for run 16 is ~43 chars vs ~200 chars for run 12.
-
-### 4. Lever count inflation in run 16 (llama3.1)
-
-All runs with `workers=4` produce 15 levers per plan (3 LLM calls × 5 levers each). Run 16 (`workers=1`) produces 20 levers per plan (4 calls × 5) in every plan checked. This indicates the pipeline emits a different number of batches depending on the worker count. The extra batch produces additional levers that go through the deduplication step (`002-11`) but inflate raw output.
-
-Evidence: `history/0/16_identify_potential_levers/outputs/20250321_silo/002-10-potential_levers.json` contains 20 entries (counted); other runs have 15.
-
-### 5. Exact-name duplicates within a single plan output (run 16)
-
-Run 16 (llama3.1) silo output contains:
-- "Material Adaptation Strategy" twice (lever_ids `fb6ffa36` and `2bf5058d`)
-- "Security and Surveillance Strategy" (lever `6f1d87d7`) and "Surveillance and Security Protocol" (lever `e09240f9`) as near-duplicates
-
-This cross-call duplication indicates the model is not aware of previously generated levers in prior calls.
-
-### 6. Semantic redundancy across calls in all models
-
-Even without exact-name duplicates, all runs show semantic overlap across their 3–4 batches. Run 10 (gpt-5-nano) silo contains:
-- Two self-sufficiency/governance levers (#1 "Self-Sufficiency and Resilience Architecture", #6 "Self-Sufficiency Governance Architecture")
-- Three funding/economics levers (#5, #10, #13)
-
-Run 12 (haiku) silo has three distinct governance levers across batches (#1, #6, #11). The deduplication step (`002-11`) should handle this, but its effectiveness is unclear from the available data.
-
-### 7. Consequence chain format inconsistency in run 16
-
-The prompt requires `"Immediate: [effect] → Systemic: [impact] → Strategic: [implication]"`. Run 16 frequently omits the arrows and shortens chains. Example from `history/0/16_identify_potential_levers/outputs/20250321_silo/002-10-potential_levers.json`:
-
-```json
-"consequences": "Immediate: Efficient material sourcing → Systemic: Reduced construction timeline
-  through optimized resource allocation → Strategic: Enhanced resilience to supply chain disruptions."
-```
-
-Some levers in run 16 have no measurable figures and very short systemic claims.
+All successful models show thematic clustering across LLM calls: governance levers appear 2–3 times, information levers 2 times, resource levers 2–3 times. The step asks the model for 5 more levers with a bare `"more"` prompt, without feeding back what was already generated. This causes cross-call duplication in topic coverage even when lever names differ.
 
 ---
 
 ## Positive Things
 
-### 1. Run 12 (claude-haiku): exceptional option depth and project specificity
+### P1 — claude-haiku (run 12) produces plan-specific, high-depth levers
 
-Options are full strategic narratives, not summaries. From `history/0/12_identify_potential_levers/outputs/20250321_silo/002-10-potential_levers.json`, lever "Information Architecture and Exterior Reality Control", option 2:
+Run 12's silo output contains levers tailored to the Silo universe's specific constraints. Examples from `history/0/12_identify_potential_levers/outputs/20250321_silo/002-10-potential_levers.json`:
 
-> "Curate strictly controlled information flows: allow limited scientific research 'proving' exterior toxicity through rigged experiments, manage historical narratives through authorized archives, and stage periodic simulated exterior contamination events to reinforce necessity"
+- `"Closure Timing and Irreversibility Protocol"` — addresses the specific tension between external supply integration and information leakage risk
+- `"Succession Planning and Leadership Continuity Mechanisms"` — addresses what happens when founders die inside a sealed silo
+- `"Population Stratification Model"` — discusses breeding restrictions and generational stability (200+ year horizon)
 
-This is highly specific to the Silo project context and could not be confused with a generic template.
+The consequence chains are genuinely three-stage with specific percentages that vary per lever (40%, 25%, 22%) rather than a fixed template value. Options are 2–4 sentences each and represent distinct strategic philosophies.
 
-### 2. Review field quality in runs 12 and 10
+### P2 — gpt-5-nano (run 10) achieves structural compliance with rich options
 
-Run 12 reviews explicitly identify structural weaknesses that go beyond the prompt template. Example from lever "Population Stratification Model":
+Despite template leakage in consequence fields, run 10's options are substantively distinct pathways (conservative/moderate/radical), include unconventional tech (blockchain DAOs, autonomous robotics), and maintain parallel grammatical structure. The lever names are well-formed strategic concepts. All 5 plans produce valid, well-structured JSON.
 
-> "Weakness: All options ignore reproduction and population growth governance—without explicit breeding restrictions or severe demographic controls, any stratification model collapses within 3-4 generations as lower tiers demographically overwhelm upper capacity."
+### P3 — qwen3 (run 14) and gpt-4o-mini (run 15) are fully reliable operationally
 
-This is a genuine analytical observation, not a fill-in-the-blank template.
+Both complete all 5 plans with 100% success. Duration is fast (gpt-4o-mini: 45–54 s per plan). For workloads where speed and reliability outweigh depth, these models work without error.
 
-### 3. 100% plan completion for five of six runs
+### P4 — B1 fix does not introduce new failures
 
-Runs 10, 12, 14, 15, and 16 show `status: ok` for all five plans in their `outputs.jsonl`. Run 13 has one failure (parasomnia). This indicates the prompt and toolchain are generally stable.
-
-### 4. Speed: runs 12 and 15 are fast and reliable
-
-Run 12 (haiku) completes the silo plan in 91.96s and all five plans in <135s each. Run 15 (gpt-4o-mini) is the fastest at <55s per plan. Both are significantly faster than run 10 (gpt-5-nano) at 404.91s for silo alone.
+None of the 24 plan executions that succeeded (across runs 10, 12, 13, 14, 15, 16) show errors attributable to the corrected conversation sequence `SYSTEM → USER(prompt) → ASSISTANT → USER("more") → ASSISTANT → USER("more")`. The fix is transparent to output quality.
 
 ---
 
 ## Comparison
 
-### Against baseline training data
+### vs. Baseline Training Data (`baseline/train/`)
 
-`baseline/train/20260310_hong_kong_game/002-13-vital_few_levers_raw.json` (a later-stage step: "vital few" from a prior pipeline run) shows levers named: "Narrative Innovation Strategy", "Talent Alignment Strategy", "Geopolitical Risk Mitigation Strategy", "Hong Kong Identity Amplification Strategy", "Distribution Architecture Strategy". These are deeply project-specific, contextually motivated, and contain full strategic descriptions.
+The baseline file for the silo plan (`baseline/train/20250321_silo/002-10-potential_levers.json`) contains 15 levers with names like `"Resource Allocation Strategy"`, `"Social Control Mechanism"`, `"Technological Adaptation Strategy"`, `"External Communication Protocol"`, `"Ethical Oversight Framework"`. The options are 1–2 sentence descriptions with some missing trade-off depth.
 
-Run 12 (haiku) most closely matches baseline depth for its plans. Run 14 (qwen3) and run 15 (gpt-4o-mini) produce levers that are generically named and could apply to any project.
+| Dimension | Baseline (train/silo) | Run 12 (claude-haiku) | Run 15 (gpt-4o-mini) |
+|-----------|----------------------|----------------------|----------------------|
+| Plan-specific lever names | Partially (generic + some specific) | High specificity (Closure Timing, Succession Planning) | Low (generic titles) |
+| Option depth | 1–2 sentences | 3–5 sentences | 1–2 sentences |
+| Consequences specificity | Moderate (mixed format) | High (plan-specific percentages) | Low (formulaic) |
+| Duplicate lever names | Present (Material Adaptation ×2) | None | 2 exact duplicates |
+| Format compliance | Partial | High | Partial |
 
-### Run 16 (llama3.1) vs all others
+Run 12 (claude-haiku) exceeds baseline quality on all dimensions. Run 15 (gpt-4o-mini) is at or below baseline quality.
 
-The gap between run 16 and other models is qualitative, not just quantitative. The llama3.1 options read as noun phrases describing tool categories ("Advanced Biometric Identification") rather than strategic commitments. This likely causes downstream problems in the synthesis and selection steps that depend on options being interpretable as distinct strategic choices.
+### vs. Analysis 0 (runs 00–08, pre-fix)
+
+Analysis 0 covered the same prompt SHA with the double-USER-prompt bug. The runs analyzed here (09–16) are post-fix. The failure patterns are different:
+- Analysis 0 had models that may have been confused by the `SYSTEM → USER → USER` sequence
+- Analysis 1 failures (runs 09, 11) stem from model availability and JSON capability issues, not conversation structure
+- The quality of successful runs appears comparable or better, consistent with the fix not degrading output
 
 ---
 
 ## Quantitative Metrics
 
-### Lever counts per plan (merged output)
+### Table A — Lever count per run (silo plan)
 
-| Run | Model | workers | levers/plan | Expected | Violation |
-|-----|-------|---------|-------------|----------|-----------|
-| 10 | gpt-5-nano | 4 | 15 | 15 | No |
-| 12 | claude-haiku | 4 | 15 | 15 | No |
-| 13 | gpt-oss-20b | 4 | 15 (4 plans) | 15 | No (parasomnia=0) |
-| 14 | qwen3-30b | 4 | 15 | 15 | No |
-| 15 | gpt-4o-mini | 4 | 15 | 15 | No |
-| 16 | llama3.1 | 1 | 20 | 15 | Yes |
+| Run | Model | Total levers | Expected | Violation |
+|-----|-------|--------------|----------|-----------|
+| 10 | gpt-5-nano | 15 | 15 | No |
+| 12 | claude-haiku | 15 | 15 | No |
+| 13 | gpt-oss-20b | 15 | 15 | No |
+| 14 | qwen3-30b-a3b | 15 | 15 | No |
+| 15 | gpt-4o-mini | 15 | 15 | No |
+| 16 | llama3.1 | 20 | 15 | **Yes (+5)** |
+| baseline | — | 15 | 15 | No |
 
-### Plan completion (status=ok)
+Source: `**/002-10-potential_levers.json` files for silo plan.
 
-| Run | Model | Plans ok / total |
-|-----|-------|-----------------|
-| 10 | gpt-5-nano | 5/5 |
-| 12 | claude-haiku | 5/5 |
-| 13 | gpt-oss-20b | 4/5 |
-| 14 | qwen3-30b | 5/5 |
-| 15 | gpt-4o-mini | 5/5 |
-| 16 | llama3.1 | 5/5 |
+### Table B — Name uniqueness (silo plan)
 
-### Approximate average option length (chars) — silo plan
+| Run | Model | Total levers | Unique names | Exact duplicates | Near-duplicate pairs |
+|-----|-------|--------------|--------------|-----------------|----------------------|
+| 10 | gpt-5-nano | 15 | 15 | 0 | 0 |
+| 12 | claude-haiku | 15 | 15 | 0 | 0 |
+| 13 | gpt-oss-20b | 15 | 14 | 1 ("Governance Architecture Strategy") | 0 |
+| 14 | qwen3-30b-a3b | 15 | 14 | 1 ("Material Adaptation Strategy") | ~1 |
+| 15 | gpt-4o-mini | 15 | 12 | 2 ("Governance and Control Framework", "Resource Allocation Strategy") | 1 |
+| 16 | llama3.1 | 20 | 18 | 1 ("Material Adaptation Strategy") | 2 |
 
-Measured from first 3 levers in each output file:
+### Table C — Template leakage count (silo plan, "25% faster scaling through")
 
-| Run | Model | Avg option length (chars) | Assessment |
-|-----|-------|--------------------------|------------|
-| 12 | claude-haiku | ~195 | Rich, specific |
-| 10 | gpt-5-nano | ~117 | Adequate |
-| 13 | gpt-oss-20b | ~145 | Adequate |
-| 15 | gpt-4o-mini | ~92 | Borderline |
-| 14 | qwen3-30b | ~54 | Short |
-| 16 | llama3.1 | ~43 | Label-level |
+| Run | Model | Occurrences in 15 levers | Rate |
+|-----|-------|--------------------------|------|
+| 10 | gpt-5-nano | 11 | 73% |
+| 12 | claude-haiku | 0 | 0% |
+| 13 | gpt-oss-20b | 0 | 0% |
+| 14 | qwen3-30b-a3b | 2 | 13% |
+| 15 | gpt-4o-mini | 0 | 0% |
+| 16 | llama3.1 | 0 | 0% |
 
-### Template leakage: "25% faster scaling through" occurrences in silo output
+Source: manual scan of consequences fields in `history/0/{10,12,13,14,15,16}_identify_potential_levers/outputs/20250321_silo/002-10-potential_levers.json`.
 
-| Run | Model | Occurrences |
-|-----|-------|-------------|
-| 10 | gpt-5-nano | 4 |
-| 14 | qwen3-30b | 2 |
-| 15 | gpt-4o-mini | 1 |
-| 13 | gpt-oss-20b | 1 |
-| 16 | llama3.1 | 1 |
-| 12 | claude-haiku | 0 |
+### Table D — Approximate average consequence length (silo, first lever per batch, 3 batches)
 
-### Constraint violations by category
+Rough character counts from source files:
 
-| Violation type | Run 10 | Run 12 | Run 13 | Run 14 | Run 15 | Run 16 |
-|----------------|--------|--------|--------|--------|--------|--------|
-| Plan failure | 0 | 0 | 1 | 0 | 0 | 0 |
-| Lever count wrong | 0 | 0 | 0 | 0 | 0 | 1 (all plans) |
-| Exact name duplicate | 0 | 0 | 0 | 0 | 0 | 1+ (silo) |
-| Label-style options | 0 | 0 | 0 | 0 | 0 | ~many |
-| "25%" template leakage | 4 | 0 | 1 | 2 | 1 | 1 |
+| Run | Model | Avg consequence length (chars) | Qualitative depth |
+|-----|-------|-------------------------------|-------------------|
+| 10 | gpt-5-nano | ~250 | Moderate |
+| 12 | claude-haiku | ~450 | High |
+| 13 | gpt-oss-20b | ~180 | Moderate |
+| 14 | qwen3-30b-a3b | ~130 | Low |
+| 15 | gpt-4o-mini | ~200 | Low |
+| 16 | llama3.1 | ~185 | Low |
+| baseline | — | ~190 | Moderate |
 
-### Duration (seconds) by plan
+### Table E — Success rate by run
 
-| Run | Model | silo | gta_game | sovereign | hk_game | parasomnia |
-|-----|-------|------|----------|-----------|---------|------------|
-| 10 | gpt-5-nano | 404.9 | 232.2 | 253.0 | 290.2 | 241.0 |
-| 12 | claude-haiku | 92.0 | 86.5 | 116.1 | 120.9 | 131.2 |
-| 13 | gpt-oss-20b | 218.1 | 162.4 | 198.3 | 240.3 | 61.2* |
-| 14 | qwen3-30b | 114.7 | 65.7 | 168.2 | 141.2 | 115.0 |
-| 15 | gpt-4o-mini | 45.2 | 45.5 | 47.5 | 54.1 | 53.3 |
-| 16 | llama3.1 | 101.2 | 69.9 | 117.7 | 98.3 | 84.1 |
-
-*parasomnia failed mid-run at 61.2s
+| Run | Model | Success Rate | Failure type |
+|-----|-------|-------------|--------------|
+| 09 | stepfun | 0% | Config: model not found |
+| 10 | gpt-5-nano | 100% | — |
+| 11 | nemotron | 0% | Model: no JSON output |
+| 12 | claude-haiku | 100% | — |
+| 13 | gpt-oss-20b | 80% | Model: JSON truncation (1 plan) |
+| 14 | qwen3 | 100% | — |
+| 15 | gpt-4o-mini | 100% | — |
+| 16 | llama3.1 | 100% | — |
 
 ---
 
 ## Evidence Notes
 
-- `history/0/10_identify_potential_levers/outputs/20250321_silo/002-10-potential_levers.json`: 15 levers; "25% faster scaling" appears 4 times; semantic duplicates in funding/economics domain.
-- `history/0/12_identify_potential_levers/outputs/20250321_silo/002-10-potential_levers.json`: 15 levers; 0 "25% faster" instances; options are multi-sentence strategic descriptions averaging ~195 chars.
-- `history/0/13_identify_potential_levers/outputs.jsonl`: parasomnia error explicitly shows `review_lever` field name and `strategic_rationale` wrapper in raw LLM response — both rejected by the extractor.
-- `history/0/14_identify_potential_levers/outputs/20250321_silo/002-10-potential_levers.json`: 15 levers; options avg ~54 chars; all correctly follow `Immediate → Systemic → Strategic` format.
-- `history/0/15_identify_potential_levers/outputs/20250321_silo/002-10-potential_levers.json`: 15 levers; lever names are generic ("Resource Allocation Strategy", "Governance and Control Framework" appears twice with different content).
-- `history/0/16_identify_potential_levers/outputs/20250321_silo/002-10-potential_levers.json`: 20 levers; "Material Adaptation Strategy" appears twice (lever_ids `fb6ffa36` and `2bf5058d`); options are noun phrases not strategic descriptions.
-- `baseline/train/20260310_hong_kong_game/002-13-vital_few_levers_raw.json`: Baseline reference shows highly specific, project-contextual lever names and deep option descriptions — closest match is run 12.
-- Prompt file `prompts/identify_potential_levers/prompt_0_fa5dfb88099db534ef065c73c38934677aec67b938a4e0be7dfa8acd5497e316.txt`: Line 9 says `"Systemic: 25% faster scaling through..."` as example. Line 26 says `"For \`review_lever\`:"` while schema uses `review`.
+- Template leakage evidence: `history/0/10_identify_potential_levers/outputs/20250321_silo/002-10-potential_levers.json` levers 1–11 all use "25% faster scaling through"
+- Duplicate name evidence (gpt-4o-mini): `history/0/15_identify_potential_levers/outputs/20250321_silo/002-10-potential_levers.json` lever_ids `6a653f5f` and `353fdd08` both named "Governance and Control Framework"; `6a653f5f` and `5caa4f48` both named "Resource Allocation Strategy"
+- Extra batch evidence (llama3.1): `history/0/16_identify_potential_levers/outputs/20250321_silo/002-10-potential_levers.json` has 20 entries vs 15 for all other runs on the same plan
+- JSON truncation error: `history/0/13_identify_potential_levers/outputs.jsonl` shows parasomnia plan failed with truncated lever JSON mid-sentence
+- Run 11 empty JSON: `history/0/11_identify_potential_levers/outputs.jsonl` shows `ValueError('Could not extract json string from output: ')` — the model returned non-JSON text
+- Config failure: `history/0/09_identify_potential_levers/outputs.jsonl` shows `ValueError("Cannot create LLM, the llm_name 'openrouter-stepfun-step-3-5-flash' is not found...")`
 
 ---
 
 ## Questions For Later Synthesis
 
-1. Does the deduplication step (`002-11`) successfully remove the semantic duplicates created by cross-call repetition? The missing `002-11` files for some runs (noted as deleted in git status) suggest instability in that step.
-2. Is run 16 (llama3.1 with workers=1) producing 20 levers intentionally (a different target per run) or is it a code bug tied to worker count?
-3. The parasomnia plan in run 13 failed due to the `review_lever` field name. Is this a one-model issue or does the same field name confusion appear in other models' raw outputs even when they succeed?
-4. Should the prompt's "25% faster scaling" example be removed, replaced with a format placeholder, or is some numeric anchoring desirable?
-5. Run 12 (claude-haiku) produces the highest quality output but is not the fastest. Is there a quality–speed trade-off here that the synthesis step should evaluate explicitly?
+1. **Was the B1 bug (double USER prompt) causing measurable quality degradation in analysis 0 runs?** The fix can only be assessed as a "keeper" if analysis 0 had worse output from the double-prompt sequence. Does the previous synthesis confirm degradation?
+
+2. **Why did llama3.1 produce 20 levers instead of 15?** Is the "more" prompt being interpreted as "produce all remaining levers at once" by this model? Was there an extra "more" call in the runner?
+
+3. **Is cross-call thematic redundancy an inherent code problem or a prompt problem?** The step currently sends a bare `"more"` without including context of previously generated levers. Feeding a list of existing lever names would reduce redundancy.
+
+4. **Should the runner reject outputs with duplicate lever names?** The prompt prohibits generic labels but the validation step (`002-10-potential_levers.json` vs `002-9-potential_levers_raw.json`) may not enforce uniqueness.
+
+5. **Is nemotron's JSON failure related to the fixed conversation sequence?** With the double USER prompt, the first call had a different structure. It is possible nemotron responded differently (producing JSON) before the fix. Worth checking analysis 0 nemotron run outputs if available.
+
+6. **For qwen3, are short options a model limitation or missing prompt instruction?** The prompt says options must be "self-contained descriptions" but does not specify minimum length.
 
 ---
 
 ## Reflect
 
-The most striking finding is the large quality gap between run 12 (claude-haiku) and run 16 (llama3.1), with all other models falling between them. This gap is not purely about instruction-following (all models follow the JSON schema), but about contextual grounding: claude-haiku infers project-specific tensions from the plan text and encodes them in options, while llama3.1 generates context-free category labels.
+This analysis covers 8 runs testing the same prompt on 8 different model configurations, all post-fix. The most important finding is that **model choice dominates output quality** far more than the PR fix itself. Claude Haiku produces substantively superior levers (plan-specific, long, varied) while gpt-4o-mini and llama3.1 produce generic, redundant content.
 
-The "25% faster scaling" template leakage is a prompt design issue, not a model capability issue — the prompt literally provides this string as a fill-in target. Removing or abstracting it would immediately improve output diversity.
+The PR fix (B1) addresses a code correctness issue and appears safe — it does not introduce failures. However, because the pre-fix runs (analysis 0) are not in scope here, we cannot directly confirm the improvement from the fix itself. The fix should be assessed as a keeper based on:
+- Correct conversation structure is required for proper model behavior
+- No new failures observed in post-fix runs
+- Quality of successful runs is acceptable to excellent depending on model
 
-The `review_lever` vs `review` field name inconsistency is a clear prompt bug that causes a reproducible failure for at least one model.
+The persistent quality problems (template leakage, cross-call deduplication, short options in weaker models) are not caused by the B1 bug and require separate interventions.
 
 ---
 
 ## Potential Code Changes
 
-C1: **Worker-count-dependent batch count** — `history/0/16_identify_potential_levers` with `workers=1` produces 20 levers (4 batches) while `workers=4` runs produce 15 (3 batches). The runner code should fix the number of LLM call batches regardless of worker count, so merged lever counts are consistent.
+**C1 — Feed prior lever names into subsequent "more" calls**
+Evidence: N8 (cross-call thematic redundancy). All models repeat governance/information/resource themes across batches.
+Change: Include a list of already-generated lever names in the `"more"` turn, e.g., `"Generate 5 more levers. Already covered: [names]. Do not repeat these topics."`.
+Expected effect: Reduce cross-call name duplicates from ~3 per plan to near zero; improve topic diversity.
 
-C2: **JSON field name tolerance** — The extractor rejects responses with `review_lever` instead of `review`. Either accept both field names in the parser, or (better) fix the prompt to say `review` consistently.
+**C2 — Add post-processing deduplication of lever names**
+Evidence: N4, N5, N7. Multiple models produce exact or near-exact name duplicates across batches.
+Change: After merging all batches, deduplicate by lever name (exact match) or flag near-matches for synthesis-time review.
+Expected effect: Eliminates "Governance and Control Framework ×2" artifacts in gpt-4o-mini and similar issues in llama3.1.
 
-C3: **Cross-call context passing** — Models that produce exact-name duplicates (run 16) are not aware of prior-batch lever names. If the runner concatenated prior lever names into each subsequent call's context, models could avoid the overlap.
+**C3 — Add a maximum lever count guard**
+Evidence: N5 (llama3.1 produced 20 levers). If the step expects 15 (3×5) but llama3.1 produces 20, downstream processing may be affected.
+Change: After merging batches, truncate or warn if total count exceeds `n_calls × 5`.
+Expected effect: Prevents unexpected expansion of the lever set for models that generate extra content.
+
+**C4 — Log and surface per-call lever counts for monitoring**
+Evidence: The runner stores raw JSON (`002-9-potential_levers_raw.json`) and merged output (`002-10-potential_levers.json`), but there is no per-call count assertion.
+Change: Assert that each raw response contains exactly 5 levers before accepting the batch.
+Expected effect: Catches violations early (e.g., a model returning 3 or 7 levers per call) rather than silently accepting bad batches.
 
 ---
 
 ## Prompt Hypotheses
 
-H1: **Remove "25% faster scaling through" example metric** — Replace with a format placeholder like `"Systemic: [N]% [measurable outcome] through [mechanism]"`. Expected effect: reduction of literal "25% faster scaling" copies across all models; more diverse, project-driven numeric claims.
-Evidence: 4 occurrences in run 10 silo; 2 in run 14; 1 each in runs 13, 15, 16. Only run 12 (claude-haiku) avoids it.
+**H1 — Removing the example metric from the consequences template reduces template leakage**
+Evidence: N3 (gpt-5-nano copies "25% faster scaling through" in 11/15 levers). The prompt shows `"Systemic: 25% faster scaling through..."` as a concrete example, which weaker models copy verbatim.
+Change: Replace the example with a structural cue: `"Systemic: [specific quantified impact, e.g., percentage change in X] through [mechanism]"`.
+Expected effect: Reduces template copying in gpt-5-nano class models; claude-haiku is unaffected (it already ignores the template).
 
-H2: **Align prompt field name with schema** — Change `"For \`review_lever\`:"` in §4 to `"For \`review\`:"`. Expected effect: eliminates the `review_lever` field in model outputs; prevents JSON extraction failure for models that anchor on the prompt field name.
-Evidence: run 13 parasomnia failure, with raw output containing `"review_lever"` as the key.
+**H2 — Requiring minimum option word count reduces terse label options**
+Evidence: N6 (qwen3 options are 8–10 words rather than strategic descriptions).
+Change: Add to prohibitions: `"Options MUST be at least 20 words each and describe a complete approach, not a label."`.
+Expected effect: Forces qwen3 and similar models to expand options into strategic descriptions.
 
-H3: **Add a full-description option example** — Models producing label-style options (run 16) may need an explicit example of what a complete strategic option looks like. Add a concrete multi-sentence example to §6 "Option Structure Enforcement". Expected effect: increases average option length in weaker models; reduces label-style outputs.
-Evidence: run 16 average option length ~43 chars vs run 12 ~195 chars.
-
-H4: **Add "do not repeat lever names from prior calls" instruction** — If the step makes multiple sequential calls per plan, instruct the model in each subsequent call to avoid lever names already used. Expected effect: reduction in exact-name and near-name duplicates across batches.
-Evidence: run 16 has duplicate "Material Adaptation Strategy"; all runs show semantic redundancy across batches.
+**H3 — Explicitly naming the multi-call context prevents cross-call repetition**
+Evidence: N8 (all models repeat themes across calls).
+Change: In the "more" message, include: `"You have already proposed levers covering: [list]. These topics are closed. Generate 5 levers covering different strategic dimensions of the plan."`.
+Expected effect: Reduces thematic overlap between batches; requires code change (C1) to implement.
 
 ---
 
 ## Summary
 
-Six runs of the same prompt (`fa5dfb88...`) were tested across six models. Run 12 (claude-haiku-4-5-pinned) produces the highest-quality output: long, contextually grounded options, zero template leakage, and full constraint compliance. Run 16 (llama3.1) is the weakest: label-style options, inflated lever counts (20 vs expected 15), and exact-name duplicates within a plan.
+Runs 09–16 used eight different model configurations against the same prompt (post-B1 fix). Two models failed entirely (stepfun: config issue; nemotron: no JSON output). One model had one plan fail (gpt-oss-20b: JSON truncation). Five models succeeded fully.
 
-Two concrete prompt defects are present:
-1. The example metric "25% faster scaling through" is copied verbatim by most models (except haiku), flattening consequence quality.
-2. The field name `review_lever` in the prompt conflicts with the schema field `review`, causing a reproducible JSON extraction failure for at least one model (run 13, parasomnia plan).
+Quality varies dramatically by model:
 
-The code-level issue (worker-count-dependent batch count producing 20 vs 15 levers in run 16) should be investigated independently of the prompt.
+| Tier | Model | Key strength | Key weakness |
+|------|-------|-------------|--------------|
+| Best | claude-haiku (run 12) | Plan-specific, long, rich options | None observed |
+| Good | gpt-5-nano (run 10) | Structured, full options | 73% template leakage in consequences |
+| Moderate | qwen3 (run 14), gpt-oss-20b (run 13) | Reliable, reasonable structure | Short options, 1 failure |
+| Below avg | gpt-4o-mini (run 15), llama3.1 (run 16) | Fast, reliable | Duplicate lever names, generic content |
+| Failed | stepfun (run 09), nemotron (run 11) | — | Config or JSON capability |
 
-From a model selection perspective: claude-haiku produces near-baseline quality, is significantly faster than gpt-5-nano, and avoids template leakage. The synthesis step should consider whether quality differences across models reflect model capability versus prompt sensitivity.
+The B1 fix (double USER prompt removal) is operationally safe and structurally correct. The quality problems observed (template leakage, cross-call redundancy, duplicate names) are pre-existing issues not caused by the fix. Priority recommendations for synthesis:
+
+1. **Accept the PR** — B1 fix is correct and introduces no regressions
+2. **Pursue C1** (feed prior lever names into "more" calls) — code-level fix benefiting all models
+3. **Pursue H1** (remove worked example metric from prompt) — reduces gpt-5-nano template leakage at no cost
+4. **Consider C2** (deduplication guard) — defensive post-processing catches worst-case duplicate name failures
