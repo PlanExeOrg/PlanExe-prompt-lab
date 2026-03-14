@@ -1,4 +1,4 @@
-# Insights Codex
+# Insight Codex
 
 ## Negative Things
 
