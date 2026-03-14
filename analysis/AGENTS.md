@@ -8,6 +8,7 @@ Each step gets its own directory:
 - `analysis/<index>_<step_name>/meta.json`
 - `analysis/<index>_<step_name>/insight_<agent>.md`
 - `analysis/<index>_<step_name>/code_<agent>.md`
+- `analysis/<index>_<step_name>/synthesis.md`
 
 Example:
 
@@ -16,6 +17,7 @@ Example:
 - `analysis/0_identify_potential_levers/insight_claude.md`
 - `analysis/0_identify_potential_levers/code_codex.md`
 - `analysis/0_identify_potential_levers/code_claude.md`
+- `analysis/0_identify_potential_levers/synthesis.md`
 
 ## Optimization Pipeline Context
 
@@ -67,6 +69,19 @@ files. Each agent produces its `code_<agent>.md` file.
 
 Phase 2 depends on phase 1 — the insight files must exist before running
 the code review.
+
+### Phase 3: Synthesis
+
+```bash
+python analysis/run_synthesis.py analysis/0_identify_potential_levers
+```
+
+Reads all `insight_*.md` and `code_*.md` files, cross-references findings
+across agents, and produces a single `synthesis.md` with the top 5 ranked
+directions and 1 recommendation. Uses only Claude Code (not parallel agents)
+since synthesis must reconcile the independent analyses into one view.
+
+Phase 3 depends on phases 1 and 2.
 
 ## Purpose
 
@@ -184,6 +199,29 @@ Cite exact file paths and line numbers from the PlanExe repo.
 
 Code review files should not modify any source files. They are read-only
 analysis artifacts, like insight files.
+
+## `synthesis.md` Rules
+
+Each analysis step produces one `synthesis.md` file. Unlike insight and code
+review files, synthesis is not per-agent — it is a single document that
+reconciles all independent analyses.
+
+Recommended sections:
+
+- `# Synthesis`
+- `## Cross-Agent Agreement` — where the insight/code review files agree
+- `## Cross-Agent Disagreements` — where they disagree, with a verdict
+- `## Top 5 Directions` — ranked by impact, with type/evidence/effort/risk
+- `## Recommendation` — the single best action to take first
+- `## Deferred Items` — worth doing later but not first
+
+The synthesis file should:
+
+- Verify disputed claims by reading actual source code, not just trusting
+  one agent over another
+- Prefer code fixes over prompt tweaks when the fix benefits all models
+- Rank by evidence strength: confirmed bug > hypothesis > suspicion
+- Be specific about what to change (file, line, the fix or new wording)
 
 ## Evidence Standard
 
