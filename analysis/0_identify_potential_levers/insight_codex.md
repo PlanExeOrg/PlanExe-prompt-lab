@@ -6,12 +6,14 @@
 - `06_identify_potential_levers` (`openrouter-nvidia-nemotron-3-nano-30b-a3b`) failed on all 5 train plans with empty/non-extractable JSON output. The model appears unreliable for this step.
 - `04_identify_potential_levers` (`openrouter-stepfun-step-3-5-flash`) was only partially usable. It produced invalid JSON on 2 of 5 plans.
 - `08_identify_potential_levers` failed before execution because the model was missing from config, so it contributes no analytical value.
+- The registered prompt says "generate EXACTLY 5 levers per response", but every final artifact being compared contains 15 levers. That creates ambiguity about the true unit of evaluation: one call, one batch, or the final merged file.
 - `00_identify_potential_levers` often looks generic and repetitive. It repeats lever names inside a single file and sometimes produces placeholder-like review text such as `Controls Trade-off between [Scalability] vs. [Cost Efficiency].`
 - `07_identify_potential_levers` is structurally valid but low quality. It repeats the same lever names heavily, especially on `20260308_sovereign_identity`, where 15 levers collapse into only 5 unique names.
 - `01_identify_potential_levers` is better than `00` and `07`, but it still repeats names and often sounds like a prompt template filled in rather than grounded analysis.
 - Several weaker outputs regurgitate the prompt's review structure too literally: `Controls X vs. Y. Weakness: ...` without adding much domain-specific substance. The format is followed, but the content is shallow.
 - Baseline and weaker history runs often produce levers that are too generic to be strategically useful, such as broad labels like "Resource Allocation Strategy" or "Coalition Building Strategy" without enough project-specific distinction.
 - `09_identify_potential_levers` is the strongest run, but it overshoots in verbosity. Some reviews become mini-essays, which may make downstream comparison or scoring harder.
+- Some analysis artifacts have operational caveats that can mislead later scoring if ignored. `outputs.jsonl` is append-only across retries, and `usage_metrics.jsonl` is not schema-consistent across all runs.
 
 ## Positive Things
 
@@ -23,10 +25,33 @@
 - `02` shows that the current prompt can work well when the model is disciplined. That suggests the prompt is not fundamentally broken; model choice matters a lot.
 - Compared with baseline, the better runs have fewer duplicate lever names and better differentiation between levers, especially on `20260308_sovereign_identity` and `20250321_silo`.
 - Even when the review template is preserved, the stronger runs use it productively by attaching concrete stakes, constraints, and failure mechanisms.
+- `09` appears to be the first run that consistently pushes the analysis from "what are the strategic options?" toward "what breaks each option in the real world?" That is a real qualitative shift, not just a longer answer.
+- `02` and `09` complement each other: `02` is the strongest signal for structural discipline, while `09` is the strongest signal for strategic depth.
 
 ## Comparison
 
 Mixed overall, but the best responses are better than `baseline/train`. The low-end runs (`03`, `04`, `06`, `07`, and parts of `00`/`01`) are setbacks because they are invalid, repetitive, or generic. The top-end runs, especially `09` and then `02`, are a meaningful improvement over baseline: they are more specific, more differentiated, and more strategically useful. So the net result is not a clean across-the-board improvement, but it does show a clear path to major improvement when the model follows the prompt well.
+
+More specifically, baseline is not a very high bar. Baseline itself repeats lever names heavily on some plans, including `20260308_sovereign_identity`, where the 15-lever file collapses to only 5 unique names. The strongest new runs are therefore not just "slightly cleaner"; they actually overcome a known weakness in the baseline outputs.
+
+The biggest trade-off among the better runs is not simply quality versus failure rate. It is structure versus richness. `02` is highly regular and evaluator-friendly. `09` is more insightful but much longer, with average review length on `20250321_silo` around 349 characters versus roughly 126-144 for `00`, `01`, `02`, and `05`.
+
+## Evidence Notes
+
+- Best structure: `02_identify_potential_levers` produced 15 unique lever names on all 5 train plans.
+- Worst repetition among valid outputs: `07_identify_potential_levers` on `20260308_sovereign_identity` produced only 5 unique names across 15 levers.
+- Clear prompt leakage example: `00_identify_potential_levers` includes review text like `Controls Trade-off between [Scalability] vs. [Cost Efficiency].`
+- Clear depth improvement example: `09_identify_potential_levers` on `20250321_silo` and `20260308_sovereign_identity` repeatedly names institutional, generational, and governance-failure mechanisms absent from baseline.
+
+## Questions For Later Synthesis
+
+- What is the true target artifact: each 5-lever generation or the final 15-lever merged file?
+- Should duplicate lever names within one final artifact be treated as a hard failure or a soft penalty?
+- Is verbosity helping quality, or is `09` partially winning because it writes more words per review?
+- Are we optimizing for one target production model, or for robustness across multiple models?
+- Does higher-quality output at `identify_potential_levers` lead to measurably better downstream pipeline artifacts?
+- Which failure modes are unacceptable regardless of content quality: invalid JSON, empty output, generic labels, prompt-template leakage, or duplicated strategic dimensions?
+- Should the later evaluator reward strong criticism of each option, or reward concise and scan-friendly output that is easier for downstream steps to consume?
 
 ## Reflect
 
@@ -36,7 +61,9 @@ Mixed overall, but the best responses are better than `baseline/train`. The low-
 - Hypothesis 4: set a target length band for `review` and `consequences`, for example concise but specific. The weaker models are too short and generic; `09` is sometimes too long. A tighter length target could preserve specificity while improving consistency for downstream evaluation.
 - Hypothesis 5: simplify or separate the formatting instructions from the strategic-quality instructions. Some model failures look like instruction overload for structured output. A shorter formatting contract plus a smaller number of high-value quality rules may improve compliance on weaker models.
 - Hypothesis 6: explicitly demand one non-obvious lever that challenges the default project framing, not just one unconventional option within a lever. The best `09` outputs often win because they question hidden assumptions, not merely because they offer more radical option C variants.
+- Hypothesis 7: make the output contract explicit at the artifact level, not only at the single-response level. If the final stored object is expected to contain 15 levers assembled from multiple calls, the prompting and evaluation setup should say so clearly.
+- Hypothesis 8: add one instruction that each review must mention a failure mechanism that is not already named in the lever title. That would reduce tautological criticism and force more analytical distance.
 
 ## Summary
 
-This history slice is primarily a model comparison over the same registered prompt, and it shows a wide spread in quality. Several models fail outright or produce shallow, repetitive, prompt-shaped output. Baseline itself is only moderate quality and suffers from repeated lever names and generic framing, so it is beatable. The strongest evidence comes from `09`, with `02` as the cleanest structured alternative: both show that the step can produce materially better strategic analysis than baseline when the model is capable and compliant. The main prompt-level opportunities are to enforce uniqueness, force stronger source-grounding, block template leakage, and tune verbosity so the output stays specific without turning into long essays.
+This history slice is primarily a model comparison over the same registered prompt, and it shows a wide spread in quality. Several models fail outright or produce shallow, repetitive, prompt-shaped output. Baseline itself is only moderate quality and suffers from repeated lever names and generic framing, so it is beatable. The strongest evidence comes from `09`, with `02` as the cleanest structured alternative: both show that the step can produce materially better strategic analysis than baseline when the model is capable and compliant. The main prompt-level opportunities are to enforce uniqueness, force stronger source-grounding, block template leakage, clarify the true artifact contract, and tune verbosity so the output stays specific without turning into long essays.
