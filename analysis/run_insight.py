@@ -3,7 +3,7 @@
 Run Claude Code and Codex in parallel to produce insight files for an analysis step.
 
 Usage:
-    python analysis/run_analysis.py analysis/0_identify_potential_levers
+    python analysis/run_insight.py analysis/0_identify_potential_levers
 """
 import argparse
 import json

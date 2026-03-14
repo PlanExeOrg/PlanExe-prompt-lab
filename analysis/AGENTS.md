@@ -7,12 +7,15 @@ Each step gets its own directory:
 
 - `analysis/<index>_<step_name>/meta.json`
 - `analysis/<index>_<step_name>/insight_<agent>.md`
+- `analysis/<index>_<step_name>/code_<agent>.md`
 
 Example:
 
 - `analysis/0_identify_potential_levers/meta.json`
 - `analysis/0_identify_potential_levers/insight_codex.md`
 - `analysis/0_identify_potential_levers/insight_claude.md`
+- `analysis/0_identify_potential_levers/code_codex.md`
+- `analysis/0_identify_potential_levers/code_claude.md`
 
 ## Optimization Pipeline Context
 
@@ -35,6 +38,35 @@ The full workflow:
 
 Analysis sits between the runner and synthesis. Its job is to produce
 grounded, auditable evaluations that a synthesis agent can compare.
+
+## Running the Scripts
+
+Analysis is a two-phase process. Each phase runs Claude Code and Codex in
+parallel to produce independent files.
+
+### Phase 1: Insight files
+
+```bash
+python analysis/run_insight.py analysis/0_identify_potential_levers
+```
+
+Reads `meta.json` from the analysis directory, builds a prompt referencing
+the history runs and baseline data, and runs both agents. Each agent
+independently produces its `insight_<agent>.md` file.
+
+### Phase 2: Code review files
+
+```bash
+python analysis/run_code_review.py analysis/0_identify_potential_levers
+```
+
+Reads the `insight_*.md` files produced in phase 1, concatenates them as
+context, and asks both agents to review PlanExe source code for bugs and
+improvement opportunities that explain the problems found in the insight
+files. Each agent produces its `code_<agent>.md` file.
+
+Phase 2 depends on phase 1 — the insight files must exist before running
+the code review.
 
 ## Purpose
 
@@ -120,6 +152,38 @@ The exact headings may vary, but the file should cover:
 - hypotheses for code changes, if relevant
 - open questions that a later synthesis step should resolve
 - a concise summary
+
+## `code_<agent>.md` Rules
+
+Each code review file is one agent's independent review of PlanExe source code,
+informed by the insight files from the same analysis step.
+
+Naming:
+
+- `code_codex.md`
+- `code_claude.md`
+- `code_<other_agent>.md`
+
+Use lowercase ASCII filenames.
+
+Each code review file should be self-contained and trace its findings back to
+the insight files that motivated the review.
+
+Recommended sections:
+
+- `# Code Review (<Agent>)`
+- `## Bugs Found` — confirmed bugs with file:line references
+- `## Suspect Patterns` — code that looks wrong but needs more context
+- `## Improvement Opportunities` — changes that could boost output quality
+- `## Trace to Insight Findings` — map each code issue to insight-file
+  observations it explains
+- `## Summary`
+
+Label bugs `B1`, `B2`, … and improvements `I1`, `I2`, …
+Cite exact file paths and line numbers from the PlanExe repo.
+
+Code review files should not modify any source files. They are read-only
+analysis artifacts, like insight files.
 
 ## Evidence Standard
 
@@ -208,6 +272,7 @@ Assume a later synthesis agent will read:
 
 - `meta.json`
 - all `insight_<agent>.md` files for the step
+- all `code_<agent>.md` files for the step
 
 and produce a synthesis artifact that:
 
