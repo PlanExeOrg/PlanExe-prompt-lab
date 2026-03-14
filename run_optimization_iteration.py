@@ -290,14 +290,19 @@ def create_analysis_dir() -> Path:
 
 
 def step_analysis(analysis_dir: Path) -> None:
-    """Run insight → code review → synthesis in sequence."""
+    """Run insight → code review → synthesis → assessment in sequence."""
     rel_dir = str(analysis_dir.relative_to(PROMPT_LAB_DIR))
+
+    # Assessment only makes sense from index 1 onward (needs a "before").
+    index = int(analysis_dir.name.split("_", 1)[0])
 
     scripts = [
         ("run_insight.py", "Insight analysis (phase 1)"),
         ("run_code_review.py", "Code review (phase 2)"),
         ("run_synthesis.py", "Synthesis (phase 3)"),
     ]
+    if index > 0:
+        scripts.append(("run_assessment.py", "Assessment (phase 4)"))
 
     for script_name, label in scripts:
         print()

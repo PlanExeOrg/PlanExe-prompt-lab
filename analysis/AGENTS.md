@@ -9,6 +9,7 @@ Each step gets its own directory:
 - `analysis/<index>_<step_name>/insight_<agent>.md`
 - `analysis/<index>_<step_name>/code_<agent>.md`
 - `analysis/<index>_<step_name>/synthesis.md`
+- `analysis/<index>_<step_name>/assessment.md` (from index 1 onward)
 
 Example:
 
@@ -98,6 +99,25 @@ directions and 1 recommendation. Uses only Claude Code (not parallel agents)
 since synthesis must reconcile the independent analyses into one view.
 
 Phase 3 depends on phases 1 and 2.
+
+### Phase 4: Assessment
+
+```bash
+python analysis/run_assessment.py analysis/1_identify_potential_levers
+```
+
+Compares the current analysis against the previous one (auto-detected by
+index - 1, or specified with `--before`). Reads all insight, code review, and
+synthesis files from both directories, plus samples of actual output files
+from `history/`, and produces an `assessment.md` that answers:
+
+- Did the PR fix the issue it was supposed to fix?
+- Did output quality improve or worsen? (metric-by-metric comparison table)
+- Were any new issues introduced?
+- **Is the PR a keeper?** (YES / NO / CONDITIONAL)
+
+Phase 4 depends on phase 3 and requires `pr_url`/`pr_title`/`pr_description`
+in the after directory's `meta.json` (see "Registering the PR" below).
 
 ### Registering the PR
 
