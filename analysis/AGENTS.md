@@ -14,6 +14,28 @@ Example:
 - `analysis/0_identify_potential_levers/insight_codex.md`
 - `analysis/0_identify_potential_levers/insight_claude.md`
 
+## Optimization Pipeline Context
+
+This analysis folder is part of the system prompt optimizer described in
+[proposal 117](https://github.com/PlanExeOrg/PlanExe/blob/main/docs/proposals/117-system-prompt-optimizer.md).
+
+The full workflow:
+
+1. **Runner** (`prompt_optimizer/runner.py` in PlanExe) re-executes a single
+   pipeline step with a candidate system prompt against baseline training data.
+   Outputs land in `history/`.
+2. **Analysis** (this folder) — agents independently examine the runner outputs
+   against `baseline/train/` and write insight files.
+3. **Synthesis** — a later agent reads all insight files for a step, resolves
+   disagreements, and decides which prompt changes or code changes to pursue.
+4. **Candidate generation** — produce prompt variants informed by synthesis
+   conclusions, failed-attempt logs, and identified failure modes.
+5. **Verification** — the best candidates are scored against `baseline/verify/`
+   (a held-out set) to confirm improvement is not overfit to training data.
+
+Analysis sits between the runner and synthesis. Its job is to produce
+grounded, auditable evaluations that a synthesis agent can compare.
+
 ## Purpose
 
 Keep `meta.json` factual and non-conclusive.
@@ -118,23 +140,76 @@ When comparing runs, separate:
 If one run is richer but much longer, say so explicitly.
 Do not collapse "more verbose" and "better" into the same judgment without comment.
 
+## Quantitative Metrics
+
+Insight files should compute concrete metrics, not just offer impressions.
+The exact metrics depend on the step, but useful patterns include:
+
+- **Uniqueness**: count of unique items vs total items (e.g. unique lever names
+  out of 15). Report both exact-match and semantic uniqueness when they diverge.
+- **Average field length**: character counts for key text fields (e.g. review,
+  consequences). Present as a table across runs.
+- **Constraint violations**: count items that break the step's output contract
+  (e.g. wrong option count, missing fields, placeholder text).
+- **Template leakage**: count items that copy prompt examples, use bracket
+  placeholders, or repeat robotic patterns across entries.
+- **Cross-call duplication**: when a step makes multiple LLM calls and merges
+  results, measure how much content is repeated across calls.
+
+Present metrics in tables so runs can be compared at a glance.
+Always explain what the numbers mean — a perfect uniqueness score can still
+hide content problems (e.g. unique names but identical consequences).
+
+## Hypothesis Format
+
+Each insight file should propose concrete, testable hypotheses for improvement.
+Label them (H1, H2, …) and for each:
+
+- State the change (prompt wording, code fix, or workflow change).
+- Cite the evidence that motivates it (specific runs, metrics, examples).
+- Predict the expected effect so later experiments can confirm or refute it.
+
+Distinguish prompt-level hypotheses (change the system prompt text) from
+code-level hypotheses (change `runner.py`, the pipeline step, or validation
+logic). Code changes that affect all models are generally higher-leverage than
+prompt tweaks that help one model.
+
 ## Neutrality and Synthesis
 
 Individual insight files may contain opinions and hypotheses.
 `meta.json` should not.
 
-Assume a later agent will read:
+Assume a later synthesis agent will read:
 
 - `meta.json`
-- multiple `insight_<agent>.md` files
+- all `insight_<agent>.md` files for the step
 
-and produce a synthesis or decision artifact.
-Write the files so that later synthesis is easy:
+and produce a synthesis artifact that:
+
+- resolves disagreements between insight files
+- ranks hypotheses by expected impact and evidence strength
+- decides which changes to pursue (prompt edits, code fixes, or both)
+- feeds into candidate prompt generation for the next optimization round
+
+Write insight files so that synthesis is easy:
 
 - keep file names predictable
 - keep claims auditable
 - call out caveats and ambiguity
 - distinguish facts from hypotheses
+- label hypotheses consistently (H1, H2, …) so synthesis can cross-reference
+
+## Key Paths
+
+- **Baseline training data**: `baseline/train/<plan_name>/`
+- **Runner outputs**: `history/{counter // 100}/{counter % 100:02d}_{step}/outputs/<plan_name>/`
+- **Runner metadata**: `history/.../<run>/meta.json`, `outputs.jsonl`, `events.jsonl`
+- **Registered prompts**: `prompts/<step_name>/prompt_{index}_{sha256}.txt`
+- **Analysis**: `analysis/<index>_<step_name>/`
+
+The `meta.json` in each analysis directory links to the registered prompt and
+history runs that were examined. Use these paths to trace any claim back to
+source artifacts.
 
 ## Editing Guidance
 
