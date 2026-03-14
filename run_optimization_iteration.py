@@ -14,6 +14,7 @@ Usage:
 """
 import argparse
 import json
+import os
 import re
 import subprocess
 import sys
@@ -32,11 +33,10 @@ PLANEXE_PYTHON = "/opt/homebrew/bin/python3.11"
 
 # Models ordered: failed/partial first, then successful.
 # GLM removed in PR #266 — excluded.
+# StepFun removed from llm_config — excluded.
 MODELS = [
-    # Failed (0/5 in previous batch)
+    # Failed (0/5 in previous batch — model-level issues)
     "openrouter-nvidia-nemotron-3-nano-30b-a3b",
-    # Partial (3/5 in previous batch)
-    "openrouter-stepfun-step-3-5-flash",
     # Successful (5/5 in previous batch)
     "ollama-llama3.1",
     "openrouter-openai-gpt-oss-20b",
@@ -49,13 +49,19 @@ MODELS = [
 # Short aliases for --models convenience.
 MODEL_ALIASES = {
     "nemotron": "openrouter-nvidia-nemotron-3-nano-30b-a3b",
-    "stepfun": "openrouter-stepfun-step-3-5-flash",
     "llama": "ollama-llama3.1",
     "gpt-oss": "openrouter-openai-gpt-oss-20b",
     "gpt5-nano": "openai-gpt-5-nano",
     "qwen": "openrouter-qwen3-30b-a3b",
     "gpt4o-mini": "openrouter-openai-gpt-4o-mini",
     "haiku": "anthropic-claude-haiku-4-5-pinned",
+}
+
+# Models that require PLANEXE_MODEL_PROFILE=custom and a specific llm_config file.
+# These are not in the default baseline.json config.
+CUSTOM_PROFILE_MODELS = {
+    "anthropic-claude-haiku-4-5-pinned": "anthropic_claude.json",
+    "anthropic-claude-haiku-4-5": "anthropic_claude.json",
 }
 
 
@@ -244,7 +250,15 @@ def step_runner(models: list[str], prompt_file: Path) -> list[str]:
             "--model", model,
         ]
 
-        result = subprocess.run(cmd, cwd=PLANEXE_DIR)
+        # Set custom model profile env vars for Anthropic and other non-baseline models.
+        env = os.environ.copy()
+        config_file = CUSTOM_PROFILE_MODELS.get(model)
+        if config_file:
+            env["PLANEXE_MODEL_PROFILE"] = "custom"
+            env["PLANEXE_LLM_CONFIG_CUSTOM_FILENAME"] = config_file
+            print(f"  (using custom profile: {config_file})")
+
+        result = subprocess.run(cmd, cwd=PLANEXE_DIR, env=env)
         if result.returncode != 0:
             print(f"WARNING: runner.py for {model} exited with code {result.returncode}")
         else:
