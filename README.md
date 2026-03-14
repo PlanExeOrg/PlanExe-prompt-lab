@@ -40,17 +40,40 @@ baseline/                           # reference plan outputs (extracted from zip
     20260303_crate_recovery_campaign/
     ...
 
-runs/                               # optimization run outputs
-  <date>_<step_name>/
-    meta.json                       # step, base prompt, model list
-    candidates/                     # candidate prompt texts
-    outputs/                        # LLM outputs per candidate per plan
-    evaluations/                    # reasoning model comparisons
-    summary.json                    # ranked candidates
+history/                            # captured output, global run counter
+  # Path: history/{counter // 100}/{counter % 100:02d}_{step_name}/
+  # Counter is auto-incremented: scan for highest run number + 1.
+  0/                                # runs 0-99
+  1/                                # runs 100-199
+  2/                                # runs 200-299
+    00_identify_purpose/            # run 200
+    01_identify_potential_levers/
+    02_identify_potential_levers/
+      meta.json                     # step, system prompt SHA, model, system info
+      events.jsonl                  # timestamped start/complete/error events
+      outputs.jsonl                 # one row per completed plan
+      outputs/
+        <plan_name>/
+          002-9-potential_levers_raw.json
+          002-10-potential_levers.json
+          activity_overview.json
+          usage_metrics.jsonl
+    ...
+
+prompts/                            # registered system prompts by step
+  identify_potential_levers/
+    prompt_0_<sha256>.txt           # prompt_{index}_{sha256}.txt
+    prompt_1_<sha256>.txt
+
+analysis/                           # evaluation results by step
+  0_identify_purpose/
+  1_identify_potential_levers/
+    summary.json                    # ranked candidates, aggregate scores
     failed_attempts.log
 
 scores/                             # longitudinal tracking
   scoreboard.csv                    # step, date, baseline_score, best_score, delta
+  history.json                      # full history for charting
 
 full_plan_comparisons/              # periodic full-plan regenerations
 ```
