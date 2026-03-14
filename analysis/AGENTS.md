@@ -99,6 +99,19 @@ since synthesis must reconcile the independent analyses into one view.
 
 Phase 3 depends on phases 1 and 2.
 
+### Registering the PR
+
+If the analysis corresponds to a code or prompt change submitted as a GitHub
+PR, register it in `meta.json` so the provenance is traceable:
+
+```bash
+python analysis/update_meta_pr.py analysis/1_identify_potential_levers 268
+```
+
+Accepts a bare PR number or a full URL. Fetches title and summary via `gh` and
+writes `pr_url`, `pr_title`, `pr_description` into the existing `meta.json`.
+Use `--repo owner/name` if the PR is not on `PlanExeOrg/PlanExe`.
+
 ## Purpose
 
 Keep `meta.json` factual and non-conclusive.
@@ -131,6 +144,9 @@ Recommended neutral fields:
 - `plans`
 - `insight_files`
 - `caveats`
+- `pr_url`: GitHub PR URL for the change being evaluated
+- `pr_title`: PR title
+- `pr_description`: short summary of what the PR changes
 
 Do not include:
 
