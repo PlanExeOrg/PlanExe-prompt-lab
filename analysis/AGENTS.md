@@ -202,6 +202,7 @@ Recommended sections:
 - `## Comparison`
 - `## Quantitative Metrics`
 - `## Evidence Notes`
+- `## PR Impact` (when a PR is being evaluated — see below)
 - `## Questions For Later Synthesis`
 - `## Reflect`
 - `## Potential Code Changes` (if code-level causes are relevant)
@@ -212,6 +213,7 @@ The exact headings may vary, but the file should cover:
 - negative findings
 - positive findings
 - comparison to baseline or prior reference outputs
+- PR impact investigation (when a PR is being evaluated)
 - rankings or tiering, when helpful
 - quantitative metrics in tables
 - evidence examples that justify the main claims
@@ -219,6 +221,35 @@ The exact headings may vary, but the file should cover:
 - hypotheses for code changes, if relevant
 - open questions that a later synthesis step should resolve
 - a concise summary
+
+## PR Impact Investigation
+
+When `meta.json` contains PR information (`pr_url`, `pr_title`, `pr_description`)
+and the prompt provides previous-analysis history runs for comparison, each insight
+file must include a `## PR Impact` section that investigates whether the PR actually
+helped, was neutral, or made things worse.
+
+This section should:
+
+1. **State what the PR was supposed to fix** (from `pr_title` / `pr_description`).
+2. **Compare before vs after runs** using the same metrics from the Quantitative
+   Metrics section. Read actual output files from both the current and previous
+   history runs. Present a comparison table with columns:
+   Metric | Before (runs X–Y) | After (runs X–Y) | Change.
+3. **Determine if the PR fixed the targeted issue.** Cite specific evidence.
+4. **Check for regressions** — did the PR make anything worse?
+5. **End with a verdict**: one of:
+   - **KEEP** — the PR produces a significant, measurable improvement.
+   - **REVERT** — the PR made things worse or produced no benefit.
+   - **CONDITIONAL** — the PR helps in some ways but introduces issues that
+     need follow-up work.
+
+The verdict should be evidence-based. "No observable change" is a valid reason
+to recommend REVERT — changes that add complexity without measurable benefit
+should not be kept.
+
+When no previous-analysis runs are available (e.g. the baseline analysis at
+index 0), skip this section entirely.
 
 ## `code_<agent>.md` Rules
 

@@ -40,7 +40,7 @@ Key paths relative to the repo root:
 ```json
 {meta_json}
 ```
-
+{pr_impact_section}
 ## Requirements
 
 - Follow the section structure from AGENTS.md (Negative Things, Positive Things,
@@ -53,7 +53,7 @@ Key paths relative to the repo root:
   files). Do not rely on memory alone.
 - Compare the history runs against the baseline training data.
 - Keep claims auditable — quote or reference the exact artifact paths.
-
+{pr_impact_requirement}
 ## Output
 
 Write your analysis to: `{output_file}`
@@ -61,7 +61,75 @@ Do not write any other files. Do not modify meta.json.
 """
 
 
-def build_prompt(agent_name: str, analysis_dir: str, meta_json: str) -> str:
+def find_before_dir(analysis_dir: str) -> str | None:
+    """Find the analysis directory immediately before the given one."""
+    after_path = REPO_ROOT / analysis_dir
+    parts = after_path.name.split("_", 1)
+    if len(parts) < 2:
+        return None
+    step_name = parts[1]
+    after_index = int(parts[0])
+    if after_index == 0:
+        return None
+    candidate = after_path.parent / f"{after_index - 1}_{step_name}"
+    if candidate.is_dir() and (candidate / "meta.json").is_file():
+        return str(candidate.relative_to(REPO_ROOT))
+    return None
+
+
+def build_pr_impact_sections(meta_obj: dict, analysis_dir: str) -> tuple[str, str]:
+    """Build the PR impact prompt sections.
+
+    Returns (pr_impact_section, pr_impact_requirement) — both empty strings
+    if there is no PR info or no previous analysis to compare against.
+    """
+    if "pr_url" not in meta_obj:
+        return ("", "")
+
+    before_dir = find_before_dir(analysis_dir)
+    if not before_dir:
+        return ("", "")
+
+    before_meta_path = REPO_ROOT / before_dir / "meta.json"
+    before_meta = json.loads(before_meta_path.read_text())
+    before_runs = before_meta.get("history", [])
+
+    if not before_runs:
+        return ("", "")
+
+    pr_title = meta_obj.get("pr_title", "unknown")
+    pr_desc = meta_obj.get("pr_description", "")
+    before_run_list = ", ".join(f"`history/{r}/`" for r in before_runs)
+
+    section = f"""
+## PR Under Evaluation
+
+This analysis evaluates the impact of a PR:
+- **PR**: {meta_obj["pr_url"]}
+- **Title**: {pr_title}
+- **Description**: {pr_desc}
+
+### Previous Analysis Runs (before the PR)
+
+The previous analysis (`{before_dir}/`) examined these history runs:
+{before_run_list}
+
+Read the actual output files from both the previous runs (listed above) and the
+current runs (listed in meta.json `history`) to compare before vs after.
+
+"""
+
+    requirement = """- **PR Impact (REQUIRED)**: Include a `## PR Impact` section as described in
+  AGENTS.md. Compare the current runs against the previous-analysis runs listed
+  above. Determine if the PR produced a significant improvement, was neutral,
+  or made things worse. End with a verdict: KEEP, REVERT, or CONDITIONAL.
+"""
+
+    return (section, requirement)
+
+
+def build_prompt(agent_name: str, analysis_dir: str, meta_json: str,
+                 pr_impact_section: str, pr_impact_requirement: str) -> str:
     output_file = f"{analysis_dir}/insight_{agent_name}.md"
     return PROMPT_TEMPLATE.format(
         agent_name=agent_name,
@@ -69,6 +137,8 @@ def build_prompt(agent_name: str, analysis_dir: str, meta_json: str) -> str:
         repo_root=REPO_ROOT,
         analysis_dir=analysis_dir,
         meta_json=meta_json,
+        pr_impact_section=pr_impact_section,
+        pr_impact_requirement=pr_impact_requirement,
     )
 
 
@@ -89,13 +159,21 @@ def main():
         sys.exit(f"ERROR: No meta.json found at {meta_path}")
 
     meta_json = meta_path.read_text()
-    # Validate it's valid JSON while we have it.
-    json.loads(meta_json)
+    meta_obj = json.loads(meta_json)
 
-    claude_prompt = build_prompt("claude", analysis_dir, meta_json)
-    codex_prompt = build_prompt("codex", analysis_dir, meta_json)
+    pr_impact_section, pr_impact_requirement = build_pr_impact_sections(meta_obj, analysis_dir)
+
+    claude_prompt = build_prompt("claude", analysis_dir, meta_json, pr_impact_section, pr_impact_requirement)
+    codex_prompt = build_prompt("codex", analysis_dir, meta_json, pr_impact_section, pr_impact_requirement)
 
     print(f"Starting analysis for: {analysis_dir}")
+    if "pr_url" in meta_obj:
+        print(f"  PR: {meta_obj.get('pr_title', 'unknown')}")
+        before_dir = find_before_dir(analysis_dir)
+        if before_dir:
+            print(f"  Comparing against: {before_dir}")
+        else:
+            print(f"  No previous analysis found — PR impact section will be skipped")
     print(f"  Claude insight → {analysis_dir}/insight_claude.md")
     print(f"  Codex  insight → {analysis_dir}/insight_codex.md")
     print()
