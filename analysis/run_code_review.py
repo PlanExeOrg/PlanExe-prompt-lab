@@ -7,6 +7,7 @@ Usage:
     python analysis/run_code_review.py analysis/0_identify_potential_levers
 """
 import argparse
+import json
 import subprocess
 import sys
 from pathlib import Path
@@ -45,7 +46,7 @@ Use them to guide your code review — look for code-level root causes of the
 issues they describe.
 
 {insight_content}
-
+{pr_section}
 ## What to look for
 
 - **Prompt construction bugs**: Is the prompt assembled correctly? Are messages
@@ -60,7 +61,7 @@ issues they describe.
 - **Configuration issues**: Could model-name resolution fail silently?
 - **Template leakage vectors**: Does the prompt include examples that models
   might copy verbatim? Is there a guard against that?
-
+{pr_review_guidance}
 ## Output format
 
 Write your findings to: `{output_file}`
@@ -73,7 +74,7 @@ Use this structure:
 - `## Trace to Insight Findings` — map each code issue to the insight-file
   observations it explains (e.g., "The double user-prompt bug explains the
   template leakage in run 00")
-- `## Summary`
+{pr_output_section}- `## Summary`
 
 Label bugs B1, B2, … and improvements I1, I2, …
 Cite exact file paths and line numbers.
@@ -81,7 +82,48 @@ Do not modify any source files. Only write the output file.
 """
 
 
-def build_prompt(agent_name: str, analysis_dir: str, insight_content: str) -> str:
+def build_pr_sections(meta_obj: dict) -> tuple[str, str, str]:
+    """Build PR-related prompt sections.
+
+    Returns (pr_section, pr_review_guidance, pr_output_section) — all empty
+    strings if there is no PR info in meta.json.
+    """
+    if "pr_url" not in meta_obj:
+        return ("", "", "")
+
+    pr_title = meta_obj.get("pr_title", "unknown")
+    pr_desc = meta_obj.get("pr_description", "")
+
+    pr_section = f"""
+## PR Under Review
+
+This analysis evaluates the impact of a specific PR:
+- **PR**: {meta_obj["pr_url"]}
+- **Title**: {pr_title}
+- **Description**: {pr_desc}
+
+Focus your code review on the changes introduced by this PR. Read the PR diff
+(use `gh pr diff {meta_obj["pr_url"].split("/")[-1]}` or read the changed files)
+to understand exactly what was modified.
+
+"""
+
+    pr_review_guidance = f"""
+- **PR-specific review**: Does the change in {pr_title} actually address the
+  problem it claims to fix? Are there edge cases the PR misses? Could the
+  change introduce new issues?
+"""
+
+    pr_output_section = """- `## PR Review` — specific assessment of the PR's code changes: does the
+  implementation match the intent? Are there bugs or gaps in the PR itself?
+"""
+
+    return (pr_section, pr_review_guidance, pr_output_section)
+
+
+def build_prompt(agent_name: str, analysis_dir: str, insight_content: str,
+                 pr_section: str, pr_review_guidance: str,
+                 pr_output_section: str) -> str:
     output_file = f"{analysis_dir}/code_{agent_name}.md"
     source_file_list = "\n".join(
         f"- `{PLANEXE_ROOT / f}`" for f in SOURCE_FILES
@@ -91,6 +133,9 @@ def build_prompt(agent_name: str, analysis_dir: str, insight_content: str) -> st
         planexe_root=PLANEXE_ROOT,
         source_file_list=source_file_list,
         insight_content=insight_content,
+        pr_section=pr_section,
+        pr_review_guidance=pr_review_guidance,
+        pr_output_section=pr_output_section,
         output_file=output_file,
     )
 
@@ -128,10 +173,22 @@ def main():
 
     insight_content = load_insight_files(analysis_path)
 
-    claude_prompt = build_prompt("claude", analysis_dir, insight_content)
-    codex_prompt = build_prompt("codex", analysis_dir, insight_content)
+    # Load meta.json for PR info.
+    meta_path = analysis_path / "meta.json"
+    meta_obj = {}
+    if meta_path.is_file():
+        meta_obj = json.loads(meta_path.read_text())
+
+    pr_section, pr_review_guidance, pr_output_section = build_pr_sections(meta_obj)
+
+    claude_prompt = build_prompt("claude", analysis_dir, insight_content,
+                                 pr_section, pr_review_guidance, pr_output_section)
+    codex_prompt = build_prompt("codex", analysis_dir, insight_content,
+                                pr_section, pr_review_guidance, pr_output_section)
 
     print(f"Starting code review for: {analysis_dir}")
+    if "pr_url" in meta_obj:
+        print(f"  PR: {meta_obj.get('pr_title', 'unknown')}")
     print(f"  Claude → {analysis_dir}/code_claude.md")
     print(f"  Codex  → {analysis_dir}/code_codex.md")
     print()
