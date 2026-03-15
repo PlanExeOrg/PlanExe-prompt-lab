@@ -39,81 +39,91 @@ Metrics below were computed from `baseline/train/*/002-10-potential_levers.json`
 
 ### Operational / structural
 
-| Run | Model | Plans ok | Final plans | Avg sec | Raw schema issues | Missing plans |
-|---|---|---:|---:|---:|---:|---|
-| baseline | baseline | 5/5 | 5/5 | — | 0 | — |
-| 24 | openrouter-nvidia-nemotron-3-nano-30b-a3b | 0/5 | 0/5 | — | 0 | 20250321_silo, 20250329_gta_game, 20260308_sovereign_identity, 20260310_hong_kong_game, 20260311_parasomnia_research_unit |
-| 25 | openrouter-nvidia-nemotron-3-nano-30b-a3b | 1/5 | 1/5 | 146.7 | 0 | 20250329_gta_game, 20260308_sovereign_identity, 20260310_hong_kong_game, 20260311_parasomnia_research_unit |
-| 26 | ollama-llama3.1 | 5/5 | 5/5 | 76.4 | 0 | — |
-| 27 | openrouter-openai-gpt-oss-20b | 2/5 | 2/5 | 132.0 | 0 | 20260308_sovereign_identity, 20260310_hong_kong_game, 20260311_parasomnia_research_unit |
-| 28 | openai-gpt-5-nano | 5/5 | 5/5 | 228.7 | 0 | — |
-| 29 | openrouter-qwen3-30b-a3b | 5/5 | 5/5 | 96.2 | 0 | — |
-| 30 | openrouter-openai-gpt-4o-mini | 3/5 | 3/5 | 39.8 | 0 | 20260308_sovereign_identity, 20260311_parasomnia_research_unit |
-| 31 | anthropic-claude-haiku-4-5-pinned | 4/5 | 4/5 | 171.0 | 1 | 20260311_parasomnia_research_unit |
+
+| Run      | Model                                     | Plans ok | Final plans | Avg sec | Raw schema issues | Missing plans                                                                                                             |
+| -------- | ----------------------------------------- | -------- | ----------- | ------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| baseline | baseline                                  | 5/5      | 5/5         | —       | 0                 | —                                                                                                                         |
+| 24       | openrouter-nvidia-nemotron-3-nano-30b-a3b | 0/5      | 0/5         | —       | 0                 | 20250321_silo, 20250329_gta_game, 20260308_sovereign_identity, 20260310_hong_kong_game, 20260311_parasomnia_research_unit |
+| 25       | openrouter-nvidia-nemotron-3-nano-30b-a3b | 1/5      | 1/5         | 146.7   | 0                 | 20250329_gta_game, 20260308_sovereign_identity, 20260310_hong_kong_game, 20260311_parasomnia_research_unit                |
+| 26       | ollama-llama3.1                           | 5/5      | 5/5         | 76.4    | 0                 | —                                                                                                                         |
+| 27       | openrouter-openai-gpt-oss-20b             | 2/5      | 2/5         | 132.0   | 0                 | 20260308_sovereign_identity, 20260310_hong_kong_game, 20260311_parasomnia_research_unit                                   |
+| 28       | openai-gpt-5-nano                         | 5/5      | 5/5         | 228.7   | 0                 | —                                                                                                                         |
+| 29       | openrouter-qwen3-30b-a3b                  | 5/5      | 5/5         | 96.2    | 0                 | —                                                                                                                         |
+| 30       | openrouter-openai-gpt-4o-mini             | 3/5      | 3/5         | 39.8    | 0                 | 20260308_sovereign_identity, 20260311_parasomnia_research_unit                                                            |
+| 31       | anthropic-claude-haiku-4-5-pinned         | 4/5      | 4/5         | 171.0   | 1                 | 20260311_parasomnia_research_unit                                                                                         |
+
 
 Interpretation: reliability is still highly model-sensitive. Only runs `26`, `28`, and `29` are full-corpus prompt candidates; the others are mainly evidence for code hardening.
 
 ### Uniqueness
 
-| Run | Unique names | Unique reviews | Unique systemic phrases | Cross-call dup names | Cross-call dup reviews |
-|---|---:|---:|---:|---:|---:|
-| baseline | 52/75 | 75/75 | 75/75 | 22 | 0 |
-| 24 | 0/0 | 0/0 | 0/0 | 0 | 0 |
-| 25 | 15/15 | 15/15 | 15/15 | 0 | 0 |
-| 26 | 74/75 | 61/75 | 54/75 | 0 | 14 |
-| 27 | 30/30 | 30/30 | 30/30 | 0 | 0 |
-| 28 | 75/75 | 71/75 | 75/75 | 0 | 4 |
-| 29 | 73/75 | 75/75 | 45/75 | 0 | 0 |
-| 30 | 44/45 | 45/45 | 45/45 | 0 | 0 |
-| 31 | 61/61 | 61/61 | 60/61 | 0 | 0 |
+
+| Run      | Unique names | Unique reviews | Unique systemic phrases | Cross-call dup names | Cross-call dup reviews |
+| -------- | ------------ | -------------- | ----------------------- | -------------------- | ---------------------- |
+| baseline | 52/75        | 75/75          | 75/75                   | 22                   | 0                      |
+| 24       | 0/0          | 0/0            | 0/0                     | 0                    | 0                      |
+| 25       | 15/15        | 15/15          | 15/15                   | 0                    | 0                      |
+| 26       | 74/75        | 61/75          | 54/75                   | 0                    | 14                     |
+| 27       | 30/30        | 30/30          | 30/30                   | 0                    | 0                      |
+| 28       | 75/75        | 71/75          | 75/75                   | 0                    | 4                      |
+| 29       | 73/75        | 75/75          | 45/75                   | 0                    | 0                      |
+| 30       | 44/45        | 45/45          | 45/45                   | 0                    | 0                      |
+| 31       | 61/61        | 61/61          | 60/61                   | 0                    | 0                      |
+
 
 Interpretation: exact uniqueness alone is not enough. Run `26` looks strong on names, but its duplicated reviews and repeated reasoning patterns make it weaker than run `28`. Run `29` also shows that unique names can coexist with low reasoning diversity (`45/75` unique systemic phrases).
 
 ### Average field lengths
 
-| Run | Avg name chars | Avg consequence chars | Avg option chars | Avg review chars | Avg radical option chars |
-|---|---:|---:|---:|---:|---:|
-| baseline | 27.7 | 279.5 | 150.2 | 152.3 | 179.3 |
-| 24 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 |
-| 25 | 29.7 | 217.8 | 75.2 | 151.9 | 89.5 |
-| 26 | 30.7 | 166.7 | 95.6 | 146.4 | 95.2 |
-| 27 | 29.9 | 217.3 | 62.8 | 131.9 | 83.6 |
-| 28 | 43.9 | 270.3 | 126.6 | 149.4 | 147.0 |
-| 29 | 30.6 | 253.3 | 63.1 | 136.5 | 66.7 |
-| 30 | 29.5 | 229.0 | 95.9 | 145.9 | 106.8 |
-| 31 | 46.6 | 779.2 | 318.7 | 386.2 | 334.7 |
+
+| Run      | Avg name chars | Avg consequence chars | Avg option chars | Avg review chars | Avg radical option chars |
+| -------- | -------------- | --------------------- | ---------------- | ---------------- | ------------------------ |
+| baseline | 27.7           | 279.5                 | 150.2            | 152.3            | 179.3                    |
+| 24       | 0.0            | 0.0                   | 0.0              | 0.0              | 0.0                      |
+| 25       | 29.7           | 217.8                 | 75.2             | 151.9            | 89.5                     |
+| 26       | 30.7           | 166.7                 | 95.6             | 146.4            | 95.2                     |
+| 27       | 29.9           | 217.3                 | 62.8             | 131.9            | 83.6                     |
+| 28       | 43.9           | 270.3                 | 126.6            | 149.4            | 147.0                    |
+| 29       | 30.6           | 253.3                 | 63.1             | 136.5            | 66.7                     |
+| 30       | 29.5           | 229.0                 | 95.9             | 145.9            | 106.8                    |
+| 31       | 46.6           | 779.2                 | 318.7            | 386.2            | 334.7                    |
+
 
 Interpretation: run `28` is the closest to baseline depth. Run `29` is too terse in the option field. Run `31` is not just “better because longer”; it is far outside the baseline operating envelope and correlates with timeout risk.
 
 ### Constraint violations
 
-| Run | Option-count violations | Consequence chain violations | No numeric consequence | Review opener violations | Missing `Weakness:` | Placeholders |
-|---|---:|---:|---:|---:|---:|---:|
-| baseline | 0 | 5 | 21 | 0 | 0 | 0 |
-| 24 | 0 | 0 | 0 | 0 | 0 | 0 |
-| 25 | 0 | 0 | 0 | 0 | 0 | 0 |
-| 26 | 14 | 0 | 59 | 7 | 8 | 0 |
-| 27 | 0 | 0 | 0 | 0 | 0 | 0 |
-| 28 | 0 | 31 | 0 | 0 | 0 | 0 |
-| 29 | 0 | 45 | 7 | 0 | 0 | 0 |
-| 30 | 0 | 15 | 0 | 0 | 0 | 0 |
-| 31 | 1 | 16 | 1 | 1 | 1 | 1 |
+
+| Run      | Option-count violations | Consequence chain violations | No numeric consequence | Review opener violations | Missing `Weakness:` | Placeholders |
+| -------- | ----------------------- | ---------------------------- | ---------------------- | ------------------------ | ------------------- | ------------ |
+| baseline | 0                       | 5                            | 21                     | 0                        | 0                   | 0            |
+| 24       | 0                       | 0                            | 0                      | 0                        | 0                   | 0            |
+| 25       | 0                       | 0                            | 0                      | 0                        | 0                   | 0            |
+| 26       | 14                      | 0                            | 59                     | 7                        | 8                   | 0            |
+| 27       | 0                       | 0                            | 0                      | 0                        | 0                   | 0            |
+| 28       | 0                       | 31                           | 0                      | 0                        | 0                   | 0            |
+| 29       | 0                       | 45                           | 7                      | 0                        | 0                   | 0            |
+| 30       | 0                       | 15                           | 0                      | 0                        | 0                   | 0            |
+| 31       | 1                       | 16                           | 1                      | 1                        | 1                   | 1            |
+
 
 Interpretation: the prompt currently creates two different failure clusters: short-form collapse (`26`) and over-creative format drift (`28`, `29`, `31`). Code-side validation would catch both.
 
 ### Template leakage / robotic phrasing
 
-| Run | `The options fail to consider` | `25% faster` | Generic suffix names | Radical hype-token options | `Controls ...` reviews | `Trade-off:` reviews |
-|---|---:|---:|---:|---:|---:|---:|
-| baseline | 8 | 3 | 60 | 32 | 75 | 0 |
-| 24 | 0 | 0 | 0 | 0 | 0 | 0 |
-| 25 | 0 | 1 | 7 | 7 | 15 | 0 |
-| 26 | 53 | 2 | 40 | 22 | 68 | 0 |
-| 27 | 13 | 6 | 11 | 18 | 30 | 0 |
-| 28 | 69 | 72 | 32 | 61 | 0 | 75 |
-| 29 | 5 | 8 | 53 | 36 | 75 | 0 |
-| 30 | 3 | 3 | 29 | 15 | 45 | 0 |
-| 31 | 0 | 2 | 27 | 33 | 60 | 0 |
+
+| Run      | `The options fail to consider` | `25% faster` | Generic suffix names | Radical hype-token options | `Controls ...` reviews | `Trade-off:` reviews |
+| -------- | ------------------------------ | ------------ | -------------------- | -------------------------- | ---------------------- | -------------------- |
+| baseline | 8                              | 3            | 60                   | 32                         | 75                     | 0                    |
+| 24       | 0                              | 0            | 0                    | 0                          | 0                      | 0                    |
+| 25       | 0                              | 1            | 7                    | 7                          | 15                     | 0                    |
+| 26       | 53                             | 2            | 40                   | 22                         | 68                     | 0                    |
+| 27       | 13                             | 6            | 11                   | 18                         | 30                     | 0                    |
+| 28       | 69                             | 72           | 32                   | 61                         | 0                      | 75                   |
+| 29       | 5                              | 8            | 53                   | 36                         | 75                     | 0                    |
+| 30       | 3                              | 3            | 29                   | 15                         | 45                     | 0                    |
+| 31       | 0                              | 2            | 27                   | 33                         | 60                     | 0                    |
+
 
 Interpretation: run `28` is the clearest prompt-leakage run; run `29` avoids the exact phrases but still leans hard on generic lever suffixes and hype-heavy radical options. Baseline itself is suffix-heavy, so uniqueness gains should be judged against that caveat.
 
@@ -161,3 +171,4 @@ Interpretation: run `28` is the clearest prompt-leakage run; run `29` avoids the
 - The biggest practical problems are still code-side: extraction failure, partial raw objects, and post-merge invalid content.
 - The most important prompt issue is template leakage from the prompt’s own sample phrasing.
 - My recommendation for the next round is: keep run `29` as the operational base, borrow depth cues from run `28`, explicitly de-template the prompt, and add validator/sanitizer code before spending another round on pure prompt tuning.
+
