@@ -69,10 +69,20 @@ CUSTOM_PROFILE_MODELS = {
 # Helpers
 # ---------------------------------------------------------------------------
 
+def _dir_index(d: Path) -> int:
+    """Extract the numeric index prefix from a directory name like '12_step'."""
+    return int(d.name.split("_", 1)[0])
+
+
 def get_latest_analysis_dir() -> Path:
-    """Find the most recent analysis directory for this step."""
+    """Find the most recent analysis directory for this step.
+
+    Sorts numerically by index prefix, not lexicographically — otherwise
+    '9_step' sorts after '11_step'.
+    """
     analysis_root = PROMPT_LAB_DIR / "analysis"
-    dirs = sorted(analysis_root.glob(f"*_{STEP_NAME}"))
+    dirs = [d for d in analysis_root.glob(f"*_{STEP_NAME}") if d.is_dir()]
+    dirs.sort(key=_dir_index)
     if not dirs:
         sys.exit(f"ERROR: No analysis directories found for {STEP_NAME}")
     return dirs[-1]
@@ -349,7 +359,8 @@ def create_analysis_dir() -> Path:
 
     # Find the newly created directory (highest index for this step).
     analysis_root = PROMPT_LAB_DIR / "analysis"
-    dirs = sorted(analysis_root.glob(f"*_{STEP_NAME}"))
+    dirs = [d for d in analysis_root.glob(f"*_{STEP_NAME}") if d.is_dir()]
+    dirs.sort(key=_dir_index)
     if not dirs:
         sys.exit("ERROR: No analysis directory found after create_analysis_dir.py")
     return dirs[-1]

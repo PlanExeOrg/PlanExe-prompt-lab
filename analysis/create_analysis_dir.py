@@ -27,11 +27,21 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 REPO_ROOT = SCRIPT_DIR.parent
 
 
+def _dir_index(d: Path) -> int:
+    """Extract the numeric index prefix from a directory name like '12_step'."""
+    return int(d.name.split("_", 1)[0])
+
+
 def find_analysis_dirs(step_name: str) -> list[Path]:
-    """Find all existing analysis directories for this step, sorted by index."""
+    """Find all existing analysis directories for this step, sorted by index.
+
+    Sorts numerically by the index prefix, not lexicographically — otherwise
+    '9_step' would sort after '11_step'.
+    """
     analysis_root = REPO_ROOT / "analysis"
-    dirs = sorted(analysis_root.glob(f"*_{step_name}"))
-    return [d for d in dirs if d.is_dir()]
+    dirs = [d for d in analysis_root.glob(f"*_{step_name}") if d.is_dir()]
+    dirs.sort(key=_dir_index)
+    return dirs
 
 
 def collect_analyzed_runs(analysis_dirs: list[Path]) -> set[str]:
