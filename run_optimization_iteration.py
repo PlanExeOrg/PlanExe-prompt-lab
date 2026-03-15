@@ -164,8 +164,60 @@ def resolve_models(models_arg: str | None) -> list[str]:
 # Step 1: Implement recommendation
 # ---------------------------------------------------------------------------
 
-def step_implement(synthesis: str, recommendation: str) -> None:
-    """Use Claude Code to implement the recommendation on a feature branch."""
+def detect_pr_number() -> int | None:
+    """Detect the PR number for the current branch in PlanExe repo."""
+    result = subprocess.run(
+        ["gh", "pr", "view", "--json", "number", "-q", ".number"],
+        cwd=PLANEXE_DIR,
+        capture_output=True,
+        text=True,
+    )
+    if result.returncode == 0 and result.stdout.strip().isdigit():
+        return int(result.stdout.strip())
+    return None
+
+
+def register_prompt() -> None:
+    """Register the current system prompt so the runner uses the latest version."""
+    print()
+    print("Registering current system prompt...")
+    result = subprocess.run(
+        [
+            PLANEXE_PYTHON, "-m", "prompt_optimizer.register_prompt",
+            "--step", STEP_NAME,
+            "--prompt-lab-dir", str(PROMPT_LAB_DIR),
+        ],
+        cwd=PLANEXE_DIR,
+        capture_output=True,
+        text=True,
+    )
+    if result.returncode != 0:
+        print(f"WARNING: register_prompt failed: {result.stderr.strip()}")
+    else:
+        print(result.stdout.strip())
+
+
+def register_pr_in_meta(analysis_dir: Path, pr_number: int) -> None:
+    """Register PR info in the analysis meta.json."""
+    script = PROMPT_LAB_DIR / "analysis" / "update_meta_pr.py"
+    rel_dir = str(analysis_dir.relative_to(PROMPT_LAB_DIR))
+    result = subprocess.run(
+        [sys.executable, str(script), rel_dir, str(pr_number)],
+        cwd=PROMPT_LAB_DIR,
+        capture_output=True,
+        text=True,
+    )
+    if result.returncode != 0:
+        print(f"WARNING: update_meta_pr failed: {result.stderr.strip()}")
+    else:
+        print(result.stdout.strip())
+
+
+def step_implement(synthesis: str, recommendation: str) -> int | None:
+    """Use Claude Code to implement the recommendation on a feature branch.
+
+    Returns the detected PR number, or None if not detected.
+    """
     prompt = f"""\
 Read the following recommendation from the latest analysis synthesis and
 implement it in the PlanExe codebase.
@@ -185,9 +237,11 @@ implement it in the PlanExe codebase.
 3. Commit the change with a descriptive message.
 4. Push the branch.
 5. Create a PR with a clear title and description.
+6. Do NOT merge the PR. It will be merged after experiments confirm improvement.
 
 Important:
 - Do NOT commit to main directly.
+- Do NOT merge the PR — it must be tested first.
 - Make only the minimal change described in the recommendation.
 - The PlanExe repo is at: {PLANEXE_DIR}
 """
@@ -209,7 +263,19 @@ Important:
     if result.returncode != 0:
         sys.exit(f"ERROR: Claude Code exited with code {result.returncode}")
 
+    # Detect the PR number from the current branch.
+    pr_number = detect_pr_number()
+    if pr_number:
+        print(f"\nDetected PR #{pr_number}")
+    else:
+        print("\nWARNING: Could not detect PR number. Register it manually with:")
+        print("  python analysis/update_meta_pr.py <analysis_dir> <PR#>")
+
+    # Register the (potentially updated) system prompt.
+    register_prompt()
+
     print("\nImplementation step complete.")
+    return pr_number
 
 
 # ---------------------------------------------------------------------------
@@ -373,10 +439,15 @@ def main():
     print("-" * 40)
 
     # Step 1: Implement the recommendation.
+    pr_number = None
     if not args.skip_implement:
-        step_implement(synthesis, recommendation)
+        pr_number = step_implement(synthesis, recommendation)
     else:
         print("\n[Skipping implementation step]")
+        # Try to detect PR from current branch even when skipping implement.
+        pr_number = detect_pr_number()
+        if pr_number:
+            print(f"  Detected existing PR #{pr_number}")
 
     # Step 2: Run experiments.
     if not args.skip_runner:
@@ -393,6 +464,12 @@ def main():
         print("=" * 60)
 
         new_analysis_dir = create_analysis_dir()
+
+        # Register PR info in meta.json before running analysis agents.
+        if pr_number:
+            print(f"\nRegistering PR #{pr_number} in {new_analysis_dir.name}/meta.json")
+            register_pr_in_meta(new_analysis_dir, pr_number)
+
         step_analysis(new_analysis_dir)
     else:
         print("\n[Skipping analysis step]")

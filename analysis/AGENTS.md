@@ -119,7 +119,25 @@ from `history/`, and produces an `assessment.md` that answers:
 Phase 4 depends on phase 3 and requires `pr_url`/`pr_title`/`pr_description`
 in the after directory's `meta.json` (see "Registering the PR" below).
 
-### Registering the PR
+### Registering the PR (before analysis)
+
+Register the PR in `meta.json` **before** running phases 1–4. The insight,
+code review, synthesis, and assessment agents all use this PR info to focus
+their analysis. If you run the analysis first and register the PR later, the
+agents won't know which PR they're evaluating.
+
+The `run_optimization_iteration.py` orchestrator does this automatically
+after creating the analysis directory. When running phases manually, register
+the PR right after phase 0:
+
+```bash
+python analysis/create_analysis_dir.py identify_potential_levers        # Phase 0
+python analysis/update_meta_pr.py analysis/12_identify_potential_levers 285  # Register PR
+python analysis/run_insight.py analysis/12_identify_potential_levers     # Phase 1
+# ... phases 2-4
+```
+
+### Registering the PR (details)
 
 If the analysis corresponds to a code or prompt change submitted as a GitHub
 PR, register it in `meta.json` so the provenance is traceable:
@@ -131,6 +149,69 @@ python analysis/update_meta_pr.py analysis/1_identify_potential_levers 268
 Accepts a bare PR number or a full URL. Fetches title and summary via `gh` and
 writes `pr_url`, `pr_title`, `pr_description` into the existing `meta.json`.
 Use `--repo owner/name` if the PR is not on `PlanExeOrg/PlanExe`.
+
+### Completeness Heuristic
+
+`create_analysis_dir.py` considers a previous analysis directory "complete"
+if it contains a `synthesis.md` file. If a directory has no `synthesis.md`,
+the script treats it as incomplete and may try to assign the same runs to a
+new directory, causing conflicts.
+
+**When skipping the full pipeline** (e.g., writing a manual `assessment.md`
+for a failed iteration), always create a `synthesis.md` stub so the next
+`create_analysis_dir.py` run recognizes the directory as complete:
+
+```bash
+echo "# Synthesis\n\nAnalysis skipped — see assessment.md." > analysis/10_identify_potential_levers/synthesis.md
+```
+
+### Manual Iteration Workflow
+
+Sometimes the full analysis pipeline (phases 1–4) is not appropriate:
+
+- **The iteration was a clear disaster** — e.g., a quality gate broke
+  non-English plans, or a change caused mass failures. Running 4 phases of
+  LLM analysis on obviously-bad data wastes time and money.
+- **The PR had zero observable effect** — e.g., a retry config that was never
+  triggered. A manual note is more honest than a multi-page analysis saying
+  "nothing changed."
+
+In these cases, write files manually:
+
+1. Create the analysis directory and register the PR:
+   ```bash
+   python analysis/create_analysis_dir.py identify_potential_levers
+   python analysis/update_meta_pr.py analysis/N_identify_potential_levers <PR#>
+   ```
+
+2. Write a manual `assessment.md` explaining what happened and the verdict.
+
+3. Write a `synthesis.md` stub (see Completeness Heuristic above) so the
+   directory is recognized as complete.
+
+4. Optionally write a `pr_status.md` with evidence about the PR's impact.
+
+### Prompt Registration Timing
+
+The runner uses `--system-prompt-file` from the registered prompt in
+`prompts/`, not the `SYSTEM_PROMPT` constant in Python code. If you change
+the system prompt in code (e.g., via a PR), you must register the new prompt
+**before** running experiments:
+
+```bash
+# After merging/checking out the PR branch with prompt changes:
+cd /path/to/PlanExe
+/opt/homebrew/bin/python3.11 -m prompt_optimizer.register_prompt \
+    --step identify_potential_levers \
+    --prompt-lab-dir /path/to/PlanExe-prompt-lab
+
+# Then run experiments (which use the newly registered prompt):
+cd /path/to/PlanExe-prompt-lab
+python run_optimization_iteration.py --skip-implement
+```
+
+The `run_optimization_iteration.py` orchestrator does this automatically
+between the implement and runner steps.
 
 ## Purpose
 

@@ -7,6 +7,7 @@ Usage:
     python analysis/run_synthesis.py analysis/0_identify_potential_levers
 """
 import argparse
+import json
 import subprocess
 import sys
 from pathlib import Path
@@ -41,7 +42,7 @@ feasibility:
 
 The PlanExe repo is at: {planexe_root}
 The prompt-lab repo is at: {repo_root}
-
+{pr_section}
 ## Task
 
 1. Read all insight and code review files carefully.
@@ -99,6 +100,28 @@ Do not write any other files.
 """
 
 
+def build_pr_section(meta_obj: dict) -> str:
+    """Build a PR context section for the synthesis prompt."""
+    if "pr_url" not in meta_obj:
+        return ""
+
+    pr_title = meta_obj.get("pr_title", "unknown")
+    pr_desc = meta_obj.get("pr_description", "")
+
+    return f"""
+## PR Under Evaluation
+
+This analysis evaluates the impact of a specific PR:
+- **PR**: {meta_obj["pr_url"]}
+- **Title**: {pr_title}
+- **Description**: {pr_desc}
+
+When ranking directions and writing the recommendation, consider whether the
+PR's change is effective. If insight or code review files include a PR Impact
+verdict (KEEP/REVERT/CONDITIONAL), factor that into your synthesis.
+"""
+
+
 def load_analysis_files(analysis_path: Path) -> str:
     """Concatenate all .md files from the analysis directory."""
     parts = []
@@ -109,7 +132,7 @@ def load_analysis_files(analysis_path: Path) -> str:
     return "\n\n---\n\n".join(parts)
 
 
-def build_prompt(analysis_dir: str) -> str:
+def build_prompt(analysis_dir: str, pr_section: str) -> str:
     output_file = f"{analysis_dir}/synthesis.md"
     source_file_list = "\n".join(
         f"- `{PLANEXE_ROOT / f}`" for f in SOURCE_FILES
@@ -120,6 +143,7 @@ def build_prompt(analysis_dir: str) -> str:
         source_file_list=source_file_list,
         planexe_root=PLANEXE_ROOT,
         repo_root=REPO_ROOT,
+        pr_section=pr_section,
     )
 
 
@@ -149,9 +173,18 @@ def main():
         if not path.is_file():
             sys.exit(f"ERROR: PlanExe source file not found: {path}")
 
-    prompt = build_prompt(analysis_dir)
+    # Load meta.json for PR info.
+    meta_path = analysis_path / "meta.json"
+    meta_obj = {}
+    if meta_path.is_file():
+        meta_obj = json.loads(meta_path.read_text())
+
+    pr_section = build_pr_section(meta_obj)
+    prompt = build_prompt(analysis_dir, pr_section)
 
     print(f"Starting synthesis for: {analysis_dir}")
+    if "pr_url" in meta_obj:
+        print(f"  PR: {meta_obj.get('pr_title', 'unknown')}")
     print(f"  Output → {analysis_dir}/synthesis.md")
     print()
 
