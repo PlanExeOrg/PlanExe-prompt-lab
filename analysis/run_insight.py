@@ -53,6 +53,10 @@ Key paths relative to the repo root:
   files). Do not rely on memory alone.
 - Compare the history runs against the baseline training data.
 - Keep claims auditable — quote or reference the exact artifact paths.
+- Check events.jsonl for LLMChatError entries — these may indicate Pydantic
+  schema validation failures (e.g., max_length exceeded) that discard entire
+  LLM responses. Schema-level hard constraints that clash with model output
+  tendencies waste tokens on retries and hurt success rates.
 {pr_impact_requirement}
 ## Output
 

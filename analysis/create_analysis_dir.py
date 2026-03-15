@@ -7,6 +7,12 @@ Scans all existing analysis directories for the step, collects the union of
 already-analyzed history runs, then diffs against the full set of history runs
 on disk. The new analysis directory gets an auto-incremented index.
 
+Each analysis directory captures a snapshot of runs produced under the same
+code/prompt configuration. When a PR changes PlanExe (e.g., removing a Pydantic
+max_length constraint), the experiments run after that change land in new history
+runs. This script ensures those new runs get their own analysis directory so the
+assessment phase can compare "before" vs "after" cleanly.
+
 Usage:
     python analysis/create_analysis_dir.py identify_potential_levers
     python analysis/create_analysis_dir.py identify_potential_levers --dry-run

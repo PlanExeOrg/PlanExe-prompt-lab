@@ -61,6 +61,10 @@ issues they describe.
 - **Configuration issues**: Could model-name resolution fail silently?
 - **Template leakage vectors**: Does the prompt include examples that models
   might copy verbatim? Is there a guard against that?
+- **Pydantic schema constraints**: Are there max_length or other hard limits on
+  list fields that could reject valid LLM output? When a downstream step (e.g.,
+  DeduplicateLeversTask) already handles over-generation, a hard cap wastes
+  tokens by forcing a full retry instead of accepting and trimming the response.
 {pr_review_guidance}
 ## Output format
 

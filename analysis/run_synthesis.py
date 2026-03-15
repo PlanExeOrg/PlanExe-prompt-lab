@@ -56,6 +56,9 @@ The prompt-lab repo is at: {repo_root}
      help some)
    - Evidence strength (confirmed bug vs hypothesis vs suspicion)
    - Implementation difficulty
+   - Token cost: fixes that prevent wasted retries (e.g., removing hard schema
+     constraints that reject valid output) have outsized impact on cost and
+     success rate
 5. From those 5, pick the single best recommendation to pursue first.
 
 ## Output format

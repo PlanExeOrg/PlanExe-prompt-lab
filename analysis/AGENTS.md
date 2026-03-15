@@ -504,6 +504,36 @@ The `meta.json` in each analysis directory links to the registered prompt and
 history runs that were examined. Use these paths to trace any claim back to
 source artifacts.
 
+## Experiment Insights
+
+Lessons learned from past optimization iterations that should inform future
+analysis. These are patterns the analysis agents should watch for.
+
+### Pydantic hard constraints vs soft prompt guidance
+
+**Context**: The `identify_potential_levers` step had `max_length=7` on the
+`DocumentDetails.levers` Pydantic field. When haiku returned 8 levers in run 87
+(plan: gta_game), the entire LLM call failed with a `ValidationError` →
+`LLMChatError`, discarding all levers — including the valid ones. This wasted
+tokens on a full retry and reduced the success rate for that model.
+
+**Principle**: Prefer soft guidance in the system prompt (e.g., "Propose 5 to 7
+levers") over hard Pydantic constraints (`max_length=7`) when a downstream step
+already handles over-generation. The `DeduplicateLeversTask` trims extras, so
+the schema-level cap was redundant and harmful.
+
+**What to watch for in analysis**:
+- LLM call failures caused by schema validation (check `events.jsonl` for
+  `LLMChatError` entries with `ValidationError` in the message).
+- Models that consistently produce slightly more items than the hard cap — this
+  signals the cap is too tight, not that the model is broken.
+- Success rate drops that correlate with specific models + plans — these often
+  indicate a schema constraint issue rather than a prompt quality issue.
+
+**General rule**: `min_length` constraints are useful (catch under-generation).
+`max_length` constraints are risky when downstream dedup/trimming exists. Remove
+them and let the pipeline handle overflow gracefully.
+
 ## Editing Guidance
 
 - Preserve existing analysis files unless asked to rewrite them.

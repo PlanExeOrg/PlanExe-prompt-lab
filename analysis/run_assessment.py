@@ -66,7 +66,9 @@ For each metric below, compare before and after, citing specific numbers from
 the insight files. Flag whether each metric IMPROVED, REGRESSED, or is UNCHANGED.
 
 Metrics to compare:
-- **Success rate**: plans succeeded / total per model
+- **Success rate**: plans succeeded / total per model (a success rate increase
+  after removing a Pydantic hard constraint means the constraint was causing
+  unnecessary validation failures — check events.jsonl for LLMChatError count)
 - **Bracket placeholder leakage**: count of unfilled `[...]` patterns
 - **Option count violations**: levers with != 3 options
 - **Lever name uniqueness**: unique names / total levers
@@ -75,6 +77,9 @@ Metrics to compare:
 - **Consequence chain format**: `Immediate → Systemic → Strategic` markers
 - **Content depth**: average option length in characters
 - **Cross-call duplication**: lever names repeated across the 3 LLM calls
+- **Over-generation count**: how many models produced >7 levers per call now
+  that the hard cap is removed? This is informational, not a failure — the
+  downstream DeduplicateLeversTask handles the extras
 
 Present this as a comparison table with columns: Metric | Before | After | Verdict.
 

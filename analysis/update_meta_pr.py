@@ -2,6 +2,12 @@
 """
 Update an analysis meta.json with PR info fetched from GitHub.
 
+Register the PR *before* running phases 1-4 so that insight, code review,
+synthesis, and assessment agents all know which change they are evaluating.
+Without PR context, the agents produce generic analysis instead of targeted
+before/after comparisons (e.g., "did removing max_length=7 reduce haiku
+failures on gta_game?").
+
 Usage:
     python analysis/update_meta_pr.py analysis/1_identify_potential_levers https://github.com/PlanExeOrg/PlanExe/pull/268
     python analysis/update_meta_pr.py analysis/1_identify_potential_levers 268
