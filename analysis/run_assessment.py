@@ -90,8 +90,26 @@ one batch, note it separately but do not use it for the comparison.
 - Justify the verdict based on the evidence above.
 - If CONDITIONAL, specify what additional changes would be needed.
 
-### E. Recommendations
-- Should the next iteration focus on the "after" synthesis recommendation?
+### E. Recommended Next Change
+
+Read the `synthesis.md` from the "after" analysis directory. It contains a
+`## Recommendation` section proposing the next code or prompt change.
+
+Evaluate the recommended solution:
+- **What does it propose?** Summarize the recommended change in 1-2 sentences.
+- **Is the evidence convincing?** Does the synthesis cite specific runs, metrics,
+  and failure modes that the recommendation would fix?
+- **What should be verified?** List concrete things to check in the next
+  iteration's experiments to confirm the recommendation actually works.
+  Be specific — name the models, plans, metrics, or failure classes to watch.
+  Example: "Verify haiku no longer hard-fails on gta_game (was 0/1 in run 87
+  due to 8 levers exceeding max_length=7)."
+- **What could go wrong?** Identify risks or edge cases the recommendation
+  might introduce. What regressions should the next iteration watch for?
+- **Are there prerequisite issues?** Does the recommendation depend on other
+  fixes being in place first?
+
+### F. Backlog
 - Any issues from "before" that are now resolved and can be removed from
   the backlog?
 - Any new issues that should be added to the backlog?
@@ -119,7 +137,13 @@ Use this structure:
 ## Verdict
 **[YES / NO / CONDITIONAL]**: [one-sentence justification]
 
-## Recommendations
+## Recommended Next Change
+**Proposal**: ...
+**Evidence**: ...
+**Verify**: ...
+**Risks**: ...
+
+## Backlog
 ...
 ```
 
