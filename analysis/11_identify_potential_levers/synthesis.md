@@ -1,14 +1,20 @@
 # Synthesis
 
+> **Update:** PR #283 (RetryConfig) was reverted in PR #284. Zero retries were triggered across
+> all 35 runs. All failures were structural, not transient. Success rate unchanged at 28/35 (80%).
+> The directions below remain valid — they target the actual failure modes.
+
 ## Cross-Agent Agreement
 
 All four analysis files (insight_claude, insight_codex, code_claude, code_codex) converge on the
 following points:
 
-1. **PR #283's retry config does not fix the observed failure modes.** All three failures (run 81:
-   empty JSON; run 83: EOF truncation; run 87: schema count violation) are structural or behavioral,
-   not transient network faults. The retry path in `runner.py:94` fires on the same model with the
-   same prompt, so none of these failure classes becomes recoverable.
+1. **PR #283's retry config did not fix any observed failure mode and was reverted (PR #284).**
+   All three failures (run 81: empty JSON; run 83: EOF truncation; run 87: schema count violation)
+   are structural or behavioral, not transient network faults. `RetryConfig` only retries errors
+   classified as transient by `is_transient_error` (API timeouts, network faults). Pydantic
+   validation errors and JSON parse failures are permanent and fall through immediately. The retry
+   code was never exercised.
 
 2. **No content validation exists before `save_clean`.** Both code reviews independently identified
    that `save_clean` (lines 304–306) writes any schema-valid `Lever` without inspecting field
@@ -169,6 +175,9 @@ This is a real token-cost and truncation-pressure issue, especially on long plan
 ## Recommendation
 
 **Pursue direction 1 first: truncate over-limit lever lists instead of hard-failing.**
+
+PR #283 (RetryConfig) was reverted in PR #284 — it produced zero observable benefit. The codebase
+is back to its pre-#283 state. The directions below apply against clean main.
 
 **Why first:** It is the only change with a guaranteed, deterministic outcome — a model that
 previously caused a total plan failure now produces a valid, complete output with 7 levers instead
