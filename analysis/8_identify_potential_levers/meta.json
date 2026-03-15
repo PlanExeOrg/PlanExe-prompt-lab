@@ -1,0 +1,15 @@
+{
+  "prompt": "identify_potential_levers/prompt_1_b12739343b9a3bc2f0aec73a8605e712a3f663b0e2323cc068a7e328129523d3.txt",
+  "pr_url": "https://github.com/PlanExeOrg/PlanExe/pull/278",
+  "pr_title": "Fresh context per call, relax lever count to 5-7",
+  "pr_description": "Each LLM call now gets a fresh `[SYSTEM, USER]` message list instead of accumulating prior assistant JSON into `chat_message_list`. This eliminates qwen3-30b's 100% consequence contamination (confirmed across 3 consecutive batches: runs 43, 50, 57) caused by calls 2/3 conditioning on prior output with no plan re-grounding. Calls 2/3 re-include the full `user_prompt` (plan documents) alongside the name-exclusion list, maintaining domain grounding. Relaxed lever count from exactly 5 to 5-7 per call (15-21 total) per user feedback \u2014 deduplication downstream handles extras, quality matters more than exact count.",
+  "history": [
+    "0/60_identify_potential_levers",
+    "0/61_identify_potential_levers",
+    "0/62_identify_potential_levers",
+    "0/63_identify_potential_levers",
+    "0/64_identify_potential_levers",
+    "0/65_identify_potential_levers",
+    "0/66_identify_potential_levers"
+  ]
+}
