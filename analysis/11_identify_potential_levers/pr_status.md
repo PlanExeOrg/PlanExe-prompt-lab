@@ -26,7 +26,7 @@ No retries were observed. All 7 failures in runs 81-87 were structural, not tran
 
 ## Is the content of the responses better?
 
-No measurable change. The content quality is identical — the PR only affects error handling, not prompt or schema.
+No measurable change compared to iteration 10 (runs 74-80). The PR only affects error handling — it does not change the prompt, schema, or any logic that shapes the LLM's output. The levers produced in runs 81-87 have the same structure, naming patterns, and field content as runs 74-80.
 
 ## Verdict
 
