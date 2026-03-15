@@ -1,0 +1,200 @@
+[
+  {
+    "lever_id": "3bb73a1b-935c-41bf-95ba-a0fcfe61d0b6",
+    "name": "Naturalistic Monitoring Fidelity and Safety Rigor",
+    "consequences": "Immediate: Safety-focused adjustments tighten overnight risk controls. \u2192 Systemic: Safety vs throughput trade-off observed as data completeness rises by 8 percentage points to ~92% and adverse incident rate falls by 40%, but per-participant setup time increases by 20%, reducing nightly throughput. \u2192 Strategic: Preserves safe operations while enabling scalable capacity growth as staffing expands, though rapid expansion may be limited by higher initial setup overhead.",
+    "options": [
+      "Maintain the current essential sensor suite (dry-EEG headbands, contact-free sensors, cameras) and sustain eight active suites with safety margins.",
+      "Pilot a privacy-preserving on-site triage prototype using ML-assisted scoring on a subset of nights with enhanced staff time.",
+      "Adopt a cloud-enabled, privacy-preserving triage platform ingesting all streams to provide real-time event likelihoods, enabling dynamic staffing and scalable expansion"
+    ],
+    "review": "Controls safety and regulatory compliance vs preservation of ecological validity. Weakness: The options fail to consider cross-site standardization and potential drift in safety protocols across sites."
+  },
+  {
+    "lever_id": "9fdd9b13-8d80-47fd-8948-75b6c18d88c5",
+    "name": "Privacy-by-Design Data Governance and De-Identification",
+    "consequences": "Immediate: Privacy-preserving data handling reduces privacy risk during sharing. \u2192 Systemic: Re-identification risk falls by 95% while data utility for fine-grained triage declines by ~12%, illustrating a privacy-utility trade-off. \u2192 Strategic: Enables compliant collaboration at scale but demands complementary approaches to recover analytic richness; requires synthetic data strategies to preserve usefulness.",
+    "options": [
+      "Limit data sharing to de-identified physiological metrics with strict access controls.",
+      "Establish formal data-use agreements and governed data-sharing templates to enable external benchmarking while preserving privacy.",
+      "Adopt synthetic data generation and privacy-preserving data renderings to publish shared datasets without exposing raw participant data"
+    ],
+    "review": "Controls privacy safeguards vs analytic richness. Weakness: The options fail to consider user consent complexities for secondary analyses."
+  },
+  {
+    "lever_id": "496576b8-267c-41f7-b2a9-7bd7c75fa7c4",
+    "name": "Recruitment Strategy Optimization under Safety Constraints",
+    "consequences": "Immediate: Expand eligible participant pool through refined pre-screening and clearer exclusion criteria. \u2192 Systemic: Enrollment climbs by 25% (to 62\u201370 participants over 3 years) while screening duration grows by ~25%, elevating screening costs. \u2192 Strategic: Broader recruitment improves study power and generalizability but increases logistical complexity and budget pressure; risk of slower ramp-up if compensation and consent processes lag.",
+    "options": [
+      "Maintain current recruitment channels (clinic referrals, Bonn networks) with strict pre-screening to minimize protocol risk.",
+      "Expand recruitment channels to regional sleep clinics with flexible scheduling and optimized consent workflows.",
+      "Establish a Bonn-region participant consortium funded by multi-source sponsorship that pools participants for extended stays in exchange for standardized data contributions"
+    ],
+    "review": "Controls recruitment breadth vs screening burden. Weakness: The options fail to consider long-term retention risk if compensation structures are not managed."
+  },
+  {
+    "lever_id": "55fac68d-8ccf-4e33-9e7f-728925f759bf",
+    "name": "Staffing Architecture and Safety-Throughput Balance",
+    "consequences": "Immediate: Staffing and safety architecture rebalanced to reduce burnout and improve coverage. \u2192 Systemic: Suite capacity can rise to 12, boosting nightly throughput by ~20%, but automation raises risk of missed nuanced events, with a 10\u201315% potential increase in false negatives. \u2192 Strategic: Supports growth and resilience at scale while increasing dependency on maintenance and governance for automation.",
+    "options": [
+      "Maintain the current three-night shift technicians and eight active suites with existing safety protocols.",
+      "Introduce cross-training and a small on-call float pool to absorb spikes in events and reduce fatigue.",
+      "Incorporate robotic-assisted monitoring devices and automated alarm triage to reduce manual workload and enable higher suite occupancy"
+    ],
+    "review": "Controls cost of staffing vs coverage redundancy. Weakness: The options fail to consider regulatory constraints on automation of patient monitoring."
+  },
+  {
+    "lever_id": "45af9b77-d9e1-4e43-a247-3f87add3a7bf",
+    "name": "Event Triaging Analytics Pipeline and Benchmarking",
+    "consequences": "Immediate: Dual-human scoring with real-time annotation continues. \u2192 Systemic: Inter-rater reliability remains high (ICC > 0.85) but analysis cycle time increases by 24%, delaying feedback to participants. \u2192 Strategic: Retains data fidelity while risking slower insights; long-term viability depends on scalable automation with human oversight.",
+    "options": [
+      "Sustain dual-human scoring with real-time annotation and regular reliability checks.",
+      "Develop a semi-automated scoring pipeline combining rule-based triage with periodic human audit.",
+      "Deploy a cloud-native, privacy-preserving triage engine that streams data to automated scoring with explainability dashboards and ongoing benchmarking against dual-human standards"
+    ],
+    "review": "Controls timeliness of triage vs accuracy. Weakness: The options fail to consider data privacy when using cloud-based inference."
+  },
+  {
+    "lever_id": "a9de33e3-325a-4b29-8ff3-edb7d6b4933b",
+    "name": "Data Storage, Privacy, and Repository Strategy",
+    "consequences": "Immediate: Strengthens local control over sensitive streams and ensures encryption-at-rest. \u2192 Systemic: Local storage increases annual costs by ~15% but privacy risk reduces by ~90%. \u2192 Strategic: Positions the project for secure external collaboration and compliance, but may limit immediate public access and external reuse of raw data; requires long-term repository integration for scale.",
+    "options": [
+      "Store data locally with encryption and de-identify before any external sharing, requiring approvals for de-identified releases.",
+      "Standardize data-use agreements and staged deposition to a recognized repository after PI vetting.",
+      "Release a fully de-identified synthetic dataset with documented biases to facilitate external validation and reproducibility"
+    ],
+    "review": "Controls local data ownership vs external collaboration. Weakness: The options fail to consider legal risk of synthetic data biases and misinterpretation."
+  },
+  {
+    "lever_id": "16cfece8-410e-4239-8497-80f9f70f47d0",
+    "name": "Sensing Protocol Phasing and Throughput Optimization",
+    "consequences": "Immediate: Baseline data collection begins with standardized low-burden sensors, enabling continuous monitoring from enrollment. Systemic: Data processing capacity must scale by 15%, increasing annual storage and compute costs by approximately \u20ac60,000, while maintaining high event capture rates. This trades throughput and broader cohort reach against per-night PSG-depth, potentially reducing diagnostic certainty on any given night. Strategic: In the long term, broader participation improves phenotyping generalizability but requires robust data governance to sustain quality across sites.",
+    "options": [
+      "Standardize nightly low-burden sensing across all participants to minimize intrusion while preserving core data quality.",
+      "Schedule enhanced PSG nights only for flagged events to maximize data depth while containing labor and cost.",
+      "Launch privacy-preserving federated event-triage analytics and on-device summarization with data-sharing licenses for research partners."
+    ],
+    "review": "Controls intrusiveness/privacy vs data richness and event capture efficiency. Weakness: The options fail to consider cross-site regulatory variability and consent management complexities across EU member states."
+  },
+  {
+    "lever_id": "cd3c9a8b-2172-4f18-aac4-b7878cc12d37",
+    "name": "Participant-Centered Safety and Comfort Integration",
+    "consequences": "Immediate: Redesigned room layout and safety padding enable safer, more comfortable participant stay, reducing early withdrawal. Systemic: This reduces adverse events by 20% but raises operating costs by ~\u20ac120k/year due to enhanced safety equipment and staffing. This trade-off prioritizes retention over cost containment and may require enrollment pace to justify expense. Strategic: Comfort-first environments improve data yield and participant retention, increasing study power but intensifying budget scrutiny and fundraising needs.",
+    "options": [
+      "Implement comfort-first room redesigns including padded corridors and accessible emergency staffing to maximize retention.",
+      "Adopt rapid escalation protocols with safety triage to minimize risk without constraining naturalistic behavior.",
+      "Deploy IoT-enabled adaptive safety orchestration with real-time environmental adjustments and a risk-sharing, outcome-based funding model with academic partners."
+    ],
+    "review": "Controls safety prioritization vs naturalistic behavior realism. Weakness: The options fail to consider the burden on staff time and burnout risk from heightened safety protocols."
+  },
+  {
+    "lever_id": "cf36d9d6-9976-44e9-a805-1e9e9102fae2",
+    "name": "Data Governance, De-Identification, and Access Architecture",
+    "consequences": "Immediate: De-identification pipelines operate at intake, enabling initial de-identification. Systemic: Compliance overhead increases by 25%, but cross-site replication and external validation improve reproducibility by 20% and reduce data-access latency by 40%. Strategic: This strengthens trust and collaboration yet may slow iterative analyses and limit ad-hoc research due to governance steps.",
+    "options": [
+      "Standardize de-identified data pipelines with strict access controls to meet EU data protection requirements while enabling collaboration.",
+      "Expose restricted data access to consortium partners through tiered permissions and data-use agreements to accelerate replication and multi-site studies.",
+      "Create a privacy-preserving federated analytics layer with on-demand, tiered licensing for external researchers, enabling scalable, compliant data reuse while preserving patient privacy."
+    ],
+    "review": "Controls data access vs collaboration and innovation. Weakness: The options fail to consider vendor lock-in and data-use terms renegotiation risk across partner institutions."
+  },
+  {
+    "lever_id": "dad4ba11-1afa-4176-89c2-b9629ec70581",
+    "name": "Adaptive Staffing and Night Coverage Framework",
+    "consequences": "Immediate: Flexible rostering reduces idle coverage and improves response readiness. Systemic: Labor costs drop by 18%, but incident response times increase by 12% due to remote oversight limitations. Strategic: Resilience improves with remote oversight, yet on-site speed may degrade in high-risk events; recruiting and compliance will shape viability.",
+    "options": [
+      "Maintain fixed three-shift coverage with generous safety margins to ensure on-site safety.",
+      "Implement forecast-driven staffing that scales with anticipated event density to optimize labor costs.",
+      "Adopt a hybrid remote-on-site model with a risk-sharing partnership and outcome-based staffing subsidies."
+    ],
+    "review": "Controls staffing costs vs on-site safety and response times. Weakness: The options fail to consider regulatory constraints on remote monitoring across borders and staff work-hour regulations."
+  },
+  {
+    "lever_id": "6c97a685-8ba9-4c46-9cec-d27b6653ab15",
+    "name": "External Partnerships for Funding and Compliance",
+    "consequences": "Immediate: New partnerships accelerate regulatory alignment and grant procurement. Systemic: Diversified funding increases annual budget by ~25%, but adds governance overhead and longer decision cycles. Strategic: Diversified funding improves resilience but autonomy and publication timing may be constrained by partner terms.",
+    "options": [
+      "Pursue joint funding with DFG and University of Bonn while maintaining publication independence.",
+      "Form pharmaceutical collaboration as upside with pre-approval data sharing and maintained publication rights.",
+      "Create philanthropic-anchored consortium with tiered member contributions and a data-licensing network for external researchers to diversify funding."
+    ],
+    "review": "Controls funding diversification vs research autonomy. Weakness: The options fail to consider cross-institutional IP rights and data-use terms across different funders."
+  },
+  {
+    "lever_id": "12e6b8c9-4910-41e5-973a-1aecc626460e",
+    "name": "Longitudinal Analytics Platform and Event-Triage Innovation",
+    "consequences": "Immediate: Semi-automated event-triage accelerates initial scoring. Systemic: Cloud resources increase costs by 25% but data processing throughput improves by 40%, enabling larger-scale phenotyping. Strategic: External validation and reproducibility improve but vendor/licensing terms dependencies create risk.",
+    "options": [
+      "Develop a semi-automated event-triage tool that refines manual scoring with rule-based heuristics and clinician validation.",
+      "Incorporate longitudinal clustering analyses to profile individual parasomnia patterns across participants and time.",
+      "Build a privacy-preserving cloud-native triage platform with modular microservices and a data-licensing network enabling external researchers to access de-identified datasets under tiered licenses."
+    ],
+    "review": "Controls speed vs accuracy in triage. Weakness: The options fail to consider latency constraints for real-time triage and potential misclassification bias with automated rules."
+  },
+  {
+    "lever_id": "c8ed3fad-89d2-4a94-b66c-ccb0ba4c6000",
+    "name": "Tiered Acquisition Cadence and Sensor Fusion Strategy",
+    "consequences": "Immediate: Refine sensor fusion thresholds and inter-rater reliability within the current PSG-plus-Actigraphy framework to improve adjudication accuracy. Systemic: Throughput increases by 15% and manual adjudication time falls by 20%, but stricter criteria marginally increase false negatives by 2\u20133%. Strategic: Enables scalable data capture across more suites, but raises ongoing data governance costs and hardware dependency.",
+    "options": [
+      "Refine sensor fusion thresholds and inter-rater reliability within the current PSG-plus-Actigraphy framework to improve adjudication accuracy.",
+      "Broaden automated artifact rejection with rule-based filters to reduce manual review time by 25% while preserving data quality.",
+      "Deploy edge-enabled real-time triage and a data-sharing-as-a-service model to fund expansion while maintaining strict privacy controls."
+    ],
+    "review": "Controls Throughput vs. Data Integrity. Weakness: The options fail to consider participant privacy risk associated with increasing real-time triage and cross-site data sharing."
+  },
+  {
+    "lever_id": "63dca0dc-3c69-45f1-875a-af00a1d9f0e0",
+    "name": "Dynamic Staffing and Safety Margin Architecture",
+    "consequences": "Immediate: Cross-train staff across eight suites to preserve safety margins during night shifts. Systemic: Reduces overtime costs by 10% and improves event capture consistency by 15%, but scheduling complexity increases by 25%. Strategic: Enables rapid scale-up based on data-driven staffing, but elevates administrative overhead and potential vendor dependency.",
+    "options": [
+      "Cross-train staff across eight suites to preserve safety margins during night shifts.",
+      "Expand cross-training to increase throughput by 15% without additional hires.",
+      "Launch an on-demand staffing marketplace with remote supervision and performance-based contracts to scale coverage during high-variance nights."
+    ],
+    "review": "Controls Staffing flexibility vs. Safety margin. Weakness: The options fail to consider schedule complexity and the potential for staff burnout under on-demand staffing."
+  },
+  {
+    "lever_id": "7eb0e1d5-d06a-4199-beeb-54cab4f34695",
+    "name": "Privacy-Preserving Data Collaboration and External Validation",
+    "consequences": "Immediate: Harden end-to-end encryption and access controls for de-identified datasets. Systemic: Decreases cross-site data sharing by 30% and increases data harmonization costs by 12%. Strategic: Supports broader external validation while elevating governance overhead and coordination needs.",
+    "options": [
+      "Strengthen end-to-end encryption and access controls for de-identified datasets to reduce breach risk while slowing cross-site data sharing.",
+      "Expand consent-driven data-sharing agreements with partner institutions to widen external validation while preserving privacy protections.",
+      "Establish a privacy-preserving federated analytics framework and an external governance charter to enable external validation while keeping raw data resident."
+    ],
+    "review": "Controls Privacy controls vs. External collaboration. Weakness: The options fail to consider cross-border data transfer compliance and data localization constraints."
+  },
+  {
+    "lever_id": "5a55c60a-05af-462b-8075-745156580a5c",
+    "name": "Expansion Readiness and Pilot-to-Scale Pathways",
+    "consequences": "Immediate: Phase expansions only after predefined data-quality milestones within the current eight-suite footprint. Systemic: If expansion proceeds, capacity increases by 50% and enrollment by 20\u201330 participants per cohort, but capital expenditure rises by ~60% and project cadence slows. Strategic: Positions the facility for scalable growth aligned with performance targets, but heightens risk of delays if milestones slip.",
+    "options": [
+      "Phase expansions only after predefined data-quality milestones within the current eight-suite footprint.",
+      "Prepare a modular expansion blueprint with pre-renovation cost estimates to enable rapid scale-up upon meeting enrollment and data-quality targets.",
+      "Establish a public-private consortium and adopt a modular, pre-fabricated expansion strategy funded by shared-savings agreements to enable immediate scale-up while maintaining safety protocols."
+    ],
+    "review": "Controls Expansion readiness vs. Scale cadence. Weakness: The options fail to consider renovation supply chain risks and safety compliance delays."
+  },
+  {
+    "lever_id": "006bd8aa-145f-4327-b5c7-f44c8ef130ff",
+    "name": "Resident Privacy and Video Access Controls",
+    "consequences": "Immediate: Tighten consent and restrict video visibility to essential staff. Systemic: Privacy risk decreases by 40% but administrative workload grows by 15%. Strategic: Builds trust with participants and institutions, enabling broader collaborations but increases ongoing policy overhead.",
+    "options": [
+      "Tighten consent and restrict video visibility to essential staff.",
+      "Mask video streams with automated obscuration and enforce governance-approved review only on flagged events.",
+      "Implement a privacy-preserving video abstraction layer powered by on-site edge processing to enable external validation while preserving room privacy."
+    ],
+    "review": "Controls Video privacy vs. Research access. Weakness: The options fail to consider consent dynamics and video privacy constraints with broad sharing."
+  },
+  {
+    "lever_id": "6d5a5620-1898-435a-896e-fcd2939d324a",
+    "name": "Longitudinal Phenotyping Data Governance and Benchmarking Atlas",
+    "consequences": "Immediate: Standardize phenotyping protocols and data formats. Systemic: Data harmonization improves by 25% and licensing friction reduces by 30%, but governance overhead increases by 20%. Strategic: Accelerates multi-site collaborations and grants readiness, yet requires ongoing cross-institution coordination and resource allocation.",
+    "options": [
+      "Institute standardized phenotyping protocols and data formats.",
+      "Centralize a curated de-identified data repository with strict access tiers and ongoing quality checks.",
+      "Create a cross-institutional benchmarking consortium with modular data packs and shared risk governance to accelerate methods validation."
+    ],
+    "review": "Controls Data harmonization vs. Governance overhead. Weakness: The options fail to consider interoperability standards and vendor lock-in."
+  }
+]
