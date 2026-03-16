@@ -238,7 +238,8 @@ def main():
     after_meta_obj = json.loads(after_meta)
     if "pr_url" not in after_meta_obj:
         print("WARNING: after meta.json has no pr_url — assessment may lack PR context.")
-        print("  Run: python analysis/update_meta_pr.py " + after_dir + " <PR_NUMBER>")
+        step_name = after_path.name.split("_", 1)[1] if "_" in after_path.name else "STEP"
+        print("  Run: python analysis/prepare_iteration.py " + step_name + " <PR_NUMBER>")
         print()
 
     output_file = f"{after_dir}/assessment.md"

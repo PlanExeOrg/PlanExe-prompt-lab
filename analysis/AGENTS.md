@@ -47,21 +47,21 @@ grounded, auditable evaluations that a synthesis agent can compare.
 Analysis is a three-phase process, preceded by a setup step. Each analysis
 phase runs Claude Code and Codex in parallel to produce independent files.
 
-### Phase 0: Create analysis directory
+### Phase 0: Prepare iteration
 
 ```bash
-python analysis/create_analysis_dir.py identify_potential_levers
+python analysis/prepare_iteration.py identify_potential_levers 316
 ```
 
-Scans all existing analysis directories for the step, collects the union of
-history runs already referenced in their `meta.json` files, then diffs against
-the full set of history runs on disk. Creates a new auto-incremented analysis
-directory containing a `meta.json` with only the unanalyzed runs.
+Verifies the PR, resolves the latest registered prompt, pre-creates history
+directories (one per model), and creates a new auto-incremented analysis
+directory with `meta.json` containing PR info and the history run list.
 
-This must run before Phase 1. It ensures every history run is accounted for
-— no runs are accidentally skipped.
+This must run before Phase 1. It ensures all metadata (including PR context)
+is available from the start so insight agents can do targeted analysis.
 
 Use `--dry-run` to preview without writing anything.
+Use `--models llama,haiku` to create dirs for a subset of models.
 
 ### Phase 1: Insight files
 
@@ -121,45 +121,35 @@ in the after directory's `meta.json` (see "Registering the PR" below).
 
 ### Registering the PR (before analysis)
 
-Register the PR in `meta.json` **before** running phases 1–4. The insight,
-code review, synthesis, and assessment agents all use this PR info to focus
-their analysis. If you run the analysis first and register the PR later, the
-agents won't know which PR they're evaluating.
+The PR is registered in `meta.json` **during phase 0** (`prepare_iteration.py`).
+The insight, code review, synthesis, and assessment agents all use this PR info
+to focus their analysis.
 
-The `run_optimization_iteration.py` orchestrator does this automatically
-after creating the analysis directory. When running phases manually, register
-the PR right after phase 0:
+The `run_optimization_iteration.py` orchestrator calls `prepare_iteration`
+automatically before running experiments. When running phases manually:
 
 ```bash
-python analysis/create_analysis_dir.py identify_potential_levers        # Phase 0
-python analysis/update_meta_pr.py analysis/12_identify_potential_levers 285  # Register PR
+python analysis/prepare_iteration.py identify_potential_levers 285       # Phase 0 (creates dir + registers PR)
 python analysis/run_insight.py analysis/12_identify_potential_levers     # Phase 1
 # ... phases 2-4
 ```
 
-### Registering the PR (details)
-
-If the analysis corresponds to a code or prompt change submitted as a GitHub
-PR, register it in `meta.json` so the provenance is traceable:
-
-```bash
-python analysis/update_meta_pr.py analysis/1_identify_potential_levers 268
-```
-
-Accepts a bare PR number or a full URL. Fetches title and summary via `gh` and
-writes `pr_url`, `pr_title`, `pr_description` into the existing `meta.json`.
+`prepare_iteration.py` accepts a bare PR number or a full URL. It fetches
+the title and summary via `gh` and writes `pr_url`, `pr_title`,
+`pr_description` into the analysis `meta.json`.
 Use `--repo owner/name` if the PR is not on `PlanExeOrg/PlanExe`.
 
 ### Completeness Heuristic
 
-`create_analysis_dir.py` considers a previous analysis directory "complete"
-if it contains a `synthesis.md` file. If a directory has no `synthesis.md`,
-the script treats it as incomplete and may try to assign the same runs to a
-new directory, causing conflicts.
+`prepare_iteration.py` (in scan-existing mode, used by `--skip-runner`)
+considers a previous analysis directory "complete" if it contains a
+`synthesis.md` file. If a directory has no `synthesis.md`, the script treats
+it as incomplete and may try to assign the same runs to a new directory,
+causing conflicts.
 
 **When skipping the full pipeline** (e.g., writing a manual `assessment.md`
 for a failed iteration), always create a `synthesis.md` stub so the next
-`create_analysis_dir.py` run recognizes the directory as complete:
+run recognizes the directory as complete:
 
 ```bash
 echo "# Synthesis\n\nAnalysis skipped — see assessment.md." > analysis/10_identify_potential_levers/synthesis.md
@@ -180,8 +170,7 @@ In these cases, write files manually:
 
 1. Create the analysis directory and register the PR:
    ```bash
-   python analysis/create_analysis_dir.py identify_potential_levers
-   python analysis/update_meta_pr.py analysis/N_identify_potential_levers <PR#>
+   python analysis/prepare_iteration.py identify_potential_levers <PR#>
    ```
 
 2. Write a manual `assessment.md` explaining what happened and the verdict.
