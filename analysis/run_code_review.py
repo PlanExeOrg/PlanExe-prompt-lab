@@ -65,6 +65,13 @@ issues they describe.
   list fields that could reject valid LLM output? When a downstream step (e.g.,
   DeduplicateLeversTask) already handles over-generation, a hard cap wastes
   tokens by forcing a full retry instead of accepting and trimming the response.
+- **Prompt-driven quality regression**: Does the system prompt force models to
+  produce verbose, overconfident, or fabricated content? Look for instructions
+  that mandate specific percentages or metrics (forcing fabrication), require
+  formulaic structures (conservative/moderate/radical triads), or push for
+  marketing language. Compare the system prompt's demands against what the
+  baseline training data actually looks like — if the prompt forces output to
+  be 3× longer than baseline without justification, that's a quality problem.
 {pr_review_guidance}
 ## Output format
 

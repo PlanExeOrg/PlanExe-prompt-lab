@@ -57,6 +57,12 @@ Key paths relative to the repo root:
   schema validation failures (e.g., max_length exceeded) that discard entire
   LLM responses. Schema-level hard constraints that clash with model output
   tendencies waste tokens on retries and hurt success rates.
+- **Content quality vs baseline**: Compare average field lengths (consequences,
+  options, review) against the baseline training data. Report the ratio. A ratio
+  above 2× is a warning sign — longer is not better if the extra length is
+  fabricated numbers, marketing copy, or verbose restatements. Count fabricated
+  percentage claims (e.g. "reduces costs by 30%") that have no basis in the
+  project context. Flag marketing-copy language in strategic analysis fields.
 {pr_impact_requirement}
 ## Output
 

@@ -59,6 +59,11 @@ The prompt-lab repo is at: {repo_root}
    - Token cost: fixes that prevent wasted retries (e.g., removing hard schema
      constraints that reject valid output) have outsized impact on cost and
      success rate
+   - **Content quality**: a change that improves the credibility and groundedness
+     of ALL successful plans is higher-impact than one that recovers a single
+     failed plan. Content quality regressions (verbosity, fabricated numbers,
+     marketing-copy tone) that affect 34/35 plans outweigh structural fixes
+     that affect 1/35.
 5. From those 5, pick the single best recommendation to pursue first.
 
 ## Output format

@@ -80,6 +80,20 @@ Metrics to compare:
 - **Over-generation count**: how many models produced >7 levers per call now
   that the hard cap is removed? This is informational, not a failure — the
   downstream DeduplicateLeversTask handles the extras
+- **Field length vs baseline**: average consequences/options/review length
+  compared to baseline training data. Report the ratio. A ratio above 2× is a
+  warning; above 3× likely indicates verbosity regression.
+- **Fabricated quantification**: count of percentage claims or numeric estimates
+  in lever fields that have no basis in the project context (e.g. "reduces
+  costs by 30%"). These are almost always LLM-fabricated.
+- **Marketing-copy language**: count of hype phrases ("cutting-edge",
+  "game-changing", "revolutionary", "breathless") in strategic analysis fields.
+  These degrade credibility even if structural compliance is perfect.
+
+**IMPORTANT**: A change that improves success rate (e.g. 88% → 97%) but
+degrades content quality across all successful plans is a net negative.
+Content quality regressions that affect every plan are higher priority than
+structural fixes that recover one failed plan.
 
 Present this as a comparison table with columns: Metric | Before | After | Verdict.
 

@@ -407,10 +407,17 @@ When comparing runs, separate:
 
 - structural validity: valid JSON, schema compliance, option counts
 - content quality: specificity, diversity, usefulness, non-generic reasoning
+- content credibility: are claims grounded in the project context or fabricated?
+- verbosity vs substance: is increased length adding real information?
 - operational reliability: retries, timeouts, model configuration failures
 
 If one run is richer but much longer, say so explicitly.
 Do not collapse "more verbose" and "better" into the same judgment without comment.
+
+**Critical**: Longer output is NOT inherently better. Compare field lengths against
+the baseline training data. If consequences are 3-4× longer than baseline but don't
+contain proportionally more decision-relevant information, that is a regression in
+quality-per-word, even if structural compliance is perfect.
 
 ## Quantitative Metrics
 
@@ -427,6 +434,14 @@ The exact metrics depend on the step, but useful patterns include:
   placeholders, or repeat robotic patterns across entries.
 - **Cross-call duplication**: when a step makes multiple LLM calls and merges
   results, measure how much content is repeated across calls.
+- **Fabricated quantification**: count of percentage claims, cost deltas, or
+  numeric estimates that appear in lever fields (e.g. "reduces costs by 30%",
+  "15-20% increase"). These are almost always fabricated by the LLM since the
+  project context rarely contains supporting evidence for specific numbers.
+- **Baseline length comparison**: compare average field lengths against the
+  baseline training data (`baseline/train/<plan>/002-10-potential_levers.json`).
+  Report the ratio (e.g. "consequences are 3.6× longer than baseline"). A ratio
+  above 2× for any field is a warning sign for verbosity without substance.
 
 Present metrics in tables so runs can be compared at a glance.
 Always explain what the numbers mean — a perfect uniqueness score can still
@@ -437,6 +452,7 @@ Useful minimums for insight files:
 - at least one uniqueness table
 - at least one length/depth table or equivalent quantitative signal
 - at least one constraint-violation or template-leakage count when relevant
+- at least one baseline length comparison (current vs baseline avg field lengths)
 
 ## Hypothesis Format
 
@@ -533,6 +549,55 @@ the schema-level cap was redundant and harmful.
 **General rule**: `min_length` constraints are useful (catch under-generation).
 `max_length` constraints are risky when downstream dedup/trimming exists. Remove
 them and let the pipeline handle overflow gracefully.
+
+### Content quality vs structural compliance
+
+**Context**: After 17 iterations of prompt optimization, the success rate improved
+from ~60% to 97.1%. However, an external review of full PlanExe reports
+(hong_kong_game plan) rated the baseline report **6.5/10** and the report built
+on optimized levers **5.8/10**. The verdict: *"Version 2 improved specificity,
+but regressed in credibility."*
+
+The optimization loop had been maximizing **structural compliance** (valid JSON,
+validators passing, correct field formats) without any signal for **content
+quality** (are levers grounded? are numbers defensible? is the tone appropriate
+for a strategic document?).
+
+**Measured impact**: Baseline hong_kong_game levers averaged 269 chars for
+consequences, 162 chars for options, 153 chars for reviews. Iteration 17 output
+averaged 980, 321, and 319 chars respectively — 3.6×, 2.0×, and 2.1× longer.
+The additional length consisted largely of fabricated percentage claims,
+marketing-copy language, and verbose restatements rather than new information.
+
+**Specific prompt elements that drove the regression**:
+- Mandatory quantification (*"Include measurable outcomes: a % change, capacity
+  shift, or cost delta"*) forced models to fabricate numbers.
+- Verbose consequence chains (*"Immediate → Systemic → Strategic"*) inflated
+  length without proportional substance.
+- Formulaic option triads (*"conservative → moderate → radical"*) produced
+  predictable three-point spreads instead of genuinely distinct approaches.
+- Tech-forcing (*"Radical option must include emerging tech/business model"*)
+  pushed toward flashy, unsupported claims.
+
+**Principle**: Structural compliance is necessary but not sufficient. Every
+analysis iteration must measure content quality alongside success rate. A change
+that raises success rate from 90% to 97% but makes the content of every
+successful plan less credible is a net negative.
+
+**What to watch for in analysis**:
+- Field length ratios vs baseline above 2× (warning) or 3× (likely regression).
+- Fabricated percentage claims that have no basis in the project context.
+- Marketing-copy tone: phrases like "cutting-edge", "game-changing",
+  "breathless", "revolutionary" in strategic analysis fields.
+- Formulaic option structures where all three options follow an obvious
+  template (conservative/moderate/radical or similar triads).
+- Loss of grounding: options that sound impressive but don't connect to
+  specific project constraints, stakeholders, or decisions.
+
+**General rule**: Content quality regressions that affect all successful plans
+(e.g., 34/35) are higher priority than structural fixes that recover one
+failed plan (e.g., 1/35). Both matter, but quality × breadth outweighs
+compliance × edge-case.
 
 ## Editing Guidance
 
