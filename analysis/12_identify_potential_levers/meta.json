@@ -1,0 +1,15 @@
+{
+  "prompt": "identify_potential_levers/prompt_2_75f59ab464162a827807a68b029321534ae1686f6fc340e278c7881d3b334d39.txt",
+  "pr_url": "https://github.com/PlanExeOrg/PlanExe/pull/286",
+  "pr_title": "Remove max_length=7 hard constraint on levers schema",
+  "pr_description": "Remove `max_length=7` from the `DocumentDetails.levers` Pydantic field When a model returns 8 levers, the hard cap causes a `ValidationError` \u2192 `LLMChatError`, discarding all levers from that call \u2014 including valid ones (observed in run 87: haiku, gta_game) The downstream `DeduplicateLeversTask` already handles extras, so the schema-level cap is unnecessary and harmful `min_length=5` stays to catch under-generation; the system prompt still guides \"5 to 7 levers\"",
+  "history": [
+    "0/88_identify_potential_levers",
+    "0/89_identify_potential_levers",
+    "0/90_identify_potential_levers",
+    "0/91_identify_potential_levers",
+    "0/92_identify_potential_levers",
+    "0/93_identify_potential_levers",
+    "0/94_identify_potential_levers"
+  ]
+}
