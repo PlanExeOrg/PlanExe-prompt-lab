@@ -41,6 +41,7 @@ MODELS = [
     "openai-gpt-5-nano",
     "openrouter-qwen3-30b-a3b",
     "openrouter-openai-gpt-4o-mini",
+    "openrouter-gemini-2.0-flash-001",
     "anthropic-claude-haiku-4-5-pinned",
 ]
 
@@ -51,6 +52,7 @@ MODEL_ALIASES = {
     "gpt5-nano": "openai-gpt-5-nano",
     "qwen": "openrouter-qwen3-30b-a3b",
     "gpt4o-mini": "openrouter-openai-gpt-4o-mini",
+    "gemini-flash": "openrouter-gemini-2.0-flash-001",
     "haiku": "anthropic-claude-haiku-4-5-pinned",
 }
 
