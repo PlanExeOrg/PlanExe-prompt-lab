@@ -8,6 +8,8 @@ Usage:
 """
 import argparse
 import json
+import os
+import signal
 import subprocess
 import sys
 import time
@@ -102,6 +104,7 @@ Use this structure:
 Label bugs B1, B2, … and improvements I1, I2, …
 Cite exact file paths and line numbers.
 Do not modify any source files. Only write the output file.
+Do not modify meta.json or events.jsonl.
 """
 
 
@@ -252,7 +255,6 @@ def main():
     codex_proc = None
 
     if run_claude:
-        emit_event(events_path, "code_review_claude_start")
         claude_t0 = time.monotonic()
         claude_proc = subprocess.Popen(
             [
@@ -264,10 +266,11 @@ def main():
                 "--model", "sonnet",
             ],
             cwd=REPO_ROOT,
+            start_new_session=True,
         )
+        emit_event(events_path, "code_review_claude_start", pid=claude_proc.pid)
 
     if run_codex:
-        emit_event(events_path, "code_review_codex_start")
         codex_t0 = time.monotonic()
         codex_proc = subprocess.Popen(
             [
@@ -277,7 +280,9 @@ def main():
                 "--full-auto",
             ],
             cwd=REPO_ROOT,
+            start_new_session=True,
         )
+        emit_event(events_path, "code_review_codex_start", pid=codex_proc.pid)
 
     timeout = args.timeout
     pids = []
@@ -299,7 +304,7 @@ def main():
         try:
             claude_exit = claude_proc.wait(timeout=remaining)
         except subprocess.TimeoutExpired:
-            claude_proc.kill()
+            os.killpg(os.getpgid(claude_proc.pid), signal.SIGKILL)
             claude_proc.wait()
             claude_timed_out = True
             claude_exit = None
@@ -328,7 +333,7 @@ def main():
         try:
             codex_exit = codex_proc.wait(timeout=remaining)
         except subprocess.TimeoutExpired:
-            codex_proc.kill()
+            os.killpg(os.getpgid(codex_proc.pid), signal.SIGKILL)
             codex_proc.wait()
             codex_timed_out = True
             codex_exit = None

@@ -8,6 +8,8 @@ Usage:
 """
 import argparse
 import json
+import os
+import signal
 import subprocess
 import sys
 import time
@@ -116,7 +118,7 @@ change — file, line, the fix. If it's a prompt change, draft the new wording.)
 (Anything worth doing later but not first.)
 ```
 
-Do not write any other files.
+Do not write any other files. Do not modify meta.json or events.jsonl.
 """
 
 
@@ -225,7 +227,6 @@ def main():
     print()
 
     timeout = args.timeout
-    emit_event(events_path, "synthesis_claude_start")
     t0 = time.monotonic()
     proc = subprocess.Popen(
         [
@@ -237,13 +238,15 @@ def main():
             "--model", "sonnet",
         ],
         cwd=REPO_ROOT,
+        start_new_session=True,
     )
+    emit_event(events_path, "synthesis_claude_start", pid=proc.pid)
 
     timed_out = False
     try:
         exit_code = proc.wait(timeout=timeout)
     except subprocess.TimeoutExpired:
-        proc.kill()
+        os.killpg(os.getpgid(proc.pid), signal.SIGKILL)
         proc.wait()
         timed_out = True
         exit_code = None

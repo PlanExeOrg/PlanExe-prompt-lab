@@ -7,6 +7,8 @@ Usage:
 """
 import argparse
 import json
+import os
+import signal
 import subprocess
 import sys
 import time
@@ -79,7 +81,7 @@ Key paths relative to the repo root:
 ## Output
 
 Write your analysis to: `{output_file}`
-Do not write any other files. Do not modify meta.json.
+Do not write any other files. Do not modify meta.json or events.jsonl.
 """
 
 
@@ -237,7 +239,6 @@ def main():
     codex_proc = None
 
     if run_claude:
-        emit_event(events_path, "insight_claude_start")
         claude_t0 = time.monotonic()
         claude_proc = subprocess.Popen(
             [
@@ -248,10 +249,11 @@ def main():
                 "--model", "sonnet",
             ],
             cwd=REPO_ROOT,
+            start_new_session=True,
         )
+        emit_event(events_path, "insight_claude_start", pid=claude_proc.pid)
 
     if run_codex:
-        emit_event(events_path, "insight_codex_start")
         codex_t0 = time.monotonic()
         codex_proc = subprocess.Popen(
             [
@@ -261,7 +263,9 @@ def main():
                 "--full-auto",
             ],
             cwd=REPO_ROOT,
+            start_new_session=True,
         )
+        emit_event(events_path, "insight_codex_start", pid=codex_proc.pid)
 
     timeout = args.timeout
     pids = []
@@ -283,7 +287,7 @@ def main():
         try:
             claude_exit = claude_proc.wait(timeout=remaining)
         except subprocess.TimeoutExpired:
-            claude_proc.kill()
+            os.killpg(os.getpgid(claude_proc.pid), signal.SIGKILL)
             claude_proc.wait()
             claude_timed_out = True
             claude_exit = None
@@ -312,7 +316,7 @@ def main():
         try:
             codex_exit = codex_proc.wait(timeout=remaining)
         except subprocess.TimeoutExpired:
-            codex_proc.kill()
+            os.killpg(os.getpgid(codex_proc.pid), signal.SIGKILL)
             codex_proc.wait()
             codex_timed_out = True
             codex_exit = None
