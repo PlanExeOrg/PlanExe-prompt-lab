@@ -45,8 +45,30 @@ grounded, auditable evaluations that a synthesis agent can compare.
 
 ## Running the Scripts
 
-Analysis is a three-phase process, preceded by a setup step. Each analysis
-phase runs Claude Code and Codex in parallel to produce independent files.
+Analysis is a four-phase process, preceded by a setup step. Each phase is
+resumable — if the output files already exist, the phase is skipped.
+
+### Quick start: run all phases
+
+```bash
+python analysis/run_analysis.py analysis/22_identify_potential_levers
+python analysis/run_analysis.py analysis/22_identify_potential_levers --timeout 900
+```
+
+`run_analysis.py` runs insight → code review → synthesis → assessment in
+order, passing `--timeout` (default 600s / 10 min per agent) through to each
+phase. Assessment is auto-skipped for index-0 directories (no "before" to
+compare against). Exits non-zero if any phase fails.
+
+Each agent has a per-process timeout. If an agent exceeds it, the process is
+killed and a placeholder error file is written so downstream phases can
+continue. If both agents in a parallel phase (insight, code review) fail,
+that phase exits non-zero and the pipeline stops.
+
+### Running phases individually
+
+The phases can also be run one at a time. This is useful when debugging or
+re-running a single phase.
 
 ### Phase 0: Prepare iteration
 
@@ -137,8 +159,17 @@ automatically before running experiments. When running phases manually:
 
 ```bash
 python analysis/prepare_iteration.py identify_potential_levers 285       # Phase 0 (creates dir + registers PR)
+python analysis/run_analysis.py analysis/12_identify_potential_levers    # Phases 1-4 (all at once)
+```
+
+Or run individual phases:
+
+```bash
+python analysis/prepare_iteration.py identify_potential_levers 285       # Phase 0
 python analysis/run_insight.py analysis/12_identify_potential_levers     # Phase 1
-# ... phases 2-4
+python analysis/run_code_review.py analysis/12_identify_potential_levers # Phase 2
+python analysis/run_synthesis.py analysis/12_identify_potential_levers   # Phase 3
+python analysis/run_assessment.py analysis/12_identify_potential_levers  # Phase 4
 ```
 
 `prepare_iteration.py` accepts a bare PR number or a full URL. It fetches
