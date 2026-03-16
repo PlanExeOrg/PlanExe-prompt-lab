@@ -192,7 +192,7 @@ def register_prompt() -> None:
     print("Registering current system prompt...")
     result = subprocess.run(
         [
-            PLANEXE_PYTHON, "-m", "prompt_optimizer.register_prompt",
+            PLANEXE_PYTHON, "-m", "self_improve.register_prompt",
             "--step", STEP_NAME,
             "--prompt-lab-dir", str(PROMPT_LAB_DIR),
         ],
@@ -304,7 +304,7 @@ def step_runner(models: list[str], prompt_file: Path) -> list[str]:
         print(f"\n--- [{i}/{len(models)}] {model} ---")
 
         cmd = [
-            PLANEXE_PYTHON, "-m", "prompt_optimizer.runner",
+            PLANEXE_PYTHON, "-m", "self_improve.runner",
             "--system-prompt-file", str(prompt_file),
             "--baseline-dir", str(BASELINE_DIR),
             "--prompt-lab-dir", str(PROMPT_LAB_DIR),
