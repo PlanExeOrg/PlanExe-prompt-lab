@@ -214,56 +214,94 @@ def main():
     print(f"  Codex  → {analysis_dir}/code_codex.md")
     print()
 
-    # Launch both agents in parallel.
+    # Check which output files already exist (resume support).
     events_path = analysis_path / "events.jsonl"
+    claude_output = analysis_path / "code_claude.md"
+    codex_output = analysis_path / "code_codex.md"
 
-    emit_event(events_path, "code_review_claude_start")
-    claude_t0 = time.monotonic()
-    claude_proc = subprocess.Popen(
-        [
-            "claude",
-            "-p", claude_prompt,
-            "--allowedTools", "Read,Glob,Grep,Write",
-            "--add-dir", str(REPO_ROOT),
-            "--add-dir", str(PLANEXE_ROOT),
-            "--model", "sonnet",
-        ],
-        cwd=REPO_ROOT,
-    )
+    run_claude = not claude_output.is_file()
+    run_codex = not codex_output.is_file()
 
-    emit_event(events_path, "code_review_codex_start")
-    codex_t0 = time.monotonic()
-    codex_proc = subprocess.Popen(
-        [
-            "codex",
-            "exec", codex_prompt,
-            "-C", str(REPO_ROOT),
-            "--full-auto",
-        ],
-        cwd=REPO_ROOT,
-    )
+    if not run_claude and not run_codex:
+        print("Both code review files already exist — nothing to do.")
+        emit_event(events_path, "code_review_claude_complete",
+                   status="ok", skipped="already_exists")
+        emit_event(events_path, "code_review_codex_complete",
+                   status="ok", skipped="already_exists")
+        return
 
-    print(f"PIDs: claude={claude_proc.pid}  codex={codex_proc.pid}")
-    print("Waiting for both agents to finish...")
+    if not run_claude:
+        print(f"  Skipping Claude — {claude_output.relative_to(REPO_ROOT)} already exists")
+        emit_event(events_path, "code_review_claude_complete",
+                   status="ok", skipped="already_exists")
+    if not run_codex:
+        print(f"  Skipping Codex — {codex_output.relative_to(REPO_ROOT)} already exists")
+        emit_event(events_path, "code_review_codex_complete",
+                   status="ok", skipped="already_exists")
+
+    # Launch agents that still need to run.
+    claude_proc = None
+    codex_proc = None
+
+    if run_claude:
+        emit_event(events_path, "code_review_claude_start")
+        claude_t0 = time.monotonic()
+        claude_proc = subprocess.Popen(
+            [
+                "claude",
+                "-p", claude_prompt,
+                "--allowedTools", "Read,Glob,Grep,Write",
+                "--add-dir", str(REPO_ROOT),
+                "--add-dir", str(PLANEXE_ROOT),
+                "--model", "sonnet",
+            ],
+            cwd=REPO_ROOT,
+        )
+
+    if run_codex:
+        emit_event(events_path, "code_review_codex_start")
+        codex_t0 = time.monotonic()
+        codex_proc = subprocess.Popen(
+            [
+                "codex",
+                "exec", codex_prompt,
+                "-C", str(REPO_ROOT),
+                "--full-auto",
+            ],
+            cwd=REPO_ROOT,
+        )
+
+    pids = []
+    if claude_proc:
+        pids.append(f"claude={claude_proc.pid}")
+    if codex_proc:
+        pids.append(f"codex={codex_proc.pid}")
+    print(f"PIDs: {' '.join(pids)}")
+    print("Waiting for agents to finish...")
     print()
 
-    claude_exit = claude_proc.wait()
-    claude_duration = round(time.monotonic() - claude_t0, 2)
-    if claude_exit == 0:
-        emit_event(events_path, "code_review_claude_complete",
-                   status="ok", duration_seconds=claude_duration)
-    else:
-        emit_event(events_path, "code_review_claude_error",
-                   error=f"exit code {claude_exit}", duration_seconds=claude_duration)
+    claude_exit = 0
+    codex_exit = 0
 
-    codex_exit = codex_proc.wait()
-    codex_duration = round(time.monotonic() - codex_t0, 2)
-    if codex_exit == 0:
-        emit_event(events_path, "code_review_codex_complete",
-                   status="ok", duration_seconds=codex_duration)
-    else:
-        emit_event(events_path, "code_review_codex_error",
-                   error=f"exit code {codex_exit}", duration_seconds=codex_duration)
+    if claude_proc:
+        claude_exit = claude_proc.wait()
+        claude_duration = round(time.monotonic() - claude_t0, 2)
+        if claude_exit == 0:
+            emit_event(events_path, "code_review_claude_complete",
+                       status="ok", duration_seconds=claude_duration)
+        else:
+            emit_event(events_path, "code_review_claude_error",
+                       error=f"exit code {claude_exit}", duration_seconds=claude_duration)
+
+    if codex_proc:
+        codex_exit = codex_proc.wait()
+        codex_duration = round(time.monotonic() - codex_t0, 2)
+        if codex_exit == 0:
+            emit_event(events_path, "code_review_codex_complete",
+                       status="ok", duration_seconds=codex_duration)
+        else:
+            emit_event(events_path, "code_review_codex_error",
+                       error=f"exit code {codex_exit}", duration_seconds=codex_duration)
 
     # Report results.
     print()
@@ -271,11 +309,21 @@ def main():
     print("Results")
     print("═" * 50)
 
-    for name, exit_code in [("Claude Code", claude_exit), ("Codex", codex_exit)]:
-        if exit_code != 0:
-            print(f"  {name} exited with code {exit_code}")
+    if claude_proc:
+        if claude_exit != 0:
+            print(f"  Claude Code exited with code {claude_exit}")
         else:
-            print(f"  {name} finished successfully")
+            print(f"  Claude Code finished successfully")
+    else:
+        print(f"  Claude Code skipped (already exists)")
+
+    if codex_proc:
+        if codex_exit != 0:
+            print(f"  Codex exited with code {codex_exit}")
+        else:
+            print(f"  Codex finished successfully")
+    else:
+        print(f"  Codex skipped (already exists)")
 
     print()
     print("Code review files:")
