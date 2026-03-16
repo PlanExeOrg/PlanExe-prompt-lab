@@ -279,38 +279,15 @@ def step_runner(models: list[str], prompt_file: Path, history_dirs: dict[str, Pa
 # ---------------------------------------------------------------------------
 
 def step_analysis(analysis_dir: Path) -> None:
-    """Run insight → code review → synthesis → assessment in sequence.
-
-    Each script emits its own events to events.jsonl in the analysis dir.
-    """
+    """Run the full analysis pipeline via run_analysis.py."""
     rel_dir = str(analysis_dir.relative_to(PROMPT_LAB_DIR))
-
-    # Assessment only makes sense from index 1 onward (needs a "before").
-    index = int(analysis_dir.name.split("_", 1)[0])
-
-    scripts = [
-        ("run_insight.py", "Insight analysis (phase 1)"),
-        ("run_code_review.py", "Code review (phase 2)"),
-        ("run_synthesis.py", "Synthesis (phase 3)"),
-    ]
-    if index > 0:
-        scripts.append(("run_assessment.py", "Assessment (phase 4)"))
-
-    for script_name, label in scripts:
-        print()
-        print("=" * 60)
-        print(f"Analysis: {label}")
-        print("=" * 60)
-
-        script_path = PROMPT_LAB_DIR / "analysis" / script_name
-        result = subprocess.run(
-            [sys.executable, str(script_path), str(rel_dir)],
-            cwd=PROMPT_LAB_DIR,
-        )
-        if result.returncode != 0:
-            print(f"WARNING: {script_name} exited with code {result.returncode}")
-        else:
-            print(f"{label} completed successfully")
+    script_path = PROMPT_LAB_DIR / "analysis" / "run_analysis.py"
+    result = subprocess.run(
+        [sys.executable, str(script_path), str(rel_dir)],
+        cwd=PROMPT_LAB_DIR,
+    )
+    if result.returncode != 0:
+        print(f"WARNING: run_analysis.py exited with code {result.returncode}")
 
 
 # ---------------------------------------------------------------------------
