@@ -6,6 +6,7 @@ This folder stores per-step analysis artifacts for prompt-lab experiments.
 Each step gets its own directory:
 
 - `analysis/<index>_<step_name>/meta.json`
+- `analysis/<index>_<step_name>/events.jsonl` (timestamped progress events)
 - `analysis/<index>_<step_name>/insight_<agent>.md`
 - `analysis/<index>_<step_name>/code_<agent>.md`
 - `analysis/<index>_<step_name>/synthesis.md`
@@ -27,7 +28,7 @@ This analysis folder is part of the system prompt optimizer described in
 
 The full workflow:
 
-1. **Runner** (`prompt_optimizer/runner.py` in PlanExe) re-executes a single
+1. **Runner** (`self_improve/runner.py` in PlanExe) re-executes a single
    pipeline step with a candidate system prompt against baseline training data.
    Outputs land in `history/`.
 2. **Analysis** (this folder) — agents independently examine the runner outputs
@@ -53,9 +54,15 @@ phase runs Claude Code and Codex in parallel to produce independent files.
 python analysis/prepare_iteration.py identify_potential_levers 316
 ```
 
-Verifies the PR, resolves the latest registered prompt, pre-creates history
-directories (one per model), and creates a new auto-incremented analysis
-directory with `meta.json` containing PR info and the history run list.
+Validates the PR state is OPEN (exits with an error event if not), resolves
+the latest registered prompt, pre-creates history directories (one per model),
+and creates a new auto-incremented analysis directory with `meta.json`
+containing PR info and the history run list.
+
+Creates `events.jsonl` in the analysis directory and emits `prepare_start` /
+`prepare_complete` (or `prepare_error`) events. Subsequent steps (runner,
+insight, code review, synthesis, assessment) also write to this file, so you
+can monitor progress with `tail -f analysis/<index>_<step>/events.jsonl`.
 
 This must run before Phase 1. It ensures all metadata (including PR context)
 is available from the start so insight agents can do targeted analysis.
@@ -190,7 +197,7 @@ the system prompt in code (e.g., via a PR), you must register the new prompt
 ```bash
 # After merging/checking out the PR branch with prompt changes:
 cd /path/to/PlanExe
-/opt/homebrew/bin/python3.11 -m prompt_optimizer.register_prompt \
+/opt/homebrew/bin/python3.11 -m self_improve.register_prompt \
     --step identify_potential_levers \
     --prompt-lab-dir /path/to/PlanExe-prompt-lab
 
