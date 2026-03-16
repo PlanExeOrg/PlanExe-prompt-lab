@@ -1,0 +1,517 @@
+{
+  "responses": [
+    {
+      "strategic_rationale": "GTA game development faces competing pressures: scope ambition (immersive open-world with multiple narrative threads) versus production timeline and budget constraints; next-gen graphical fidelity versus performance optimization across hardware tiers; creative narrative autonomy versus publisher/funder expectations and constraints; and distributed team collaboration versus the need for cohesive creative vision. The selected levers address these core trade-offs by forcing explicit choices about world scale, visual targets, funding governance, and development methodology\u2014each fundamentally shapes budget, schedule, and creative freedom.",
+      "levers": [
+        {
+          "lever_index": 1,
+          "name": "Open-World Scope and Density",
+          "consequences": "Deciding the geographic footprint and detail density of the metropolis directly determines art asset volume, NPC simulation complexity, and memory constraints across hardware generations. A larger, denser world extends production timelines and increases technical risk, but delivers the immersion and emergent gameplay central to the franchise's identity.",
+          "options": [
+            "Design a single ultra-dense metropolitan core roughly equivalent to Los Angeles proper, with subway systems and adjacent districts, leaving outlying areas procedurally generated or simplified",
+            "Implement a three-city hub model (compact LA downtown, Detroit industrial zone, Miami beach corridor) connected by fast-travel or simplified overland zones to distribute development effort",
+            "Use procedural generation and AI-driven content creation to populate a massive contiguous landmass, with hand-crafted narrative zones embedded within procedurally varied terrain"
+          ],
+          "review_lever": "Controls world size versus production feasibility. Weakness: None of the options fully address how to integrate hand-authored story environments with procedurally generated filler without creating visual or narrative discontinuity."
+        },
+        {
+          "lever_index": 2,
+          "name": "Graphical Fidelity Target and Hardware Baseline",
+          "consequences": "Defining the visual standard (ray-traced photorealism versus stylized high-detail) and minimum supported hardware (current-gen only, cross-gen, or legacy support) determines engine workload, development tooling, and addressable market. Targeting older hardware broadens reach but constrains next-gen visual ambition; pursuing cutting-edge fidelity narrows audience and extends art production cycles.",
+          "options": [
+            "Commit to current-generation consoles and high-end PC as the primary target, with legacy platform support handled through a simplified engine fork after core launch",
+            "Design a scalable graphical pipeline that offers ray-traced photorealism on flagship hardware but gracefully downgrades to high-detail rasterization on mid-tier systems, maintaining consistent gameplay",
+            "Adopt a stylized visual language with exaggerated proportions and hand-painted texturing that achieves memorable aesthetics with lower polygon counts and shorter iteration cycles"
+          ],
+          "review_lever": "Controls visual ambition versus production timeline and team size. Weakness: Scalable pipelines increase technical complexity and testing burden; the options underestimate the ongoing cost of maintaining multiple visual branches."
+        },
+        {
+          "lever_index": 3,
+          "name": "Narrative Structure and Branching Depth",
+          "consequences": "Choosing between a linear main campaign with emergent side content versus deeply branching narrative trees affects voice acting budgets, quest design labor, and player replay value. Extensive branching multiplies story permutations and QA overhead; linear structure reduces complexity but risks player perception of limited agency.",
+          "options": [
+            "Implement a single canonical story spine with high-consequence decision points that alter NPC relationships and mission availability, supported by extensive procedurally-generated side missions and stranger encounters",
+            "Design interconnected narrative arcs for three rival protagonists whose storylines can converge, diverge, or conclude independently based on player choices, requiring full voice acting and cutscene coverage for all paths",
+            "Develop a modular dialogue and relationship system that allows NPCs to remember player actions across sessions, dynamically adjusting faction standing and opening context-specific missions without requiring pre-authored branching quest scripts"
+          ],
+          "review_lever": "Controls replay value and emotional investment versus production scope. Weakness: Modular relationship systems risk feeling disconnected from authored story beats; the tension between dynamic systems and narrative coherence remains unresolved."
+        },
+        {
+          "lever_index": 4,
+          "name": "Funding Structure and Creative Governance",
+          "consequences": "Selecting between pure publisher investment, hybrid industry partnerships, or government innovation grants shapes capital availability, approval cycles, and creative autonomy. Publisher funding accelerates timeline but introduces quarterly review gates and commercial pressure; grant funding offers autonomy but slower disbursement and strict accountability metrics.",
+          "options": [
+            "Secure primary funding from a major publisher with milestone-based advancement (technical prototype, alpha build, launch candidate), accepting standard editorial oversight and release date commitments",
+            "Structure a consortium of technology partners (hardware manufacturers, engine vendors, middleware providers) offering discounted tools and capital in exchange for early access to showcase their products in-game",
+            "Pursue government innovation grants focused on advanced AI systems and procedural generation as the core funding mechanism, supplemented by publisher backing, positioning the project as a research initiative with publication requirements"
+          ],
+          "review_lever": "Controls financial runway and decision-making speed. Weakness: The options assume linear funding disbursement; none address how to manage contingency if a major funder withdraws mid-production or shifts strategic priorities."
+        },
+        {
+          "lever_index": 5,
+          "name": "Team Structure and Creative Leadership",
+          "consequences": "Deciding between a traditional hierarchical studio model, a distributed cell-based team structure, or a hybrid core-plus-contractor model determines communication overhead, creative bottlenecks, and ability to scale. Centralized leadership ensures vision coherence but slows iteration; distributed teams enable parallel development but risk narrative inconsistency.",
+          "options": [
+            "Establish a core creative directorship (game director, narrative lead, technical director) at a single primary studio, with satellite teams for art, audio, and QA reporting through clear chains of command",
+            "Organize production into autonomous narrative cells (each managing one protagonist storyline or major system), with a lightweight integration team ensuring mechanical compatibility and tonal consistency across cells",
+            "Hire a permanent core team of 30\u201350 for architecture and systems design, supplemented by contract specialists who rotate in for specific phases (motion capture, environmental art, optimization), reducing overhead during slower periods"
+          ],
+          "review_lever": "Controls creative coherence versus flexibility. Weakness: Cell-based structures risk inconsistent tone and mechanics; none of the options address how to onboard and integrate contract teams without sacrificing the iterative discovery process essential to game design."
+        },
+        {
+          "lever_index": 6,
+          "name": "Criminal Economy Simulation and Player Agency",
+          "consequences": "Deciding whether the economic systems are cosmetic, simulated at a systems level, or fully player-driven determines NPC believability and emergent gameplay depth. Deeper simulation creates richer emergent content but increases balancing labor; cosmetic economics prioritize narrative pacing over systemic complexity.",
+          "options": [
+            "Implement a living criminal economy where player actions (theft, drug distribution, territory control) directly affect NPC faction wealth, police response levels, and market prices, requiring continuous balancing and monitoring for exploits",
+            "Design a narrative-driven economy where faction power is determined by scripted story events and player choices in main missions, with side activity rewards scaled to avoid breaking the intended progression curve",
+            "Create a hybrid approach where the core economy is simulation-driven but fenced by narrative checkpoints\u2014players can grow powerful through side activities, but major story beats temporarily reset the economy to their intended state to ensure narrative coherence"
+          ],
+          "review_lever": "Controls emergent depth versus narrative coherence. Weakness: Hybrid approaches create artificial reset moments that break immersion; the options do not adequately address how to preserve player investment while maintaining story pacing."
+        },
+        {
+          "lever_index": 7,
+          "name": "Procedural Generation Integration and Hand-Authorship Balance",
+          "consequences": "Choosing how extensively to rely on procedural generation for missions, dialogue, and environmental variation determines content volume and development velocity, but risks diluting the authored quality that defines GTA's storytelling. Heavy procedural reliance allows faster iteration but may feel hollow; minimal reliance maximizes quality but extends timelines.",
+          "options": [
+            "Reserve procedural generation exclusively for repeatable activities (street races, robbery encounters, random NPC routines) while hand-authoring all story missions, character arcs, and key narrative locations to preserve narrative depth",
+            "Deploy advanced procedural systems to generate mission frameworks, dialogue variations, and environmental layouts from authored templates, with narrative designers validating generated content for quality and thematic fit before distribution",
+            "Combine procedural generation with machine learning-assisted content authoring: use neural networks trained on existing GTA dialogue and mission structures to generate first-pass variations that human writers refine, dramatically accelerating iteration"
+          ],
+          "review_lever": "Controls content volume versus narrative quality. Weakness: ML-assisted authoring introduces quality control challenges and potential tonal inconsistency; the options minimize the human editorial cost of validating procedurally or AI-generated content."
+        }
+      ],
+      "summary": "Add 'establish a narrative consistency council that reviews all procedurally generated and AI-assisted mission content before release' to Procedural Generation Integration and Hand-Authorship Balance."
+    },
+    {
+      "strategic_rationale": "This next-generation GTA requires resolving three foundational tensions: balancing technical ambition with shipping timelines, managing distributed creative input across multiple studios while maintaining narrative coherence, and navigating regulatory scrutiny around criminal simulation content alongside commercial viability. The selected levers address how to sequence massive asset production, distribute authority between central vision and regional teams, manage public perception during development, allocate computing resources across simulation layers, and calibrate post-launch monetization without fragmenting the player base. These choices directly impact whether the project remains feasible within realistic budgets and schedules.",
+      "levers": [
+        {
+          "lever_index": 1,
+          "name": "Asset Production Bottleneck and Pipeline Parallelization",
+          "consequences": "Deciding whether to build all city districts sequentially or in parallel determines overall project duration and peak staffing costs. Parallel production accelerates time-to-market but requires sophisticated asset versioning systems and risks inconsistent environmental quality across neighborhoods. Sequential production ensures tighter quality control but delays launch and stretches financing runway.",
+          "options": [
+            "Establish three regional hubs (Los Angeles-inspired, Detroit-inspired, Miami-inspired) working in parallel with a central art direction team validating weekly against shared design language documents",
+            "Build the core city district first to full completion, then replicate proven asset pipelines and workflows to satellite locations while the flagship team moves to secondary systems",
+            "Develop modular building systems and block templates that lower per-district labor costs, allowing one studio to cycle through all neighborhoods with staggered quality gates rather than simultaneous teams"
+          ],
+          "review_lever": "Controls sequential efficiency vs. parallel speed. Weakness: The options do not address how to handle mid-project style drift or the cost of maintaining consistency when teams are geographically separated."
+        },
+        {
+          "lever_index": 2,
+          "name": "NPC Simulation Fidelity and CPU Budget Allocation",
+          "consequences": "Choosing how realistically NPCs behave\u2014from scripted routines to persistent state-driven decision-making\u2014directly affects both runtime performance and development complexity. High-fidelity simulation consumes substantial CPU cycles but creates believable emergent gameplay; lower fidelity preserves performance headroom but risks the illusion of life breaking apart under player scrutiny.",
+          "options": [
+            "Implement a tiered NPC system where major story characters and neighborhood leaders run full state machines with persistent memories, while ambient crowds use lightweight behavior trees triggered by proximity, creating a believable core cast within performance budgets",
+            "Design all NPCs to operate on identical decision-loop architecture powered by lightweight utility-based AI, tuned to run thousands of agents simultaneously but limiting individual personality and reactive depth",
+            "Reserve procedural generation for ambient NPC schedules and routines while hiring specialized narrative designers to author dialogue trees and relationship arcs for the top 200 story-critical characters, accepting higher voice-acting costs for meaningful branching"
+          ],
+          "review_lever": "Controls realism vs. technical feasibility. Weakness: The options assume voice acting and character memory systems are independent, but in reality, higher dialogue variety drives up localization and QA costs globally."
+        },
+        {
+          "lever_index": 3,
+          "name": "Regulatory Compliance and Content Messaging Strategy",
+          "consequences": "The game's portrayal of criminal activity, police violence, and urban decay will attract media scrutiny and rating board review. Proactive engagement with regional regulators and press before launch can prevent post-launch bans or content controversies; minimal compliance focus risks last-minute rating downgrades or regional restrictions that fragment the player base.",
+          "options": [
+            "Establish a Content Advisory Council including former law enforcement, community advocates, and rating board representatives six months pre-launch, conduct monthly design reviews, and publicly commit to design changes addressing substantive concerns, accepting some creative constraint for market access",
+            "Develop the game without external review, then hire specialized regulatory consultants in the final three months to navigate rating submissions and secure ESRB ratings, managing any required changes as post-launch patches",
+            "Create two content tracks\u2014an internationally compliant version for EMEA and APAC regions with adjusted crime mechanics and consequence systems, and a full-featured North American version, accepting fragmented player experience and parallel QA burden"
+          ],
+          "review_lever": "Controls creative autonomy vs. market access. Weakness: The options fail to specify how to handle player-generated content mods and community circumvention of content restrictions."
+        },
+        {
+          "lever_index": 4,
+          "name": "Multiplayer Integration Scope and Server Architecture",
+          "consequences": "Multiplayer functionality dramatically expands development scope and ongoing operational costs but drives player retention and long-term monetization. Tightly integrated multiplayer (shared world, persistent heists) requires cloud infrastructure investment and complex anti-cheat systems; standalone multiplayer modes decouple from single-player launch pressure but fragment the player base.",
+          "options": [
+            "Build a unified persistent online world where players encounter each other organically, with story missions repeatable co-operatively and a dynamic crime economy reacting to aggregate player actions, requiring substantial cloud infrastructure and continuous content updates post-launch",
+            "Ship the single-player campaign as the primary product with asynchronous multiplayer features (leaderboards, ghosted heists, reputation systems) that run on lightweight backend services, deferring synchronous multiplayer to a separate post-launch service",
+            "Develop a modular multiplayer layer compatible with private servers, allowing players and third-party communities to host their own instances with custom rule sets and economies, trading direct monetization for viral community distribution and reduced operational overhead"
+          ],
+          "review_lever": "Controls revenue concentration vs. operational burden. Weakness: The options do not account for the cost of anti-cheat systems scaling with player count, which can exceed backend infrastructure costs."
+        },
+        {
+          "lever_index": 5,
+          "name": "Voice Acting Scope and Localization Investment",
+          "consequences": "The number of scripted dialogue trees and character voices directly impacts localization costs and schedule. Full voice acting for all dialogue creates immersion but multiplies localization and re-recording costs; selective voice acting (story missions only) reduces scope but fragments the audio experience between dialogue-heavy and text-heavy interactions.",
+          "options": [
+            "Voice every significant NPC interaction across all cities and quest chains in English, Spanish, French, German, and Mandarin from day one, accepting 18-month post-launch localization pipelines and substantial ongoing QA for dialogue consistency",
+            "Produce full voice acting only for story missions and character-critical interactions (roughly 40% of dialogue), with remaining ambient and side content delivered as English subtitles initially, then localized text-only in subsequent updates",
+            "Hire a single voice director to cast and record all major characters and key story missions in English, then partner with regional studios in Spain, Germany, China, and Mexico to handle localization casting and recording, distributing costs and schedule risk across studios"
+          ],
+          "review_lever": "Controls narrative immersion vs. localization cost. Weakness: The options assume voice quality and casting consistency can be maintained equally across regions, which historically breaks down when using distributed regional teams."
+        },
+        {
+          "lever_index": 6,
+          "name": "Procedural Generation Scope and Manual Authorship Ratio",
+          "consequences": "Procedural systems accelerate content volume but risk repetitive layouts and unpredictable narrative placement; hand-authored environments ensure intentional design but consume artist time linearly. The balance between these approaches defines both project duration and the perceived depth of exploration throughout the city.",
+          "options": [
+            "Use procedural generation exclusively for residential block layouts, traffic patterns, and ambient NPC schedules, while hand-authoring all interior spaces, mission locations, and storefronts to ensure narrative intentionality and visual variety in high-traffic areas",
+            "Implement hybrid generation where procedural algorithms produce base city topology and building shells, then a team of level designers manually places interior details, quest hooks, and environmental storytelling elements in a second pass, balancing scale with craftedness",
+            "Procedurally generate 80% of residential and commercial districts using validated architectural templates, reserving all procedural output for exploration reward (hidden shops, random encounters), while keeping story-critical and monetized spaces entirely hand-authored by senior designers"
+          ],
+          "review_lever": "Controls development time vs. content freshness. Weakness: The options do not address how procedural generation interacts with multiplayer synchronization, where two players seeing different procedurally-generated interiors breaks shared narrative coherence."
+        },
+        {
+          "lever_index": 7,
+          "name": "Post-Launch Monetization Model and Battle Pass Philosophy",
+          "consequences": "Monetization strategy determines ongoing revenue, player satisfaction, and competitive positioning relative to live-service games. Battle passes and cosmetics preserve single-player fairness but require continuous content creation; gameplay-affecting monetization (vehicle upgrades, ability unlocks) maximizes revenue but risks pay-to-win perception and player churn among non-paying users.",
+          "options": [
+            "Implement a cosmetic-only monetization model with optional battle passes tied to seasonal story chapters, keeping all gameplay advantages purchasable with in-game currency earned through play, accepting lower revenue projections but stronger player goodwill and retention",
+            "Introduce tiered monetization where cosmetics remain cosmetic-only, but quality-of-life conveniences (faster heist cooldowns, expanded garage slots, skill leveling accelerators) offer meaningful progression shortcuts to paying players, capturing mid-tier spenders without hard gameplay walls",
+            "Ship the single-player campaign as a one-time purchase with zero post-launch monetization, then offer a separate subscription service for multiplayer features, seasonal cosmetics, and exclusive story expansions, matching subscription revenue models to content update cadence"
+          ],
+          "review_lever": "Controls lifetime value vs. player base unity. Weakness: The options assume cosmetic appeal remains consistent across all player demographics, but cosmetics designed for North American audiences often fail to resonate in APAC markets."
+        }
+      ],
+      "summary": "Add 'establish a Content Advisory Council with former law enforcement and rating board representatives before design freeze' to Regulatory Compliance and Content Messaging Strategy to mitigate late-stage revision risk and regional distribution loss."
+    },
+    {
+      "strategic_rationale": "This GTA project must navigate the tension between technological ambition (next-gen graphics, procedural systems, complex simulations) and practical execution constraints (team capacity, hardware costs, content creation velocity). The most critical levers control how much simulation and authorship burden falls on automation versus hand-crafted content, how development phases are sequenced to avoid bottleneck stalls, and how the game's core economic and social systems scale without exploding production scope. The seven levers below isolate the decisions that ripple across all other planning: they determine whether this project completes within a realistic timeline, whether technical debt accumulates, and whether creative vision remains coherent under resource pressure.",
+      "levers": [
+        {
+          "lever_index": 1,
+          "name": "Mission Authorship Strategy and Handcrafted Content Volume",
+          "consequences": "Choosing between hand-authored missions and procedurally-generated mission templates determines the depth of narrative and player agency, but directly trades off against production timeline and animation/voice-acting costs. Handcrafted missions deliver stronger storytelling and unique sequences; procedural approaches scale faster but risk repetitive gameplay.",
+          "options": [
+            "Commission a core set of hand-authored heist-and-crime missions (50\u201380 total) with full cinematics, branching dialogue, and custom animations, supported by a smaller procedural layer for side activities.",
+            "Develop a mission generation system built from modular narrative templates, dialogue trees, and asset combinations, with only the main story arc fully scripted and directed.",
+            "Blend a mid-sized handcrafted campaign (25\u201335 primary missions) with player-driven emergent tasks generated from NPC interactions, environmental triggers, and economic simulation outcomes."
+          ],
+          "review_lever": "Controls narrative depth versus production scalability. Weakness: The options do not address how to maintain narrative coherence across procedurally-generated branches or how to avoid player confusion when authored and generated content mix."
+        },
+        {
+          "lever_index": 2,
+          "name": "Live-Service vs. Complete-Game Release Model",
+          "consequences": "Deciding whether to ship a feature-complete open world upfront or launch with a core map and progressively expand dictates post-launch roadmap, revenue timing, and player retention strategy. A complete launch avoids long-term content creation pressure but delays revenue; phased expansion distributes work but requires live infrastructure and community management.",
+          "options": [
+            "Launch with a fully-realized three-city metropolis containing all major features and content, with post-launch updates focused on new missions, events, and cosmetics rather than core map expansion.",
+            "Release an initial core city (Los Angeles analogue) at launch with committed expansions to secondary cities (Detroit and Miami versions) rolling out over 12\u201318 months, funded by early monetization and live events.",
+            "Ship a minimal viable open world with essential gameplay at launch, then use live-service revenue to iteratively expand and densify neighborhoods, introduce new criminal enterprises, and unlock additional story chapters."
+          ],
+          "review_lever": "Controls upfront completion scope versus ongoing revenue and player engagement. Weakness: The options do not specify how to maintain quality and prevent community backlash if launch content feels incomplete, or how to budget for live-service staff and infrastructure."
+        },
+        {
+          "lever_index": 3,
+          "name": "Vehicle Customization Depth and Dynamic Physics Simulation",
+          "consequences": "Determining how deeply players can customize vehicles (paint, parts, performance tuning) and whether physics adapt in real-time affects both gameplay richness and physics engine load. Deep customization with dynamic physics creates emergent vehicle behavior and player expression but raises CPU/GPU demands and animation complexity.",
+          "options": [
+            "Implement modular vehicle customization (wheels, bumpers, engine upgrades with measurable stat changes) with static physics profiles that update only when customization is finalized, not during gameplay.",
+            "Enable extensive real-time customization with physics recalculation on each modification, including aerodynamics, weight distribution, and handling adjustments that dynamically affect driving feel and collision response.",
+            "Restrict customization to cosmetic and limited performance tiers (low/medium/high profiles), with physics pre-baked into each tier to minimize runtime calculation while preserving visible variety."
+          ],
+          "review_lever": "Controls player agency and vehicle emergent behavior versus computational overhead. Weakness: The options overlook the challenge of allowing deep customization without creating balancing nightmares in multiplayer or making some configurations clearly overpowered."
+        },
+        {
+          "lever_index": 4,
+          "name": "Law Enforcement AI Sophistication and Wanted-Level Mechanics",
+          "consequences": "Designing how police and crime networks respond to player actions (pursuit behavior, wanted levels, NPC witness reporting) shapes replayability and tension but adds significant AI complexity. Sophisticated law enforcement creates dynamic cat-and-mouse gameplay; simplified mechanics reduce CPU load but can feel artificial.",
+          "options": [
+            "Build a layered AI system where officers adapt pursuit tactics based on player history, environment, and reinforcement learning, with a five-level wanted system that triggers escalating NPC faction responses and media attention.",
+            "Implement a rule-based wanted system with static pursuit rules and scripted escalation triggers, where AI difficulty increases through spawn rates and reinforcements rather than tactical adaptation.",
+            "Create a hybrid system where wanted level generates scripted police dispatch events and chokepoints, but individual officer behavior remains rule-based; allow player reputation to unlock alternative outcomes (bribes, safe houses)."
+          ],
+          "review_lever": "Controls emergent tension and player challenge versus AI development cost and network synchronization demands. Weakness: The options do not address how to prevent wanted-level mechanics from feeling punitive in single-player or how to prevent exploitation of AI predictability."
+        },
+        {
+          "lever_index": 5,
+          "name": "Criminal Economy Interactivity and Player Market Impact",
+          "consequences": "Deciding whether the game's criminal economy (drug trafficking, protection rackets, money laundering) responds dynamically to player actions or follows preset scripts affects emergent gameplay and world believability. A truly dynamic economy creates replayability but requires robust economic simulation and extensive content to fill player-driven voids.",
+          "options": [
+            "Develop a responsive underground economy where player-controlled criminal enterprises directly influence NPC prices, supply routes, and rival faction behavior; use procedural event generation to fill gaps when player activity is low.",
+            "Implement a static economy with preset trading routes and faction relationships, where player actions trigger predetermined story branches rather than ongoing economic shifts.",
+            "Create a semi-responsive economy with key nodes (major trafficking routes, protection rackets) that react to player activity through scripted branching events, while peripheral markets follow preset cycles independent of player interference."
+          ],
+          "review_lever": "Controls emergent storytelling and player agency versus simulation complexity and content creation demands. Weakness: The options do not explain how to prevent players from gaming the economy to trivialize financial challenges or how to avoid content voids when players ignore major criminal enterprises."
+        },
+        {
+          "lever_index": 6,
+          "name": "Dialogue System Scope and AI-Assisted Writing Integration",
+          "consequences": "Choosing between fully-written dialogue trees, AI-augmented conversation generation, and hybrid approaches affects voice-acting costs, localization burden, and NPC realism. Full hand-writing ensures quality but scales poorly; AI-assisted dialogue reduces costs but risks inconsistency and requires careful quality gates.",
+          "options": [
+            "Commission comprehensive dialogue trees for all major NPCs and story beats, with voice actors recording millions of lines across full branching trees; use localization teams for all major languages.",
+            "Deploy an AI dialogue system that generates contextual NPC responses from seed templates and character profiles, with human editors curating critical story moments and a smaller voice-acting pool for emotional beats.",
+            "Use a dialogue system that mixes handwritten primary character arcs with AI-augmented secondary NPC interactions, where essential story dialogue is fully voiced but ambient conversations rely on text or procedurally-composed bark systems."
+          ],
+          "review_lever": "Controls dialogue authenticity and scale versus voice-acting labor and localization cost. Weakness: The options do not address how to maintain narrative tone consistency when AI-generated and human-written dialogue coexist, or how to localize AI-generated dialogue without introducing errors."
+        },
+        {
+          "lever_index": 7,
+          "name": "Geographic Scale vs. Environmental Detail Density",
+          "consequences": "Defining the map size (single sprawling metropolis versus multiple distinct cities) and asset density per square kilometer directly affects memory footprint, loading-screen frequency, and artist throughput. A sprawling map with high density requires sophisticated streaming and asset reuse; smaller, denser areas allow richer bespoke detail but limit exploration scope.",
+          "options": [
+            "Design a massive unified open world spanning all three cities with low-to-medium density, relying on procedural building facades, parametric interiors, and aggressive asset streaming to maintain performance on current-gen hardware.",
+            "Create three highly-detailed, densely-authored city zones with distinct architectural and cultural character, separated by clear travel transitions (loading zones or map tabs) rather than seamless traversal.",
+            "Build a single primary city with extremely high environmental detail and handcrafted landmarks, supported by procedurally-expanded suburbs and outlying rural regions with lower fidelity, allowing players to experience a fully-realized urban core."
+          ],
+          "review_lever": "Controls exploration scope and visual fidelity versus streaming complexity and asset production velocity. Weakness: The options do not address the player expectation for true open-world traversal without loading screens, or how to prevent procedural suburban areas from feeling hollow compared to authored city centers."
+        }
+      ],
+      "summary": "Add 'implement a semi-responsive criminal economy with key faction nodes that trigger scripted branching events tied to player reputation thresholds' to Criminal Economy Interactivity and Player Market Impact to avoid both simulation overreach and content voids."
+    }
+  ],
+  "levers": [
+    {
+      "lever_id": "6abeffc3-3df7-4a51-bde9-3985f2bacb54",
+      "name": "Open-World Scope and Density",
+      "consequences": "Deciding the geographic footprint and detail density of the metropolis directly determines art asset volume, NPC simulation complexity, and memory constraints across hardware generations. A larger, denser world extends production timelines and increases technical risk, but delivers the immersion and emergent gameplay central to the franchise's identity.",
+      "options": [
+        "Design a single ultra-dense metropolitan core roughly equivalent to Los Angeles proper, with subway systems and adjacent districts, leaving outlying areas procedurally generated or simplified",
+        "Implement a three-city hub model (compact LA downtown, Detroit industrial zone, Miami beach corridor) connected by fast-travel or simplified overland zones to distribute development effort",
+        "Use procedural generation and AI-driven content creation to populate a massive contiguous landmass, with hand-crafted narrative zones embedded within procedurally varied terrain"
+      ],
+      "review": "Controls world size versus production feasibility. Weakness: None of the options fully address how to integrate hand-authored story environments with procedurally generated filler without creating visual or narrative discontinuity."
+    },
+    {
+      "lever_id": "48d24aaf-a7e0-4bf7-88bf-2453432a6d73",
+      "name": "Graphical Fidelity Target and Hardware Baseline",
+      "consequences": "Defining the visual standard (ray-traced photorealism versus stylized high-detail) and minimum supported hardware (current-gen only, cross-gen, or legacy support) determines engine workload, development tooling, and addressable market. Targeting older hardware broadens reach but constrains next-gen visual ambition; pursuing cutting-edge fidelity narrows audience and extends art production cycles.",
+      "options": [
+        "Commit to current-generation consoles and high-end PC as the primary target, with legacy platform support handled through a simplified engine fork after core launch",
+        "Design a scalable graphical pipeline that offers ray-traced photorealism on flagship hardware but gracefully downgrades to high-detail rasterization on mid-tier systems, maintaining consistent gameplay",
+        "Adopt a stylized visual language with exaggerated proportions and hand-painted texturing that achieves memorable aesthetics with lower polygon counts and shorter iteration cycles"
+      ],
+      "review": "Controls visual ambition versus production timeline and team size. Weakness: Scalable pipelines increase technical complexity and testing burden; the options underestimate the ongoing cost of maintaining multiple visual branches."
+    },
+    {
+      "lever_id": "bc967616-2db3-48ab-a384-25d855004246",
+      "name": "Narrative Structure and Branching Depth",
+      "consequences": "Choosing between a linear main campaign with emergent side content versus deeply branching narrative trees affects voice acting budgets, quest design labor, and player replay value. Extensive branching multiplies story permutations and QA overhead; linear structure reduces complexity but risks player perception of limited agency.",
+      "options": [
+        "Implement a single canonical story spine with high-consequence decision points that alter NPC relationships and mission availability, supported by extensive procedurally-generated side missions and stranger encounters",
+        "Design interconnected narrative arcs for three rival protagonists whose storylines can converge, diverge, or conclude independently based on player choices, requiring full voice acting and cutscene coverage for all paths",
+        "Develop a modular dialogue and relationship system that allows NPCs to remember player actions across sessions, dynamically adjusting faction standing and opening context-specific missions without requiring pre-authored branching quest scripts"
+      ],
+      "review": "Controls replay value and emotional investment versus production scope. Weakness: Modular relationship systems risk feeling disconnected from authored story beats; the tension between dynamic systems and narrative coherence remains unresolved."
+    },
+    {
+      "lever_id": "5dd3e371-0876-4f9a-8251-a011fb66383a",
+      "name": "Funding Structure and Creative Governance",
+      "consequences": "Selecting between pure publisher investment, hybrid industry partnerships, or government innovation grants shapes capital availability, approval cycles, and creative autonomy. Publisher funding accelerates timeline but introduces quarterly review gates and commercial pressure; grant funding offers autonomy but slower disbursement and strict accountability metrics.",
+      "options": [
+        "Secure primary funding from a major publisher with milestone-based advancement (technical prototype, alpha build, launch candidate), accepting standard editorial oversight and release date commitments",
+        "Structure a consortium of technology partners (hardware manufacturers, engine vendors, middleware providers) offering discounted tools and capital in exchange for early access to showcase their products in-game",
+        "Pursue government innovation grants focused on advanced AI systems and procedural generation as the core funding mechanism, supplemented by publisher backing, positioning the project as a research initiative with publication requirements"
+      ],
+      "review": "Controls financial runway and decision-making speed. Weakness: The options assume linear funding disbursement; none address how to manage contingency if a major funder withdraws mid-production or shifts strategic priorities."
+    },
+    {
+      "lever_id": "7d14d043-b20a-402c-8a4a-d8fa62547a9c",
+      "name": "Team Structure and Creative Leadership",
+      "consequences": "Deciding between a traditional hierarchical studio model, a distributed cell-based team structure, or a hybrid core-plus-contractor model determines communication overhead, creative bottlenecks, and ability to scale. Centralized leadership ensures vision coherence but slows iteration; distributed teams enable parallel development but risk narrative inconsistency.",
+      "options": [
+        "Establish a core creative directorship (game director, narrative lead, technical director) at a single primary studio, with satellite teams for art, audio, and QA reporting through clear chains of command",
+        "Organize production into autonomous narrative cells (each managing one protagonist storyline or major system), with a lightweight integration team ensuring mechanical compatibility and tonal consistency across cells",
+        "Hire a permanent core team of 30\u201350 for architecture and systems design, supplemented by contract specialists who rotate in for specific phases (motion capture, environmental art, optimization), reducing overhead during slower periods"
+      ],
+      "review": "Controls creative coherence versus flexibility. Weakness: Cell-based structures risk inconsistent tone and mechanics; none of the options address how to onboard and integrate contract teams without sacrificing the iterative discovery process essential to game design."
+    },
+    {
+      "lever_id": "aed08355-0a23-4c8a-8c10-ee97b95d1cc6",
+      "name": "Criminal Economy Simulation and Player Agency",
+      "consequences": "Deciding whether the economic systems are cosmetic, simulated at a systems level, or fully player-driven determines NPC believability and emergent gameplay depth. Deeper simulation creates richer emergent content but increases balancing labor; cosmetic economics prioritize narrative pacing over systemic complexity.",
+      "options": [
+        "Implement a living criminal economy where player actions (theft, drug distribution, territory control) directly affect NPC faction wealth, police response levels, and market prices, requiring continuous balancing and monitoring for exploits",
+        "Design a narrative-driven economy where faction power is determined by scripted story events and player choices in main missions, with side activity rewards scaled to avoid breaking the intended progression curve",
+        "Create a hybrid approach where the core economy is simulation-driven but fenced by narrative checkpoints\u2014players can grow powerful through side activities, but major story beats temporarily reset the economy to their intended state to ensure narrative coherence"
+      ],
+      "review": "Controls emergent depth versus narrative coherence. Weakness: Hybrid approaches create artificial reset moments that break immersion; the options do not adequately address how to preserve player investment while maintaining story pacing."
+    },
+    {
+      "lever_id": "7802c3d7-db5a-4ed3-bef1-5b7ac6efdb82",
+      "name": "Procedural Generation Integration and Hand-Authorship Balance",
+      "consequences": "Choosing how extensively to rely on procedural generation for missions, dialogue, and environmental variation determines content volume and development velocity, but risks diluting the authored quality that defines GTA's storytelling. Heavy procedural reliance allows faster iteration but may feel hollow; minimal reliance maximizes quality but extends timelines.",
+      "options": [
+        "Reserve procedural generation exclusively for repeatable activities (street races, robbery encounters, random NPC routines) while hand-authoring all story missions, character arcs, and key narrative locations to preserve narrative depth",
+        "Deploy advanced procedural systems to generate mission frameworks, dialogue variations, and environmental layouts from authored templates, with narrative designers validating generated content for quality and thematic fit before distribution",
+        "Combine procedural generation with machine learning-assisted content authoring: use neural networks trained on existing GTA dialogue and mission structures to generate first-pass variations that human writers refine, dramatically accelerating iteration"
+      ],
+      "review": "Controls content volume versus narrative quality. Weakness: ML-assisted authoring introduces quality control challenges and potential tonal inconsistency; the options minimize the human editorial cost of validating procedurally or AI-generated content."
+    },
+    {
+      "lever_id": "c0c4578c-1291-482c-b58d-31981c8d3dbd",
+      "name": "Asset Production Bottleneck and Pipeline Parallelization",
+      "consequences": "Deciding whether to build all city districts sequentially or in parallel determines overall project duration and peak staffing costs. Parallel production accelerates time-to-market but requires sophisticated asset versioning systems and risks inconsistent environmental quality across neighborhoods. Sequential production ensures tighter quality control but delays launch and stretches financing runway.",
+      "options": [
+        "Establish three regional hubs (Los Angeles-inspired, Detroit-inspired, Miami-inspired) working in parallel with a central art direction team validating weekly against shared design language documents",
+        "Build the core city district first to full completion, then replicate proven asset pipelines and workflows to satellite locations while the flagship team moves to secondary systems",
+        "Develop modular building systems and block templates that lower per-district labor costs, allowing one studio to cycle through all neighborhoods with staggered quality gates rather than simultaneous teams"
+      ],
+      "review": "Controls sequential efficiency vs. parallel speed. Weakness: The options do not address how to handle mid-project style drift or the cost of maintaining consistency when teams are geographically separated."
+    },
+    {
+      "lever_id": "512c4116-9667-4cbd-914e-a7d49afca696",
+      "name": "NPC Simulation Fidelity and CPU Budget Allocation",
+      "consequences": "Choosing how realistically NPCs behave\u2014from scripted routines to persistent state-driven decision-making\u2014directly affects both runtime performance and development complexity. High-fidelity simulation consumes substantial CPU cycles but creates believable emergent gameplay; lower fidelity preserves performance headroom but risks the illusion of life breaking apart under player scrutiny.",
+      "options": [
+        "Implement a tiered NPC system where major story characters and neighborhood leaders run full state machines with persistent memories, while ambient crowds use lightweight behavior trees triggered by proximity, creating a believable core cast within performance budgets",
+        "Design all NPCs to operate on identical decision-loop architecture powered by lightweight utility-based AI, tuned to run thousands of agents simultaneously but limiting individual personality and reactive depth",
+        "Reserve procedural generation for ambient NPC schedules and routines while hiring specialized narrative designers to author dialogue trees and relationship arcs for the top 200 story-critical characters, accepting higher voice-acting costs for meaningful branching"
+      ],
+      "review": "Controls realism vs. technical feasibility. Weakness: The options assume voice acting and character memory systems are independent, but in reality, higher dialogue variety drives up localization and QA costs globally."
+    },
+    {
+      "lever_id": "6fcfc900-d532-4b8a-abd5-2110c06e8590",
+      "name": "Regulatory Compliance and Content Messaging Strategy",
+      "consequences": "The game's portrayal of criminal activity, police violence, and urban decay will attract media scrutiny and rating board review. Proactive engagement with regional regulators and press before launch can prevent post-launch bans or content controversies; minimal compliance focus risks last-minute rating downgrades or regional restrictions that fragment the player base.",
+      "options": [
+        "Establish a Content Advisory Council including former law enforcement, community advocates, and rating board representatives six months pre-launch, conduct monthly design reviews, and publicly commit to design changes addressing substantive concerns, accepting some creative constraint for market access",
+        "Develop the game without external review, then hire specialized regulatory consultants in the final three months to navigate rating submissions and secure ESRB ratings, managing any required changes as post-launch patches",
+        "Create two content tracks\u2014an internationally compliant version for EMEA and APAC regions with adjusted crime mechanics and consequence systems, and a full-featured North American version, accepting fragmented player experience and parallel QA burden"
+      ],
+      "review": "Controls creative autonomy vs. market access. Weakness: The options fail to specify how to handle player-generated content mods and community circumvention of content restrictions."
+    },
+    {
+      "lever_id": "125ac516-b764-4d1e-9476-3f3ccdb4b708",
+      "name": "Multiplayer Integration Scope and Server Architecture",
+      "consequences": "Multiplayer functionality dramatically expands development scope and ongoing operational costs but drives player retention and long-term monetization. Tightly integrated multiplayer (shared world, persistent heists) requires cloud infrastructure investment and complex anti-cheat systems; standalone multiplayer modes decouple from single-player launch pressure but fragment the player base.",
+      "options": [
+        "Build a unified persistent online world where players encounter each other organically, with story missions repeatable co-operatively and a dynamic crime economy reacting to aggregate player actions, requiring substantial cloud infrastructure and continuous content updates post-launch",
+        "Ship the single-player campaign as the primary product with asynchronous multiplayer features (leaderboards, ghosted heists, reputation systems) that run on lightweight backend services, deferring synchronous multiplayer to a separate post-launch service",
+        "Develop a modular multiplayer layer compatible with private servers, allowing players and third-party communities to host their own instances with custom rule sets and economies, trading direct monetization for viral community distribution and reduced operational overhead"
+      ],
+      "review": "Controls revenue concentration vs. operational burden. Weakness: The options do not account for the cost of anti-cheat systems scaling with player count, which can exceed backend infrastructure costs."
+    },
+    {
+      "lever_id": "464e51dd-185b-4bef-bbc6-bb534b4c2d96",
+      "name": "Voice Acting Scope and Localization Investment",
+      "consequences": "The number of scripted dialogue trees and character voices directly impacts localization costs and schedule. Full voice acting for all dialogue creates immersion but multiplies localization and re-recording costs; selective voice acting (story missions only) reduces scope but fragments the audio experience between dialogue-heavy and text-heavy interactions.",
+      "options": [
+        "Voice every significant NPC interaction across all cities and quest chains in English, Spanish, French, German, and Mandarin from day one, accepting 18-month post-launch localization pipelines and substantial ongoing QA for dialogue consistency",
+        "Produce full voice acting only for story missions and character-critical interactions (roughly 40% of dialogue), with remaining ambient and side content delivered as English subtitles initially, then localized text-only in subsequent updates",
+        "Hire a single voice director to cast and record all major characters and key story missions in English, then partner with regional studios in Spain, Germany, China, and Mexico to handle localization casting and recording, distributing costs and schedule risk across studios"
+      ],
+      "review": "Controls narrative immersion vs. localization cost. Weakness: The options assume voice quality and casting consistency can be maintained equally across regions, which historically breaks down when using distributed regional teams."
+    },
+    {
+      "lever_id": "c416692f-4e94-4f7e-8b1b-4721de5cff57",
+      "name": "Procedural Generation Scope and Manual Authorship Ratio",
+      "consequences": "Procedural systems accelerate content volume but risk repetitive layouts and unpredictable narrative placement; hand-authored environments ensure intentional design but consume artist time linearly. The balance between these approaches defines both project duration and the perceived depth of exploration throughout the city.",
+      "options": [
+        "Use procedural generation exclusively for residential block layouts, traffic patterns, and ambient NPC schedules, while hand-authoring all interior spaces, mission locations, and storefronts to ensure narrative intentionality and visual variety in high-traffic areas",
+        "Implement hybrid generation where procedural algorithms produce base city topology and building shells, then a team of level designers manually places interior details, quest hooks, and environmental storytelling elements in a second pass, balancing scale with craftedness",
+        "Procedurally generate 80% of residential and commercial districts using validated architectural templates, reserving all procedural output for exploration reward (hidden shops, random encounters), while keeping story-critical and monetized spaces entirely hand-authored by senior designers"
+      ],
+      "review": "Controls development time vs. content freshness. Weakness: The options do not address how procedural generation interacts with multiplayer synchronization, where two players seeing different procedurally-generated interiors breaks shared narrative coherence."
+    },
+    {
+      "lever_id": "bcc93348-07b2-4105-8f57-40abeecddeb1",
+      "name": "Post-Launch Monetization Model and Battle Pass Philosophy",
+      "consequences": "Monetization strategy determines ongoing revenue, player satisfaction, and competitive positioning relative to live-service games. Battle passes and cosmetics preserve single-player fairness but require continuous content creation; gameplay-affecting monetization (vehicle upgrades, ability unlocks) maximizes revenue but risks pay-to-win perception and player churn among non-paying users.",
+      "options": [
+        "Implement a cosmetic-only monetization model with optional battle passes tied to seasonal story chapters, keeping all gameplay advantages purchasable with in-game currency earned through play, accepting lower revenue projections but stronger player goodwill and retention",
+        "Introduce tiered monetization where cosmetics remain cosmetic-only, but quality-of-life conveniences (faster heist cooldowns, expanded garage slots, skill leveling accelerators) offer meaningful progression shortcuts to paying players, capturing mid-tier spenders without hard gameplay walls",
+        "Ship the single-player campaign as a one-time purchase with zero post-launch monetization, then offer a separate subscription service for multiplayer features, seasonal cosmetics, and exclusive story expansions, matching subscription revenue models to content update cadence"
+      ],
+      "review": "Controls lifetime value vs. player base unity. Weakness: The options assume cosmetic appeal remains consistent across all player demographics, but cosmetics designed for North American audiences often fail to resonate in APAC markets."
+    },
+    {
+      "lever_id": "601bf365-e69c-4e7a-93fb-d87609493a1f",
+      "name": "Mission Authorship Strategy and Handcrafted Content Volume",
+      "consequences": "Choosing between hand-authored missions and procedurally-generated mission templates determines the depth of narrative and player agency, but directly trades off against production timeline and animation/voice-acting costs. Handcrafted missions deliver stronger storytelling and unique sequences; procedural approaches scale faster but risk repetitive gameplay.",
+      "options": [
+        "Commission a core set of hand-authored heist-and-crime missions (50\u201380 total) with full cinematics, branching dialogue, and custom animations, supported by a smaller procedural layer for side activities.",
+        "Develop a mission generation system built from modular narrative templates, dialogue trees, and asset combinations, with only the main story arc fully scripted and directed.",
+        "Blend a mid-sized handcrafted campaign (25\u201335 primary missions) with player-driven emergent tasks generated from NPC interactions, environmental triggers, and economic simulation outcomes."
+      ],
+      "review": "Controls narrative depth versus production scalability. Weakness: The options do not address how to maintain narrative coherence across procedurally-generated branches or how to avoid player confusion when authored and generated content mix."
+    },
+    {
+      "lever_id": "0265bd61-33c1-440e-a281-141b87ef6a42",
+      "name": "Live-Service vs. Complete-Game Release Model",
+      "consequences": "Deciding whether to ship a feature-complete open world upfront or launch with a core map and progressively expand dictates post-launch roadmap, revenue timing, and player retention strategy. A complete launch avoids long-term content creation pressure but delays revenue; phased expansion distributes work but requires live infrastructure and community management.",
+      "options": [
+        "Launch with a fully-realized three-city metropolis containing all major features and content, with post-launch updates focused on new missions, events, and cosmetics rather than core map expansion.",
+        "Release an initial core city (Los Angeles analogue) at launch with committed expansions to secondary cities (Detroit and Miami versions) rolling out over 12\u201318 months, funded by early monetization and live events.",
+        "Ship a minimal viable open world with essential gameplay at launch, then use live-service revenue to iteratively expand and densify neighborhoods, introduce new criminal enterprises, and unlock additional story chapters."
+      ],
+      "review": "Controls upfront completion scope versus ongoing revenue and player engagement. Weakness: The options do not specify how to maintain quality and prevent community backlash if launch content feels incomplete, or how to budget for live-service staff and infrastructure."
+    },
+    {
+      "lever_id": "2097b623-df01-4c2e-9990-3de59b562351",
+      "name": "Vehicle Customization Depth and Dynamic Physics Simulation",
+      "consequences": "Determining how deeply players can customize vehicles (paint, parts, performance tuning) and whether physics adapt in real-time affects both gameplay richness and physics engine load. Deep customization with dynamic physics creates emergent vehicle behavior and player expression but raises CPU/GPU demands and animation complexity.",
+      "options": [
+        "Implement modular vehicle customization (wheels, bumpers, engine upgrades with measurable stat changes) with static physics profiles that update only when customization is finalized, not during gameplay.",
+        "Enable extensive real-time customization with physics recalculation on each modification, including aerodynamics, weight distribution, and handling adjustments that dynamically affect driving feel and collision response.",
+        "Restrict customization to cosmetic and limited performance tiers (low/medium/high profiles), with physics pre-baked into each tier to minimize runtime calculation while preserving visible variety."
+      ],
+      "review": "Controls player agency and vehicle emergent behavior versus computational overhead. Weakness: The options overlook the challenge of allowing deep customization without creating balancing nightmares in multiplayer or making some configurations clearly overpowered."
+    },
+    {
+      "lever_id": "d443ad09-b2d4-4779-abbb-c7eae2e550cd",
+      "name": "Law Enforcement AI Sophistication and Wanted-Level Mechanics",
+      "consequences": "Designing how police and crime networks respond to player actions (pursuit behavior, wanted levels, NPC witness reporting) shapes replayability and tension but adds significant AI complexity. Sophisticated law enforcement creates dynamic cat-and-mouse gameplay; simplified mechanics reduce CPU load but can feel artificial.",
+      "options": [
+        "Build a layered AI system where officers adapt pursuit tactics based on player history, environment, and reinforcement learning, with a five-level wanted system that triggers escalating NPC faction responses and media attention.",
+        "Implement a rule-based wanted system with static pursuit rules and scripted escalation triggers, where AI difficulty increases through spawn rates and reinforcements rather than tactical adaptation.",
+        "Create a hybrid system where wanted level generates scripted police dispatch events and chokepoints, but individual officer behavior remains rule-based; allow player reputation to unlock alternative outcomes (bribes, safe houses)."
+      ],
+      "review": "Controls emergent tension and player challenge versus AI development cost and network synchronization demands. Weakness: The options do not address how to prevent wanted-level mechanics from feeling punitive in single-player or how to prevent exploitation of AI predictability."
+    },
+    {
+      "lever_id": "9c43f6f1-1900-44be-bc94-850827149927",
+      "name": "Criminal Economy Interactivity and Player Market Impact",
+      "consequences": "Deciding whether the game's criminal economy (drug trafficking, protection rackets, money laundering) responds dynamically to player actions or follows preset scripts affects emergent gameplay and world believability. A truly dynamic economy creates replayability but requires robust economic simulation and extensive content to fill player-driven voids.",
+      "options": [
+        "Develop a responsive underground economy where player-controlled criminal enterprises directly influence NPC prices, supply routes, and rival faction behavior; use procedural event generation to fill gaps when player activity is low.",
+        "Implement a static economy with preset trading routes and faction relationships, where player actions trigger predetermined story branches rather than ongoing economic shifts.",
+        "Create a semi-responsive economy with key nodes (major trafficking routes, protection rackets) that react to player activity through scripted branching events, while peripheral markets follow preset cycles independent of player interference."
+      ],
+      "review": "Controls emergent storytelling and player agency versus simulation complexity and content creation demands. Weakness: The options do not explain how to prevent players from gaming the economy to trivialize financial challenges or how to avoid content voids when players ignore major criminal enterprises."
+    },
+    {
+      "lever_id": "1cf40636-207c-492f-9d8f-2424e2af13dc",
+      "name": "Dialogue System Scope and AI-Assisted Writing Integration",
+      "consequences": "Choosing between fully-written dialogue trees, AI-augmented conversation generation, and hybrid approaches affects voice-acting costs, localization burden, and NPC realism. Full hand-writing ensures quality but scales poorly; AI-assisted dialogue reduces costs but risks inconsistency and requires careful quality gates.",
+      "options": [
+        "Commission comprehensive dialogue trees for all major NPCs and story beats, with voice actors recording millions of lines across full branching trees; use localization teams for all major languages.",
+        "Deploy an AI dialogue system that generates contextual NPC responses from seed templates and character profiles, with human editors curating critical story moments and a smaller voice-acting pool for emotional beats.",
+        "Use a dialogue system that mixes handwritten primary character arcs with AI-augmented secondary NPC interactions, where essential story dialogue is fully voiced but ambient conversations rely on text or procedurally-composed bark systems."
+      ],
+      "review": "Controls dialogue authenticity and scale versus voice-acting labor and localization cost. Weakness: The options do not address how to maintain narrative tone consistency when AI-generated and human-written dialogue coexist, or how to localize AI-generated dialogue without introducing errors."
+    },
+    {
+      "lever_id": "78297360-b97a-4d77-9f01-45f54750cccf",
+      "name": "Geographic Scale vs. Environmental Detail Density",
+      "consequences": "Defining the map size (single sprawling metropolis versus multiple distinct cities) and asset density per square kilometer directly affects memory footprint, loading-screen frequency, and artist throughput. A sprawling map with high density requires sophisticated streaming and asset reuse; smaller, denser areas allow richer bespoke detail but limit exploration scope.",
+      "options": [
+        "Design a massive unified open world spanning all three cities with low-to-medium density, relying on procedural building facades, parametric interiors, and aggressive asset streaming to maintain performance on current-gen hardware.",
+        "Create three highly-detailed, densely-authored city zones with distinct architectural and cultural character, separated by clear travel transitions (loading zones or map tabs) rather than seamless traversal.",
+        "Build a single primary city with extremely high environmental detail and handcrafted landmarks, supported by procedurally-expanded suburbs and outlying rural regions with lower fidelity, allowing players to experience a fully-realized urban core."
+      ],
+      "review": "Controls exploration scope and visual fidelity versus streaming complexity and asset production velocity. Weakness: The options do not address the player expectation for true open-world traversal without loading screens, or how to prevent procedural suburban areas from feeling hollow compared to authored city centers."
+    }
+  ],
+  "metadata": {
+    "metadata_1": {
+      "context_window": 200000,
+      "num_output": 8192,
+      "is_chat_model": true,
+      "is_function_calling_model": true,
+      "model_name": "claude-haiku-4-5-20251001",
+      "system_role": "system",
+      "llm_classname": "Anthropic_LLM"
+    },
+    "metadata_2": {
+      "context_window": 200000,
+      "num_output": 8192,
+      "is_chat_model": true,
+      "is_function_calling_model": true,
+      "model_name": "claude-haiku-4-5-20251001",
+      "system_role": "system",
+      "llm_classname": "Anthropic_LLM"
+    },
+    "metadata_3": {
+      "context_window": 200000,
+      "num_output": 8192,
+      "is_chat_model": true,
+      "is_function_calling_model": true,
+      "model_name": "claude-haiku-4-5-20251001",
+      "system_role": "system",
+      "llm_classname": "Anthropic_LLM"
+    }
+  },
+  "system_prompt": "You are an expert strategic analyst. Generate solution space parameters following these directives:\n\n1. **Output Requirements**\n   - You must generate 5 to 7 levers per response.\n   - Each lever's `options` field must contain exactly 3 qualitative strategic choices as plain strings.\n\n2. **Lever Quality Standards**\n   - Consequences: describe the direct effect of pulling this lever, then at least one downstream implication or trade-off. Be concise and grounded \u2014 only cite specific numbers if the project context provides evidence for them. Do not fabricate percentages or cost estimates. Target length: 2\u20134 sentences.\n   - Options MUST:\n     \u2022 Represent genuinely distinct strategic pathways (not just labels)\n     \u2022 Include at least one unconventional or non-obvious approach\n     \u2022 NO prefixes (e.g., \"Option A:\", \"Choice 1:\")\n\n3. **Strategic Framing**\n   - Name each lever using language drawn directly from the project's own domain \u2014 avoid formulaic patterns or repeated prefixes\n   - Frame options as complete strategic approaches\n   - Ensure levers challenge core project assumptions\n\n4. **Validation Protocols**\n   - For `review_lever` (one field, two sentences):\n     First sentence names the core tension. Second sentence identifies a weakness.\n     Example: \"Controls centralization vs. local autonomy. Weakness: The options fail to account for transition costs.\"\n     Do not use square brackets or placeholder text.\n   - For `summary`:\n     One sentence prescribing a concrete addition to a specific lever.\n     Example: \"Add 'partner with a regional distributor for last-mile logistics' to Supply Chain Strategy.\"\n\n5. **Prohibitions**\n   - NO prefixes/labels in options (e.g., \"Option A:\", \"Choice 1:\")\n   - NO generic option labels (e.g., \"Optimize X\", \"Tolerate Y\")\n   - NO placeholder consequences or bracket-wrapped templates\n   - NO fabricated statistics or percentages without evidence from the project context\n   - NO marketing language (e.g., \"game-changing\", \"cutting-edge\", \"revolutionary\")\n\n6. **Option Structure**\n   - Maintain parallel grammatical structure across options\n   - Ensure options are self-contained descriptions\n   - Each option should be a concrete, actionable approach \u2014 not a vague aspiration",
+  "user_prompt": "File 'plan.txt':\nPlan:\nDevelop the next Grand Theft Auto (GTA), featuring a sprawling, immersive open-world metropolis blending elements of Los Angeles, Detroit, and Miami, filled with intricate narratives of crime, corruption, and power struggles, realistic criminal economies, dynamic NPC interactions, complex heist mechanics, extensive vehicle customization, nuanced morality systems, advanced procedural generation, next-gen graphical fidelity, multiplayer modes, and innovative gameplay funded by strategic industry partnerships, publisher investments, and government innovation grants. Don't go for the most aggressive scenario. Banned words: blockchain, DAO, crowdfunding.\n\nToday's date:\n2026-Mar-13\n\nProject start ASAP\n\nFile 'purpose.md':\n**Purpose:** business\n\n**Purpose Detailed:** Developing a new Grand Theft Auto game with advanced features, complex narratives, and strategic funding.\n\n**Topic:** Grand Theft Auto (GTA) Game Development\n\nFile 'plan_type.md':\nThis plan requires one or more physical locations. It cannot be executed digitally.\n\n**Explanation:** Developing a Grand Theft Auto game, even with advanced procedural generation and cloud-based tools, *inherently requires* a physical development environment, including offices, hardware, and in-person collaboration among developers, artists, and designers. Testing the game also requires physical devices and real-world testing scenarios. Securing funding through partnerships and grants involves physical meetings and presentations. Therefore, this plan is classified as physical."
+}

@@ -1,0 +1,233 @@
+[
+  {
+    "lever_id": "0f0a2b8c-bbc0-4a83-a75f-f1ec38e084bf",
+    "name": "Residential Facility Scaling Pathway",
+    "consequences": "Deferring expansion beyond 8 suites until month 12 validation mitigates financial and staffing risk, but delays enrollment velocity and stretches the timeline for capturing the prespecified minimum parasomnia event count. Early-stage facilities often underestimate conversion rates and false-alarm costs; premature scaling risks unsustainable night-shift burden and quality degradation.",
+    "options": [
+      "Commit to 8-suite steady-state operation for all three years, investing deferred capital into enhanced recruitment and retention incentives to reach 50\u201370 participants through longer individual stays and repeat admissions.",
+      "Expand to 10\u201311 suites by month 15 if pilot data demonstrates \u226575% event-yield rate and staffing confidence, staging renovation and hiring in parallel to avoid operational disruption.",
+      "Partner with a second University Hospital sleep center in western Germany to operate a remote satellite facility under unified protocols, distributing recruitment load and reducing per-site enrollment pressure while doubling geographic reach."
+    ],
+    "review": "Controls facility investment intensity versus enrollment velocity. Weakness: The options do not explicitly address transition risk if early staffing rotations prove unsustainable; no contingency for scale-down mid-program."
+  },
+  {
+    "lever_id": "1ace7485-14eb-4440-9433-acc5904e2372",
+    "name": "Sensing Architecture\u2014Dry Headband Versus Laboratory Polysomnography Trade-off",
+    "consequences": "Tiered acquisition (dry headbands nightly, full PSG on scheduled enhanced nights) reduces participant burden and preserves naturalistic behavior, but distributes event capture across low-resolution and high-resolution windows\u2014some episodes may be missed on low-burden nights, and late-stage escalation PSG incurs unpredictable costs. The semi-automated triage tool must learn from sparse high-resolution data to generalize to dense low-resolution streams.",
+    "options": [
+      "Perform full PSG montage on every night for the first week of each admission, then switch to dry headband plus mattress/video on weeks 2\u20138, front-loading high-fidelity data to accelerate algorithm development and allow confident downsampling later.",
+      "Retain scheduled enhanced-night PSG (first, mid-stay, final) and escalation-triggered PSG, but add optional participant-initiated button-press events on headband nights to mark subjective symptom onset, improving low-resolution event localization without technician cognitive load.",
+      "Eliminate scheduled mid-stay PSG and escalate only after two dry-headband flagged events within 72 hours, freeing PSG technician time for other data processing and reducing equipment wear while relying on mattress and video to provide sufficient context for event morphology."
+    ],
+    "review": "Controls sensing fidelity versus operational cost and participant intrusiveness. Weakness: None of the options explicitly weigh the risk that sparse high-resolution data may be insufficient for algorithm training if event-yield rates fall below 70%."
+  },
+  {
+    "lever_id": "79997b7c-639d-4469-a910-92b386fa76a9",
+    "name": "Recruitment Criteria and Participant Stability",
+    "consequences": "Current pre-admission pathway filters for confirmed NREM parasomnias and excludes epilepsy mimics, untreated sleep apnea, and severe psychiatric instability. Tightening criteria reduces misclassification risk and false admissions, but shrinks the eligible pool and extends screening time; loosening criteria accelerates enrollment but introduces confounding and protocol-deviation burden.",
+    "options": [
+      "Require an ambulatory PSG or home actigraphy screen within 6 months pre-admission for all candidates, standardizing baseline arousal profiles and event frequency estimates, but extending the recruitment pathway by 4\u20138 weeks per candidate and requiring external lab coordination.",
+      "Accept clinical interview plus collateral history for initial cohorts (first 20 participants) without prior PSG, then use observed event-yield and false-positive rates to refine criteria iteratively by month 6, trading upfront enrollment speed for data-driven gatekeeping.",
+      "Partner with regional neurologists to pre-screen candidates using a structured telephone questionnaire and prior EEG records before formal referral to Bonn, filtering out likely mimics before consent and reducing no-show and protocol-violation risk."
+    ],
+    "review": "Controls diagnostic certainty versus recruitment velocity. Weakness: The options do not account for the cost and logistical burden of coordinating external PSG screening; early high-threshold criteria may delay publications despite better data quality."
+  },
+  {
+    "lever_id": "5e78c96c-492d-4957-b590-930a4f0c6f7b",
+    "name": "Manual Scoring Labor and Inter-Rater Reliability",
+    "consequences": "Dual independent scoring by trained raters ensures AASM compliance and grounds the semi-automated tool against human agreement, but consumes approximately 20\u201330 hours per participant (depending on event frequency and session duration). Labor is the dominant non-personnel variable in years 2\u20133; automating initial triage reduces review volume but risks missed or misclassified episodes if the algorithm is undertrained.",
+    "options": [
+      "Employ a dedicated third rater (or rotating pool) to adjudicate disagreements between the primary two scorers, increasing labor cost by ~15\u201320% but reducing ambiguous event classifications and providing training signal for the semi-automated tool.",
+      "Implement a tiered scoring protocol: technician flags probable events on dry-headband nights and scores only enhanced-night PSG in full; two independent raters score only technician-flagged events plus a random 20% of non-flagged nights, reducing total review volume by ~40% but introducing technician bias and missing rare events.",
+      "Outsource routine PSG scoring to an external sleep medicine scoring service (e.g., in Austria or Switzerland) certified in AASM criteria, reserving independent dual scoring to Bonn for the subset of events flagged as equivocal by the service, trading direct quality control for labor cost reduction."
+    ],
+    "review": "Controls scoring quality and inter-rater reliability against labor expense. Weakness: Outsourcing or tiered protocols risk introducing systematic bias and may compromise the independence required for unambiguous algorithm benchmarking."
+  },
+  {
+    "lever_id": "a105948c-0790-4139-90b9-6dcab4979250",
+    "name": "Semi-Automated Event Triage\u2014Algorithm Ambition Versus Training Data",
+    "consequences": "Developing a triage tool that ranks events by probability (rather than autonomous diagnosis) reduces liability and aligns with guidance; however, its performance depends on the volume and diversity of high-resolution training examples. If event capture is sparse or skewed toward one parasomnia subtype, the tool's generalization suffers and manual review burden remains high.",
+    "options": [
+      "Design the algorithm as a Bayesian probabilistic model that integrates dry-headband features (EEG spectral signatures, arousal markers), mattress sensor patterns, and video motion envelopes, with explicit uncertainty quantification and a configurable decision threshold tunable by the user to prioritize sensitivity or specificity depending on clinical context.",
+      "Train a supervised classifier on the first 30 participants' enhanced-night PSG data with balanced class distribution (ensuring each parasomnia subtype and control nights are well-represented), then evaluate on held-out test data; if performance plateaus below 75% sensitivity, freeze algorithm development and publish triage outputs as exploratory, deferring mature benchmarking to phase two.",
+      "Establish a lightweight rule-based heuristic (e.g., rapid EEG desynchronization plus mattress motion plus video-flagged movement within 60-second windows equals probable event) for rapid deployment by month 12, then overlay machine-learning refinement later, accepting early false-positive rate in exchange for faster feedback to inform recruitment and enrichment strategies."
+    ],
+    "review": "Controls algorithm sophistication versus data sufficiency for valid benchmarking. Weakness: None of the options address how to handle imbalanced training data if one parasomnia subtype (e.g., sleep terrors) is underrepresented in the captured event set."
+  },
+  {
+    "lever_id": "ef86efc7-77b3-4e62-ae1a-9a2b8e46873d",
+    "name": "Data Stewardship, Privacy, and Repository Deposition",
+    "consequences": "Excluding bedroom video from public sharing preserves participant privacy and sidesteps institutional liability, but limits post-hoc phenotypic annotation and reuse value. Depositing only de-identified physiological data and sensor streams reaches a narrower audience and may slow external algorithm development; privacy-preserving approaches (homomorphic encryption, federated learning) are immature and carry implementation risk.",
+    "options": [
+      "Deposit de-identified EEG, EOG, EMG, and actigraphy in a standard repository (e.g., OpenNeuro, Zenodo) under a CC-BY license, with video data retained locally under secure access upon signed data use agreement, enabling secondary research on physiological patterns while maintaining video privacy and regulatory compliance.",
+      "Implement a tiered data release: physiological data released openly at study completion; video metadata (timestamps, coarse event classifications) released under DUA; raw video retained indefinitely on secure institutional servers, accessible only to approved collaborators vetted by an external data governance committee.",
+      "Develop a harmonized dataset format in collaboration with the International Sleep Research Organization to deposit data alongside reference standards from comparable sleep centers, enabling meta-analysis; coordinate with other residential parasomnia units (if they exist or are established) to pool anonymized cohorts for downstream algorithm training by the wider community."
+    ],
+    "review": "Controls data utility and secondary research potential versus privacy burden and institutional liability. Weakness: None of the options explicitly address the cost and timeline for de-identification software and legal review; early repository deposit may be delayed by months if governance processes are not accelerated."
+  },
+  {
+    "lever_id": "520d80d7-7828-4cae-82c4-f56e5a54f7dc",
+    "name": "Publication Strategy and Pharma Partnership Scope",
+    "consequences": "Publishing methods-validation and longitudinal phenotyping results in peer-reviewed sleep medicine journals establishes the facility's credibility and supports phase-two grant competitiveness; a pharma partnership (with 30-day pre-publication review window only) provides optional upside funding but risks reputational entanglement if partner interests diverge from academic independence. Early vs. late publication timing affects recruitment momentum and funding narrative.",
+    "options": [
+      "Prioritize publication of the methods paper (aims 1 and operational validation) by month 18, securing a high-impact sleep medicine venue before recruiting additional cohorts, then publish parasomnia phenotyping papers (aims 2 and 3) by month 30\u201336 as exploratory results, maintaining narrative momentum for phase-two applications.",
+      "Defer all publications until month 30, aggregating three years of data into a comprehensive report covering methods, phenotyping, and algorithm performance simultaneously, trading early visibility for a stronger integrated story and higher-impact single venue, but risking competitive preemption and loss of recruitment momentum.",
+      "Publish three concurrent manuscripts on rolling schedule: methods paper by month 18, semi-automated triage benchmarking paper by month 24, and longitudinal parasomnia heterogeneity paper by month 32, building a diversified publication portfolio that supports phase-two funding and collaborator recruitment without overwhelming the team's writing bandwidth."
+    ],
+    "review": "Controls visibility and funding momentum versus publication quality and team workload. Weakness: The options do not weigh the risk that early methods publications may receive critical peer review that forces protocol modifications, potentially undermining the 'proven sustainable' narrative needed for expansion funding."
+  },
+  {
+    "lever_id": "d2f28e1f-5250-424c-a09f-1384da4c67a9",
+    "name": "Event Capture Intensity and Stay Duration",
+    "consequences": "Longer residential stays increase the statistical likelihood of capturing rare parasomnia events, enabling richer longitudinal phenotyping but raising per-participant costs, staffing load, and the risk of habituation or emotional fatigue. Shorter, repeated stays reduce cost per night but fragment longitudinal continuity and require higher recruitment throughput to achieve the same event density.",
+    "options": [
+      "Commit to 4-week minimum residential stays for all enrolled participants with optional extension to 10 weeks only after zero events are captured, prioritizing deep within-person phenotyping.",
+      "Adopt a flexible 2\u20138 week protocol with explicit per-participant event yield targets, discharging participants early if target events are captured and extending only those with low event frequency, maximizing facility turnover and participant enrollment numbers.",
+      "Implement a hybrid model: standard 3-week stays for cohort stability with rolling recruitment, but reserve a secondary track of extended 6\u201310 week stays for participants with consistently low event frequency, creating two distinct population pathways."
+    ],
+    "review": "Controls depth of longitudinal data per participant versus breadth of participant enrollment. Weakness: The options do not address how early discharge criteria interact with within-person circadian or stress-driven event clustering, risking premature discharge before a true baseline is established."
+  },
+  {
+    "lever_id": "adcadda8-4313-4e54-9f7a-f5da1f026ec7",
+    "name": "Matched Control Cohort\u2014Recruitment Scale and Timing",
+    "consequences": "Recruiting and housing a matched control group (healthy adults under identical monitoring conditions) generates critical baseline data for algorithm development and false-positive rate benchmarking but doubles residential facility demand and recruiting burden. Conversely, retrospective use of healthy-sleep data from published datasets or historical single-night PSGs reduces facility load but weakens ecological validity and introduces methodological heterogeneity.",
+    "options": [
+      "Prospectively recruit and retain a contemporaneous control group of 15\u201320 healthy adults matched on age, sex, and baseline sleep characteristics, scheduling them throughout the 3 years to maintain steady facility occupancy and fresh baseline data.",
+      "Defer control group recruitment to year 2, after parasomnia cohort stabilization and initial event yield assessment, reducing early operational burden and allowing criteria refinement based on observed participant demographics and event patterns.",
+      "Construct control baselines from published polysomnography databases (e.g., Sleep Heart Health Study, Multi-Ethnic Study of Atherosclerosis) supplemented by selective in-person overnight monitoring of 5\u20138 local healthy volunteers, minimizing facility disruption while leveraging existing data infrastructure."
+    ],
+    "review": "Controls generalizability of algorithm benchmarking and false-positive characterization. Weakness: The options do not address the trade-off between prospective control data freshness and the retrospective cohort's administrative simplicity, nor do they account for differences in sensor hardware and electrode placement across datasets."
+  },
+  {
+    "lever_id": "2a4517f9-ba16-417a-81a9-ed37858aa655",
+    "name": "Annotation and Scoring Workflow\u2014Labor Model and Threshold Rigor",
+    "consequences": "Requiring dual independent manual scoring of all polysomnography nights ensures inter-rater reliability measurement and rigorous AASM adjudication but consumes substantial time and cost per participant. Conversely, single-pass technician annotation with post-hoc spot-check reliability audits reduces labor demand but introduces scoring bias and weakens defensibility of event classification.",
+    "options": [
+      "Score all enhanced PSG nights (first, mid-stay, final) plus any escalation nights using two independent raters blind to participant history, calculating inter-rater agreement on every event and flagging discordant cases for senior physician arbitration.",
+      "Implement tiered scoring: technician annotation in real time for operational decision-making, followed by single-rater formal AASM scoring for repository deposition, with dual-rater reliability assessment applied to a stratified random sample (20% of nights) to monitor drift without full burden.",
+      "Adopt a single primary rater (the PI or a senior technician) for all scoring, with monthly recalibration sessions against a reference standard of 10 pre-scored exemplar nights, reducing labor while maintaining consistency through structured retraining rather than dual review."
+    ],
+    "review": "Controls annotation quality assurance and publishable inter-rater reliability claims. Weakness: The options do not adequately address how to maintain rater blinding in a small facility where technicians and scorers may observe patterns across participants, nor how to budget for independent scoring contractor time versus internal staff capacity."
+  },
+  {
+    "lever_id": "edac9cba-b652-47b3-8a73-b1d008378e10",
+    "name": "Escalation-Night PSG Deployment\u2014Trigger Criteria and Coverage Implications",
+    "consequences": "Deploying full clinical-grade PSG on nights flagged by technicians or headband algorithms captures events at highest resolution but requires technician availability and lab staff notification, risking disruption and cost overruns. Scheduled escalation on fixed nights (e.g., first, mid, final) is predictable and cost-controlled but misses spontaneous high-event clusters and may waste PSG nights when no event occurs.",
+    "options": [
+      "Reserve escalation PSG exclusively for pre-planned nights (first, mid-stay, final) per protocol, ensuring consistent technician staffing and reliable data comparability across participants, accepting that cluster-dependent event frequency will be undersampled.",
+      "Empower night technicians to trigger escalation PSG reactively when headband sensors detect sustained arousals, movement bursts, or other real-time markers above a threshold, optimizing event capture but requiring on-call technician coverage and dynamic staffing flexibility.",
+      "Implement a hybrid protocol: schedule PSG on fixed nights plus grant technicians authority to request escalation only when raw headband EEG shows unambiguous burst activity during suspected sleep stages, balancing predictability with opportunistic capture and requiring explicit escalation criteria documentation."
+    ],
+    "review": "Controls event capture resolution and facility responsiveness versus operational predictability and cost control. Weakness: The options assume technician judgment is reliable and consistent across shifts, but do not address cross-technician variation in threshold interpretation or how to validate escalation trigger accuracy during the pilot phase."
+  },
+  {
+    "lever_id": "a48c9617-ff09-4712-936b-dfd300eeff22",
+    "name": "Institutional Embedding\u2014Departmental Alignment and Clinical Integration",
+    "consequences": "Tight integration with University Hospital Bonn's Epileptology Department leverages existing video-EEG infrastructure and clinical credibility but creates operational dependency on a busy clinical department and risks subordinating research priorities to clinical demands. Conversely, autonomous operation with loosely coordinated consultative relationships preserves research autonomy but foregoes infrastructure sharing and clinical referral networks.",
+    "options": [
+      "Formalize a joint operational governance structure with named Epileptology Department leadership and shared staffing for on-call emergency response, granting research priority scheduling in exchange for participating in departmental rounds and accepting clinical seizure referrals that meet parasomnia mimicry criteria.",
+      "Maintain the facility as a legally independent research unit within University of Bonn's research infrastructure, with formal service agreements for emergency medical backup and neurology consultation on an as-needed, cost-recovery basis, preserving autonomy while establishing clear boundary conditions.",
+      "Create a hybrid embedded model: establish the facility as a dedicated research unit but co-locate it within Hospital Bonn's Sleep Medicine Clinic (if one exists) or Neurology outpatient area rather than the Epileptology Department, reducing clinical entanglement while retaining institutional affiliation and participant access."
+    ],
+    "review": "Controls access to clinical infrastructure and patient referral networks versus operational independence and research decision authority. Weakness: The options do not address the contractual complexity of shared equipment maintenance responsibilities or how to handle priority conflicts if the facility needs PSG equipment simultaneously with a clinical patient."
+  },
+  {
+    "lever_id": "379cb0ed-22aa-48ed-a6e6-0421e813fbb9",
+    "name": "Dry-Electrode Headband Calibration and Site-Specific Validation",
+    "consequences": "Standardizing the dry-electrode headband across all nightly recordings enables longitudinal trend detection and reduces variability in algorithm training data but requires formal site-specific validation to establish baseline noise thresholds, impedance tolerances, and artefact profiles. Rapid deployment without local calibration accelerates pilot enrollment but risks incorporating systematic site-specific bias into the event-triage model.",
+    "options": [
+      "Conduct a 2-month pre-pilot in-house validation phase using the 8 core staff and 5\u20138 recruited volunteers, establishing site-specific electrode-impedance curves, overnight drift patterns, and artifact baselines before admitting the first parasomnia participant, delaying enrollment but cementing methodological credibility.",
+      "Deploy headbands immediately upon equipment arrival with real-time recalibration during the first 5\u201310 participant admissions, collecting calibration data in parallel with early pilot recruitment and adjusting impedance protocols iteratively based on observed performance, accelerating timeline but introducing heterogeneity in early data.",
+      "Partner with the headband manufacturer's applications team to conduct a 1-week calibration protocol on-site, transferring their validation toolkit to the facility and then conducting a smaller local validation study (3 staff, 2 participants) for facility-specific environmental characterization, balancing speed and rigor through vendor support."
+    ],
+    "review": "Controls the robustness of baseline sensor characterization for a novel capture environment versus recruitment velocity. Weakness: The options assume the headband manufacturer has sufficient support capacity and that local environmental factors (acoustic, electromagnetic, humidity) will be stable throughout the 3-year period, but do not address how to recalibrate if the facility undergoes seasonal changes or equipment aging."
+  },
+  {
+    "lever_id": "7c8b3c4e-ece2-4dde-a18b-c3fc38e3f404",
+    "name": "Public Data Deposition Schedule and De-identification Boundaries",
+    "consequences": "Rapid deposition of de-identified physiological and sensor data to a public repository (e.g., OpenNeuro, PhysioNet) within 6\u201312 months of data collection accelerates secondary-use research and strengthens the facility's reputation but imposes tight de-identification and metadata curation deadlines and limits the original team's exclusive analysis window. Delayed deposition (12\u201336 months) preserves publication priority and allows iterative method refinement but risks losing momentum in the field and reducing long-term data reuse impact.",
+    "options": [
+      "Commit to 12-month post-collection deposition of all BIDS-formatted polysomnography, headband EEG, and sensor data to OpenNeuro, establishing a rolling release schedule aligned with publication acceptance and requiring data curation during months 6\u201312 of each participant's stay.",
+      "Implement a staggered deposition strategy: release anonymized headband EEG and contact-free sensor streams within 6 months, withhold full PSG montages until 18 months post-collection to allow primary publications, and exclude video entirely, balancing reuse acceleration with author publication advantage.",
+      "Establish a restricted-access data repository hosted on University of Bonn's secure infrastructure, releasing de-identified data to researchers under executed data use agreements rather than public deposition, prioritizing privacy protection and author control over maximal open-science visibility."
+    ],
+    "review": "Controls scientific impact and field contribution velocity versus the original team's competitive advantage and privacy risk management. Weakness: The options do not adequately address the regulatory and ethical burden of de-identification verification or how to handle secondary-use inquiries if the facility lacks dedicated data governance personnel."
+  },
+  {
+    "lever_id": "20b02926-b84b-42c3-9e8c-1110d9be5875",
+    "name": "Domestic Ambiance Versus Safety Instrumentation Trade-off",
+    "consequences": "A strictly clinical interior (visible cameras, obvious microphones, exposed sensor wiring) inhibits naturalistic parasomnia manifestation and participant comfort, reducing event frequency and quality. Conversely, over-masking instrumentation (hidden cameras, camouflaged sensors) may violate informed consent transparency and regulatory expectations. The balance directly affects both event yield and ethical defensibility.",
+    "options": [
+      "Maintain visible, clearly labeled fixed camera and microphone mounts in each suite with clear consent language, and use minimalist color palette and residential furniture to preserve domestic feel without concealment.",
+      "Deploy discrete infrared camera domes and microphone capsules behind fabric-covered acoustic panels with transparent labeling in the entrance foyer, accepting slightly higher installation cost to reduce visual clinical impression.",
+      "Provide modular sensor mounting systems that participants can adjust (raising or lowering visible camera angles, muting microphones during private moments outside sleep) within a supervised consent protocol, trading some technical control for agency and comfort."
+    ],
+    "review": "Controls perceived clinical atmosphere versus authentic home environment. Weakness: The options do not address how to manage informed consent renewal if a participant becomes uncomfortable mid-stay after initially consenting to visible instrumentation."
+  },
+  {
+    "lever_id": "f1bad36d-eb11-487e-bd1e-92a82ea01930",
+    "name": "Technician Event-Flagging Threshold and Escalation Night Trigger Criteria",
+    "consequences": "A sensitive flagging threshold (low bar for escalation-night PSG deployment) maximizes event capture but exhausts technician time and PSG equipment, increasing costs and staff fatigue. A conservative threshold preserves resources but risks missing bona fide episodes, reducing Aim 2 phenotyping power. The choice directly determines overnight workload distribution, PSG montage utilization rates, and event-adjudication throughput per stay.",
+    "options": [
+      "Establish a low threshold requiring escalation PSG within 4 hours of any technician-flagged movement burst exceeding 5 minutes with simultaneous arousal or heart-rate elevation on the headband signal, accepting higher PSG deployment density.",
+      "Use a two-step rule: first-night triage via headband only, then escalate PSG only if the technician observes a second or third nocturnal event cluster on subsequent nights, reducing escalation frequency at the cost of missing first-night episodes.",
+      "Implement weekly technician-physician review huddles (asynchronous video review of prior 7 nights per participant) to adjudicate escalation candidates retrospectively, freeing real-time technician judgment but delaying PSG montage availability."
+    ],
+    "review": "Controls responsiveness to real-time event detection versus resource efficiency. Weakness: None of the options account for technician cognitive fatigue during night shifts, which may degrade flagging accuracy regardless of threshold formality."
+  },
+  {
+    "lever_id": "eb3e2746-9524-43eb-bf4f-4f83db4f0ee8",
+    "name": "Dual-Rater Scoring Labor Model and Annotation Velocity",
+    "consequences": "Mandatory dual-rater independent scoring of all nights (with adjudication by consensus or PI tiebreak) provides inter-rater reliability reporting required for Aim 3 but consumes \u20ac400K\u2013\u20ac600K of the 3-year budget in independent contractor time and delays publication. Single-rater scoring with spot-check reliability audits reduces cost and accelerates turnaround but weakens the statistical foundation for algorithm benchmarking and may not satisfy peer-review expectations.",
+    "options": [
+      "Hire two dedicated part-time sleep medicine physician contractors (0.4 FTE each) over 3 years to score all recorded nights in parallel, with weekly adjudication meetings and formal kappa reporting, treating dual scoring as a fixed operational cost.",
+      "Establish tiered scoring: night technician provides preliminary event annotation in real time, then a single credentialed scorer reviews and finalizes during business hours, with a blinded second scorer auditing 30% of nights selected via stratified random sampling for inter-rater kappa calculation.",
+      "Recruit graduate students in sleep neuroscience or physiology from University of Bonn to score under structured training (monthly workshops, written scoring guides, competency assessments) with cost-sharing via their departmental mentors, accepting variability in scorer experience but leveraging academic collaboration."
+    ],
+    "review": "Controls annotation quality and reliability reporting versus cost and publication speed. Weakness: The options underestimate the overhead cost of training and supervising multiple independent raters, particularly if turnover occurs mid-project."
+  },
+  {
+    "lever_id": "f79d4548-2528-494a-b744-bbd73278a1cf",
+    "name": "Matched Control Recruitment Cadence and Enrollment Pacing",
+    "consequences": "Enrolling controls in parallel with case participants (1:1 or 1:0.5 ratio, simultaneous residential stays) ensures environmental, seasonal, and technician-training consistency for event-triage benchmarking but doubles recruitment burden and may overconstrain case enrollment if control screening is slower. Enrolling controls as a second cohort after case accrual plateaus reduces operational strain but risks cohort heterogeneity (different technicians, facility maturity, sensor firmware versions) and delays Aim 3 algorithm benchmarking publication.",
+    "options": [
+      "Recruit and admit matched controls concurrently with case participants at a 1:1 cadence, using the same specialist screening pathway and residential procedures, accepting resource strain and potential slowdown of total case enrollment.",
+      "Enroll all 50\u201370 parasomnia cases during years 1\u20132, then recruit 20\u201325 matched controls in year 2\u20133 after case accrual stabilizes, minimizing parallel overhead but accepting temporal separation and seasonal confounding risk.",
+      "Partner with a second sleep medicine center in Germany (e.g., Charit\u00e9 Berlin or Heidelberg University Hospital) to enroll matched controls under identical protocols at their residential facilities, enabling true concurrent enrollment without doubling Bonn's recruitment load."
+    ],
+    "review": "Controls enrollment sequencing and operational parallelism versus recruitment efficiency. Weakness: The multi-center control option introduces inter-site equipment heterogeneity and scoring standardization challenges that the single-site options avoid."
+  },
+  {
+    "lever_id": "ed028213-ffdd-4577-96b9-404fc5fab078",
+    "name": "Participant Stay Duration Flexibility and Zero-Event Management Protocol",
+    "consequences": "Rigid stay lengths (e.g., fixed 3 weeks regardless of event capture) simplify scheduling but result in 20% unproductive admissions per protocol ceiling, wasting bed-nights and participant compensation. Flexible stay extensions (up to 10 weeks total, with conditional protocol review at zero-event milestone) maximize event yield but destabilize scheduling, increase per-participant cost variance, and require clear decision rules to avoid indefinite extensions. The lever directly impacts budget predictability and participant retention.",
+    "options": [
+      "Cap all stays at a fixed 3 weeks regardless of event outcome, using zero-event admissions as natural experiments in nocturnal arousal and movement patterns under facility conditions, accepting 20% unproductive yield as a cost of enrollment fidelity.",
+      "Offer mandatory flexible extensions: if no event is captured by day 14, automatically extend to day 28; if still zero events by day 28, offer one optional 2-week extension (up to day 42) with participant consent and PI approval, with hard termination at 42 days regardless of event status.",
+      "Implement a predictive model (based on baseline actigraphy, self-report frequency, and first-week headband data) to identify likely non-event participants by day 7 and offer early discharge with option to reschedule in 2\u20133 months, reducing wasteful bed-time and participant burden."
+    ],
+    "review": "Controls stay flexibility and zero-event yield recovery versus scheduling predictability and per-participant cost. Weakness: The predictive model option assumes baseline actigraphy and pre-stay headband data are available, but the plan does not specify a pre-residential screening device protocol."
+  },
+  {
+    "lever_id": "423d7c28-d3c8-404d-bcfe-92dd52fa56a3",
+    "name": "Sensor Hardware Redundancy and Real-Time Data Integrity Assurance",
+    "consequences": "Single-stream sensor architecture (one headband, one mattress sensor, one camera per suite) minimizes capital cost but creates unrecoverable data loss if a device fails mid-stay, compromising event phenotyping and inter-rater reliability. Dual-redundancy (two headbands, two mattress sensors, backup camera) ensures continuity but increases equipment cost by ~\u20ac150K\u2013\u20ac200K over 3 years and adds technician burden in daily calibration and troubleshooting. The choice affects data completeness and facility robustness under 24/7 operation.",
+    "options": [
+      "Deploy single primary sensors per suite (one dry-electrode headband, one mattress sensor, one fixed infrared camera) with rapid replacement protocols (next-morning swap, edge-case data interpolation, explicit notation in BIDS metadata), accepting occasional data gaps and requiring conservative analysis inclusion criteria.",
+      "Install dual-headband and dual-mattress-sensor architecture with automatic switching logic on signal loss (headband 2 activates if headband 1 dropout detected), requiring daily technician sync checks but guaranteeing physiological continuity across all nights and all participants.",
+      "Use primary sensors for all nights plus one portable backup headband and mattress sensor stored charged and ready in a technician workstation, deployed within 2 hours of primary device failure, prioritizing immediate recovery over pre-failure redundancy."
+    ],
+    "review": "Controls data continuity and system robustness versus capital and operational overhead. Weakness: None of the options address the cost and complexity of maintaining EEG-BIDS compatibility and timestamp synchronization across heterogeneous device redundancy."
+  },
+  {
+    "lever_id": "9d405569-9bc2-4d4a-8867-018d5f315afd",
+    "name": "Pharmaceutical Partnership Activation Timeline and Publication Rights Governance",
+    "consequences": "Early pharmaceutical engagement (year 1, during methods-validation phase) provides upside funding (~\u20ac400K\u2013\u20ac600K) for algorithm development and expanded participant cohorts, but introduces industry timelines and potential negotiation delays in data access and publication. Deferring pharma partnership until after month 18 (post-Aim 1 operational validation and Aim 2 preliminary results) preserves academic autonomy but sacrifices optional funding and may require revised grant applications if DFG funding tightens. The timing determines governance complexity and external reporting obligations.",
+    "options": [
+      "Initiate pharmaceutical partnership discussions at month 6 (during pilot cohort phase), aiming for a signed agreement by month 12 that delineates the pharma partner's role in algorithm co-development, affords them a 30-day pre-publication comment window, and grants them optional sponsored-research fees if data is used for biomarker validation or trial-readiness work.",
+      "Maintain arms-length independence through month 18 operational validation and Aim 2 phenotyping milestone, then solicit pharma interest post-hoc for year 3 algorithm scaling and intervention-trial planning, leveraging early publications as proof-of-concept and bargaining leverage.",
+      "Establish a formal pharma steering-committee seat on the 3-member external advisory board from the outset, substituting one academic advisor for a pharma medical-affairs representative, accepting direct industry input on milestone prioritization in exchange for guaranteed co-funding of semi-automated triage tools."
+    ],
+    "review": "Controls revenue timing and research autonomy versus upside funding and industry alignment. Weakness: The options do not distinguish between different therapeutic classes (REM behavior disorder pharmacotherapy, NREM parasomnia novel agents) that may have competing timelines and publication preferences."
+  }
+]
