@@ -122,6 +122,79 @@ _TRANSIENT_PATTERNS: list[str] = [
 
 ---
 
+## Content Quality Regression (External Feedback)
+
+**External review of full PlanExe reports** (hong_kong_game plan, reviewed by ChatGPT comparison)
+rated the older baseline report **6.5/10** and the newer report (built on optimized levers)
+**5.8/10**. Verdict: *"Version 2 improved specificity, but regressed in credibility."*
+
+This is a critical finding: **the optimization loop has been maximizing structural compliance
+(success rate: 88.6% → 97.1%) while the actual content quality of levers has degraded.**
+
+### Quantitative evidence
+
+Comparing baseline hong_kong_game levers vs. iteration 17 haiku hong_kong_game output:
+
+| Metric | Baseline | Iteration 17 (haiku) | Change |
+|--------|----------|---------------------|--------|
+| Lever count | 15 | 21 | +40% |
+| Avg consequences length | 269 chars | 980 chars | **+3.6×** |
+| Avg option length | 162 chars | 321 chars | **+2.0×** |
+| Avg review length | 153 chars | 319 chars | **+2.1×** |
+
+The levers are dramatically more verbose. The reviewer notes: *"the added specificity does not
+look evidence-backed; it looks selected because it sounds plausible."*
+
+### Root causes in the system prompt
+
+Several elements in `IDENTIFY_POTENTIAL_LEVERS_SYSTEM_PROMPT` directly drive the overconfident,
+marketing-copy tone:
+
+1. **Mandatory fabricated quantification** (line 178): *"Include measurable outcomes: a % change,
+   capacity shift, or cost delta"* — forces models to invent numbers like "reduces development
+   friction by 30–40%" with no evidence basis. The reviewer flags this: *"why 55 days, why 75%,
+   why that exact market split? The report still does not support those claims."*
+
+2. **Verbose consequence chain** (line 177): *"Chain three SPECIFIC effects: Immediate → Systemic
+   → Strategic"* — forces every consequence into a 3-part structure that inflates length without
+   adding substance. Baseline consequences are concise and grounded; optimized consequences are
+   3.6× longer but say less per word.
+
+3. **Formulaic option triads** (line 183): *"Show clear progression: conservative → moderate →
+   radical"* — creates predictable three-point spreads. The reviewer notes the older report's
+   decision framework was *"cleaner and more structurally grounded"* while the newer one *"reads
+   more like a framework generator output."*
+
+4. **Tech/innovation forcing** (line 207): *"Radical option must include emerging tech/business
+   model"* — pushes toward flashy, unsupported claims. The reviewer: *"phrases like 'change the
+   game,' 'breathless,' 'cutting-edge technology' make it sound more like a trailer voiceover than
+   a financing memo."*
+
+5. **Review format overhead** (lines 192–194): The rigid "Controls [A] vs. [B]. Weakness: ..."
+   format produces formulaic reviews that don't surface genuine critical thinking.
+
+### Implication for the optimization loop
+
+The optimizer's objective function is broken: it measures **structural compliance** (did the JSON
+parse? did validators pass?) but has no signal for **content quality** (are the levers grounded?
+are the options genuinely distinct? are the numbers defensible?). Every iteration that improves
+success rate may be simultaneously degrading the quality of what succeeds.
+
+**The next iteration should NOT pursue another structural fix.** Instead, it should address the
+content quality regression by simplifying the system prompt:
+
+- Remove or soften the mandatory quantification requirement ("may include" instead of "MUST")
+- Remove the "Radical option must include emerging tech/business model" constraint
+- Replace "conservative → moderate → radical" with guidance for genuinely distinct approaches
+- Shorten the consequence chain format or make it optional
+- Add guidance like "Be concise. Prefer grounded specificity over impressive-sounding generality.
+  Do not fabricate numbers without evidence from the project context."
+
+This is a higher priority than the EOF retry fix (Direction 1) because it affects the quality of
+**every successful plan**, not just one failure case.
+
+---
+
 ## Deferred Items
 
 **D1 — Add RetryConfig to optimizer runner (code_codex B2):** The optimizer constructs `LLMExecutor` without `RetryConfig`, while the production pipeline at `run_plan_pipeline.py:171–174` passes `retry_config=RetryConfig()`. This gap means validation retries (e.g., a lever with wrong option count) get only one attempt in the optimizer. Lower priority than the EOF fix because validation retries are less common than plan failures, but worth aligning.

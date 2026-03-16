@@ -124,6 +124,47 @@ the plan loop would prevent recurrence with any future typo.
 
 ---
 
+## Content Quality Regression (External Feedback)
+
+**Critical finding**: An external review comparing full PlanExe reports for hong_kong_game rated
+the baseline report **6.5/10** and the report built on optimized levers **5.8/10**. The reviewer's
+verdict: *"Version 2 improved specificity, but regressed in credibility."*
+
+The optimization loop has been maximizing structural compliance (success rate: 88.6% → 97.1%)
+while the actual content quality has degraded. Key observations from the external review:
+
+- *"The added specificity does not look evidence-backed; it looks selected because it sounds
+  plausible."*
+- *"The newer version leans harder into marketing copy disguised as analysis."*
+- *"The newer report's strategic decisions read more like a framework generator output and less
+  like a producer forcing hard decisions."*
+- *"It also still contains suspicious uplift numbers like pre-sales increasing 15–20%, which
+  remain unsupported."*
+- *"The newer report is better at pretending to be investor-ready. The older report is actually
+  slightly more trustworthy."*
+
+### Measured impact on lever verbosity
+
+| Metric | Baseline (hong_kong) | Iter 17 haiku (hong_kong) | Change |
+|--------|---------------------|--------------------------|--------|
+| Lever count | 15 | 21 | +40% |
+| Avg consequences length | 269 chars | 980 chars | **+3.6×** |
+| Avg option length | 162 chars | 321 chars | **+2.0×** |
+| Avg review length | 153 chars | 319 chars | **+2.1×** |
+
+The system prompt's mandatory quantification (*"Include measurable outcomes: a % change, capacity
+shift, or cost delta"*), verbose consequence chain (*"Immediate → Systemic → Strategic"*),
+formulaic option triads (*"conservative → moderate → radical"*), and tech-forcing (*"Radical option
+must include emerging tech/business model"*) are the direct drivers. These produce output that is
+longer and more specific on the surface but less grounded and less credible underneath.
+
+**This changes the priority order for the next iteration.** Content quality regression affects
+every successful plan (34/35), while the EOF retry fix affects one failure case (1/35). The next
+iteration should simplify the system prompt to restore content quality before pursuing further
+structural fixes.
+
+---
+
 ## Verdict
 
 **CONDITIONAL**: The behavioral outcomes are strong — 97.1% success rate is the best observed
