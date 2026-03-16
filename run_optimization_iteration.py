@@ -33,11 +33,9 @@ PLANEXE_PYTHON = "/opt/homebrew/bin/python3.11"
 
 # Models ordered: failed/partial first, then successful.
 # GLM removed in PR #266 — excluded.
+# Nemotron removed in 23797697 — excluded.
 # StepFun removed from llm_config — excluded.
 MODELS = [
-    # Failed (0/5 in previous batch — model-level issues)
-    "openrouter-nvidia-nemotron-3-nano-30b-a3b",
-    # Successful (5/5 in previous batch)
     "ollama-llama3.1",
     "openrouter-openai-gpt-oss-20b",
     "openai-gpt-5-nano",
@@ -48,7 +46,6 @@ MODELS = [
 
 # Short aliases for --models convenience.
 MODEL_ALIASES = {
-    "nemotron": "openrouter-nvidia-nemotron-3-nano-30b-a3b",
     "llama": "ollama-llama3.1",
     "gpt-oss": "openrouter-openai-gpt-oss-20b",
     "gpt5-nano": "openai-gpt-5-nano",
