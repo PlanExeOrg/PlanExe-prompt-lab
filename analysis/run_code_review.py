@@ -72,6 +72,13 @@ issues they describe.
   marketing language. Compare the system prompt's demands against what the
   baseline training data actually looks like — if the prompt forces output to
   be 3× longer than baseline without justification, that's a quality problem.
+- **OPTIMIZE_INSTRUCTIONS alignment**: Read the `OPTIMIZE_INSTRUCTIONS` constant
+  near the top of `identify_potential_levers.py`. Does the system prompt, Pydantic
+  schema, and validator code align with its goals and known-problems list? Flag
+  mismatches. In particular, check for fragile English-only validators (e.g.,
+  hard-coded checks for "Controls ", "Weakness:", "versus"/"vs.") that will break
+  when PlanExe receives non-English prompts. Propose concrete fixes or propose
+  updates to OPTIMIZE_INSTRUCTIONS if you find a new recurring problem.
 {pr_review_guidance}
 ## Output format
 

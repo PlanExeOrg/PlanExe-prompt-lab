@@ -64,6 +64,13 @@ The prompt-lab repo is at: {repo_root}
      failed plan. Content quality regressions (verbosity, fabricated numbers,
      marketing-copy tone) that affect 34/35 plans outweigh structural fixes
      that affect 1/35.
+   - **OPTIMIZE_INSTRUCTIONS alignment**: Read the `OPTIMIZE_INSTRUCTIONS`
+     constant near the top of `identify_potential_levers.py`. Proposed changes
+     should move toward its goals (realistic, feasible, actionable plans) and
+     avoid its known pitfalls (optimism bias, fabricated numbers, marketing
+     language, vague aspirations, fragile English-only validation). If a
+     direction would improve OPTIMIZE_INSTRUCTIONS itself (e.g., documenting
+     a new recurring problem), note that.
 5. From those 5, pick the single best recommendation to pursue first.
 
 ## Output format

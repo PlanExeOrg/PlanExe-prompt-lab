@@ -95,6 +95,14 @@ degrades content quality across all successful plans is a net negative.
 Content quality regressions that affect every plan are higher priority than
 structural fixes that recover one failed plan.
 
+**OPTIMIZE_INSTRUCTIONS**: Read the `OPTIMIZE_INSTRUCTIONS` constant near the
+top of `identify_potential_levers.py` (in the PlanExe repo). When evaluating
+the PR, check whether the change moves closer to or further from its goals
+(realistic, feasible, actionable plans). Flag any new violations of its
+known-problems list. If the PR or the recommended next change would benefit
+from updating OPTIMIZE_INSTRUCTIONS (e.g., adding a newly discovered pitfall),
+note that in the Recommended Next Change or Backlog section.
+
 Present this as a comparison table with columns: Metric | Before | After | Verdict.
 
 Only compare models that appear in BOTH batches. If a model only appears in

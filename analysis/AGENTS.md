@@ -454,6 +454,32 @@ Useful minimums for insight files:
 - at least one constraint-violation or template-leakage count when relevant
 - at least one baseline length comparison (current vs baseline avg field lengths)
 
+## OPTIMIZE_INSTRUCTIONS Alignment
+
+The PlanExe source file `identify_potential_levers.py` contains an
+`OPTIMIZE_INSTRUCTIONS` constant that defines the project-level goals and known
+pitfalls for lever generation. Every analysis agent should read it (it is near
+the top of the file, after imports). When proposing improvements, agents should:
+
+- **Check alignment**: Does the current system prompt, Pydantic schema, and
+  validator code align with `OPTIMIZE_INSTRUCTIONS`? If not, flag the mismatch.
+- **Propose updates to OPTIMIZE_INSTRUCTIONS itself**: If analysis reveals a new
+  recurring problem (e.g., a pattern not yet documented), propose adding it to
+  the known-problems list. The constant is living documentation, not frozen.
+- **Guard plan quality, not just lever quality**: The instructions emphasize that
+  levers must lead to *realistic, feasible, actionable* plans. An option that
+  sounds strategic but cannot be scheduled, resourced, or executed by a human or
+  AI agent is a failure — even if it passes all structural validators.
+- **Watch for optimism bias**: The downstream scenario picker tends to select the
+  most ambitious option. If levers only offer moonshot options, the final plan
+  will be unrealistically optimistic. Each lever should include at least one
+  conservative, low-risk path.
+- **Internationalization**: PlanExe receives prompts in many non-English
+  languages. Validators that hard-code English keywords (e.g., checking for
+  `"Controls "` or `"Weakness:"` in the LLM response) will reject valid output
+  when the model responds in the prompt's language. Flag any English-only
+  validation as a bug or improvement opportunity.
+
 ## Hypothesis Format
 
 Each insight file should propose concrete, testable hypotheses for improvement.

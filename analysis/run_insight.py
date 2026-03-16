@@ -63,6 +63,13 @@ Key paths relative to the repo root:
   fabricated numbers, marketing copy, or verbose restatements. Count fabricated
   percentage claims (e.g. "reduces costs by 30%") that have no basis in the
   project context. Flag marketing-copy language in strategic analysis fields.
+- **OPTIMIZE_INSTRUCTIONS alignment**: Read the `OPTIMIZE_INSTRUCTIONS` constant
+  near the top of `identify_potential_levers.py` (in the PlanExe repo). Check
+  whether the current outputs align with its goals — realistic, feasible,
+  actionable plans. Flag any violations of its known-problems list (optimism
+  bias, fabricated numbers, marketing language, vague aspirations, fragile
+  English-only validation). If you discover a recurring problem not yet listed
+  in OPTIMIZE_INSTRUCTIONS, propose adding it.
 {pr_impact_requirement}
 ## Output
 
