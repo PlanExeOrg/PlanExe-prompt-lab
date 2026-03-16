@@ -10,7 +10,10 @@ import argparse
 import json
 import subprocess
 import sys
+import time
 from pathlib import Path
+
+from event_log import emit_event
 
 
 SCRIPT_DIR = Path(__file__).resolve().parent
@@ -203,6 +206,9 @@ def main():
     print(f"  Output → {analysis_dir}/synthesis.md")
     print()
 
+    events_path = analysis_path / "events.jsonl"
+    emit_event(events_path, "synthesis_claude_start")
+    t0 = time.monotonic()
     result = subprocess.run(
         [
             "claude",
@@ -214,6 +220,13 @@ def main():
         ],
         cwd=REPO_ROOT,
     )
+    duration = round(time.monotonic() - t0, 2)
+    if result.returncode == 0:
+        emit_event(events_path, "synthesis_claude_complete",
+                   status="ok", duration_seconds=duration)
+    else:
+        emit_event(events_path, "synthesis_claude_error",
+                   error=f"exit code {result.returncode}", duration_seconds=duration)
 
     print()
     print("═" * 50)

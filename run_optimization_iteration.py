@@ -278,48 +278,39 @@ def step_runner(models: list[str], prompt_file: Path, history_dirs: dict[str, Pa
 # Step 3: Analysis pipeline
 # ---------------------------------------------------------------------------
 
-def step_analysis(analysis_dir: Path, events_path: Path | None = None) -> None:
-    """Run insight → code review → synthesis → assessment in sequence."""
+def step_analysis(analysis_dir: Path) -> None:
+    """Run insight → code review → synthesis → assessment in sequence.
+
+    Each script emits its own events to events.jsonl in the analysis dir.
+    """
     rel_dir = str(analysis_dir.relative_to(PROMPT_LAB_DIR))
 
     # Assessment only makes sense from index 1 onward (needs a "before").
     index = int(analysis_dir.name.split("_", 1)[0])
 
     scripts = [
-        ("run_insight.py", "insight", "Insight analysis (phase 1)"),
-        ("run_code_review.py", "code_review", "Code review (phase 2)"),
-        ("run_synthesis.py", "synthesis", "Synthesis (phase 3)"),
+        ("run_insight.py", "Insight analysis (phase 1)"),
+        ("run_code_review.py", "Code review (phase 2)"),
+        ("run_synthesis.py", "Synthesis (phase 3)"),
     ]
     if index > 0:
-        scripts.append(("run_assessment.py", "assessment", "Assessment (phase 4)"))
+        scripts.append(("run_assessment.py", "Assessment (phase 4)"))
 
-    for script_name, event_name, label in scripts:
+    for script_name, label in scripts:
         print()
         print("=" * 60)
         print(f"Analysis: {label}")
         print("=" * 60)
 
         script_path = PROMPT_LAB_DIR / "analysis" / script_name
-        cmd = [sys.executable, str(script_path), str(rel_dir)]
-
-        if events_path:
-            try:
-                with EventTimer(events_path, event_name):
-                    result = subprocess.run(cmd, cwd=PROMPT_LAB_DIR)
-                    if result.returncode != 0:
-                        raise RuntimeError(
-                            f"{script_name} exited with code {result.returncode}"
-                        )
-            except RuntimeError:
-                print(f"WARNING: {script_name} exited with non-zero code")
-                continue
+        result = subprocess.run(
+            [sys.executable, str(script_path), str(rel_dir)],
+            cwd=PROMPT_LAB_DIR,
+        )
+        if result.returncode != 0:
+            print(f"WARNING: {script_name} exited with code {result.returncode}")
         else:
-            result = subprocess.run(cmd, cwd=PROMPT_LAB_DIR)
-            if result.returncode != 0:
-                print(f"WARNING: {script_name} exited with code {result.returncode}")
-                continue
-
-        print(f"{label} completed successfully")
+            print(f"{label} completed successfully")
 
 
 # ---------------------------------------------------------------------------
@@ -441,7 +432,7 @@ def main():
         print("=" * 60)
 
         if analysis_dir:
-            step_analysis(analysis_dir, events_path)
+            step_analysis(analysis_dir)
         else:
             print("No analysis directory to process (no new runs found).")
     else:

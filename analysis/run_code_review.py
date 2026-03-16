@@ -10,7 +10,10 @@ import argparse
 import json
 import subprocess
 import sys
+import time
 from pathlib import Path
+
+from event_log import emit_event
 
 
 SCRIPT_DIR = Path(__file__).resolve().parent
@@ -212,6 +215,10 @@ def main():
     print()
 
     # Launch both agents in parallel.
+    events_path = analysis_path / "events.jsonl"
+
+    emit_event(events_path, "code_review_claude_start")
+    claude_t0 = time.monotonic()
     claude_proc = subprocess.Popen(
         [
             "claude",
@@ -223,6 +230,9 @@ def main():
         ],
         cwd=REPO_ROOT,
     )
+
+    emit_event(events_path, "code_review_codex_start")
+    codex_t0 = time.monotonic()
     codex_proc = subprocess.Popen(
         [
             "codex",
@@ -238,7 +248,22 @@ def main():
     print()
 
     claude_exit = claude_proc.wait()
+    claude_duration = round(time.monotonic() - claude_t0, 2)
+    if claude_exit == 0:
+        emit_event(events_path, "code_review_claude_complete",
+                   status="ok", duration_seconds=claude_duration)
+    else:
+        emit_event(events_path, "code_review_claude_error",
+                   error=f"exit code {claude_exit}", duration_seconds=claude_duration)
+
     codex_exit = codex_proc.wait()
+    codex_duration = round(time.monotonic() - codex_t0, 2)
+    if codex_exit == 0:
+        emit_event(events_path, "code_review_codex_complete",
+                   status="ok", duration_seconds=codex_duration)
+    else:
+        emit_event(events_path, "code_review_codex_error",
+                   error=f"exit code {codex_exit}", duration_seconds=codex_duration)
 
     # Report results.
     print()
