@@ -20,7 +20,7 @@ PLANEXE_ROOT = Path("/Users/neoneye/git/PlanExeGroup/PlanExe")
 # PlanExe source files to review.
 SOURCE_FILES = [
     "worker_plan/worker_plan_internal/lever/identify_potential_levers.py",
-    "prompt_optimizer/runner.py",
+    "self_improve/runner.py",
 ]
 
 PROMPT_TEMPLATE = """\
