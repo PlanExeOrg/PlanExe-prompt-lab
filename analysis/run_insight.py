@@ -18,6 +18,8 @@ from event_log import emit_event
 SCRIPT_DIR = Path(__file__).resolve().parent
 REPO_ROOT = SCRIPT_DIR.parent
 
+DEFAULT_TIMEOUT = 600  # 10 minutes
+
 PROMPT_TEMPLATE = """\
 You are an analysis agent ("{agent_name}").
 
@@ -171,6 +173,12 @@ def main():
         "analysis_dir",
         help="Relative path to the analysis step directory (e.g. analysis/0_identify_potential_levers)",
     )
+    parser.add_argument(
+        "--timeout",
+        type=int,
+        default=DEFAULT_TIMEOUT,
+        help=f"Per-agent timeout in seconds (default: {DEFAULT_TIMEOUT})",
+    )
     args = parser.parse_args()
 
     analysis_dir: str = args.analysis_dir
@@ -255,37 +263,78 @@ def main():
             cwd=REPO_ROOT,
         )
 
+    timeout = args.timeout
     pids = []
     if claude_proc:
         pids.append(f"claude={claude_proc.pid}")
     if codex_proc:
         pids.append(f"codex={codex_proc.pid}")
     print(f"PIDs: {' '.join(pids)}")
-    print("Waiting for agents to finish...")
+    print(f"Waiting for agents to finish (timeout: {timeout}s)...")
     print()
 
-    claude_exit = 0
-    codex_exit = 0
+    claude_ok = not run_claude  # True if skipped (already exists)
+    codex_ok = not run_codex
+    claude_timed_out = False
+    codex_timed_out = False
 
     if claude_proc:
-        claude_exit = claude_proc.wait()
+        remaining = max(0, timeout - (time.monotonic() - claude_t0))
+        try:
+            claude_exit = claude_proc.wait(timeout=remaining)
+        except subprocess.TimeoutExpired:
+            claude_proc.kill()
+            claude_proc.wait()
+            claude_timed_out = True
+            claude_exit = None
+
         claude_duration = round(time.monotonic() - claude_t0, 2)
-        if claude_exit == 0:
+        if claude_timed_out:
+            emit_event(events_path, "insight_claude_error",
+                       error=f"timed out after {timeout}s",
+                       duration_seconds=claude_duration)
+            claude_output.write_text(
+                "# ERROR: claude timed out\n\n"
+                f"Claude Code exceeded the {timeout}s time limit.\n"
+                "See events.jsonl for details.\n"
+            )
+        elif claude_exit == 0:
             emit_event(events_path, "insight_claude_complete",
                        status="ok", duration_seconds=claude_duration)
+            claude_ok = True
         else:
             emit_event(events_path, "insight_claude_error",
-                       error=f"exit code {claude_exit}", duration_seconds=claude_duration)
+                       error=f"exit code {claude_exit}",
+                       duration_seconds=claude_duration)
 
     if codex_proc:
-        codex_exit = codex_proc.wait()
+        remaining = max(0, timeout - (time.monotonic() - codex_t0))
+        try:
+            codex_exit = codex_proc.wait(timeout=remaining)
+        except subprocess.TimeoutExpired:
+            codex_proc.kill()
+            codex_proc.wait()
+            codex_timed_out = True
+            codex_exit = None
+
         codex_duration = round(time.monotonic() - codex_t0, 2)
-        if codex_exit == 0:
+        if codex_timed_out:
+            emit_event(events_path, "insight_codex_error",
+                       error=f"timed out after {timeout}s",
+                       duration_seconds=codex_duration)
+            codex_output.write_text(
+                "# ERROR: codex timed out\n\n"
+                f"Codex exceeded the {timeout}s time limit.\n"
+                "See events.jsonl for details.\n"
+            )
+        elif codex_exit == 0:
             emit_event(events_path, "insight_codex_complete",
                        status="ok", duration_seconds=codex_duration)
+            codex_ok = True
         else:
             emit_event(events_path, "insight_codex_error",
-                       error=f"exit code {codex_exit}", duration_seconds=codex_duration)
+                       error=f"exit code {codex_exit}",
+                       duration_seconds=codex_duration)
 
     # Report results.
     print()
@@ -293,21 +342,23 @@ def main():
     print("Results")
     print("═" * 50)
 
-    if claude_proc:
-        if claude_exit != 0:
-            print(f"  Claude Code exited with code {claude_exit}")
-        else:
-            print(f"  Claude Code finished successfully")
-    else:
+    if not run_claude:
         print(f"  Claude Code skipped (already exists)")
-
-    if codex_proc:
-        if codex_exit != 0:
-            print(f"  Codex exited with code {codex_exit}")
-        else:
-            print(f"  Codex finished successfully")
+    elif claude_timed_out:
+        print(f"  Claude Code timed out after {timeout}s (killed)")
+    elif claude_ok:
+        print(f"  Claude Code finished successfully")
     else:
+        print(f"  Claude Code exited with code {claude_exit}")
+
+    if not run_codex:
         print(f"  Codex skipped (already exists)")
+    elif codex_timed_out:
+        print(f"  Codex timed out after {timeout}s (killed)")
+    elif codex_ok:
+        print(f"  Codex finished successfully")
+    else:
+        print(f"  Codex exited with code {codex_exit}")
 
     print()
     print("Insight files:")
@@ -319,6 +370,10 @@ def main():
             print(f"  {f.relative_to(REPO_ROOT)}  ({size} bytes)")
     else:
         print("  (no insight files found)")
+
+    # If both agents failed (timeout or error), exit non-zero.
+    if not claude_ok and not codex_ok:
+        sys.exit("ERROR: both agents failed")
 
 
 if __name__ == "__main__":
