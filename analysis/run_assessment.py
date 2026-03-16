@@ -246,6 +246,15 @@ def main():
         print()
 
     output_file = f"{after_dir}/assessment.md"
+    output_path = REPO_ROOT / output_file
+    events_path = after_path / "events.jsonl"
+
+    if output_path.is_file():
+        size = output_path.stat().st_size
+        print(f"assessment.md already exists ({size} bytes) — nothing to do.")
+        emit_event(events_path, "assessment_claude_complete",
+                   status="ok", skipped="already_exists")
+        return
 
     prompt = PROMPT_TEMPLATE.format(
         before_dir=before_dir,
@@ -263,7 +272,6 @@ def main():
     print(f"  Output: {output_file}")
     print()
 
-    events_path = after_path / "events.jsonl"
     emit_event(events_path, "assessment_claude_start")
     t0 = time.monotonic()
     result = subprocess.run(
@@ -295,7 +303,6 @@ def main():
         print("  Claude Code finished successfully")
 
     print()
-    output_path = REPO_ROOT / output_file
     if output_path.is_file():
         size = output_path.stat().st_size
         print(f"  {output_file}  ({size} bytes)")

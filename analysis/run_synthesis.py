@@ -200,13 +200,22 @@ def main():
     pr_section = build_pr_section(meta_obj)
     prompt = build_prompt(analysis_dir, pr_section)
 
+    events_path = analysis_path / "events.jsonl"
+    synthesis_output = analysis_path / "synthesis.md"
+
+    if synthesis_output.is_file():
+        size = synthesis_output.stat().st_size
+        print(f"synthesis.md already exists ({size} bytes) — nothing to do.")
+        emit_event(events_path, "synthesis_claude_complete",
+                   status="ok", skipped="already_exists")
+        return
+
     print(f"Starting synthesis for: {analysis_dir}")
     if "pr_url" in meta_obj:
         print(f"  PR: {meta_obj.get('pr_title', 'unknown')}")
     print(f"  Output → {analysis_dir}/synthesis.md")
     print()
 
-    events_path = analysis_path / "events.jsonl"
     emit_event(events_path, "synthesis_claude_start")
     t0 = time.monotonic()
     result = subprocess.run(
@@ -239,10 +248,9 @@ def main():
         print("  Claude Code finished successfully")
 
     print()
-    output_file = analysis_path / "synthesis.md"
-    if output_file.is_file():
-        size = output_file.stat().st_size
-        print(f"  {output_file.relative_to(REPO_ROOT)}  ({size} bytes)")
+    if synthesis_output.is_file():
+        size = synthesis_output.stat().st_size
+        print(f"  {synthesis_output.relative_to(REPO_ROOT)}  ({size} bytes)")
     else:
         print("  (synthesis.md not found)")
 
