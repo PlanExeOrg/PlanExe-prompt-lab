@@ -20,6 +20,8 @@ from event_log import emit_event
 SCRIPT_DIR = Path(__file__).resolve().parent
 REPO_ROOT = SCRIPT_DIR.parent
 
+DEFAULT_TIMEOUT = 600  # 10 minutes
+
 PROMPT_TEMPLATE = """\
 You are an assessment agent. Your job is to compare two analysis rounds — one
 before a code/prompt change and one after — and determine whether the change
@@ -205,6 +207,12 @@ def main():
         help="Relative path to the post-change analysis directory (e.g. analysis/1_identify_potential_levers)",
     )
     parser.add_argument(
+        "--timeout",
+        type=int,
+        default=DEFAULT_TIMEOUT,
+        help=f"Timeout in seconds (default: {DEFAULT_TIMEOUT})",
+    )
+    parser.add_argument(
         "--before",
         dest="before_dir",
         default=None,
@@ -272,9 +280,10 @@ def main():
     print(f"  Output: {output_file}")
     print()
 
+    timeout = args.timeout
     emit_event(events_path, "assessment_claude_start")
     t0 = time.monotonic()
-    result = subprocess.run(
+    proc = subprocess.Popen(
         [
             "claude",
             "-p", prompt,
@@ -284,21 +293,42 @@ def main():
         ],
         cwd=REPO_ROOT,
     )
+
+    timed_out = False
+    try:
+        exit_code = proc.wait(timeout=timeout)
+    except subprocess.TimeoutExpired:
+        proc.kill()
+        proc.wait()
+        timed_out = True
+        exit_code = None
+
     duration = round(time.monotonic() - t0, 2)
-    if result.returncode == 0:
+    if timed_out:
+        emit_event(events_path, "assessment_claude_error",
+                   error=f"timed out after {timeout}s",
+                   duration_seconds=duration)
+        output_path.write_text(
+            "# ERROR: claude timed out\n\n"
+            f"Claude Code exceeded the {timeout}s time limit.\n"
+            "See events.jsonl for details.\n"
+        )
+    elif exit_code == 0:
         emit_event(events_path, "assessment_claude_complete",
                    status="ok", duration_seconds=duration)
     else:
         emit_event(events_path, "assessment_claude_error",
-                   error=f"exit code {result.returncode}", duration_seconds=duration)
+                   error=f"exit code {exit_code}", duration_seconds=duration)
 
     print()
     print("═" * 50)
     print("Results")
     print("═" * 50)
 
-    if result.returncode != 0:
-        print(f"  Claude Code exited with code {result.returncode}")
+    if timed_out:
+        print(f"  Claude Code timed out after {timeout}s (killed)")
+    elif exit_code != 0:
+        print(f"  Claude Code exited with code {exit_code}")
     else:
         print("  Claude Code finished successfully")
 
@@ -308,6 +338,9 @@ def main():
         print(f"  {output_file}  ({size} bytes)")
     else:
         print("  (assessment.md not found)")
+
+    if timed_out or (exit_code is not None and exit_code != 0):
+        sys.exit(1)
 
 
 if __name__ == "__main__":

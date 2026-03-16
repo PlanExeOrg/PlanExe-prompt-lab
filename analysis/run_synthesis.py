@@ -18,6 +18,8 @@ from event_log import emit_event
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 REPO_ROOT = SCRIPT_DIR.parent
+
+DEFAULT_TIMEOUT = 600  # 10 minutes
 PLANEXE_ROOT = Path("/Users/neoneye/git/PlanExeGroup/PlanExe")
 
 # PlanExe source files the agent may want to inspect.
@@ -173,6 +175,12 @@ def main():
         "analysis_dir",
         help="Relative path to the analysis step directory (e.g. analysis/0_identify_potential_levers)",
     )
+    parser.add_argument(
+        "--timeout",
+        type=int,
+        default=DEFAULT_TIMEOUT,
+        help=f"Timeout in seconds (default: {DEFAULT_TIMEOUT})",
+    )
     args = parser.parse_args()
 
     analysis_dir: str = args.analysis_dir
@@ -216,9 +224,10 @@ def main():
     print(f"  Output → {analysis_dir}/synthesis.md")
     print()
 
+    timeout = args.timeout
     emit_event(events_path, "synthesis_claude_start")
     t0 = time.monotonic()
-    result = subprocess.run(
+    proc = subprocess.Popen(
         [
             "claude",
             "-p", prompt,
@@ -229,21 +238,42 @@ def main():
         ],
         cwd=REPO_ROOT,
     )
+
+    timed_out = False
+    try:
+        exit_code = proc.wait(timeout=timeout)
+    except subprocess.TimeoutExpired:
+        proc.kill()
+        proc.wait()
+        timed_out = True
+        exit_code = None
+
     duration = round(time.monotonic() - t0, 2)
-    if result.returncode == 0:
+    if timed_out:
+        emit_event(events_path, "synthesis_claude_error",
+                   error=f"timed out after {timeout}s",
+                   duration_seconds=duration)
+        synthesis_output.write_text(
+            "# ERROR: claude timed out\n\n"
+            f"Claude Code exceeded the {timeout}s time limit.\n"
+            "See events.jsonl for details.\n"
+        )
+    elif exit_code == 0:
         emit_event(events_path, "synthesis_claude_complete",
                    status="ok", duration_seconds=duration)
     else:
         emit_event(events_path, "synthesis_claude_error",
-                   error=f"exit code {result.returncode}", duration_seconds=duration)
+                   error=f"exit code {exit_code}", duration_seconds=duration)
 
     print()
     print("═" * 50)
     print("Results")
     print("═" * 50)
 
-    if result.returncode != 0:
-        print(f"  Claude Code exited with code {result.returncode}")
+    if timed_out:
+        print(f"  Claude Code timed out after {timeout}s (killed)")
+    elif exit_code != 0:
+        print(f"  Claude Code exited with code {exit_code}")
     else:
         print("  Claude Code finished successfully")
 
@@ -253,6 +283,9 @@ def main():
         print(f"  {synthesis_output.relative_to(REPO_ROOT)}  ({size} bytes)")
     else:
         print("  (synthesis.md not found)")
+
+    if timed_out or (exit_code is not None and exit_code != 0):
+        sys.exit(1)
 
 
 if __name__ == "__main__":
