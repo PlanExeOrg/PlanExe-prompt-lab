@@ -21,6 +21,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+from event_log import EventTimer
+
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 REPO_ROOT = SCRIPT_DIR.parent
@@ -75,7 +77,7 @@ def fetch_pr(repo: str, pr_number: int) -> dict:
     """Fetch PR details using gh CLI."""
     result = subprocess.run(
         ["gh", "pr", "view", str(pr_number), "--repo", repo,
-         "--json", "url,title,body"],
+         "--json", "url,title,body,state"],
         capture_output=True, text=True,
     )
     if result.returncode != 0:
@@ -300,93 +302,111 @@ def prepare(
 ) -> dict | None:
     """Prepare an optimization iteration.
 
-    1. Verify PR (optional)
-    2. Resolve prompt
-    3. Pre-create history dirs (one per model)
-    4. Create analysis dir
+    1. Create analysis dir (so events.jsonl has a home)
+    2. Verify PR (state == OPEN)
+    3. Resolve prompt
+    4. Pre-create history dirs (one per model)
     5. Write analysis meta.json with PR info + history list
     6. Print summary
 
     Returns dict with 'analysis_dir' and 'history_dirs' on success,
     None on dry-run.
     """
-    # 1. Verify PR (optional).
-    pr_url = pr_title = pr_description = None
-    if pr_arg:
-        pr_repo, pr_number = parse_pr_arg(pr_arg, repo)
-        pr = fetch_pr(pr_repo, pr_number)
-        pr_url = pr["url"]
-        pr_title = pr["title"]
-        pr_description = summarize_body(pr.get("body", ""))
-        print(f"PR #{pr_number}: {pr_title}")
-        print(f"  {pr_url}")
-
-    # 2. Resolve prompt.
-    prompt_ref, prompt_sha256 = resolve_prompt(step_name)
-    print(f"Prompt: {prompt_ref}")
-    print(f"  sha256: {prompt_sha256}")
-
-    # 3. Pre-create history dirs.
-    history_dir = REPO_ROOT / "history"
-    counter = _next_history_counter(history_dir)
-    system_info = _collect_system_info()
-
-    history_entries: list[str] = []
-    history_dirs: dict[str, Path] = {}
-
-    print(f"\nHistory dirs ({len(models)} models):")
-    for model in models:
-        bucket = str(counter // 100)
-        entry = f"{counter % 100:02d}_{step_name}"
-        run_dir = history_dir / bucket / entry
-        rel = f"{bucket}/{entry}"
-
-        meta = {
-            "step": step_name,
-            "system_prompt_sha256": prompt_sha256,
-            "model": {"primary": model},
-            "workers": 1,
-            "system": system_info,
-        }
-
-        print(f"  history/{rel}  ({model})")
-
-        if not dry_run:
-            run_dir.mkdir(parents=True, exist_ok=True)
-            (run_dir / "outputs").mkdir(exist_ok=True)
-            (run_dir / "meta.json").write_text(json.dumps(meta, indent=2) + "\n")
-
-        history_entries.append(rel)
-        history_dirs[model] = run_dir
-        counter += 1
-
-    # 4-5. Create analysis dir + write meta.json.
+    # 1. Create analysis dir early so events.jsonl has a home.
     index = get_next_analysis_index(step_name)
     analysis_dir = REPO_ROOT / "analysis" / f"{index}_{step_name}"
 
-    analysis_meta: dict = {"prompt": prompt_ref}
-    if pr_url:
-        analysis_meta["pr_url"] = pr_url
-        analysis_meta["pr_title"] = pr_title
-        analysis_meta["pr_description"] = pr_description
-    analysis_meta["history"] = history_entries
-
-    print(f"\nAnalysis dir: analysis/{index}_{step_name}")
-
     if dry_run:
-        print("\n(dry run -- nothing written)")
-        print(json.dumps(analysis_meta, indent=2))
-        return None
+        events_path = None
+    else:
+        analysis_dir.mkdir(parents=True, exist_ok=True)
+        events_path = analysis_dir / "events.jsonl"
 
-    analysis_dir.mkdir(parents=True, exist_ok=True)
-    (analysis_dir / "meta.json").write_text(json.dumps(analysis_meta, indent=2) + "\n")
-    print(f"Created: analysis/{index}_{step_name}/meta.json")
+    def _inner():
+        # 2. Verify PR (optional).
+        pr_url = pr_title = pr_description = None
+        if pr_arg:
+            pr_repo, pr_number = parse_pr_arg(pr_arg, repo)
+            pr = fetch_pr(pr_repo, pr_number)
+            if pr["state"] != "OPEN":
+                raise RuntimeError(
+                    f"PR #{pr_number} state is {pr['state']}, expected OPEN"
+                )
+            pr_url = pr["url"]
+            pr_title = pr["title"]
+            pr_description = summarize_body(pr.get("body", ""))
+            print(f"PR #{pr_number}: {pr_title}")
+            print(f"  {pr_url}")
 
-    # 6. Summary.
-    return {
-        "analysis_dir": analysis_dir,
-        "history_dirs": history_dirs,
-    }
+        # 3. Resolve prompt.
+        prompt_ref, prompt_sha256 = resolve_prompt(step_name)
+        print(f"Prompt: {prompt_ref}")
+        print(f"  sha256: {prompt_sha256}")
+
+        # 4. Pre-create history dirs.
+        history_dir = REPO_ROOT / "history"
+        counter = _next_history_counter(history_dir)
+        system_info = _collect_system_info()
+
+        history_entries: list[str] = []
+        history_dirs: dict[str, Path] = {}
+
+        print(f"\nHistory dirs ({len(models)} models):")
+        for model in models:
+            bucket = str(counter // 100)
+            entry = f"{counter % 100:02d}_{step_name}"
+            run_dir = history_dir / bucket / entry
+            rel = f"{bucket}/{entry}"
+
+            meta = {
+                "step": step_name,
+                "system_prompt_sha256": prompt_sha256,
+                "model": {"primary": model},
+                "workers": 1,
+                "system": system_info,
+            }
+
+            print(f"  history/{rel}  ({model})")
+
+            if not dry_run:
+                run_dir.mkdir(parents=True, exist_ok=True)
+                (run_dir / "outputs").mkdir(exist_ok=True)
+                (run_dir / "meta.json").write_text(json.dumps(meta, indent=2) + "\n")
+
+            history_entries.append(rel)
+            history_dirs[model] = run_dir
+            counter += 1
+
+        # 5. Write analysis meta.json.
+        analysis_meta: dict = {"prompt": prompt_ref}
+        if pr_url:
+            analysis_meta["pr_url"] = pr_url
+            analysis_meta["pr_title"] = pr_title
+            analysis_meta["pr_description"] = pr_description
+        analysis_meta["history"] = history_entries
+
+        print(f"\nAnalysis dir: analysis/{index}_{step_name}")
+
+        if dry_run:
+            print("\n(dry run -- nothing written)")
+            print(json.dumps(analysis_meta, indent=2))
+            return None
+
+        (analysis_dir / "meta.json").write_text(json.dumps(analysis_meta, indent=2) + "\n")
+        print(f"Created: analysis/{index}_{step_name}/meta.json")
+
+        # 6. Summary.
+        return {
+            "analysis_dir": analysis_dir,
+            "history_dirs": history_dirs,
+        }
+
+    if events_path is None:
+        # dry-run: no event logging
+        return _inner()
+
+    with EventTimer(events_path, "prepare"):
+        return _inner()
 
 
 # ---------------------------------------------------------------------------

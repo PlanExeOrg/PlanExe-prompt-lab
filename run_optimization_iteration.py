@@ -62,9 +62,10 @@ CUSTOM_PROFILE_MODELS = {
     "anthropic-claude-haiku-4-5": "anthropic_claude.json",
 }
 
-# Import prepare_iteration from the analysis directory.
+# Import prepare_iteration and event_log from the analysis directory.
 sys.path.insert(0, str(PROMPT_LAB_DIR / "analysis"))
 from prepare_iteration import prepare, prepare_analysis_from_existing  # noqa: E402
+from event_log import EventTimer  # noqa: E402
 
 
 # ---------------------------------------------------------------------------
@@ -277,7 +278,7 @@ def step_runner(models: list[str], prompt_file: Path, history_dirs: dict[str, Pa
 # Step 3: Analysis pipeline
 # ---------------------------------------------------------------------------
 
-def step_analysis(analysis_dir: Path) -> None:
+def step_analysis(analysis_dir: Path, events_path: Path | None = None) -> None:
     """Run insight → code review → synthesis → assessment in sequence."""
     rel_dir = str(analysis_dir.relative_to(PROMPT_LAB_DIR))
 
@@ -285,28 +286,40 @@ def step_analysis(analysis_dir: Path) -> None:
     index = int(analysis_dir.name.split("_", 1)[0])
 
     scripts = [
-        ("run_insight.py", "Insight analysis (phase 1)"),
-        ("run_code_review.py", "Code review (phase 2)"),
-        ("run_synthesis.py", "Synthesis (phase 3)"),
+        ("run_insight.py", "insight", "Insight analysis (phase 1)"),
+        ("run_code_review.py", "code_review", "Code review (phase 2)"),
+        ("run_synthesis.py", "synthesis", "Synthesis (phase 3)"),
     ]
     if index > 0:
-        scripts.append(("run_assessment.py", "Assessment (phase 4)"))
+        scripts.append(("run_assessment.py", "assessment", "Assessment (phase 4)"))
 
-    for script_name, label in scripts:
+    for script_name, event_name, label in scripts:
         print()
         print("=" * 60)
         print(f"Analysis: {label}")
         print("=" * 60)
 
         script_path = PROMPT_LAB_DIR / "analysis" / script_name
-        result = subprocess.run(
-            [sys.executable, str(script_path), str(rel_dir)],
-            cwd=PROMPT_LAB_DIR,
-        )
-        if result.returncode != 0:
-            print(f"WARNING: {script_name} exited with code {result.returncode}")
+        cmd = [sys.executable, str(script_path), str(rel_dir)]
+
+        if events_path:
+            try:
+                with EventTimer(events_path, event_name):
+                    result = subprocess.run(cmd, cwd=PROMPT_LAB_DIR)
+                    if result.returncode != 0:
+                        raise RuntimeError(
+                            f"{script_name} exited with code {result.returncode}"
+                        )
+            except RuntimeError:
+                print(f"WARNING: {script_name} exited with non-zero code")
+                continue
         else:
-            print(f"{label} completed successfully")
+            result = subprocess.run(cmd, cwd=PROMPT_LAB_DIR)
+            if result.returncode != 0:
+                print(f"WARNING: {script_name} exited with code {result.returncode}")
+                continue
+
+        print(f"{label} completed successfully")
 
 
 # ---------------------------------------------------------------------------
@@ -404,10 +417,19 @@ def main():
             analysis_dir = result["analysis_dir"]
             history_dirs = result.get("history_dirs", {})
 
+    # Compute events_path for logging.
+    events_path = None
+    if analysis_dir:
+        events_path = analysis_dir / "events.jsonl"
+
     # Step 2: Run experiments.
     if not args.skip_runner:
         prompt_file = get_prompt_file()
-        step_runner(models, prompt_file, history_dirs)
+        if events_path:
+            with EventTimer(events_path, "runner", model_count=len(models)):
+                step_runner(models, prompt_file, history_dirs)
+        else:
+            step_runner(models, prompt_file, history_dirs)
     else:
         print("\n[Skipping runner step]")
 
@@ -419,7 +441,7 @@ def main():
         print("=" * 60)
 
         if analysis_dir:
-            step_analysis(analysis_dir)
+            step_analysis(analysis_dir, events_path)
         else:
             print("No analysis directory to process (no new runs found).")
     else:
