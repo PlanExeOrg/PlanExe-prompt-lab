@@ -207,3 +207,26 @@ review) and document model-native template patterns in OPTIMIZE_INSTRUCTIONS (I3
 - **[LOW] Q4: Consider replacing llama3.1 in standard test suite.** Chronic partial_recovery
   across runs 60 and 75; strongest template lock; full timeout on hong_kong_game in run 75.
   Low signal per run. Candidate replacement: a more reliable small model.
+
+---
+
+## INVALID EXPERIMENT
+
+This entire iteration is invalid. The runner was executed from the main PlanExe
+repo (`/Users/neoneye/git/PlanExeGroup/PlanExe`) which was on the `main` branch,
+not the PR #334 branch (`fix/lever-content-changes`). The
+`run_optimization_iteration.py` script uses `cwd=PLANEXE_DIR` when spawning the
+runner, and `PLANEXE_DIR` points to the main repo checkout. Since
+`python3.11 -m self_improve.runner` imports `identify_potential_levers.py` from
+whatever code is in the working directory, all 7 model runs (history 75–81)
+tested the `main` branch code — not the PR's changes.
+
+Consequence: the assessment above compares `main` (runs 75–81) against an older
+`main` snapshot (runs 53–59 from analysis 22). The findings about the summary
+field still being present at line 164 are correct for `main` but irrelevant to
+PR #334, which does remove it. No conclusions about PR #334's actual impact can
+be drawn from this data.
+
+The experiment needs to be re-run with the runner executing from the worktree
+(or with the main repo checked out to the PR branch) so that the PR's code
+changes are actually tested.
