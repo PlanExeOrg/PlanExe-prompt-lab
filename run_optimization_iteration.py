@@ -66,7 +66,7 @@ CUSTOM_PROFILE_MODELS = {
 # Import prepare_iteration and event_log from the analysis directory.
 sys.path.insert(0, str(PROMPT_LAB_DIR / "analysis"))
 from prepare_iteration import prepare, prepare_analysis_from_existing  # noqa: E402
-from event_log import EventTimer  # noqa: E402
+from event_log import EventTimer, emit_event  # noqa: E402
 
 
 # ---------------------------------------------------------------------------
@@ -286,7 +286,11 @@ def _build_runner_env(model: str) -> dict:
     return env
 
 
-def step_runner(models: list[str], history_dirs: dict[str, Path] | None = None) -> None:
+def step_runner(
+    models: list[str],
+    history_dirs: dict[str, Path] | None = None,
+    events_path: Path | None = None,
+) -> None:
     """Run runner.py for each model.
 
     Phase 1: run local models (self_improve_sequential=true) one at a time.
@@ -321,12 +325,19 @@ def step_runner(models: list[str], history_dirs: dict[str, Path] | None = None) 
         if CUSTOM_PROFILE_MODELS.get(model):
             print(f"  (using custom profile: {CUSTOM_PROFILE_MODELS[model]})")
 
+        if events_path:
+            emit_event(events_path, "model_start", model=model, phase="sequential")
+
         result = subprocess.run(cmd, cwd=PLANEXE_DIR, env=env)
 
         if result.returncode != 0:
             print(f"WARNING: runner.py for {model} exited with code {result.returncode}")
+            if events_path:
+                emit_event(events_path, "model_error", model=model, returncode=result.returncode)
         else:
             print(f"runner.py for {model} completed successfully")
+            if events_path:
+                emit_event(events_path, "model_complete", model=model)
 
     # Phase 2: cloud models, all in parallel.
     if parallel:
@@ -340,6 +351,9 @@ def step_runner(models: list[str], history_dirs: dict[str, Path] | None = None) 
             if CUSTOM_PROFILE_MODELS.get(model):
                 print(f"  (using custom profile: {CUSTOM_PROFILE_MODELS[model]})")
 
+            if events_path:
+                emit_event(events_path, "model_start", model=model, phase="parallel")
+
             proc = subprocess.Popen(cmd, cwd=PLANEXE_DIR, env=env)
             procs.append((model, proc))
 
@@ -348,8 +362,12 @@ def step_runner(models: list[str], history_dirs: dict[str, Path] | None = None) 
             proc.wait()
             if proc.returncode != 0:
                 print(f"WARNING: runner.py for {model} exited with code {proc.returncode}")
+                if events_path:
+                    emit_event(events_path, "model_error", model=model, returncode=proc.returncode)
             else:
                 print(f"runner.py for {model} completed successfully")
+                if events_path:
+                    emit_event(events_path, "model_complete", model=model)
 
 
 # ---------------------------------------------------------------------------
@@ -486,7 +504,7 @@ def main():
     if not args.skip_runner:
         if events_path:
             with EventTimer(events_path, "runner", model_count=len(models)):
-                step_runner(models, history_dirs)
+                step_runner(models, history_dirs, events_path)
         else:
             step_runner(models, history_dirs)
     else:
@@ -500,11 +518,18 @@ def main():
         print("=" * 60)
 
         if analysis_dir:
-            step_analysis(analysis_dir)
+            if events_path:
+                with EventTimer(events_path, "analysis"):
+                    step_analysis(analysis_dir)
+            else:
+                step_analysis(analysis_dir)
         else:
             print("No analysis directory to process (no new runs found).")
     else:
         print("\n[Skipping analysis step]")
+
+    if events_path:
+        emit_event(events_path, "iteration_complete")
 
     print()
     print("=" * 60)
