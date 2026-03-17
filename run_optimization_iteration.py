@@ -110,15 +110,6 @@ def extract_recommendation(synthesis: str) -> str:
     return match.group(1).strip()
 
 
-def get_prompt_file() -> Path:
-    """Find the registered prompt file for this step."""
-    prompts_dir = PROMPT_LAB_DIR / "prompts" / STEP_NAME
-    prompt_files = sorted(prompts_dir.glob("prompt_*.txt"))
-    if not prompt_files:
-        sys.exit(f"ERROR: No prompt files found in {prompts_dir}")
-    return prompt_files[-1]
-
-
 def resolve_models(models_arg: str | None) -> list[str]:
     """Resolve model names from CLI argument or return defaults."""
     if not models_arg:
@@ -134,26 +125,6 @@ def resolve_models(models_arg: str | None) -> list[str]:
 # ---------------------------------------------------------------------------
 # Step 1: Implement recommendation
 # ---------------------------------------------------------------------------
-
-def register_prompt() -> None:
-    """Register the current system prompt so the runner uses the latest version."""
-    print()
-    print("Registering current system prompt...")
-    result = subprocess.run(
-        [
-            PLANEXE_PYTHON, "-m", "self_improve.register_prompt",
-            "--step", STEP_NAME,
-            "--prompt-lab-dir", str(PROMPT_LAB_DIR),
-        ],
-        cwd=PLANEXE_DIR,
-        capture_output=True,
-        text=True,
-    )
-    if result.returncode != 0:
-        print(f"WARNING: register_prompt failed: {result.stderr.strip()}")
-    else:
-        print(result.stdout.strip())
-
 
 def step_implement(synthesis: str, recommendation: str) -> int | None:
     """Use Claude Code to implement the recommendation on a feature branch.
@@ -219,9 +190,6 @@ Important:
     else:
         print("\nWARNING: Could not detect PR number. Use --pr to specify.")
 
-    # Register the (potentially updated) system prompt.
-    register_prompt()
-
     print("\nImplementation step complete.")
     return pr_number
 
@@ -230,7 +198,7 @@ Important:
 # Step 2: Run experiments
 # ---------------------------------------------------------------------------
 
-def step_runner(models: list[str], prompt_file: Path, history_dirs: dict[str, Path] | None = None) -> None:
+def step_runner(models: list[str], history_dirs: dict[str, Path] | None = None) -> None:
     """Run runner.py for each model.
 
     When history_dirs is provided (from prepare_iteration), uses --output-dir
@@ -247,7 +215,6 @@ def step_runner(models: list[str], prompt_file: Path, history_dirs: dict[str, Pa
 
         cmd = [
             PLANEXE_PYTHON, "-m", "self_improve.runner",
-            "--system-prompt-file", str(prompt_file),
             "--baseline-dir", str(BASELINE_DIR),
             "--model", model,
         ]
@@ -400,12 +367,11 @@ def main():
 
     # Step 2: Run experiments.
     if not args.skip_runner:
-        prompt_file = get_prompt_file()
         if events_path:
             with EventTimer(events_path, "runner", model_count=len(models)):
-                step_runner(models, prompt_file, history_dirs)
+                step_runner(models, history_dirs)
         else:
-            step_runner(models, prompt_file, history_dirs)
+            step_runner(models, history_dirs)
     else:
         print("\n[Skipping runner step]")
 
