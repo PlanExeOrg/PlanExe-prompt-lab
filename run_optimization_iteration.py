@@ -313,6 +313,16 @@ def step_runner(
         print(f"  Phase 2: {len(parallel)} cloud model(s) — parallel")
     print("=" * 60)
 
+    if events_path:
+        emit_event(
+            events_path, "runner_plan",
+            model_count=len(models),
+            sequential_count=len(sequential),
+            parallel_count=len(parallel),
+            sequential_models=sequential,
+            parallel_models=parallel,
+        )
+
     idx = 0
 
     # Phase 1: local models, one at a time.
