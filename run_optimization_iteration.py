@@ -13,6 +13,7 @@ Usage:
     python run_optimization_iteration.py --pr 316 --models nemotron,stepfun
 """
 import argparse
+import json
 import os
 import re
 import subprocess
@@ -247,43 +248,79 @@ Important:
 # Step 2: Run experiments
 # ---------------------------------------------------------------------------
 
+def _load_model_configs() -> dict:
+    """Load all llm_config JSON files from PLANEXE_DIR and merge into one dict."""
+    config_dir = PLANEXE_DIR / "llm_config"
+    merged = {}
+    for json_file in sorted(config_dir.glob("*.json")):
+        try:
+            data = json.loads(json_file.read_text())
+            merged.update(data)
+        except (json.JSONDecodeError, OSError):
+            pass
+    return merged
+
+
+def _build_runner_cmd(model: str, history_dirs: dict[str, Path] | None) -> list[str]:
+    """Build the runner subprocess command for a model."""
+    cmd = [
+        PLANEXE_PYTHON, "-m", "self_improve.runner",
+        "--baseline-dir", str(BASELINE_DIR),
+        "--model", model,
+    ]
+    if history_dirs and model in history_dirs:
+        output_dir = history_dirs[model] / "outputs"
+        cmd += ["--output-dir", str(output_dir)]
+    else:
+        cmd += ["--prompt-lab-dir", str(PROMPT_LAB_DIR)]
+    return cmd
+
+
+def _build_runner_env(model: str) -> dict:
+    """Build the environment dict for a model, adding custom profile vars if needed."""
+    env = os.environ.copy()
+    config_file = CUSTOM_PROFILE_MODELS.get(model)
+    if config_file:
+        env["PLANEXE_MODEL_PROFILE"] = "custom"
+        env["PLANEXE_LLM_CONFIG_CUSTOM_FILENAME"] = config_file
+    return env
+
+
 def step_runner(models: list[str], history_dirs: dict[str, Path] | None = None) -> None:
     """Run runner.py for each model.
+
+    Phase 1: run local models (self_improve_sequential=true) one at a time.
+    Phase 2: run cloud models in parallel.
 
     When history_dirs is provided (from prepare_iteration), uses --output-dir
     to write into the pre-created directories. Otherwise falls back to
     --prompt-lab-dir for auto-creation.
     """
+    configs = _load_model_configs()
+    sequential = [m for m in models if configs.get(m, {}).get("self_improve_sequential", False)]
+    parallel = [m for m in models if not configs.get(m, {}).get("self_improve_sequential", False)]
+
     print()
     print("=" * 60)
     print(f"Step 2: Running experiments ({len(models)} models)")
+    if sequential:
+        print(f"  Phase 1: {len(sequential)} local model(s) — sequential")
+    if parallel:
+        print(f"  Phase 2: {len(parallel)} cloud model(s) — parallel")
     print("=" * 60)
 
-    for i, model in enumerate(models, 1):
-        print(f"\n--- [{i}/{len(models)}] {model} ---")
+    idx = 0
 
-        cmd = [
-            PLANEXE_PYTHON, "-m", "self_improve.runner",
-            "--baseline-dir", str(BASELINE_DIR),
-            "--model", model,
-        ]
+    # Phase 1: local models, one at a time.
+    for model in sequential:
+        idx += 1
+        print(f"\n--- [{idx}/{len(models)}] {model} (sequential) ---")
 
-        # Use pre-created output dir if available, otherwise auto-create.
-        if history_dirs and model in history_dirs:
-            output_dir = history_dirs[model] / "outputs"
-            cmd += ["--output-dir", str(output_dir)]
-        else:
-            cmd += ["--prompt-lab-dir", str(PROMPT_LAB_DIR)]
+        cmd = _build_runner_cmd(model, history_dirs)
+        env = _build_runner_env(model)
+        if CUSTOM_PROFILE_MODELS.get(model):
+            print(f"  (using custom profile: {CUSTOM_PROFILE_MODELS[model]})")
 
-        # Set custom model profile env vars for Anthropic and other non-baseline models.
-        env = os.environ.copy()
-        config_file = CUSTOM_PROFILE_MODELS.get(model)
-        if config_file:
-            env["PLANEXE_MODEL_PROFILE"] = "custom"
-            env["PLANEXE_LLM_CONFIG_CUSTOM_FILENAME"] = config_file
-            print(f"  (using custom profile: {config_file})")
-
-        # Write runner output to log.txt in the history dir for easy troubleshooting.
         log_file = None
         if history_dirs and model in history_dirs:
             log_path = history_dirs[model] / "log.txt"
@@ -299,6 +336,38 @@ def step_runner(models: list[str], history_dirs: dict[str, Path] | None = None) 
             print(f"WARNING: runner.py for {model} exited with code {result.returncode}")
         else:
             print(f"runner.py for {model} completed successfully")
+
+    # Phase 2: cloud models, all in parallel.
+    if parallel:
+        procs: list[tuple[str, subprocess.Popen, object | None]] = []
+        for model in parallel:
+            idx += 1
+            print(f"\n--- [{idx}/{len(models)}] {model} (parallel) ---")
+
+            cmd = _build_runner_cmd(model, history_dirs)
+            env = _build_runner_env(model)
+            if CUSTOM_PROFILE_MODELS.get(model):
+                print(f"  (using custom profile: {CUSTOM_PROFILE_MODELS[model]})")
+
+            log_file = None
+            if history_dirs and model in history_dirs:
+                log_path = history_dirs[model] / "log.txt"
+                log_file = open(log_path, "w")
+                print(f"  log: {log_path}")
+
+            proc = subprocess.Popen(cmd, cwd=PLANEXE_DIR, env=env,
+                                    stdout=log_file, stderr=subprocess.STDOUT)
+            procs.append((model, proc, log_file))
+
+        print(f"\nWaiting for {len(procs)} parallel model(s) to finish...")
+        for model, proc, log_file in procs:
+            proc.wait()
+            if log_file:
+                log_file.close()
+            if proc.returncode != 0:
+                print(f"WARNING: runner.py for {model} exited with code {proc.returncode}")
+            else:
+                print(f"runner.py for {model} completed successfully")
 
 
 # ---------------------------------------------------------------------------
