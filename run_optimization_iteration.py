@@ -369,6 +369,9 @@ def step_runner(
                 if events_path:
                     emit_event(events_path, "model_complete", model=model)
 
+    if events_path:
+        emit_event(events_path, "all_models_complete", model_count=len(models))
+
 
 # ---------------------------------------------------------------------------
 # Step 3: Analysis pipeline
