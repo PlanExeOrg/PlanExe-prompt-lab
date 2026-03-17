@@ -22,7 +22,7 @@ from event_log import emit_event
 SCRIPT_DIR = Path(__file__).resolve().parent
 REPO_ROOT = SCRIPT_DIR.parent
 
-DEFAULT_TIMEOUT = 600  # 10 minutes
+DEFAULT_TIMEOUT = 900  # 15 minutes
 
 PROMPT_TEMPLATE = """\
 You are an assessment agent. Your job is to compare two analysis rounds — one

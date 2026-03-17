@@ -21,7 +21,7 @@ from event_log import emit_event
 SCRIPT_DIR = Path(__file__).resolve().parent
 REPO_ROOT = SCRIPT_DIR.parent
 
-DEFAULT_TIMEOUT = 600  # 10 minutes
+DEFAULT_TIMEOUT = 900  # 15 minutes
 PLANEXE_ROOT = Path("/Users/neoneye/git/PlanExeGroup/PlanExe")
 
 # PlanExe source files the agent may want to inspect.

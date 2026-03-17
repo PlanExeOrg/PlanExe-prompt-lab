@@ -22,7 +22,7 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 REPO_ROOT = SCRIPT_DIR.parent
 PLANEXE_ROOT = Path("/Users/neoneye/git/PlanExeGroup/PlanExe")
 
-DEFAULT_TIMEOUT = 600  # 10 minutes
+DEFAULT_TIMEOUT = 900  # 15 minutes
 
 # PlanExe source files to review.
 SOURCE_FILES = [
