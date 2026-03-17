@@ -1,0 +1,200 @@
+[
+  {
+    "lever_id": "f43ce30f-55cd-4711-8c2f-7a629a01b019",
+    "name": "Recruitment Strategy",
+    "consequences": "Pulling this lever changes how participants are sourced, affecting enrollment speed, sample representativeness, and cost per participant. If recruitment channels are broadened, enrollment may accelerate but risk of enrolling ineligible participants rises, increasing screening burden. If recruitment is limited to specialist clinics, sample may be highly selected, limiting generalizability. If a community outreach program is added, recruitment may diversify but require additional outreach resources.",
+    "options": [
+      "Expand recruitment to include regional sleep disorder support groups and online forums, offering virtual pre\u2011screening to widen reach.",
+      "Restrict enrollment to patients already diagnosed at the University Hospital Bonn sleep clinic, ensuring high pre\u2011screening certainty.",
+      "Implement a referral incentive program for neurologists, providing a modest fee for each eligible patient referred."
+    ],
+    "review": "This lever addresses the tension between broad enrollment and data quality, but the options overlook the need for continuous monitoring of referral bias and its impact on sample representativeness."
+  },
+  {
+    "lever_id": "98504a53-3228-40a5-96e2-8ec66abec608",
+    "name": "Data Acquisition Fidelity",
+    "consequences": "Adjusting acquisition fidelity changes the balance between participant comfort and data resolution. Increasing sensor density improves event detection but may increase participant burden and reduce compliance. Reducing sensor count enhances comfort but risks missing subtle parasomnia events, lowering study power. Introducing adaptive sensor deployment can optimize both but requires complex coordination.",
+    "options": [
+      "Deploy a hybrid sensor suite that uses dry\u2011electrode headbands for all nights and adds full PSG only on flagged nights.",
+      "Standardize full PSG on every first, middle, and last night for all participants to guarantee consistent high\u2011resolution data.",
+      "Introduce a lightweight, wireless sensor array that records only core EEG and motion signals, reducing physical contact while maintaining event capture."
+    ],
+    "review": "This lever balances data richness against participant comfort, yet the options fail to address the downstream impact of sensor fatigue on long\u2011term compliance."
+  },
+  {
+    "lever_id": "34c83c70-dd4f-4a28-a53e-3d75e056124d",
+    "name": "Staffing and Shift Coverage",
+    "consequences": "Modifying staffing models influences safety, annotation throughput, and operational cost. Increasing technician coverage improves real\u2011time event response but raises payroll. Reducing coverage saves costs but may delay event capture and increase error rates. A hybrid model could maintain safety while optimizing cost.",
+    "options": [
+      "Expand the technician roster to include a dedicated night shift specialist for each suite, ensuring immediate response to all events.",
+      "Implement a rotating shift schedule that pairs two technicians per night, sharing responsibilities and reducing overtime.",
+      "Outsource part of the annotation workload to a remote, trained volunteer pool, lowering staffing expenses."
+    ],
+    "review": "This lever tackles the trade\u2011off between safety and cost, but the options ignore the potential quality variance introduced by remote annotation."
+  },
+  {
+    "lever_id": "44760f6e-a839-4e2f-8efc-91ea00e0486e",
+    "name": "Event\u2011Triage Algorithm Development",
+    "consequences": "Shifting focus on algorithm development affects manual review burden and data quality. Prioritizing algorithm accuracy reduces human labor but may delay publication. Emphasizing speed accelerates throughput but risks higher false positives. Balancing both can optimize resource use.",
+    "options": [
+      "Allocate dedicated computational resources to train a deep learning model on annotated events, aiming for high sensitivity.",
+      "Develop a rule\u2011based triage system using thresholded sensor metrics to flag likely events for human review.",
+      "Pilot a hybrid approach that first applies a lightweight classifier, then refines with a secondary deep model on ambiguous cases."
+    ],
+    "review": "This lever confronts the tension between automation and reliability, yet the options overlook the need for continuous model validation against new data."
+  },
+  {
+    "lever_id": "2262237d-0edc-4da4-ae73-764699072871",
+    "name": "Facility Safety and Participant Comfort",
+    "consequences": "Adjusting safety measures influences participant perception and data integrity. Enhancing safety features may increase costs but reduces incident risk. Overemphasizing comfort could compromise safety, leading to regulatory issues. A balanced approach can maintain both.",
+    "options": [
+      "Install additional motion sensors and real\u2011time alerts to detect falls, coupled with a rapid response protocol.",
+      "Redesign suite interiors to maximize natural light and reduce artificial stimuli, improving sleep quality.",
+      "Introduce a participant feedback loop where nightly surveys assess comfort and safety perceptions, informing iterative design changes."
+    ],
+    "review": "This lever balances safety with naturalistic behavior, but the options miss the potential impact of increased monitoring on participant privacy concerns."
+  },
+  {
+    "lever_id": "ea1cc693-b479-4092-a497-0d96a3198e3a",
+    "name": "Funding and Budget Flexibility",
+    "consequences": "Adjusting budget allocation affects project scope and risk tolerance. Allocating more to contingency reduces risk but limits research activities. Tight budgeting may accelerate milestones but increases exposure to cost overruns. A flexible budget can adapt to emerging needs.",
+    "options": [
+      "Reserve 15% of the total budget as a contingency fund to absorb unforeseen expenses.",
+      "Reallocate a portion of the equipment budget to expand participant compensation, boosting enrollment rates.",
+      "Seek a staged funding agreement with the industry partner that releases funds only upon meeting predefined milestones."
+    ],
+    "review": "This lever addresses the tension between risk mitigation and research intensity, yet the options overlook the long\u2011term impact of early cost overruns on grant renewal prospects."
+  },
+  {
+    "lever_id": "c5748090-abd7-4fb8-b543-fe21e7fb8981",
+    "name": "Participant Experience Design",
+    "consequences": "Pulling this lever will shape how participants perceive the residential environment, potentially affecting compliance and data quality. Enhancing comfort may reduce anxiety\u2011driven artifacts but could increase costs for amenities. Balancing domestic feel with clinical rigor will influence recruitment appeal and retention rates.",
+    "options": [
+      "Introduce a personalized welcome kit that includes local cultural items, a daily schedule guide, and a quiet relaxation corner to foster a homely atmosphere for each participant.",
+      "Offer nightly guided meditation sessions led by a trained facilitator to reduce sleep onset anxiety, while recording participant feedback to adjust the program iteratively.",
+      "Implement a rotating volunteer support system where former participants volunteer as peer mentors, providing emotional reassurance and practical tips during stays."
+    ],
+    "review": "This lever addresses the tension between clinical rigor and participant comfort, but the options overlook the potential impact on data consistency when introducing variable home\u2011like elements."
+  },
+  {
+    "lever_id": "df057d64-fecf-4e6a-a9ff-5a7a8bb3d15a",
+    "name": "Longitudinal Data Integration",
+    "consequences": "Pulling this lever will determine how disparate sensor streams are merged over time, affecting the granularity of phenotypic insights. A robust integration pipeline may enable richer temporal analyses but could increase computational complexity and storage demands. Misaligned timestamps could compromise event correlation, leading to erroneous conclusions.",
+    "options": [
+      "Develop a unified time\u2011stamping protocol that synchronizes all sensor modalities to a central NTP server, ensuring millisecond\u2011level alignment across the study duration.",
+      "Create a modular data fusion framework that aggregates raw streams into a hierarchical BIDS structure, allowing researchers to query by event type, time window, or participant cohort.",
+      "Introduce a real\u2011time anomaly detection layer that flags synchronization drift or missing data, prompting immediate technician intervention to preserve data integrity."
+    ],
+    "review": "This lever tackles the trade\u2011off between integration depth and operational overhead, yet the options fail to address the scalability of the framework for future expansion beyond the initial cohort."
+  },
+  {
+    "lever_id": "81441c06-3ce8-4498-9600-d18854de9194",
+    "name": "Ethics and Consent Workflow",
+    "consequences": "Pulling this lever will shape participant autonomy and data governance, influencing recruitment trust and regulatory compliance. Streamlining consent may accelerate enrollment but could risk oversimplifying complex data sharing agreements. A rigid workflow might deter participants who value flexibility, affecting sample diversity.",
+    "options": [
+      "Implement a tiered consent model that allows participants to opt into varying levels of data sharing, from anonymized physiological data to full video recordings, with clear, jargon\u2011free explanations.",
+      "Deploy an interactive digital consent portal that uses scenario\u2011based questions to assess participant understanding, automatically generating a personalized consent summary for review.",
+      "Establish a periodic ethics audit cycle where participants can revisit and modify their consent preferences, ensuring ongoing alignment with their evolving comfort levels."
+    ],
+    "review": "This lever balances participant autonomy against procedural efficiency, but the options neglect the potential administrative burden of managing dynamic consent changes across a large cohort."
+  },
+  {
+    "lever_id": "4549db9c-2b77-4872-b62d-839bc2bb3906",
+    "name": "Technician Skill Development",
+    "consequences": "Pulling this lever will influence the quality of real\u2011time monitoring and annotation accuracy, directly impacting data reliability. Enhanced training may reduce error rates but could increase staffing costs and reduce flexibility for other tasks. Over\u2011specialization might limit cross\u2011coverage during shift rotations.",
+    "options": [
+      "Introduce a competency ladder that requires technicians to complete progressive certification modules covering EEG interpretation, sensor troubleshooting, and patient communication, with quarterly performance reviews.",
+      "Implement a peer\u2011review system where technicians jointly annotate a subset of nights, providing immediate feedback and fostering a culture of continuous learning.",
+      "Offer a cross\u2011disciplinary shadowing program that pairs technicians with neurologists and data engineers for one\u2011day rotations, broadening their contextual understanding of the study."
+    ],
+    "review": "This lever addresses the tension between technical proficiency and workforce flexibility, yet the options overlook the challenge of sustaining high skill levels during extended night shifts."
+  },
+  {
+    "lever_id": "c7e06622-24e0-4587-b0bc-1a059931ecf8",
+    "name": "Control Group Calibration",
+    "consequences": "Pulling this lever will refine the baseline against which parasomnia events are measured, affecting the validity of comparative analyses. A well\u2011calibrated control may reduce false positives but could increase recruitment complexity and resource allocation. Misaligned control conditions could bias event\u2011triage algorithm performance.",
+    "options": [
+      "Schedule control participants to undergo identical residential monitoring periods, including the same sensor suite and PSG nights, while ensuring they receive no therapeutic interventions during the stay.",
+      "Introduce a randomized crossover design where control participants alternate between a quiet sleep environment and a mildly stimulating ambient setting, allowing assessment of environmental influence on baseline metrics.",
+      "Implement a blinded data labeling protocol for control nights, ensuring that event\u2011triage algorithms are evaluated against a dataset with no known parasomnia events."
+    ],
+    "review": "This lever balances the need for a robust baseline against logistical feasibility, but the options do not consider the potential psychological impact of extended monitoring on control participants."
+  },
+  {
+    "lever_id": "6ad18436-8087-4514-81b5-8b4bce7f9a38",
+    "name": "Data Governance and Sharing",
+    "consequences": "Pulling this lever will dictate how data are protected, accessed, and disseminated, influencing compliance with GDPR and institutional policies. Strong governance may enhance trust but could slow data sharing timelines. Overly restrictive policies might limit collaborative opportunities and downstream research impact.",
+    "options": [
+      "Establish a tiered data access committee that reviews requests based on project relevance, data sensitivity, and participant consent levels, granting access through a secure portal.",
+      "Create a dynamic data de\u2011identification pipeline that automatically removes personally identifying information before dataset release, while maintaining metadata integrity for reproducibility.",
+      "Implement a data stewardship rotation where senior researchers alternate responsibility for overseeing data quality, security audits, and compliance reporting on a quarterly basis."
+    ],
+    "review": "This lever addresses the trade\u2011off between openness and privacy, yet the options fail to anticipate the administrative load of maintaining continuous audit trails across multiple data types."
+  },
+  {
+    "lever_id": "57484651-2f25-4d44-835b-05bcce1a6e8b",
+    "name": "Participant Retention Dynamics",
+    "consequences": "Pulling this lever focuses on strategies to keep participants engaged throughout their stay, directly affecting event capture rates and data completeness. Enhancing retention may raise nightly costs and require more staff time for personalized support, potentially impacting budget allocations. It also influences the representativeness of the sample if retention biases toward certain demographics.",
+    "options": [
+      "Implement a structured nightly debrief that offers personalized feedback and anticipates participant concerns to foster continued engagement.",
+      "Introduce a flexible meal schedule that accommodates individual preferences and sleep patterns, reducing discomfort during stays.",
+      "Offer a tiered incentive program that rewards participants for completing full monitoring periods, encouraging adherence."
+    ],
+    "review": "This lever addresses the tension between participant comfort and data completeness, but the options overlook potential cultural differences in engagement preferences."
+  },
+  {
+    "lever_id": "eb88b118-bac7-4a4f-b03e-7193039c8690",
+    "name": "Environmental Realism Calibration",
+    "consequences": "Adjusting environmental realism directly influences naturalistic behavior capture, potentially increasing event yield. Overemphasis on domestic feel may compromise safety protocols, requiring additional monitoring or staff vigilance. Balancing realism with safety may necessitate design trade\u2011offs that affect renovation costs.",
+    "options": [
+      "Conduct iterative resident simulations that test bedroom acoustics and lighting, adjusting materials to replicate typical home environments while maintaining safety thresholds.",
+      "Integrate passive motion sensors into corridor design to detect unintended movements, allowing real\u2011time adjustments to environmental cues that may trigger parasomnia.",
+      "Deploy a modular furniture system that can be reconfigured nightly to simulate varying domestic layouts, assessing impact on sleep behavior."
+    ],
+    "review": "This lever balances authenticity with safety, yet the options fail to address how environmental changes might affect long\u2011term participant compliance."
+  },
+  {
+    "lever_id": "25be8f87-0626-45bb-a4fa-f6d679b274f6",
+    "name": "Technician Response Protocol",
+    "consequences": "Pulling this lever refines how technicians respond to flagged events, directly affecting annotation speed and data quality. A stricter protocol may reduce false positives but increase staff workload and shift fatigue. It also influences the reliability of event capture timing.",
+    "options": [
+      "Establish a tiered response system where technicians triage flagged events by severity, allocating rapid intervention only to high\u2011risk episodes.",
+      "Implement a real\u2011time dashboard that alerts technicians to sensor anomalies, enabling proactive checks before full event escalation.",
+      "Schedule rotating on\u2011call shifts that include brief refresher training, ensuring technicians remain familiar with evolving sensor protocols."
+    ],
+    "review": "This lever tackles the trade\u2011off between rapid event capture and technician fatigue, but the options do not consider cross\u2011shift knowledge transfer."
+  },
+  {
+    "lever_id": "4ae5d220-1852-4a7a-bd3f-2d50da485125",
+    "name": "Data Annotation Workflow",
+    "consequences": "Pulling this lever streamlines annotation, reducing manual scorer time and improving inter\u2011rater reliability. Automation may introduce new error modes, requiring validation steps. It also affects data storage demands and downstream analysis timelines.",
+    "options": [
+      "Introduce a two\u2011stage annotation pipeline where initial automated tagging is reviewed by a senior scorer before final approval.",
+      "Deploy a consensus\u2011driven annotation interface that records scorer confidence levels, enabling targeted re\u2011review of ambiguous events.",
+      "Automate metadata extraction from sensor logs to populate annotation fields, reducing manual entry errors and speeding workflow."
+    ],
+    "review": "This lever addresses the tension between speed and accuracy in scoring, yet the options overlook the need for continuous scorer calibration."
+  },
+  {
+    "lever_id": "b6f9d0c0-ec79-4eab-a550-766194a4030b",
+    "name": "Ethical Oversight Cadence",
+    "consequences": "Pulling this lever adjusts frequency and depth of ethical reviews, directly impacting participant safety and study compliance. More frequent reviews may slow protocol changes but enhance trust. Less frequent reviews risk oversight gaps.",
+    "options": [
+      "Schedule quarterly ethics board meetings that include real\u2011time audit of adverse event logs, ensuring timely risk mitigation.",
+      "Implement a continuous monitoring system that flags ethical concerns automatically, prompting immediate review by the oversight committee.",
+      "Create a participant feedback portal that records concerns in real time, feeding data into the ethics review cycle."
+    ],
+    "review": "This lever balances regulatory compliance with operational flexibility, but the options do not address how to manage divergent stakeholder expectations."
+  },
+  {
+    "lever_id": "b2ebd322-c769-4a64-aa25-a1ebfab7faa8",
+    "name": "Funding Sustainability Pathways",
+    "consequences": "Pulling this lever explores alternative funding streams, potentially reducing reliance on grant cycles and enabling longer\u2011term project stability. Diversification may dilute focus and require additional administrative overhead. It also affects stakeholder alignment and publication freedom.",
+    "options": [
+      "Pursue a joint research partnership with a university department that offers in\u2011kind support, such as shared lab space and equipment access.",
+      "Develop a tiered participant sponsorship model where local businesses contribute modest funds in exchange for anonymized aggregate data insights.",
+      "Establish a grant\u2011matching program that encourages alumni donations, matching contributions to the research budget on a dollar\u2011for\u2011dollar basis."
+    ],
+    "review": "This lever confronts the tension between financial independence and academic integrity, yet the options fail to consider the impact on publication timelines."
+  }
+]

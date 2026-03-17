@@ -1,0 +1,200 @@
+[
+  {
+    "lever_id": "d062e098-c233-4123-a54a-f8615cd8c07e",
+    "name": "Residential capture fidelity and escalation policy",
+    "consequences": "Expanding the escalation policy to more nights improves event capture and within-subject phenotyping by increasing data richness; downstream, it elevates overnight staffing requirements, participant burden, and data processing workload, potentially slowing turnaround times.",
+    "options": [
+      "Maintain the current tiered monitoring with baseline nights, mid-stay PSG, and escalation nights only when flagged by sensor streams.",
+      "Expand escalation to universal PSG across all nights for all participants to maximize data fidelity and event capture.",
+      "Adopt an adaptive escalation protocol where only participants with low-quality data or high suspicion of events receive additional PSG."
+    ],
+    "review": "Core tension: data richness versus resource intensity. The options miss explicit escalation-criteria calibration and safeguards for participant burden during extended stays."
+  },
+  {
+    "lever_id": "1b4dfa16-8a07-4241-a6e2-30ad466bb58e",
+    "name": "Data governance and privacy posture for resident data",
+    "consequences": "Tight privacy controls reduce breach risk and improve compliance, but may limit external validation and cross-site benchmarking; downstream, this can slow replication studies and external collaborations.",
+    "options": [
+      "Enforce a strict privacy-first policy by de-identifying all streams and withholding bedroom video from repository access while sharing derived metrics.",
+      "Create a tiered data access framework granting external researchers controlled access under data use agreements with an audit trail.",
+      "Deploy federated analysis where raw data remains on-site and only aggregated features are shared for external validation."
+    ],
+    "review": "Core tension: privacy protection versus data-sharing utility. The options overlook potential long-term storage costs and alignment overhead with external partners."
+  },
+  {
+    "lever_id": "ab9f9cef-8773-40e7-87d6-0e5abbf142db",
+    "name": "Recruitment and retention strategy for parasomnia participants",
+    "consequences": "Expanding recruitment improves representativeness and enrollment speed, aligning with Aim 2 targets. However, it increases screening workload and potential participant burden due to longer stays. Downstream, budget pressure and scheduling complexity rise.",
+    "options": [
+      "Expand pre-admission screening with enhanced collateral history and awake clinical interview to improve yield.",
+      "Offer structured support, including travel stipends and on-site accommodations, to improve retention during longer stays.",
+      "Engage regional clinicians under formal referral agreements to stabilize flow and reduce recruitment lag."
+    ],
+    "review": "Core tension: recruitment speed versus consent rigor and participant welfare. The options miss explicit safeguards for consent procedures and monitoring participant burden across longer stays."
+  },
+  {
+    "lever_id": "aa7615cb-b9ee-4c2c-a43e-a7bbe34a3a59",
+    "name": "Staffing model and risk management for 8 active suites",
+    "consequences": "Increasing permanent staff improves safety and data throughput, but raises costs; conversely, lean staffing heightens risk of gaps and missed events; downstream, reliability of scoring and intervention response could be compromised.",
+    "options": [
+      "Institute a dedicated on-site data-science and scoring team to ensure real-time annotation and reliability.",
+      "Adopt a rotating on-call schedule with flexible contractors to cover peak nights while keeping fixed core.",
+      "Collaborate with a local sleep clinic for shared technician resources under a formal service agreement."
+    ],
+    "review": "Core tension: staffing stability versus cost containment. The options miss a clear escalation protocol during shortages and a defined safety net for critical nights."
+  },
+  {
+    "lever_id": "21dd71bf-c0b7-481f-bc82-e04486ef1e37",
+    "name": "Technology stack and data interoperability for synchronized streams",
+    "consequences": "Standardized pipelines improve reproducibility and annotation throughput; however, integrating multiple sensors can cause data compatibility drift and setup delays; downstream, initial configuration cost and maintenance overhead increase.",
+    "options": [
+      "Adopt EEG-BIDS-compatible pipelines with offline processing to ensure reproducibility and auditable workflows.",
+      "Develop rule-based and heuristic event triage methods to identify candidate parasomnias without relying on opaque models.",
+      "Pilot a modular data ingestion framework that accommodates new sensors without major rework."
+    ],
+    "review": "Core tension: standardization for reproducibility versus flexibility for new sensors. The options may under-address future hardware changes and long-term maintenance."
+  },
+  {
+    "lever_id": "a45913e9-f023-4b39-bae8-71a7bad81fbc",
+    "name": "Funding and governance strategy for sustainability",
+    "consequences": "Diversifying funding reduces risk and enables longer-term work; but governance and reporting requirements from multiple sources can slow progress and create scope drift.",
+    "options": [
+      "Pursue staged DFG and university funding with milestone gates linked to enrollment and data quality.",
+      "Establish a pharma partnership with strict publication rights and a 30-day pre-publication review window.",
+      "Form a European network of sleep centers to share methods and co-apply for grants to increase reach."
+    ],
+    "review": "Core tension: funding diversity versus coordination burden. The options overlook potential conflicts of interest safeguards and decision-rights alignment across partners."
+  },
+  {
+    "lever_id": "6ac4a2c9-7eac-465a-888d-71e830713e93",
+    "name": "Facility capacity expansion gating tied to pilot data quality and staffing readiness",
+    "consequences": "Expanding capacity increases throughput and accelerates data collection, enabling enrollment targets to be met more quickly. The trade-off is higher capital expenditure and more complex safety oversight, which could delay other program improvements if budgets tighten.",
+    "options": [
+      "Proceed with phased expansion after achieving predefined data quality metrics and staffing safety ratios through pilot outcomes.",
+      "Hold expansion in reserve and optimize existing suites' utilization via scheduling and throughput improvements over three quarters.",
+      "Scale expansion only after securing additional staffing contracts and ensuring full regulatory compliance for new capacity."
+    ],
+    "review": "This lever governs the tension between expansion and safety readiness during the pilot. The options overlook transition costs and the lead times required to train and certify additional staff."
+  },
+  {
+    "lever_id": "d51f3bcd-289b-42d5-80a6-92b65bf69df0",
+    "name": "Tiered sensing strategy optimization for data fidelity and participant comfort",
+    "consequences": "Adopting a tiered sensing approach improves data fidelity during enhanced nights while preserving naturalistic behavior during low-burden monitoring. The trade-off is increased data management complexity and the need for explicit protocols to prevent misalignment between sensor streams.",
+    "options": [
+      "Adopt a strictly gated tiering policy that escalates to full PSG only after a predefined event threshold is met in a given participant stay.",
+      "Maintain continuous low-burden monitoring for all nights and reserve enhanced nights for the mid-point and final night of each stay.",
+      "Introduce a consent-forward adaptive pipeline that allows participants to opt into additional sensors during selected nights with explicit privacy controls."
+    ],
+    "review": "This lever frames data fidelity versus participant burden, but the options miss the risk of data integration gaps across streams. A fuller view should address cross-stream reconciliation and latency issues."
+  },
+  {
+    "lever_id": "cf7af931-6efc-4c0c-8b0e-221844fccd28",
+    "name": "Event triage and adjudication workflow modernization",
+    "consequences": "Improving adjudication workflow reduces manual review time and speeds the publication cycle, while enhancing consistency across scorers. It also requires robust training and governance to avoid unexpected biases or over-reliance on automation.",
+    "options": [
+      "Implement dual-human blinded scoring with algorithmic triage to prioritize likely parasomnia events for rapid adjudication.",
+      "Pilot a staged workflow where junior technicians flag potential events for senior review during overnight shifts.",
+      "Rearchitect the event annotation interface to support rapid cross-validation and audit trails across scorers in real-time operations."
+    ],
+    "review": "This lever targets adjudication workflow; the options address process efficiency but may overlook scorer fatigue and inter-rater consistency under long-night shifts. Strengthening cross-scorer calibration would help ensure reliability beyond individual workflows."
+  },
+  {
+    "lever_id": "d00435ab-b6c5-4b54-896c-54be540ba5a1",
+    "name": "Recruitment channels diversification and enrollment pacing",
+    "consequences": "Diversifying recruitment channels expands reach and improves sample diversity, increasing likelihood of meeting enrollment targets. The trade-off is higher administrative overhead and consent management, which could slow decision cycles if not coordinated.",
+    "options": [
+      "Establish regional partnerships with sleep clinics to streamline referrals and reduce pre-admission barriers for eligible participants.",
+      "Implement rolling recruitment with flexible eligibility criteria and extended stay windows to counter slow enrollment.",
+      "Offer enhanced participant engagement through structured pre-admission interviews and dedicated care coordinators to boost retention."
+    ],
+    "review": "This lever covers recruitment pace versus sample diversity; the options miss risk of selection bias and regulatory complexity. Provisions for monitoring recruitment representativeness and consent load will help avoid skew."
+  },
+  {
+    "lever_id": "c6b3484d-d37e-4a9e-8cb5-e9f893d93240",
+    "name": "Local data governance and privacy alignment with regulatory context",
+    "consequences": "Strengthening privacy and governance reduces risk of data misuse and regulatory concerns, enabling responsible collaboration. However, it can slow data sharing and external partnerships if approvals are lengthy or opaque.",
+    "options": [
+      "Establish a privacy-by-design data pipeline with strict access controls and de-identified data processing standards.",
+      "Negotiate data-use agreements with partner institutions that balance openness and participant protection while sustaining collaboration.",
+      "Institute a tiered data-sharing model that permits de-identified datasets to external researchers under robust governance."
+    ],
+    "review": "This lever addresses data governance and consent management complexities with cross-border data sharing, but the options address privacy while not fully anticipating approvals timelines. A clearer governance pathway could reduce delays and misalignment with university policies."
+  },
+  {
+    "lever_id": "8a71aa24-5102-4539-8d7a-fd6cc1b94e9d",
+    "name": "Safety culture and incident response readiness for residential settings",
+    "consequences": "Heightened safety readiness improves incident handling and reduces risk, supporting a stable residential observation environment. The downside is potential strictness that can affect participant comfort and naturalistic behavior in daily routines.",
+    "options": [
+      "Develop proactive incident response drills and safety audits with cross-functional teams and scheduled reviews.",
+      "Create a permit-based access policy for non-clinical staff during high-occupancy periods to minimize risk.",
+      "Institute continuous safety training and feedback loops to adjust environment and protocols based on incident insights."
+    ],
+    "review": "This lever emphasizes safety culture and incident readiness; the options address response but may impose burdens that affect participant comfort. Explicitly balancing safety with participant autonomy would help maintain naturalistic observation."
+  },
+  {
+    "lever_id": "2fea7792-b63d-40b5-a3b8-3e54c78963ee",
+    "name": "Adaptive staffing model for night coverage and cross-training",
+    "consequences": "Direct effect: Flexible, cross-trained staffing reduces single-point coverage risk and improves safety during peak event windows. Downstream implications include higher initial training costs, more complex scheduling, and potential overtime management as teams adapt to variable event density.",
+    "options": [
+      "Reorganize the night shift into cross-trained teams that cover eight suites with overlapping standby capacity to reduce response latency and maintain safety margins.",
+      "Implement a flexible on-call roster aligned with observed event density to optimize staffing costs while preserving patient safety.",
+      "Introduce a structured fatigue-management program including micro-breaks and rotation rules to sustain data quality over extended stays."
+    ],
+    "review": "This lever wrestles with coverage continuity versus staff fatigue and training overhead, but the options miss transition costs. The proliferation of cross-trained roles could complicate performance evaluation and retention strategies."
+  },
+  {
+    "lever_id": "2b7eb44c-90c7-41c0-bb67-ef0f3b20df29",
+    "name": "Privacy-by-design operational framework for data flows",
+    "consequences": "Direct effect: Strengthens privacy and compliance posture by restricting access and minimizing identifiable data exposure. Downstream implications include potential delays in data availability for collaborative analyses and added governance overhead for access controls and audits.",
+    "options": [
+      "Enforce strict role-based access and audit trails across all sensing streams, including local de-identification before data transfer.",
+      "Implement on-site data processing with local anonymization and minimize cloud transfers to university storage.",
+      "Publish a de-identified data-sharing policy that excludes video footage while enabling waveform and sensor-data analyses."
+    ],
+    "review": "This lever balances privacy with data utility, but options overlook potential access delays and governance overhead that could hinder collaboration. Excessive de-identification steps may reduce analytic richness and slow data circulation."
+  },
+  {
+    "lever_id": "b65d06fa-26f7-4299-b836-a61172ab872b",
+    "name": "Semi-automated event triage governance and validation plan",
+    "consequences": "Direct effect: Establishes reliability of triage tools and reduces manual review burden; however, calibration may require substantial initial effort and ongoing maintenance to avoid drift. Downstream effects include potential bias in early deployments and the need for ongoing quality metrics.",
+    "options": [
+      "Establish a dual-review workflow where algorithmic scoring is calibrated against expert raters on a rolling sample to maintain alignment.",
+      "Institute continuous monitoring of false positives with monthly threshold adjustments and performance reviews to prevent drift.",
+      "Pilot a tiered alert system that escalates only high-confidence events to technicians to reduce fatigue and improve response times."
+    ],
+    "review": "This lever targets tooling governance and reviewer workload, but options overlook calibration drift risks and the time needed for robust validation. Early deployment may face under-specified performance criteria and bias in sample selection."
+  },
+  {
+    "lever_id": "f84ce5f7-e5f2-4fc5-8f52-98802acdf484",
+    "name": "Community engagement and recruitment pathway diversification beyond medical networks",
+    "consequences": "Direct effect: Expands recruitment pool and improves enrollment velocity, but consent workflows may become more complex and data quality may vary with outreach channel. Downstream implications include the need for additional onboarding processes and governance around multi-channel recruitment.",
+    "options": [
+      "Partner with regional sleep clinics and patient advocacy groups to co-create screening criteria and streamline referrals to the Bonn unit.",
+      "Offer travel stipends and flexible scheduling to reduce participation barriers and improve retention across longer stays.",
+      "Implement pre-screening teleconsultations and online intake forms to triage suitability before admission and optimize site capacity."
+    ],
+    "review": "This lever broadens recruitment channels but risks consent complexity and variable data quality across sites; options miss standardized onboarding. Coordination across groups may require additional governance and monitoring."
+  },
+  {
+    "lever_id": "6f09ef4c-a470-4824-8453-9840216b5a8d",
+    "name": "Expanded data sharing and publication pipeline policy",
+    "consequences": "Direct effect: Enables external validation and broader scientific impact while preserving privacy controls; may extend publication timelines and require governance reviews. Downstream effects include the need for formal data-use agreements and clear responsibility for data stewardship.",
+    "options": [
+      "Create data-use agreements that enable external researchers to access de-identified EEG-BIDS datasets under strict access controls.",
+      "Establish a data embargo schedule that balances publication priority with broader verification efforts by different groups.",
+      "Coordinate with regional hospitals to develop a federated data sharing framework that avoids central data aggregation while enhancing reproducibility."
+    ],
+    "review": "This lever expands external validation but could slow publication cadence if governance reviews become bottlenecks. Clear SLAs and defined review scope are needed to prevent delays."
+  },
+  {
+    "lever_id": "920af9be-b11a-4338-b0b8-3483879e64e5",
+    "name": "Facility design for scalable modular expansion",
+    "consequences": "Direct effect: Keeps capital expenditure aligned with data quality milestones and allows rapid scaling, but adds planning and modular integration risk. Downstream implications include potential disruption during expansion and the need for future-proofed IT and safety integration.",
+    "options": [
+      "Adopt a modular renovation plan with plug-in suite modules that can be added without disrupting ongoing nightly monitoring.",
+      "Create a flexible staging area for equipment and supplies that decouples renovation work from live monitoring operations.",
+      "Develop a robust power and network architecture that supports rapid expansion contingent on data quality milestones."
+    ],
+    "review": "This lever enables scaling but introduces modular integration risk and potential architectural debt; options miss phased cost control. A staged road map with compatibility checks is essential."
+  }
+]
