@@ -76,10 +76,10 @@ re-running a single phase.
 python analysis/prepare_iteration.py identify_potential_levers 316
 ```
 
-Validates the PR state is OPEN (exits with an error event if not), resolves
-the latest registered prompt, pre-creates history directories (one per model),
-and creates a new auto-incremented analysis directory with `meta.json`
-containing PR info and the history run list.
+Validates the PR state is OPEN (exits with an error event if not),
+pre-creates history directories (one per model), and creates a new
+auto-incremented analysis directory with `meta.json` containing PR info
+and the history run list.
 
 Creates `events.jsonl` in the analysis directory and emits `prepare_start` /
 `prepare_complete` (or `prepare_error`) events. Subsequent steps (runner,
@@ -218,27 +218,13 @@ In these cases, write files manually:
 
 4. Optionally write a `pr_status.md` with evidence about the PR's impact.
 
-### Prompt Registration Timing
+### System Prompt
 
-The runner uses `--system-prompt-file` from the registered prompt in
-`prompts/`, not the `SYSTEM_PROMPT` constant in Python code. If you change
-the system prompt in code (e.g., via a PR), you must register the new prompt
-**before** running experiments:
-
-```bash
-# After merging/checking out the PR branch with prompt changes:
-cd /path/to/PlanExe
-/opt/homebrew/bin/python3.11 -m self_improve.register_prompt \
-    --step identify_potential_levers \
-    --prompt-lab-dir /path/to/PlanExe-prompt-lab
-
-# Then run experiments (which use the newly registered prompt):
-cd /path/to/PlanExe-prompt-lab
-python run_optimization_iteration.py --skip-implement
-```
-
-The `run_optimization_iteration.py` orchestrator does this automatically
-between the implement and runner steps.
+The runner always uses the `IDENTIFY_POTENTIAL_LEVERS_SYSTEM_PROMPT` constant
+from PlanExe's code. There is no external prompt file or CLI override — the
+prompt is whatever is committed in the PlanExe repo at run time. To change the
+prompt, modify `identify_potential_levers.py` and merge the PR before running
+experiments.
 
 ## Purpose
 
@@ -259,7 +245,6 @@ should compare the insight files and decide what is most promising.
 
 Include factual fields such as:
 
-- `prompt`: relative path to the registered prompt file
 - `history`: array of relative run-history paths that were analyzed
 
 Recommended neutral fields:
@@ -267,7 +252,6 @@ Recommended neutral fields:
 - `schema_version`
 - `step`
 - `created_at`
-- `prompt_sha256`
 - `baseline_split`
 - `plans`
 - `insight_files`
@@ -424,7 +408,6 @@ Prefer citing:
 - `history/.../outputs.jsonl`
 - `history/.../meta.json`
 - `baseline/train/...`
-- registered prompt files under `prompts/`
 
 Do not rely on memory alone when describing failure modes or strengths.
 
@@ -566,12 +549,10 @@ Write insight files so that synthesis is easy:
 - **Baseline training data**: `baseline/train/<plan_name>/`
 - **Runner outputs**: `history/{counter // 100}/{counter % 100:02d}_{step}/outputs/<plan_name>/`
 - **Runner metadata**: `history/.../<run>/meta.json`, `outputs.jsonl`, `events.jsonl`
-- **Registered prompts**: `prompts/<step_name>/prompt_{index}_{sha256}.txt`
 - **Analysis**: `analysis/<index>_<step_name>/`
 
-The `meta.json` in each analysis directory links to the registered prompt and
-history runs that were examined. Use these paths to trace any claim back to
-source artifacts.
+The `meta.json` in each analysis directory links to the history runs that
+were examined. Use these paths to trace any claim back to source artifacts.
 
 ## Experiment Insights
 
