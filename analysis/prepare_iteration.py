@@ -353,7 +353,6 @@ def prepare(
 
             meta = {
                 "step": step_name,
-                "system_prompt_sha256": prompt_sha256,
                 "model": {"primary": model},
                 "workers": 1,
                 "system": system_info,
