@@ -321,16 +321,7 @@ def step_runner(models: list[str], history_dirs: dict[str, Path] | None = None) 
         if CUSTOM_PROFILE_MODELS.get(model):
             print(f"  (using custom profile: {CUSTOM_PROFILE_MODELS[model]})")
 
-        log_file = None
-        if history_dirs and model in history_dirs:
-            log_path = history_dirs[model] / "log.txt"
-            log_file = open(log_path, "w")
-            print(f"  log: {log_path}")
-
-        result = subprocess.run(cmd, cwd=PLANEXE_DIR, env=env,
-                                stdout=log_file, stderr=subprocess.STDOUT)
-        if log_file:
-            log_file.close()
+        result = subprocess.run(cmd, cwd=PLANEXE_DIR, env=env)
 
         if result.returncode != 0:
             print(f"WARNING: runner.py for {model} exited with code {result.returncode}")
@@ -339,7 +330,7 @@ def step_runner(models: list[str], history_dirs: dict[str, Path] | None = None) 
 
     # Phase 2: cloud models, all in parallel.
     if parallel:
-        procs: list[tuple[str, subprocess.Popen, object | None]] = []
+        procs: list[tuple[str, subprocess.Popen]] = []
         for model in parallel:
             idx += 1
             print(f"\n--- [{idx}/{len(models)}] {model} (parallel) ---")
@@ -349,21 +340,12 @@ def step_runner(models: list[str], history_dirs: dict[str, Path] | None = None) 
             if CUSTOM_PROFILE_MODELS.get(model):
                 print(f"  (using custom profile: {CUSTOM_PROFILE_MODELS[model]})")
 
-            log_file = None
-            if history_dirs and model in history_dirs:
-                log_path = history_dirs[model] / "log.txt"
-                log_file = open(log_path, "w")
-                print(f"  log: {log_path}")
-
-            proc = subprocess.Popen(cmd, cwd=PLANEXE_DIR, env=env,
-                                    stdout=log_file, stderr=subprocess.STDOUT)
-            procs.append((model, proc, log_file))
+            proc = subprocess.Popen(cmd, cwd=PLANEXE_DIR, env=env)
+            procs.append((model, proc))
 
         print(f"\nWaiting for {len(procs)} parallel model(s) to finish...")
-        for model, proc, log_file in procs:
+        for model, proc in procs:
             proc.wait()
-            if log_file:
-                log_file.close()
             if proc.returncode != 0:
                 print(f"WARNING: runner.py for {model} exited with code {proc.returncode}")
             else:
