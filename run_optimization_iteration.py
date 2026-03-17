@@ -283,7 +283,18 @@ def step_runner(models: list[str], history_dirs: dict[str, Path] | None = None) 
             env["PLANEXE_LLM_CONFIG_CUSTOM_FILENAME"] = config_file
             print(f"  (using custom profile: {config_file})")
 
-        result = subprocess.run(cmd, cwd=PLANEXE_DIR, env=env)
+        # Write runner output to log.txt in the history dir for easy troubleshooting.
+        log_file = None
+        if history_dirs and model in history_dirs:
+            log_path = history_dirs[model] / "log.txt"
+            log_file = open(log_path, "w")
+            print(f"  log: {log_path}")
+
+        result = subprocess.run(cmd, cwd=PLANEXE_DIR, env=env,
+                                stdout=log_file, stderr=subprocess.STDOUT)
+        if log_file:
+            log_file.close()
+
         if result.returncode != 0:
             print(f"WARNING: runner.py for {model} exited with code {result.returncode}")
         else:
