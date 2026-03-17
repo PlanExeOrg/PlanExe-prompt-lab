@@ -22,6 +22,20 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 REPO_ROOT = SCRIPT_DIR.parent
 PLANEXE_ROOT = Path("/Users/neoneye/git/PlanExeGroup/PlanExe")
 
+
+def _load_config() -> dict:
+    """Load config.json from the repo root. Returns empty dict if missing."""
+    config_path = REPO_ROOT / "config.json"
+    if config_path.is_file():
+        return json.loads(config_path.read_text())
+    return {}
+
+
+def _codex_enabled() -> bool:
+    """Check if codex is enabled in config.json (default: True)."""
+    config = _load_config()
+    return config.get("codex", {}).get("enabled", True)
+
 DEFAULT_TIMEOUT = 900  # 15 minutes
 
 # PlanExe source files to review.
@@ -240,7 +254,9 @@ def main():
     codex_output = analysis_path / "code_codex.md"
 
     run_claude = not claude_output.is_file()
-    run_codex = not codex_output.is_file()
+    run_codex = not codex_output.is_file() and _codex_enabled()
+    if not _codex_enabled():
+        print("  Codex disabled in config.json")
 
     if not run_claude and not run_codex:
         print("Both code review files already exist — nothing to do.")
