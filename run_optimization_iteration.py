@@ -333,19 +333,27 @@ def main():
 
     models = resolve_models(args.models)
 
-    # Read the latest synthesis.
+    # Read the latest synthesis (only required when implementing).
     latest_analysis_dir = get_latest_analysis_dir()
-    synthesis = read_synthesis(latest_analysis_dir)
-    recommendation = extract_recommendation(synthesis)
-
     print("Latest analysis: " + str(latest_analysis_dir.relative_to(PROMPT_LAB_DIR)))
-    print()
-    print("Top recommendation:")
-    print("-" * 40)
-    for line in recommendation.split("\n")[:8]:
-        print(f"  {line}")
-    print("  ...")
-    print("-" * 40)
+
+    synthesis = None
+    recommendation = None
+    synthesis_path = latest_analysis_dir / "synthesis.md"
+    if synthesis_path.is_file():
+        synthesis = synthesis_path.read_text()
+        recommendation = extract_recommendation(synthesis)
+        print()
+        print("Top recommendation:")
+        print("-" * 40)
+        for line in recommendation.split("\n")[:8]:
+            print(f"  {line}")
+        print("  ...")
+        print("-" * 40)
+    elif not args.skip_implement:
+        sys.exit(f"ERROR: synthesis.md not found at {synthesis_path} (required for implement step)")
+    else:
+        print("  (no synthesis.md — skipped, not needed with --skip-implement)")
 
     # Step 1: Implement the recommendation.
     pr_arg = args.pr
