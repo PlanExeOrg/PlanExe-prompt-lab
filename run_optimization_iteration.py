@@ -122,6 +122,55 @@ def resolve_models(models_arg: str | None) -> list[str]:
     return result
 
 
+def verify_planexe_branch(pr_arg: str) -> None:
+    """Verify that PLANEXE_DIR is checked out to the PR's head branch.
+
+    Prevents running experiments on the wrong branch (e.g. main instead of
+    the PR branch), which would produce invalid results.
+    """
+    # Get the PR's head branch name.
+    pr_ref = pr_arg if not pr_arg.isdigit() else pr_arg
+    gh_result = subprocess.run(
+        ["gh", "pr", "view", pr_ref, "--json", "headRefName", "-q", ".headRefName"],
+        cwd=PLANEXE_DIR,
+        capture_output=True,
+        text=True,
+    )
+    if gh_result.returncode != 0:
+        sys.exit(
+            f"ERROR: Could not look up PR {pr_arg}. "
+            f"gh pr view failed: {gh_result.stderr.strip()}"
+        )
+    pr_branch = gh_result.stdout.strip()
+
+    # Get the current branch at PLANEXE_DIR.
+    git_result = subprocess.run(
+        ["git", "branch", "--show-current"],
+        cwd=PLANEXE_DIR,
+        capture_output=True,
+        text=True,
+    )
+    if git_result.returncode != 0:
+        sys.exit(
+            f"ERROR: Could not determine current branch at {PLANEXE_DIR}. "
+            f"git branch --show-current failed: {git_result.stderr.strip()}"
+        )
+    current_branch = git_result.stdout.strip()
+
+    if current_branch != pr_branch:
+        sys.exit(
+            f"ERROR: Branch mismatch!\n"
+            f"  PR {pr_arg} branch: {pr_branch}\n"
+            f"  {PLANEXE_DIR} is on: {current_branch}\n"
+            f"\n"
+            f"The runner imports code from {PLANEXE_DIR}, so it must be on the\n"
+            f"PR branch to test the PR's changes. Run:\n"
+            f"  cd {PLANEXE_DIR} && git checkout {pr_branch}"
+        )
+
+    print(f"Branch check OK: {PLANEXE_DIR} is on '{current_branch}' (matches PR {pr_arg})")
+
+
 # ---------------------------------------------------------------------------
 # Step 1: Implement recommendation
 # ---------------------------------------------------------------------------
@@ -330,6 +379,12 @@ def main():
             pr_arg = str(pr_number)
     else:
         print("\n[Skipping implementation step]")
+
+    # Prerequisite: verify PLANEXE_DIR is on the PR's branch.
+    # Without this check, the runner would import code from whatever branch
+    # PLANEXE_DIR happens to be on (often main), producing invalid results.
+    if pr_arg and not args.skip_runner:
+        verify_planexe_branch(pr_arg)
 
     # Prepare iteration: create analysis dir + pre-create history dirs.
     # This runs BEFORE the runner so all metadata (including PR info) is
