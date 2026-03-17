@@ -1,0 +1,451 @@
+{
+  "responses": [
+    {
+      "strategic_rationale": "The Bonn residential parasomnia research unit confronts core trade-offs among safety, data quality, participant burden, and research scalability. The proposed levers focus on (1) the sensing and data capture architecture to balance longitudinal richness with operational feasibility, (2) recruitment and retention within an ethically rigorous screening framework to achieve target enrollment without compromising safety, (3) governance of data privacy and sharing to enable scientific value while protecting participants, (4) automation-assisted event triage to reduce manual workload while preserving accuracy, (5) staffing and safety protocols to sustain night coverage and respond to adverse events, and (6) governance and funding structures to ensure financial resilience and timely decision-making. Together they shape data quality, risk management, and the facility's ability to produce validated methods for longitudinal parasomnia phenotyping and reproducible event-triage benchmarks.",
+      "levers": [
+        {
+          "lever_index": 1,
+          "name": "Tiered data acquisition and escalation protocol",
+          "consequences": "This lever reduces baseline burden and concentrates PSG resources on escalation nights, improving safety and data quality when events are detected. Downstream, it increases data integration complexity and requires robust synchronization and QA to avoid gaps between tiers.",
+          "options": [
+            "Apply nightly low-burden monitoring for all participants while reserving full PSG for escalation nights triggered by sensor flags.",
+            "Schedule randomized enhanced nights across participants to build broad PSG datasets without systematic bias.",
+            "Define escalation criteria based on multi-sensor anomaly thresholds and implement adaptive full PSG only when those thresholds are met."
+          ],
+          "review_lever": "This lever balances data richness and participant safety, but the options miss contingencies for unanticipated low event yield during baseline nights and potential data gaps between tiers."
+        },
+        {
+          "lever_index": 2,
+          "name": "Expanded recruitment and retention strategy within safety envelope",
+          "consequences": "Broadening recruitment accelerates enrollment and improves sample diversity while demanding more screening resources and tougher pre-admission safeguards to protect participant safety. It may increase costs and extend timelines if screening bottlenecks arise.",
+          "options": [
+            "Scale recruitment to Bonn and regional clinics while maintaining rigorous pre-admission screening.",
+            "Offer flexible stay scheduling and enhanced participant engagement programs to improve retention across multi-week stays.",
+            "Establish partnerships with patient networks to streamline referrals and reduce no-show risk."
+          ],
+          "review_lever": "Core tension between recruitment pace and safety screening, but options miss a plan to handle screening bottlenecks and consent fatigue or retention drop-off."
+        },
+        {
+          "lever_index": 3,
+          "name": "Data governance, privacy, and ethical compliance posture",
+          "consequences": "Clarifies access, storage, and de-identification standards, reducing participant risk and institutional exposure. Downstream, it may constrain data sharing pace and limit some research dissemination, requiring careful balance.",
+          "options": [
+            "Institute de-identification protocols and strict access controls for all data streams.",
+            "Launch a controlled-access data portal with formal data-use agreements for external researchers.",
+            "Incorporate privacy-by-design reviews into protocol amendments to anticipate evolving risks."
+          ],
+          "review_lever": "Tension between data openness and privacy; options miss explicit procedures for breach response and cross-institution data sharing acceleration."
+        },
+        {
+          "lever_index": 4,
+          "name": "Semi-automated event triage and scoring workflow",
+          "consequences": "Develops algorithmic ranking of parasomnia events to reduce manual review workload while preserving accuracy. Downstream, requires robust validation, monitoring of false positives, and continued human oversight to prevent drift.",
+          "options": [
+            "Develop a heuristic triage tool that flags likely events for rapid human review.",
+            "Train a dual-scorer guided model using existing human scores and refine through cross-validation.",
+            "Pilot multi-sensor ensemble methods to improve event specificity before full deployment."
+          ],
+          "review_lever": "Tension between automation efficiency and diagnostic accuracy; options miss a robust, pre-registered validation plan comparing automation to human scoring."
+        },
+        {
+          "lever_index": 5,
+          "name": "Operational safety and staffing model for night coverage",
+          "consequences": "Ensures safe coverage of multiple suites with a margin for incident response. Downstream, may constrain expansion or increase costs if demand fluctuates or recruitment lags.",
+          "options": [
+            "Maintain a rotating night-shift roster with defined coverage margins and escalation triggers.",
+            "Cross-train staff to multiple roles to maximize flexibility during varying event loads.",
+            "Institute standardized incident response drills to reduce reaction times on high-risk nights."
+          ],
+          "review_lever": "Tension between safety margins and cost; options miss a strategy to optimize staffing with dynamic demand forecasting."
+        },
+        {
+          "lever_index": 6,
+          "name": "Governance, funding strategy, and external partnerships",
+          "consequences": "Diversifies funding and oversight, increasing resilience, and decision speed. Downstream, requires more formal reporting and alignment constraints with industry partners.",
+          "options": [
+            "Adopt milestone-based funding releases aligned to enrollment and data quality milestones.",
+            "Negotiate time-bound industry partnerships with clear publication governance that preserves academic authorship.",
+            "Establish an external scientific advisory board with defined decision rights and triggers for program pivots."
+          ],
+          "review_lever": "Tension between funding stability and governance flexibility; options miss a contingency plan for funding shifts and a formal risk register."
+        }
+      ],
+      "summary": "Add formal data-use agreement with the Bonn repository to Tiered data acquisition strategy."
+    },
+    {
+      "strategic_rationale": "Establishing a residential Bonn unit creates clear tensions between safety, scientific rigor, participant privacy, data throughput, and the need for external validation. The levers below target governance, consent handling, data quality, environment design, cross-site collaboration, and scalable capacity, balancing agility with ethical constraints and the requirement for robust phenotyping in a real-world setting. The mix emphasizes external oversight, flexible participant engagement, rigorous annotation, safe yet naturalistic environments, and disciplined growth to maximize credibility and impact while respecting regulatory boundaries.",
+      "levers": [
+        {
+          "lever_index": 1,
+          "name": "Independent external data auditing cadence and ethics oversight",
+          "consequences": "Establishes an external audit cadence and ethics governance, which enhances data integrity and participant privacy assurance. It introduces independent validation of sensor streams, annotations, and data handling, but creates coordination overhead that can slow internal decision cycles and data access approvals. Downstream, this can extend timelines for data releases and necessitate clear budgeting for governance activities.",
+          "options": [
+            "Institute a standing external ethics board to review participant safety and protocol compliance on a quarterly basis, with published recommendations.",
+            "Arrange biannual independent data integrity audits of sensor streams and annotation pipelines to validate scoring reliability.",
+            "Formalize a transparent data access policy that requires external sign-off for critical analyses and data releases prior to publication."
+          ],
+          "review_lever": "This lever governs the tension between independent oversight and operational agility, but coordination costs and potential delays are not addressed."
+        },
+        {
+          "lever_index": 2,
+          "name": "Adaptive consenting workflow during prolonged stays",
+          "consequences": "Enhances participant autonomy and consent validity across extended stays, reducing withdrawal risk and ethical concerns. It also adds administrative workload and potential delays in data access approvals, which may slow recruitment momentum and rise staffing needs. The trade-off is balancing robust consent with practical throughput in a multi-week monitoring environment.",
+          "options": [
+            "Implement staggered re-consent prompts synchronized with stay milestones to refresh scope and data uses.",
+            "Provide opt-out pathways for specific data streams while maintaining core participation to sustain dataset.",
+            "Automate documentation of consent changes and provide participants with clarity on their rights and data ownership."
+          ],
+          "review_lever": "This lever tackles consent fatigue but may complicate data governance and increase documentation burden."
+        },
+        {
+          "lever_index": 3,
+          "name": "Adaptive multi-modal event annotation workflow",
+          "consequences": "Improves data fidelity by prioritizing resource allocation on ambiguous or clinically relevant nights, reducing mislabeling and reviewer fatigue. It may require ongoing calibration, retraining, and sufficient staffing to handle escalations, which could create scheduling complexity and potential backlogs if throughput ceilings are reached. The net effect is higher-quality phenotyping with a possible increase in operational friction.",
+          "options": [
+            "Institute phased annotation protocols that escalate review priority when dry-electrode data shows atypical patterns and routine nights are inconclusive.",
+            "Adopt dynamic scoring rubrics that adapt to individual participant morphology while preserving inter-rater reliability through periodic calibration sessions.",
+            "Pilot automated pre-screening algorithms to triage events and route only probable episodes to human scorers."
+          ],
+          "review_lever": "This lever improves data fidelity but depends on consistent scorer calibration; gaps may still yield drift in labeling."
+        },
+        {
+          "lever_index": 4,
+          "name": "Residential environment safety and wellbeing optimization through behavior-informed design adjustments",
+          "consequences": "Aligns the on-site environment with naturalistic behavior while maintaining safety margins, which can improve participant comfort and engagement and reduce stress-related artifacts. However, implementing flexible layouts and responsive controls can increase maintenance overhead and create variability across suites, potentially complicating cross-participant comparisons. The downstream effect is enhanced ecological validity with a manageable risk profile.",
+          "options": [
+            "Install sleep-safety features with modular room layouts that can be reconfigured to reduce wandering without compromising domestic feel.",
+            "Schedule regular environmental audits with staff and participants to adjust noise, lighting, and privacy settings in response to feedback.",
+            "Create a protocol for rapid reconfiguration of suites during escalation nights to maintain safety while preserving naturalistic conditions."
+          ],
+          "review_lever": "This lever aligns environment with natural behavior, but it risks inconsistent safety margins across rooms and times."
+        },
+        {
+          "lever_index": 5,
+          "name": "External collaboration for cross-validation with Bonn Epileptology and sleep research centers",
+          "consequences": "Expands external validation and triangulation of parasomnia classifications, leveraging broader expertise and datasets to strengthen phenotyping credibility. It can introduce governance and data-sharing friction, require harmonization of protocols, and potentially slow some analyses; however, it also increases external accountability and resilience against single-site bias. The net is deeper science with mitigated risk of over-interpretation.",
+          "options": [
+            "Establish regular joint analysis workshops with epilepsy specialists to cross-validate parasomnia event classifications.",
+            "Form data-sharing pilot with regional sleep centers to compare annotation reliability across sites.",
+            "Coordinate shared access to anonymized datasets for independent replication of phenotyping results."
+          ],
+          "review_lever": "This lever expands external validation, but alignment of protocols and consent across institutions may introduce governance friction."
+        },
+        {
+          "lever_index": 6,
+          "name": "Phased expansion governance tied to data quality metrics",
+          "consequences": "Directs growth to match demonstrated data quality, ensuring safety, reliability, and annotation throughput before scaling. It constrains capacity expansion during early phases, preserving focus on core aims, but may slow speed to scale if quality gates prove strict. The trade-off is disciplined growth at the potential cost of opportunity if milestones stall.",
+          "options": [
+            "Define objective data quality gates for expansion that trigger incremental capacity increases only after meeting predefined annotation throughput and reliability.",
+            "Publish monthly dashboards that track false alarm rates, inter-rater reliability, and data retention compliance to inform governance decisions.",
+            "Institute a staged expansion plan with external review at 6-month intervals to validate alignment with safety and ethical standards."
+          ],
+          "review_lever": "This lever ensures disciplined growth but may slow scaling if quality metrics prove challenging; ensures accountability."
+        }
+      ],
+      "summary": "Add quarterly privacy impact assessment and ethics audit cadence to Independent external data auditing cadence and ethics oversight."
+    },
+    {
+      "strategic_rationale": "The Bonn residential parasomnia program operates at the intersection of rigorous scientific data collection and ethical real-world exposure. Core tensions include preserving participant privacy and safety in a domestic-style environment while achieving high-quality, longitudinal phenotyping across multiple nights; sustaining safe overnight operation within budgetary constraints; and ensuring cross-site credibility without compromising local feasibility. The proposed levers center on privacy-preserving observation, resilient staffing, phased data capture, standardized scoring calibration, external validation, and adaptive enrollment. Together they challenge assumptions that more video always yields better insight, that staffing can be minimal without sacrificing safety, and that single-night polysomnography suffices for longitudinal understanding.",
+      "levers": [
+        {
+          "lever_index": 1,
+          "name": "Residential environment safety and privacy balance for naturalistic observation",
+          "consequences": "This lever tightens privacy controls and mitigates participant concern, enabling ethically compliant naturalistic observation in a domestic setting. It reduces exposure-related distress and legal risk while potentially limiting the richness of video data; teams then rely more on non-visual sensors and structured logs, which can affect event detectability and require additional analytics to compensate.",
+          "options": [
+            "Implement privacy-preserving camera placements and access controls to ensure only essential staff view recordings while maintaining clinical observation.",
+            "Redesign data collection to emphasize non-visual sensors and encrypted storage, preserving analytical richness while reducing privacy exposure.",
+            "Pilot a consent-driven opt-in window for recording during high-risk nights with enhanced observation requirements."
+          ],
+          "review_lever": "This lever balances privacy with ecological validity, but the options overlook the practical costs and operational overhead of implementing privacy-preserving infrastructure."
+        },
+        {
+          "lever_index": 2,
+          "name": "Robust night-shift staffing with cross-coverage and rapid-response protocols",
+          "consequences": "This lever increases safety and reduces missed events during overnight monitoring; downstream: higher labor costs and scheduling complexity, with potential fatigue risk if night shifts extend too long.",
+          "options": [
+            "Cross-train staff across sleep monitoring, patient safety, and rapid-response signaling to ensure continuous coverage during overnight shifts and rapid escalation.",
+            "Institute staggered shift blocks with built-in floaters to guarantee minimum team coverage during peak event windows.",
+            "Conduct regular nocturnal safety drills and post-event debriefs to sharpen decision-making under pressure."
+          ],
+          "review_lever": "This lever resolves staffing resilience versus cost, but options miss burnout risk and long-term staff retention dynamics."
+        },
+        {
+          "lever_index": 3,
+          "name": "Phased data capture cadence alignment with clinical escalation nights",
+          "consequences": "Aligning data capture cadence improves data yield on escalation nights and avoids unnecessary full PSG on every night; downstream: scheduling overhead and potential bottlenecks if escalation nights are mismatched with participant stay length.",
+          "options": [
+            "Synchronize tiered monitoring with escalation-night windows to maximize high-resolution data without imposing unnecessary workload.",
+            "Allocate dedicated PSG calibration nights to validate sensor fusion and improve detection fidelity.",
+            "Implement automated scheduling rules that trigger escalation PSG when sensor anomalies indicate potential parasomnia events."
+          ],
+          "review_lever": "This lever addresses scheduling efficiency, but options miss potential data management bottlenecks during escalation nights."
+        },
+        {
+          "lever_index": 4,
+          "name": "Structured inter-rater calibration and scoring coherence program",
+          "consequences": "Enhances consistency between two independent raters and reduces variability in annotation; downstream: demands ongoing training time and can create perceived audit pressure.",
+          "options": [
+            "Mandate weekly cross-review sessions where two experienced raters reconcile discrepancies on a representative annotation set.",
+            "Institute a standardized scoring rubric and quarterly recalibration to stabilize inter-rater reliability.",
+            "Incorporate randomized audits of a sample of annotations to detect drift and bias and correct course."
+          ],
+          "review_lever": "This lever strengthens scoring reliability, but options miss the risk of over-standardization reducing nuance in atypical events."
+        },
+        {
+          "lever_index": 5,
+          "name": "Regional external validation partnerships for parasomnia event annotation",
+          "consequences": "Enhances external credibility and cross-site validation; downstream: coordination overhead and potential delays due to partner schedules or differing regulatory constraints.",
+          "options": [
+            "Formalize partnerships with Bonn-area sleep centers to cross-validate event annotations on shared de-identified datasets.",
+            "Establish joint workshops with partner centers to align scoring criteria and harmonize nomenclature across sites.",
+            "Create a data-sharing memorandum of understanding and periodic benchmarking with external labs for independent scoring validation."
+          ],
+          "review_lever": "This lever opens external validation, but options miss the risk of data-sharing delays and regulatory alignment across sites."
+        },
+        {
+          "lever_index": 6,
+          "name": "Adaptive admission pathways and consent-based scheduling to improve enrollment stability",
+          "consequences": "Improves enrollment stability and study throughput; downstream: introduces consent-management complexity and potential cohort heterogeneity that can complicate downstream analyses.",
+          "options": [
+            "Offer flexible admission windows and consent packages to accommodate participant preferences while maintaining safety and study integrity.",
+            "Implement an enhanced pre-screening portal to streamline eligibility checks and reduce late-screening dropouts.",
+            "Pilot rolling enrollment cohorts that maintain recruitment momentum while preserving consistent study timelines."
+          ],
+          "review_lever": "This lever improves enrollment tempo, but options miss potential ethical complexity around consent variations across cohorts."
+        }
+      ],
+      "summary": "Add 'structured inter-rater calibration cycles after every escalation night' to Structured inter-rater calibration and scoring coherence program."
+    }
+  ],
+  "levers": [
+    {
+      "lever_id": "5642969a-6969-4782-a20a-25857617e885",
+      "name": "Tiered data acquisition and escalation protocol",
+      "consequences": "This lever reduces baseline burden and concentrates PSG resources on escalation nights, improving safety and data quality when events are detected. Downstream, it increases data integration complexity and requires robust synchronization and QA to avoid gaps between tiers.",
+      "options": [
+        "Apply nightly low-burden monitoring for all participants while reserving full PSG for escalation nights triggered by sensor flags.",
+        "Schedule randomized enhanced nights across participants to build broad PSG datasets without systematic bias.",
+        "Define escalation criteria based on multi-sensor anomaly thresholds and implement adaptive full PSG only when those thresholds are met."
+      ],
+      "review": "This lever balances data richness and participant safety, but the options miss contingencies for unanticipated low event yield during baseline nights and potential data gaps between tiers."
+    },
+    {
+      "lever_id": "70f470da-d893-41bc-bc3a-8e860bfefd56",
+      "name": "Expanded recruitment and retention strategy within safety envelope",
+      "consequences": "Broadening recruitment accelerates enrollment and improves sample diversity while demanding more screening resources and tougher pre-admission safeguards to protect participant safety. It may increase costs and extend timelines if screening bottlenecks arise.",
+      "options": [
+        "Scale recruitment to Bonn and regional clinics while maintaining rigorous pre-admission screening.",
+        "Offer flexible stay scheduling and enhanced participant engagement programs to improve retention across multi-week stays.",
+        "Establish partnerships with patient networks to streamline referrals and reduce no-show risk."
+      ],
+      "review": "Core tension between recruitment pace and safety screening, but options miss a plan to handle screening bottlenecks and consent fatigue or retention drop-off."
+    },
+    {
+      "lever_id": "838115fe-6659-4db9-8311-70e3652dd571",
+      "name": "Data governance, privacy, and ethical compliance posture",
+      "consequences": "Clarifies access, storage, and de-identification standards, reducing participant risk and institutional exposure. Downstream, it may constrain data sharing pace and limit some research dissemination, requiring careful balance.",
+      "options": [
+        "Institute de-identification protocols and strict access controls for all data streams.",
+        "Launch a controlled-access data portal with formal data-use agreements for external researchers.",
+        "Incorporate privacy-by-design reviews into protocol amendments to anticipate evolving risks."
+      ],
+      "review": "Tension between data openness and privacy; options miss explicit procedures for breach response and cross-institution data sharing acceleration."
+    },
+    {
+      "lever_id": "13e3276d-e9f0-4732-9fb0-44d361c12ab0",
+      "name": "Semi-automated event triage and scoring workflow",
+      "consequences": "Develops algorithmic ranking of parasomnia events to reduce manual review workload while preserving accuracy. Downstream, requires robust validation, monitoring of false positives, and continued human oversight to prevent drift.",
+      "options": [
+        "Develop a heuristic triage tool that flags likely events for rapid human review.",
+        "Train a dual-scorer guided model using existing human scores and refine through cross-validation.",
+        "Pilot multi-sensor ensemble methods to improve event specificity before full deployment."
+      ],
+      "review": "Tension between automation efficiency and diagnostic accuracy; options miss a robust, pre-registered validation plan comparing automation to human scoring."
+    },
+    {
+      "lever_id": "2552595c-c208-4846-990a-35a7eae845bb",
+      "name": "Operational safety and staffing model for night coverage",
+      "consequences": "Ensures safe coverage of multiple suites with a margin for incident response. Downstream, may constrain expansion or increase costs if demand fluctuates or recruitment lags.",
+      "options": [
+        "Maintain a rotating night-shift roster with defined coverage margins and escalation triggers.",
+        "Cross-train staff to multiple roles to maximize flexibility during varying event loads.",
+        "Institute standardized incident response drills to reduce reaction times on high-risk nights."
+      ],
+      "review": "Tension between safety margins and cost; options miss a strategy to optimize staffing with dynamic demand forecasting."
+    },
+    {
+      "lever_id": "49dc243e-470b-4241-9fd4-08daceae3535",
+      "name": "Governance, funding strategy, and external partnerships",
+      "consequences": "Diversifies funding and oversight, increasing resilience, and decision speed. Downstream, requires more formal reporting and alignment constraints with industry partners.",
+      "options": [
+        "Adopt milestone-based funding releases aligned to enrollment and data quality milestones.",
+        "Negotiate time-bound industry partnerships with clear publication governance that preserves academic authorship.",
+        "Establish an external scientific advisory board with defined decision rights and triggers for program pivots."
+      ],
+      "review": "Tension between funding stability and governance flexibility; options miss a contingency plan for funding shifts and a formal risk register."
+    },
+    {
+      "lever_id": "e59b7c9b-ed67-4a0a-9810-1a9b5e3ec6be",
+      "name": "Independent external data auditing cadence and ethics oversight",
+      "consequences": "Establishes an external audit cadence and ethics governance, which enhances data integrity and participant privacy assurance. It introduces independent validation of sensor streams, annotations, and data handling, but creates coordination overhead that can slow internal decision cycles and data access approvals. Downstream, this can extend timelines for data releases and necessitate clear budgeting for governance activities.",
+      "options": [
+        "Institute a standing external ethics board to review participant safety and protocol compliance on a quarterly basis, with published recommendations.",
+        "Arrange biannual independent data integrity audits of sensor streams and annotation pipelines to validate scoring reliability.",
+        "Formalize a transparent data access policy that requires external sign-off for critical analyses and data releases prior to publication."
+      ],
+      "review": "This lever governs the tension between independent oversight and operational agility, but coordination costs and potential delays are not addressed."
+    },
+    {
+      "lever_id": "924dbf83-2178-437f-a3f2-83e58b017617",
+      "name": "Adaptive consenting workflow during prolonged stays",
+      "consequences": "Enhances participant autonomy and consent validity across extended stays, reducing withdrawal risk and ethical concerns. It also adds administrative workload and potential delays in data access approvals, which may slow recruitment momentum and rise staffing needs. The trade-off is balancing robust consent with practical throughput in a multi-week monitoring environment.",
+      "options": [
+        "Implement staggered re-consent prompts synchronized with stay milestones to refresh scope and data uses.",
+        "Provide opt-out pathways for specific data streams while maintaining core participation to sustain dataset.",
+        "Automate documentation of consent changes and provide participants with clarity on their rights and data ownership."
+      ],
+      "review": "This lever tackles consent fatigue but may complicate data governance and increase documentation burden."
+    },
+    {
+      "lever_id": "25272fcf-3abb-49f3-ad03-942dca526bee",
+      "name": "Adaptive multi-modal event annotation workflow",
+      "consequences": "Improves data fidelity by prioritizing resource allocation on ambiguous or clinically relevant nights, reducing mislabeling and reviewer fatigue. It may require ongoing calibration, retraining, and sufficient staffing to handle escalations, which could create scheduling complexity and potential backlogs if throughput ceilings are reached. The net effect is higher-quality phenotyping with a possible increase in operational friction.",
+      "options": [
+        "Institute phased annotation protocols that escalate review priority when dry-electrode data shows atypical patterns and routine nights are inconclusive.",
+        "Adopt dynamic scoring rubrics that adapt to individual participant morphology while preserving inter-rater reliability through periodic calibration sessions.",
+        "Pilot automated pre-screening algorithms to triage events and route only probable episodes to human scorers."
+      ],
+      "review": "This lever improves data fidelity but depends on consistent scorer calibration; gaps may still yield drift in labeling."
+    },
+    {
+      "lever_id": "e319420f-dae0-4b3f-940b-6db18d98c41b",
+      "name": "Residential environment safety and wellbeing optimization through behavior-informed design adjustments",
+      "consequences": "Aligns the on-site environment with naturalistic behavior while maintaining safety margins, which can improve participant comfort and engagement and reduce stress-related artifacts. However, implementing flexible layouts and responsive controls can increase maintenance overhead and create variability across suites, potentially complicating cross-participant comparisons. The downstream effect is enhanced ecological validity with a manageable risk profile.",
+      "options": [
+        "Install sleep-safety features with modular room layouts that can be reconfigured to reduce wandering without compromising domestic feel.",
+        "Schedule regular environmental audits with staff and participants to adjust noise, lighting, and privacy settings in response to feedback.",
+        "Create a protocol for rapid reconfiguration of suites during escalation nights to maintain safety while preserving naturalistic conditions."
+      ],
+      "review": "This lever aligns environment with natural behavior, but it risks inconsistent safety margins across rooms and times."
+    },
+    {
+      "lever_id": "d3f67b8a-90f8-4ac9-aaa7-2426b7835f33",
+      "name": "External collaboration for cross-validation with Bonn Epileptology and sleep research centers",
+      "consequences": "Expands external validation and triangulation of parasomnia classifications, leveraging broader expertise and datasets to strengthen phenotyping credibility. It can introduce governance and data-sharing friction, require harmonization of protocols, and potentially slow some analyses; however, it also increases external accountability and resilience against single-site bias. The net is deeper science with mitigated risk of over-interpretation.",
+      "options": [
+        "Establish regular joint analysis workshops with epilepsy specialists to cross-validate parasomnia event classifications.",
+        "Form data-sharing pilot with regional sleep centers to compare annotation reliability across sites.",
+        "Coordinate shared access to anonymized datasets for independent replication of phenotyping results."
+      ],
+      "review": "This lever expands external validation, but alignment of protocols and consent across institutions may introduce governance friction."
+    },
+    {
+      "lever_id": "07c8e4a3-bb4a-4e07-b5e0-92e4c289fde4",
+      "name": "Phased expansion governance tied to data quality metrics",
+      "consequences": "Directs growth to match demonstrated data quality, ensuring safety, reliability, and annotation throughput before scaling. It constrains capacity expansion during early phases, preserving focus on core aims, but may slow speed to scale if quality gates prove strict. The trade-off is disciplined growth at the potential cost of opportunity if milestones stall.",
+      "options": [
+        "Define objective data quality gates for expansion that trigger incremental capacity increases only after meeting predefined annotation throughput and reliability.",
+        "Publish monthly dashboards that track false alarm rates, inter-rater reliability, and data retention compliance to inform governance decisions.",
+        "Institute a staged expansion plan with external review at 6-month intervals to validate alignment with safety and ethical standards."
+      ],
+      "review": "This lever ensures disciplined growth but may slow scaling if quality metrics prove challenging; ensures accountability."
+    },
+    {
+      "lever_id": "39e1f02b-90f2-4679-96bb-e70b668c7f6d",
+      "name": "Residential environment safety and privacy balance for naturalistic observation",
+      "consequences": "This lever tightens privacy controls and mitigates participant concern, enabling ethically compliant naturalistic observation in a domestic setting. It reduces exposure-related distress and legal risk while potentially limiting the richness of video data; teams then rely more on non-visual sensors and structured logs, which can affect event detectability and require additional analytics to compensate.",
+      "options": [
+        "Implement privacy-preserving camera placements and access controls to ensure only essential staff view recordings while maintaining clinical observation.",
+        "Redesign data collection to emphasize non-visual sensors and encrypted storage, preserving analytical richness while reducing privacy exposure.",
+        "Pilot a consent-driven opt-in window for recording during high-risk nights with enhanced observation requirements."
+      ],
+      "review": "This lever balances privacy with ecological validity, but the options overlook the practical costs and operational overhead of implementing privacy-preserving infrastructure."
+    },
+    {
+      "lever_id": "be3765af-d1d1-4364-977c-fc5b1acdb3b3",
+      "name": "Robust night-shift staffing with cross-coverage and rapid-response protocols",
+      "consequences": "This lever increases safety and reduces missed events during overnight monitoring; downstream: higher labor costs and scheduling complexity, with potential fatigue risk if night shifts extend too long.",
+      "options": [
+        "Cross-train staff across sleep monitoring, patient safety, and rapid-response signaling to ensure continuous coverage during overnight shifts and rapid escalation.",
+        "Institute staggered shift blocks with built-in floaters to guarantee minimum team coverage during peak event windows.",
+        "Conduct regular nocturnal safety drills and post-event debriefs to sharpen decision-making under pressure."
+      ],
+      "review": "This lever resolves staffing resilience versus cost, but options miss burnout risk and long-term staff retention dynamics."
+    },
+    {
+      "lever_id": "5c29c15e-91ea-4771-a78d-044220490ed4",
+      "name": "Phased data capture cadence alignment with clinical escalation nights",
+      "consequences": "Aligning data capture cadence improves data yield on escalation nights and avoids unnecessary full PSG on every night; downstream: scheduling overhead and potential bottlenecks if escalation nights are mismatched with participant stay length.",
+      "options": [
+        "Synchronize tiered monitoring with escalation-night windows to maximize high-resolution data without imposing unnecessary workload.",
+        "Allocate dedicated PSG calibration nights to validate sensor fusion and improve detection fidelity.",
+        "Implement automated scheduling rules that trigger escalation PSG when sensor anomalies indicate potential parasomnia events."
+      ],
+      "review": "This lever addresses scheduling efficiency, but options miss potential data management bottlenecks during escalation nights."
+    },
+    {
+      "lever_id": "cea2cd15-1253-4a6e-a88d-94b6553e0413",
+      "name": "Structured inter-rater calibration and scoring coherence program",
+      "consequences": "Enhances consistency between two independent raters and reduces variability in annotation; downstream: demands ongoing training time and can create perceived audit pressure.",
+      "options": [
+        "Mandate weekly cross-review sessions where two experienced raters reconcile discrepancies on a representative annotation set.",
+        "Institute a standardized scoring rubric and quarterly recalibration to stabilize inter-rater reliability.",
+        "Incorporate randomized audits of a sample of annotations to detect drift and bias and correct course."
+      ],
+      "review": "This lever strengthens scoring reliability, but options miss the risk of over-standardization reducing nuance in atypical events."
+    },
+    {
+      "lever_id": "9be55f12-c0ff-4705-b7cb-2b7f6ee0376d",
+      "name": "Regional external validation partnerships for parasomnia event annotation",
+      "consequences": "Enhances external credibility and cross-site validation; downstream: coordination overhead and potential delays due to partner schedules or differing regulatory constraints.",
+      "options": [
+        "Formalize partnerships with Bonn-area sleep centers to cross-validate event annotations on shared de-identified datasets.",
+        "Establish joint workshops with partner centers to align scoring criteria and harmonize nomenclature across sites.",
+        "Create a data-sharing memorandum of understanding and periodic benchmarking with external labs for independent scoring validation."
+      ],
+      "review": "This lever opens external validation, but options miss the risk of data-sharing delays and regulatory alignment across sites."
+    },
+    {
+      "lever_id": "cdf60350-6636-4fec-bded-24da6308ac16",
+      "name": "Adaptive admission pathways and consent-based scheduling to improve enrollment stability",
+      "consequences": "Improves enrollment stability and study throughput; downstream: introduces consent-management complexity and potential cohort heterogeneity that can complicate downstream analyses.",
+      "options": [
+        "Offer flexible admission windows and consent packages to accommodate participant preferences while maintaining safety and study integrity.",
+        "Implement an enhanced pre-screening portal to streamline eligibility checks and reduce late-screening dropouts.",
+        "Pilot rolling enrollment cohorts that maintain recruitment momentum while preserving consistent study timelines."
+      ],
+      "review": "This lever improves enrollment tempo, but options miss potential ethical complexity around consent variations across cohorts."
+    }
+  ],
+  "metadata": {
+    "metadata_1": {
+      "context_window": 400000,
+      "num_output": 128000,
+      "is_chat_model": true,
+      "is_function_calling_model": true,
+      "model_name": "gpt-5-nano",
+      "system_role": "user",
+      "llm_classname": "openai_llm"
+    },
+    "metadata_2": {
+      "context_window": 400000,
+      "num_output": 128000,
+      "is_chat_model": true,
+      "is_function_calling_model": true,
+      "model_name": "gpt-5-nano",
+      "system_role": "user",
+      "llm_classname": "openai_llm"
+    },
+    "metadata_3": {
+      "context_window": 400000,
+      "num_output": 128000,
+      "is_chat_model": true,
+      "is_function_calling_model": true,
+      "model_name": "gpt-5-nano",
+      "system_role": "user",
+      "llm_classname": "openai_llm"
+    }
+  },
+  "system_prompt": "You are an expert strategic analyst. Generate solution space parameters following these directives:\n\n1. **Output Requirements**\n   - You must generate 5 to 7 levers per response.\n   - Each lever's `options` field must contain exactly 3 qualitative strategic choices as plain strings.\n\n2. **Lever Quality Standards**\n   - Consequences: describe the direct effect of pulling this lever, then at least one downstream implication or trade-off. Be concise and grounded \u2014 only cite specific numbers if the project context provides evidence for them. Do not fabricate percentages or cost estimates. Target length: 2\u20134 sentences.\n   - Options MUST:\n     \u2022 Represent genuinely distinct strategic pathways (not just labels)\n     \u2022 Include at least one unconventional or non-obvious approach\n     \u2022 NO prefixes (e.g., \"Option A:\", \"Choice 1:\")\n\n3. **Strategic Framing**\n   - Name each lever using language drawn directly from the project's own domain \u2014 avoid formulaic patterns or repeated prefixes\n   - Frame options as complete strategic approaches\n   - Ensure levers challenge core project assumptions\n\n4. **Validation Protocols**\n   - For `review_lever`:\n     A short critical review \u2014 name the core tension, then identify a weakness the options miss.\n     Examples:\n     - \"This lever governs the tension between centralization and local autonomy, but the options overlook transition costs.\"\n     - \"Prioritizing speed over reliability carries hidden costs: none of the options address rollback complexity.\"\n     Do not use square brackets or placeholder text.\n   - For `summary`:\n     One sentence prescribing a concrete addition to a specific lever.\n     Example: \"Add 'partner with a regional distributor for last-mile logistics' to Supply Chain Strategy.\"\n\n5. **Prohibitions**\n   - NO prefixes/labels in options (e.g., \"Option A:\", \"Choice 1:\")\n   - NO generic option labels (e.g., \"Optimize X\", \"Tolerate Y\")\n   - NO placeholder consequences or bracket-wrapped templates\n   - NO fabricated statistics or percentages without evidence from the project context\n   - NO marketing language (e.g., \"game-changing\", \"cutting-edge\", \"revolutionary\")\n\n6. **Option Structure**\n   - Maintain parallel grammatical structure across options\n   - Ensure options are self-contained descriptions\n   - Each option should be a concrete, actionable approach \u2014 not a vague aspiration",
+  "user_prompt": "File 'plan.txt':\nPlan:\nEstablish a 3-year residential longitudinal research unit in Bonn, Germany, for the study of adult NREM parasomnias \u2014 sleepwalking, confusional arousals, and sleep terrors \u2014 with a secondary exploratory arm for REM sleep behavior disorder under a separate protocol with dedicated neurologic screening, reflecting RBD's distinct clinical trajectory per current AASM guidance. The facility is affiliated with University Hospital Bonn's Department of Epileptology, leveraging its existing long-term video-EEG monitoring culture, and addresses a specific methodological gap: traditional single-night polysomnography rarely captures infrequent parasomnia events, while outpatient actigraphy lacks physiological resolution. The unit houses 8 active sleep suites at launch in a converted residential property in a quiet Bonn neighborhood, renovated for safety (padded corridor edges, restricted-opening windows, silent exterior door alarms, fire safety, acoustic treatment, network cabling, accessibility modifications) while preserving a domestic feel \u2014 if the environment is too clinical, naturalistic behavior is suppressed. Physical capacity exists for 12 suites, but expansion is deferred until the pilot proves acceptable data quality, manageable false alarm rates, safe staffing ratios, and usable annotation throughput. Sensing uses a tiered acquisition model: nightly low-burden monitoring via dry-electrode EEG headbands, contact-free mattress sensors, unobtrusively mounted infrared cameras, ambient microphones, and environmental sensors; scheduled enhanced nights with fuller PSG montage including standard scalp EEG, EOG, chin EMG, and leg EMG on the first night, one mid-stay night, and the final night per participant; and escalation nights deploying full PSG after technician-flagged events to capture recurrence at clinical-grade resolution. All streams are time-synchronized and stored in EEG-BIDS-compatible format on a local NAS with nightly encrypted backup to university storage, annotated in real time by the night technician and later scored by two independent raters using AASM criteria with inter-rater reliability reported. Public data sharing is limited to de-identified physiological and sensor data under data use agreements \u2014 bedroom video carries severe privacy constraints and is not deposited in public repositories. The scientific program has three explicit aims: Aim 1, establish and operationally validate the residential capture model as safe, ethics-approved, and sustainable; Aim 2, characterize within-person and between-person parasomnia patterns longitudinally, including episode frequency, morphology, triggers, and temporal clustering; Aim 3, develop and benchmark semi-automated event-triage tools that rank probable parasomnia episodes and reduce manual review burden, evaluated against dual human scorer agreement rather than promising autonomous diagnosis.\n\nParticipant recruitment targets adults aged 18\u201365 with NREM parasomnia confirmed through a structured pre-admission pathway: specialist clinical interview, collateral history from bed partner or household member where available, prior or screening polysomnography, and a structured exclusion checklist adjudicated by the PI. Explicit exclusions are nocturnal epilepsy or suspected epilepsy mimics, untreated obstructive sleep apnea, active major substance use disorder, severe psychiatric instability, and wandering or injury risk beyond facility capability. Recruitment channels are the University Hospital Bonn sleep clinic, regional neurologist referrals, and the Deutsche Gesellschaft f\u00fcr Schlafforschung und Schlafmedizin network, with per-night compensation of \u20ac80 plus meals. A matched control group provides baseline nocturnal movement, arousal patterns, and false-positive sensor activity under identical residential monitoring conditions, enabling benchmarking of the event-triage tools against normal nocturnal behavior. Event-yield planning assumes that based on the inclusion criterion of at least 2 self-reported episodes per month, approximately 70\u201380% of admitted participants will produce at least one captured and adjudicated event during a 2\u20138 week stay; stays may be extended up to 2 additional weeks for participants with zero captured events after the initial period, capped at 10 weeks total, with a protocol ceiling of 20% unproductive admissions before triggering a recruitment-criteria review. The core team is 9 people: a PI who is a board-certified sleep medicine physician, 2 postdoctoral researchers in sleep neurophysiology and computational neuroscience respectively, 3 research technicians rotating night shifts to ensure safe coverage of 8 active suites with adequate margin for event response and annotation, a clinical psychologist specializing in sleep disorders, a data engineer managing the sensor pipeline, and a study coordinator handling recruitment, consent, scheduling, and ethics compliance.\n\nBudget is \u20ac3.8 million over 3 years, gated: \u20ac1.8M year one covering property lease and renovation at approximately \u20ac750K, equipment at approximately \u20ac450K, staff hiring accounting for German social insurance contributions and actual overnight coverage, ethics approval, and a pilot cohort of 15\u201320 participants; \u20ac1.2M year two covering full operations with 30\u201335 participants, the enhanced-night PSG program, first publications, and event-triage algorithm development; \u20ac800K year three conditional on demonstrable progress by month 24. Personnel costs are approximately \u20ac2M over three years and remaining funds cover participant compensation, independent scoring time, data storage and retention, regulatory and legal work, and contingency. Funding sources are DFG research grant and University of Bonn internal research funding as the primary pillars, with a pharmaceutical industry partnership as optional upside rather than a feasibility requirement \u2014 if secured, the academic team retains full publication rights with the pharma partner receiving a 30-day pre-publication comment window only. Success criteria at 36 months: safe residential monitoring operations sustained for at least 24 months, enrollment of 50\u201370 NREM parasomnia participants plus matched controls, capture of a prespecified minimum number of independently adjudicated parasomnia events sufficient for Aim 2 phenotyping analysis, 2\u20133 peer-reviewed publications in sleep medicine journals covering methods validation and longitudinal characterization, a benchmarked semi-automated event-triage model with reported sensitivity, specificity, and agreement against dual human scoring, de-identified physiological dataset deposited in a recognized repository, and a submitted phase-two grant proposal for expansion and intervention studies. Failure triggers: if by month 18 the facility has enrolled fewer than 25 participants or captured fewer than 40 adjudicated events, the program undergoes external review. Governance is a 3-member external scientific advisory board reviewing progress every 6 months, with the PI holding operational authority and budget reallocations above \u20ac50K requiring board approval. Banned words: AI, blockchain, app, VR, AR, gamification, wearable startup, consumer product, DAO, NFT, metaverse, smart home, autonomous diagnosis, digital therapeutic, SaaS, marketplace, validated (in the context of claiming a mature deployable system). Pick a realistic scenario \u2014 this is an early-stage clinical research facility producing methods validation and phenotyping work, not a finished diagnostic platform.\n\nToday's date:\n2026-Mar-11\n\nProject start ASAP\n\nFile 'purpose.md':\n**Purpose:** business\n\n**Purpose Detailed:** Research facility establishment, data collection, and analysis for scientific publication and grant funding.\n\n**Topic:** Establishment of a residential research unit for the study of adult NREM parasomnias\n\nFile 'plan_type.md':\nThis plan requires one or more physical locations. It cannot be executed digitally.\n\n**Explanation:** This plan *unequivocally requires* a physical location (the research unit in Bonn, Germany), physical renovations, physical equipment, in-person staffing, and physical participants. The entire research project *revolves around* physical data collection and analysis in a real-world setting. The plan also requires physical travel to the location."
+}
