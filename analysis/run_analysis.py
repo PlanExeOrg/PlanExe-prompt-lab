@@ -80,23 +80,22 @@ def main():
         result = subprocess.run(cmd, cwd=REPO_ROOT)
 
         if result.returncode != 0:
-            print(f"WARNING: {script_name} exited with code {result.returncode}")
-            failed.append(script_name)
-        else:
-            print(f"{label} completed successfully")
+            print(f"ERROR: {script_name} exited with code {result.returncode}")
+            print(f"Stopping pipeline — later phases depend on this one.")
+            print()
+            print("=" * 60)
+            print(f"Analysis pipeline STOPPED at: {label}")
+            print("=" * 60)
+            sys.exit(1)
 
+        print(f"{label} completed successfully")
         print()
 
     # Summary.
     print("=" * 60)
     print("Analysis pipeline complete")
     print("=" * 60)
-
-    if failed:
-        print(f"  Failed phases: {', '.join(failed)}")
-        sys.exit(1)
-    else:
-        print("  All phases succeeded")
+    print("  All phases succeeded")
 
 
 if __name__ == "__main__":
