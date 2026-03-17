@@ -166,6 +166,14 @@ def build_prompt(agent_name: str, analysis_dir: str, meta_json: str,
     )
 
 
+def _stderr_tail(proc: subprocess.Popen, max_chars: int = 500) -> str:
+    """Read the tail of a process's stderr (must use stderr=PIPE)."""
+    if proc.stderr is None:
+        return ""
+    raw = proc.stderr.read()
+    text = raw.decode("utf-8", errors="replace").strip()
+    return text[-max_chars:] if text else ""
+
 
 def main():
     parser = argparse.ArgumentParser(
@@ -250,6 +258,7 @@ def main():
             ],
             cwd=REPO_ROOT,
             start_new_session=True,
+            stderr=subprocess.PIPE,
         )
         emit_event(events_path, "insight_claude_start", pid=claude_proc.pid)
 
@@ -264,6 +273,7 @@ def main():
             ],
             cwd=REPO_ROOT,
             start_new_session=True,
+            stderr=subprocess.PIPE,
         )
         emit_event(events_path, "insight_codex_start", pid=codex_proc.pid)
 
@@ -293,10 +303,12 @@ def main():
             claude_exit = None
 
         claude_duration = round(time.monotonic() - claude_t0, 2)
+        claude_stderr = _stderr_tail(claude_proc)
         if claude_timed_out:
             emit_event(events_path, "insight_claude_error",
                        error=f"timed out after {timeout}s",
-                       duration_seconds=claude_duration)
+                       duration_seconds=claude_duration,
+                       **({"stderr_tail": claude_stderr} if claude_stderr else {}))
             claude_output.write_text(
                 "# ERROR: claude timed out\n\n"
                 f"Claude Code exceeded the {timeout}s time limit.\n"
@@ -309,7 +321,8 @@ def main():
         else:
             emit_event(events_path, "insight_claude_error",
                        error=f"exit code {claude_exit}",
-                       duration_seconds=claude_duration)
+                       duration_seconds=claude_duration,
+                       **({"stderr_tail": claude_stderr} if claude_stderr else {}))
 
     if codex_proc:
         remaining = max(0, timeout - (time.monotonic() - codex_t0))
@@ -322,10 +335,12 @@ def main():
             codex_exit = None
 
         codex_duration = round(time.monotonic() - codex_t0, 2)
+        codex_stderr = _stderr_tail(codex_proc)
         if codex_timed_out:
             emit_event(events_path, "insight_codex_error",
                        error=f"timed out after {timeout}s",
-                       duration_seconds=codex_duration)
+                       duration_seconds=codex_duration,
+                       **({"stderr_tail": codex_stderr} if codex_stderr else {}))
             codex_output.write_text(
                 "# ERROR: codex timed out\n\n"
                 f"Codex exceeded the {timeout}s time limit.\n"
@@ -338,7 +353,8 @@ def main():
         else:
             emit_event(events_path, "insight_codex_error",
                        error=f"exit code {codex_exit}",
-                       duration_seconds=codex_duration)
+                       duration_seconds=codex_duration,
+                       **({"stderr_tail": codex_stderr} if codex_stderr else {}))
 
     # Report results.
     print()

@@ -200,6 +200,15 @@ def find_before_dir(after_dir: str) -> str | None:
     return None
 
 
+def _stderr_tail(proc: subprocess.Popen, max_chars: int = 500) -> str:
+    """Read the tail of a process's stderr (must use stderr=PIPE)."""
+    if proc.stderr is None:
+        return ""
+    raw = proc.stderr.read()
+    text = raw.decode("utf-8", errors="replace").strip()
+    return text[-max_chars:] if text else ""
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Assess whether a PR improved output quality by comparing before/after analyses.",
@@ -294,6 +303,7 @@ def main():
         ],
         cwd=REPO_ROOT,
         start_new_session=True,
+        stderr=subprocess.PIPE,
     )
     emit_event(events_path, "assessment_claude_start", pid=proc.pid)
 
@@ -307,10 +317,12 @@ def main():
         exit_code = None
 
     duration = round(time.monotonic() - t0, 2)
+    stderr_text = _stderr_tail(proc)
     if timed_out:
         emit_event(events_path, "assessment_claude_error",
                    error=f"timed out after {timeout}s",
-                   duration_seconds=duration)
+                   duration_seconds=duration,
+                   **({"stderr_tail": stderr_text} if stderr_text else {}))
         output_path.write_text(
             "# ERROR: claude timed out\n\n"
             f"Claude Code exceeded the {timeout}s time limit.\n"
@@ -321,7 +333,8 @@ def main():
                    status="ok", duration_seconds=duration)
     else:
         emit_event(events_path, "assessment_claude_error",
-                   error=f"exit code {exit_code}", duration_seconds=duration)
+                   error=f"exit code {exit_code}", duration_seconds=duration,
+                   **({"stderr_tail": stderr_text} if stderr_text else {}))
 
     print()
     print("═" * 50)
