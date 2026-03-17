@@ -163,17 +163,6 @@ def get_next_analysis_index(step_name: str) -> int:
     return _dir_index(analysis_dirs[-1]) + 1
 
 
-def resolve_prompt_sha256_from_runs(history_runs: list[str]) -> str | None:
-    """Read the system_prompt_sha256 from the most recent history run's meta.json."""
-    for run in reversed(history_runs):
-        run_meta = REPO_ROOT / "history" / run / "meta.json"
-        if run_meta.is_file():
-            meta = json.loads(run_meta.read_text())
-            sha256 = meta.get("system_prompt_sha256")
-            if sha256:
-                return sha256
-    return None
-
 
 # ---------------------------------------------------------------------------
 # History dir helpers (ported from runner.py)
@@ -234,37 +223,6 @@ def _collect_system_info() -> dict:
             info["memory_gb"] = round(int(meminfo) / (1024 ** 2), 1)
     return info
 
-
-# ---------------------------------------------------------------------------
-# Prompt resolution
-# ---------------------------------------------------------------------------
-
-PLANEXE_DIR = Path("/Users/neoneye/git/PlanExeGroup/PlanExe")
-PLANEXE_PYTHON = "/opt/homebrew/bin/python3.11"
-
-
-def resolve_prompt_sha256() -> str:
-    """Compute the system prompt SHA256 from PlanExe's code constant.
-
-    Runs a small Python snippet against the PlanExe repo to extract
-    IDENTIFY_POTENTIAL_LEVERS_SYSTEM_PROMPT and hash it, matching
-    what runner.py writes to meta.json.
-    """
-    result = subprocess.run(
-        [
-            PLANEXE_PYTHON, "-c",
-            "import sys, hashlib; sys.path.insert(0, 'worker_plan'); "
-            "from worker_plan_internal.lever.identify_potential_levers import "
-            "IDENTIFY_POTENTIAL_LEVERS_SYSTEM_PROMPT; "
-            "print(hashlib.sha256(IDENTIFY_POTENTIAL_LEVERS_SYSTEM_PROMPT.strip().encode()).hexdigest())",
-        ],
-        cwd=PLANEXE_DIR,
-        capture_output=True,
-        text=True,
-    )
-    if result.returncode != 0:
-        sys.exit(f"ERROR: Could not extract system prompt SHA256: {result.stderr.strip()}")
-    return result.stdout.strip()
 
 
 # ---------------------------------------------------------------------------
@@ -332,11 +290,7 @@ def prepare(
             print(f"PR #{pr_number}: {pr_title}")
             print(f"  {pr_url}")
 
-        # 3. Resolve prompt SHA256 from PlanExe code constant.
-        prompt_sha256 = resolve_prompt_sha256()
-        print(f"Prompt sha256: {prompt_sha256}")
-
-        # 4. Pre-create history dirs.
+        # 3. Pre-create history dirs.
         history_dir = REPO_ROOT / "history"
         counter = _next_history_counter(history_dir)
         system_info = _collect_system_info()
@@ -369,8 +323,8 @@ def prepare(
             history_dirs[model] = run_dir
             counter += 1
 
-        # 5. Write analysis meta.json.
-        analysis_meta: dict = {"system_prompt_sha256": prompt_sha256}
+        # 4. Write analysis meta.json.
+        analysis_meta: dict = {}
         if pr_url:
             analysis_meta["pr_url"] = pr_url
             analysis_meta["pr_title"] = pr_title
@@ -440,17 +394,12 @@ def prepare_analysis_from_existing(
         print(f"  Total: {len(all_runs)}, analyzed: {len(analyzed)}")
         return None
 
-    # 3. Resolve prompt SHA from runs or PlanExe code.
-    prompt_sha256 = resolve_prompt_sha256_from_runs(new_runs)
-    if not prompt_sha256:
-        prompt_sha256 = resolve_prompt_sha256()
-
-    # 4. Create analysis dir.
+    # 3. Create analysis dir.
     index = get_next_analysis_index(step_name)
     analysis_dir = REPO_ROOT / "analysis" / f"{index}_{step_name}"
 
-    # 5. Build meta.
-    meta: dict = {"system_prompt_sha256": prompt_sha256}
+    # 4. Build meta.
+    meta: dict = {}
     if pr_url:
         meta["pr_url"] = pr_url
         meta["pr_title"] = pr_title
@@ -463,7 +412,6 @@ def prepare_analysis_from_existing(
     print(f"New runs to analyze:  {len(new_runs)}")
     for run in new_runs:
         print(f"  history/{run}")
-    print(f"Prompt sha256: {prompt_sha256}")
     print(f"Analysis dir: analysis/{index}_{step_name}")
 
     if dry_run:
