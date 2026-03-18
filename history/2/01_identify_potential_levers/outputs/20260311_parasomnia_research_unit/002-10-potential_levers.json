@@ -1,0 +1,200 @@
+[
+  {
+    "lever_id": "cccafd19-a303-4429-a17b-cfb72108ba35",
+    "name": "Participant Inclusion Criteria",
+    "consequences": "Stricter inclusion criteria (e.g., requiring prior video-PSG confirmation of parasomnia) increases the likelihood of capturing events but reduces the pool of eligible participants and potentially skews the sample towards more severe cases. Looser criteria broaden recruitment but may lower event capture rates and increase the burden of false positives. The trade-off is between statistical power and representativeness.",
+    "options": [
+      "Require video-polysomnography confirmation of NREM parasomnia events for all participants prior to admission, ensuring a higher probability of capturing events during their stay",
+      "Implement a tiered inclusion pathway, prioritizing participants with video-PSG confirmation but also accepting those with strong clinical history and bed partner corroboration, expanding the recruitment pool",
+      "Partner with a network of referring sleep specialists across Germany who can vouch for the clinical history of potential participants, streamlining the pre-admission pathway"
+    ],
+    "review": "The core tension is balancing recruitment volume with event capture probability. The options don't address the potential for selection bias introduced by relying on specialist referrals, which might over-represent certain parasomnia subtypes."
+  },
+  {
+    "lever_id": "641b6057-b4b5-4755-ab9d-2e95fcc86fcf",
+    "name": "Night Technician Staffing Model",
+    "consequences": "A higher technician-to-suite ratio improves real-time event detection and response, enhancing participant safety and data quality, but increases personnel costs. A lower ratio reduces costs but may compromise responsiveness and increase the risk of missed events or delayed intervention. The staffing model directly impacts both the safety and the scientific rigor of the study.",
+    "options": [
+      "Implement a 1:4 technician-to-suite ratio during peak hours (10 PM - 6 AM), ensuring rapid response to events and comprehensive real-time annotation",
+      "Utilize a 1:8 technician-to-suite ratio with a centralized monitoring station and a clearly defined escalation protocol for responding to events, balancing cost-effectiveness with safety",
+      "Introduce a 'roving technician' model where one technician covers all 8 suites but is augmented by remote monitoring and automated alerts, minimizing staffing costs while maintaining a baseline level of oversight"
+    ],
+    "review": "The tension is between cost and responsiveness. The options don't consider the impact of technician fatigue on vigilance and annotation accuracy, especially with a roving or centralized model."
+  },
+  {
+    "lever_id": "aeeadab2-7c7f-49d5-8802-8c784cce7d56",
+    "name": "Data Sharing Strategy",
+    "consequences": "Openly sharing de-identified physiological data accelerates scientific progress and fosters collaboration, but requires careful anonymization and data use agreements to protect participant privacy. Restricting data access mitigates privacy risks but limits the potential for external validation and secondary analyses. The data sharing strategy must balance scientific benefit with ethical considerations.",
+    "options": [
+      "Establish a public repository for de-identified physiological data and summary statistics, requiring researchers to apply for access and agree to a data use agreement",
+      "Share de-identified data only with pre-approved collaborators under a formal data sharing agreement, maintaining tighter control over data access and usage",
+      "Create a 'synthetic dataset' derived from the original data using generative models, allowing broader access while minimizing the risk of re-identification"
+    ],
+    "review": "The tension is between open science and participant privacy. The options don't address the potential for 'attribute disclosure,' where combining summary statistics with other publicly available data could reveal sensitive information."
+  },
+  {
+    "lever_id": "dae42e8f-a872-4624-b878-470ceb67ddbe",
+    "name": "Residential Stay Duration",
+    "consequences": "Longer residential stays increase the probability of capturing parasomnia events, improving statistical power, but also increase participant burden, cost, and the risk of attrition. Shorter stays reduce these burdens but may compromise the ability to characterize within-person variability and identify triggers. The stay duration must balance data yield with participant comfort and resource constraints.",
+    "options": [
+      "Implement a fixed 4-week residential stay for all participants, providing a standardized observation period and simplifying data analysis",
+      "Offer a flexible stay duration ranging from 2 to 8 weeks, tailored to individual participant event frequency and data capture needs, maximizing data yield while accommodating participant preferences",
+      "Employ an 'adaptive stay' protocol where the stay duration is dynamically adjusted based on real-time event capture rates, extending stays only for participants who have not yet experienced a captured event"
+    ],
+    "review": "The tension is between maximizing event capture and minimizing participant burden. The options don't account for the potential impact of habituation to the residential environment on parasomnia frequency over time."
+  },
+  {
+    "lever_id": "4f1cc98f-4d38-4aa9-a24d-f1e9b3805ce8",
+    "name": "Sensor Modality Prioritization",
+    "consequences": "Prioritizing high-resolution PSG data provides detailed physiological insights but is resource-intensive and can disrupt sleep. Emphasizing low-burden sensors allows for more naturalistic data collection but may sacrifice the ability to characterize subtle physiological changes. The sensor strategy must balance data richness with ecological validity.",
+    "options": [
+      "Focus primarily on full-montage PSG data collection, using the dry-electrode EEG headbands and contact-free mattress sensors as secondary validation tools",
+      "Prioritize continuous monitoring with dry-electrode EEG headbands, contact-free mattress sensors, and infrared cameras, reserving full-montage PSG for targeted 'escalation nights' triggered by detected events",
+      "Develop a custom sensor fusion algorithm that integrates data from all sensor modalities to generate a 'parasomnia probability score,' guiding the deployment of full-montage PSG only when the score exceeds a predefined threshold"
+    ],
+    "review": "The tension is between data resolution and participant comfort. The options don't address the potential for sensor artifacts and noise to confound the event-triage algorithm, especially with low-burden sensors."
+  },
+  {
+    "lever_id": "f255fbf9-04ed-4b95-a092-ee9900597679",
+    "name": "Event Annotation Workflow",
+    "consequences": "Real-time annotation by night technicians allows for immediate event response and detailed contextual notes, but may be subject to bias and inter-rater variability. Delayed scoring by independent raters ensures objectivity but loses the richness of real-time observations. The annotation workflow must balance timeliness with accuracy.",
+    "options": [
+      "Implement a 'concurrent annotation' model where the night technician and an independent rater simultaneously annotate events in real-time, resolving discrepancies through immediate discussion",
+      "Utilize a 'two-stage annotation' process where the night technician provides initial annotations, followed by independent scoring by two raters who are blinded to the technician's notes",
+      "Develop a 'hybrid annotation' workflow where the night technician flags potential events and provides contextual notes, while a machine learning model generates preliminary annotations that are then reviewed and refined by independent raters"
+    ],
+    "review": "The tension is between annotation speed and accuracy. The options don't consider the potential for 'annotation drift' over time, where raters' criteria shift subtly, affecting longitudinal data consistency."
+  },
+  {
+    "lever_id": "419716a9-cdef-47af-ae12-845de7a5441c",
+    "name": "Overnight Safety Protocol",
+    "consequences": "The overnight safety protocol dictates the level of intervention and monitoring during participant sleep. A more restrictive protocol reduces the risk of injury but may also increase participant anxiety and suppress naturalistic behavior. A less restrictive protocol allows for more naturalistic data but increases the potential for safety incidents and liability.",
+    "options": [
+      "Implement continuous video and physiological monitoring with immediate technician intervention for any deviation from pre-defined safety parameters, prioritizing participant safety above all else.",
+      "Establish a tiered response system where technicians remotely monitor participants and only intervene physically when pre-defined escalation criteria are met, balancing safety and naturalistic observation.",
+      "Employ a passive monitoring approach with minimal intervention unless a participant explicitly requests assistance or a critical safety threshold is breached, emphasizing participant autonomy and naturalistic data capture."
+    ],
+    "review": "The core tension is balancing participant safety with naturalistic data capture. The options neglect the potential for delayed intervention in the tiered response system, which could lead to increased risk if escalation criteria are not sufficiently sensitive."
+  },
+  {
+    "lever_id": "7d183a79-272b-49b8-aa6e-a40c2dc2b5c1",
+    "name": "PSG Montage Density",
+    "consequences": "The density of the PSG montage affects the richness of the physiological data captured. A higher-density montage provides more detailed information but increases participant burden, technician workload, and data processing complexity. A lower-density montage reduces burden but may compromise the ability to detect subtle physiological changes associated with parasomnia events.",
+    "options": [
+      "Utilize a full high-density PSG montage on every enhanced night for all participants to maximize physiological data capture and analytical potential.",
+      "Employ an adaptive PSG montage that adjusts electrode density based on individual participant characteristics and event history, tailoring data acquisition to specific research questions.",
+      "Standardize on a minimal PSG montage focusing on core sleep architecture and arousal markers to reduce participant burden and streamline data processing."
+    ],
+    "review": "The core tension is maximizing data richness versus minimizing participant burden and processing complexity. The options overlook the potential for signal degradation and artifact contamination in high-density montages, which can negate the benefits of increased data volume."
+  },
+  {
+    "lever_id": "a4070ac8-9e1b-450f-b01d-db926ad8dc36",
+    "name": "Control Group Matching Criteria",
+    "consequences": "The stringency of the control group matching criteria affects the validity of the benchmarked event-triage tools. Tighter matching on demographic and sleep-related variables reduces confounding factors but may limit the pool of eligible controls and increase recruitment costs. Looser matching expands the pool but increases the risk of spurious findings due to uncontrolled variables.",
+    "options": [
+      "Match controls strictly on age, sex, BMI, sleep duration, and sleep quality indices to minimize confounding variables and isolate parasomnia-specific features.",
+      "Employ a propensity score matching approach that balances multiple demographic and sleep-related variables to create a comparable control group while maximizing recruitment efficiency.",
+      "Recruit a convenience sample of healthy sleepers with minimal matching criteria, acknowledging potential confounding factors and adjusting statistical analyses accordingly."
+    ],
+    "review": "The core tension is balancing statistical power with recruitment feasibility. The options fail to address the potential for unmeasured confounders, such as subtle sleep disorders or subclinical psychiatric conditions, to influence the control group's nocturnal behavior."
+  },
+  {
+    "lever_id": "e890573f-8ff9-4dd4-8de8-d55f587bf1d3",
+    "name": "Event Adjudication Stringency",
+    "consequences": "The stringency of event adjudication criteria affects the reliability and validity of the identified parasomnia events. More stringent criteria reduce the risk of false positives but may also lead to missed events and underestimation of parasomnia frequency. Less stringent criteria increase event yield but may compromise the accuracy of subsequent phenotyping analyses.",
+    "options": [
+      "Require complete agreement between both independent raters on all AASM criteria for an event to be considered a true parasomnia episode, ensuring high specificity but potentially sacrificing sensitivity.",
+      "Implement a consensus-based adjudication process where disagreements between raters are resolved through discussion and review of supporting evidence, balancing sensitivity and specificity.",
+      "Accept events as true parasomnia episodes if at least one rater identifies them as such, prioritizing sensitivity and capturing a broader range of potential events for exploratory analysis."
+    ],
+    "review": "The core tension is balancing sensitivity and specificity in event identification. The options do not account for the potential for systematic bias in rater judgments, which could lead to consistent over- or under-reporting of certain types of events."
+  },
+  {
+    "lever_id": "66728c46-0c9f-416d-9535-170ce7e034e0",
+    "name": "Facility Expansion Trigger",
+    "consequences": "The criteria for triggering facility expansion influence the project's scalability and responsiveness to demand. A more conservative trigger based on high data quality and low false alarm rates ensures operational stability but may limit the project's ability to capitalize on recruitment opportunities. A more aggressive trigger based on high enrollment rates may strain resources and compromise data quality.",
+    "options": [
+      "Defer facility expansion until the pilot phase demonstrates consistently high data quality, manageable false alarm rates, and safe staffing ratios, prioritizing operational stability.",
+      "Implement a phased expansion plan that adds suites incrementally based on a combination of enrollment rates, data quality metrics, and available funding, balancing growth and risk.",
+      "Immediately expand the facility to its full capacity of 12 suites to maximize enrollment potential and accelerate data acquisition, accepting a higher initial risk of operational challenges."
+    ],
+    "review": "The core tension is balancing growth potential with operational risk. The options neglect the potential for unforeseen infrastructure limitations or regulatory hurdles to delay or prevent facility expansion, regardless of the chosen trigger criteria."
+  },
+  {
+    "lever_id": "219bfd80-4b60-4f77-9422-8b9b1533bb41",
+    "name": "Pharmaceutical Partnership Terms",
+    "consequences": "The terms of the pharmaceutical partnership influence the project's scientific independence and commercial potential. More restrictive terms may provide greater financial support but could compromise publication rights and limit the scope of research questions. Less restrictive terms preserve academic freedom but may reduce the level of industry funding and access to proprietary data.",
+    "options": [
+      "Maintain full publication rights and limit the pharmaceutical partner's involvement to a 30-day pre-publication comment window, prioritizing academic freedom and scientific integrity.",
+      "Grant the pharmaceutical partner exclusive rights to commercialize any discoveries arising from the research in exchange for increased funding and access to proprietary compounds, maximizing commercial potential.",
+      "Collaborate with the pharmaceutical partner on joint research projects with shared publication rights and intellectual property ownership, balancing academic and commercial interests."
+    ],
+    "review": "The core tension is balancing scientific independence with commercial opportunity. The options do not address the potential for conflicts of interest to arise if the pharmaceutical partner's commercial goals diverge from the project's scientific aims, even with pre-publication review."
+  },
+  {
+    "lever_id": "00e39065-0479-4b06-a168-e07a915f9f8e",
+    "name": "Enhanced-Night PSG Cadence",
+    "consequences": "Increasing the frequency of enhanced-night PSG recordings provides richer physiological data and improves event characterization. However, it also increases participant burden, technician workload, and scoring costs. A lower cadence reduces these burdens but may miss subtle physiological markers associated with parasomnia events.",
+    "options": [
+      "Schedule enhanced-night PSG on the first night and every third night of each participant's stay to capture more frequent physiological data",
+      "Limit enhanced-night PSG to the first, middle, and last nights of each participant's stay to minimize participant burden and technician workload",
+      "Trigger enhanced-night PSG only after a technician-flagged event during low-burden monitoring to maximize clinical-grade resolution of captured events"
+    ],
+    "review": "The cadence of enhanced-night PSG balances data richness with participant burden, but the options don't consider adaptive scheduling based on individual participant event frequency."
+  },
+  {
+    "lever_id": "7d495d0b-f147-445d-9a03-9de56b897bda",
+    "name": "Event Scoring Consensus Threshold",
+    "consequences": "A higher consensus threshold for event scoring increases the reliability of adjudicated events and reduces false positives. However, it also increases the time and cost associated with scoring, potentially discarding genuine events with subtle or ambiguous features. A lower threshold reduces scoring burden but increases the risk of including spurious events in the analysis.",
+    "options": [
+      "Require strict consensus between two independent raters for all event classifications to ensure high reliability",
+      "Accept events where raters agree on the presence of a parasomnia event, even if the specific subtype differs, to balance rigor and efficiency",
+      "Implement a third-rater adjudication process only for events where the initial two raters disagree to minimize scoring costs"
+    ],
+    "review": "The event scoring threshold balances reliability with scoring costs, but the options don't address the potential for systematic bias in rater disagreements."
+  },
+  {
+    "lever_id": "b49a4142-acbe-443d-98c9-816eb423cb1b",
+    "name": "Video Data Access Protocol",
+    "consequences": "Restricting access to bedroom video data protects participant privacy but limits the potential for detailed behavioral analysis and external collaboration. Broadening access, even with de-identification measures, increases the risk of privacy breaches and requires robust data security protocols. The chosen protocol shapes the scope of research questions that can be addressed and the level of public trust in the project.",
+    "options": [
+      "Restrict video data access to the core research team only, using it solely for event annotation and quality control",
+      "Allow external collaborators to access de-identified video data through a secure portal with strict data use agreements",
+      "Generate skeletal pose estimation data from the video and share only the pose data publicly, omitting the raw video feed"
+    ],
+    "review": "Video data access balances privacy with research utility, but the options don't consider the potential for re-identification from skeletal pose data."
+  },
+  {
+    "lever_id": "9df0fe45-006d-4456-b15d-909fff6bd0cf",
+    "name": "Participant Visit Scheduling Flexibility",
+    "consequences": "Offering flexible scheduling options can improve recruitment rates and participant retention, but it also complicates staffing logistics and data synchronization. A rigid schedule simplifies operations but may exclude participants with demanding work or family commitments. The chosen approach impacts both the representativeness of the sample and the operational efficiency of the facility.",
+    "options": [
+      "Offer participants a choice of arrival and departure days, allowing for weekend stays and accommodating individual schedules",
+      "Implement a fixed weekly schedule with standardized arrival and departure days to streamline staffing and data management",
+      "Allow participants to pause and resume their residential stay within a defined timeframe to accommodate unforeseen circumstances"
+    ],
+    "review": "Scheduling flexibility balances recruitment with operational efficiency, but the options don't account for the impact of variable stay lengths on longitudinal data analysis."
+  },
+  {
+    "lever_id": "6aaa6b38-4eff-4314-a6ec-95dafe5cd07e",
+    "name": "Environmental Modification Intensity",
+    "consequences": "Extensive environmental modifications enhance participant safety and reduce the risk of injury during parasomnia events. However, they also increase renovation costs and may create an overly clinical environment that inhibits naturalistic behavior. Minimal modifications reduce costs but may compromise participant safety and increase liability risks.",
+    "options": [
+      "Implement comprehensive safety modifications, including padded walls, floor sensors, and automated bed alarms, to minimize injury risk",
+      "Focus on essential safety measures, such as restricted-opening windows and silent door alarms, while preserving a domestic aesthetic",
+      "Provide participants with personal safety devices, such as wearable impact sensors and panic buttons, instead of modifying the environment"
+    ],
+    "review": "Environmental modification intensity balances safety with ecological validity, but the options don't address the potential for participants to circumvent safety measures."
+  },
+  {
+    "lever_id": "4f0974fc-0ef6-43b8-b057-f7ed2b845654",
+    "name": "Facility Expansion Criteria",
+    "consequences": "Aggressively expanding the facility increases the potential for data capture and accelerates the research timeline. However, it also increases financial risk and may strain existing resources if the pilot phase is not successful. A conservative expansion strategy reduces risk but may limit the scope of the study and delay progress.",
+    "options": [
+      "Expand the facility to 12 suites immediately after the pilot phase, regardless of initial data quality or operational efficiency",
+      "Expand the facility incrementally, adding suites only after demonstrating sustained high data quality, manageable false alarm rates, and safe staffing ratios",
+      "Defer facility expansion indefinitely, focusing on optimizing data capture and analysis within the existing 8-suite capacity"
+    ],
+    "review": "Facility expansion balances ambition with financial risk, but the options don't consider the potential for external funding to accelerate expansion."
+  }
+]

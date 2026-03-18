@@ -1,0 +1,14 @@
+{
+  "pr_url": "https://github.com/PlanExeOrg/PlanExe/pull/339",
+  "pr_title": "fix: relax option count validator, raise review min_length, clean up dead code",
+  "pr_description": "Change `check_option_count` from `len(v) != 3` to `len(v) < 3` \u2014 allows over-generation (>3 options), rejects under-generation Fix docstring run reference: run 89 \u2192 run 82 (llama, gta_game) where the 2-option bug was actually observed Raise `review_lever` `min_length` from 20 to 50 chars \u2014 catches stub reviews like the 19-char \"Sensor Data Sharing\" from run 89 parasomnia Strip dead-code examples from `LeverCleaned.review` field description (confirmed never serialized to LLM) Add template-lock migration pattern to `OPTIMIZE_INSTRUCTIONS` \u2014 documents that replacing copyable openers can shift weaker models to copying subphrases within the new examples",
+  "history": [
+    "1/96_identify_potential_levers",
+    "1/97_identify_potential_levers",
+    "1/98_identify_potential_levers",
+    "1/99_identify_potential_levers",
+    "2/00_identify_potential_levers",
+    "2/01_identify_potential_levers",
+    "2/02_identify_potential_levers"
+  ]
+}
