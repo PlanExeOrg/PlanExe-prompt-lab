@@ -1,0 +1,556 @@
+{
+  "responses": [
+    {
+      "strategic_rationale": "GTA's next iteration must navigate three core tensions: (1) production scale versus timeline\u2014sprawling open-world fidelity demands extended development, yet market windows and franchise momentum pressure faster delivery; (2) narrative complexity versus player agency\u2014intricate storylines and procedural generation can conflict in coherence; (3) funding diversification versus creative control\u2014publisher deals, partnerships, and government grants each carry different governance and IP constraints. The selected levers address when to lock design scope, which studios and talent to own versus contract, how to stage funding to avoid mid-project dependencies, how to pilot new systems before full integration, and governance structures that preserve creative vision under multiple stakeholders. These decisions cascade through the entire 4-5 year development cycle and determine whether the project delivers cutting-edge immersion or ships incomplete.",
+      "levers": [
+        {
+          "lever_index": 1,
+          "name": "Design Scope Lock Timing",
+          "consequences": "Locking the core design specification (map size, heist mechanics, NPC behavior depth) early enables parallel asset production and reduces mid-development feature creep, but prematurely freezes decisions before procedural generation tools mature. Delaying scope lock until year 2 allows technology pilots to inform design, but compresses the production timeline for art and code, risking either cut features or extended crunch.",
+          "options": [
+            "Lock core design pillars (world scale, heist archetypes, NPC interaction tiers) by month 9, allowing art pipeline stabilization and contractor onboarding while reserving procedural generation and morality system refinement for iterative tuning post-alpha.",
+            "Conduct a 12-month parallel technology sprint in year 1 (procedural generation, real-time lighting, NPC behavior simulation) with a small core team, then freeze design only after prototypes prove feasibility, accepting a compressed art production window.",
+            "Adopt a modular design freeze\u2014lock narrative backbone and heist structure by month 6, defer vehicle customization depth and morality permutations to live service roadmap post-launch, trading Day One completeness for faster core loop validation."
+          ],
+          "review_lever": "Early scope lock de-risks production but assumes procedural generation and NPC systems can meet ambition without design iteration; delaying lock risks timeline but requires confidence in technology partners' delivery. None of the options address what happens if a critical system (e.g., real-time NPC behavior in dense urban zones) proves infeasible\u2014the fallback design simplification strategy is absent.",
+          "lever_classification": "methodology \u2014 when core game design features are finalized"
+        },
+        {
+          "lever_index": 2,
+          "name": "Internal Studio Composition vs. Contractor Workforce",
+          "consequences": "Building a large internal team (500+ developers across design, art, engineering) creates institutional knowledge, continuity, and creative control, but locks in fixed payroll and overhead regardless of project phase. Alternatively, sourcing 60% of specialist roles (motion capture, city design, vehicle modeling) through regional contractors and outsourcing partners reduces fixed costs and enables flexible scaling, but introduces IP ownership complexity, knowledge transfer friction, and dependency on external studio stability.",
+          "options": [
+            "Establish a dedicated 350-person core studio in a major tech hub (Los Angeles or Austin), hiring permanent engineers and designers, while outsourcing animation, motion capture, and vehicle asset production to 2-3 vetted external studios with licensed IP agreements and milestone-based payment structures.",
+            "Assemble a 200-person core team focused on systems architecture, narrative design, and procedural generation pipelines, with 60% of asset production and implementation contracted through a distributed network of 8-12 smaller regional studios, each owning sub-systems (e.g., one studio owns all vehicle physics and customization logic).",
+            "Maintain a lean 150-person internal team handling creative direction and integration, while licensing or acquiring two mid-sized Canadian or European studios (each 100-200 people) to function as permanent satellite teams reporting to core leadership, combining operational flexibility with institutional knowledge."
+          ],
+          "review_lever": "All three options assume contractor relationships are stable and contractual IP terms are enforceable; none adequately address the risk of a key external partner studio pivoting projects, folding, or negotiating unequal IP claims mid-development. Talent retention for permanent staff is also unexamined\u2014how does turnover in a 350-person team affect code coherence over a 5-year cycle?",
+          "lever_classification": "execution \u2014 balance between internal permanent staff and external contracted workforce"
+        },
+        {
+          "lever_index": 3,
+          "name": "Funding Source Sequencing and Control Trade-offs",
+          "consequences": "Publisher-led funding (take 60\u201370% upfront capital) accelerates development but subordinates creative decisions to quarterly earnings targets and shareholder pressure. Government innovation grants (R&D tax credits, AI/procedural generation subsidies) are slower to secure and lower-volume but impose no creative veto. Strategic industry partnerships (middleware vendors, GPU manufacturers, cloud providers) inject funding and tech but require long-term exclusivity or marketing commitments. Sequencing these sources shapes governance and timeline pressure throughout development.",
+          "options": [
+            "Secure 60% funding from a major publisher (providing $40\u201360M upfront capital) with creative approval reserved to a steering committee of 5 (2 publisher, 2 internal creative leads, 1 independent), then layer government grants (AI R&D, procedural generation innovation) for 15\u201320% of remaining costs, and negotiate technology partnerships for remaining 20\u201325% without equity stakes.",
+            "Front-load government innovation grants and R&D tax incentives (targeting $15\u201325M over 3 years) as the primary funding anchor to preserve creative autonomy, supplement with a smaller publisher investment (30% of budget, capped at advisory role) and industry partnerships for specialized tech (cloud infrastructure, real-time rendering), accepting slower fund deployment.",
+            "Pursue a hybrid model: secure publisher funding for 50% of budget ($30\u201345M) with a clause preserving creative decisions for core systems (narrative, morality, procedural generation), fund 30% through regional and federal innovation grants targeted at AI and procedural generation research, and negotiate 20% through non-exclusive technology partnerships with GPU and cloud providers."
+          ],
+          "review_lever": "All options prioritize funding security over consideration of how each source's timelines and reporting requirements cascade into team pressure. Government grants require compliance reporting (IP ownership, researcher credits, publication requirements) that can conflict with commercial confidentiality; no option addresses how to structure IP ownership across mixed-source funding.",
+          "lever_classification": "governance \u2014 which funding sources to prioritize and how much control each grants"
+        },
+        {
+          "lever_index": 4,
+          "name": "Procedural Generation System Piloting and Risk Containment",
+          "consequences": "Procedural generation (city layouts, NPC routines, criminal economy simulation) is central to the game's immersion at scale, but unproven at AAA fidelity. Piloting on a sub-system (e.g., generating 1,000 unique NPC routines) early allows risk discovery and team upskilling without blocking core art production. However, partial pilots can create architectural debt if the final full-scale integration differs from prototype assumptions, wasting months of learning.",
+          "options": [
+            "Dedicate a 30-person research strike team (Year 1, months 1\u201312) to build a 'procedural generation laboratory' simulating city block generation, NPC behavior trees, and criminal economy flows in isolation, validating algorithms against quality metrics before integrating into the main game engine and content pipeline.",
+            "Embed procedural generation as a live experiment within the main development pipeline starting month 6: generate NPC behavior for 2\u20133 neighborhood archetypes (warehouse district, beach community, downtown finance core) and test in internal playtests alongside hand-authored content, iterating design in parallel with core game systems.",
+            "Outsource procedural generation R&D to a specialized AI/simulation studio (e.g., a university spinout or boutique middleware firm) under a 18-month contract to deliver a validated procedural generation toolkit, while internal teams in parallel build a traditional scripted prototype of the same systems, then choose which approach to integrate at month 18 gate review."
+          ],
+          "review_lever": "Strike-team piloting isolates risk but can diverge from final integration requirements; parallel embedding accelerates learning but risks polluting core pipelines with unstable code. The outsourcing option mitigates risk but assumes the external studio's toolkit integrates cleanly\u2014if it doesn't, rework costs balloon. None of the options include a documented fallback: what is the hand-authored baseline if procedural generation fails to deliver immersion targets?",
+          "lever_classification": "methodology \u2014 how to validate and integrate procedural generation technology before full-scale deployment"
+        },
+        {
+          "lever_index": 5,
+          "name": "Narrative and Player Agency Conflict Resolution Framework",
+          "consequences": "Complex heist mechanics and a nuanced morality system imply player choice and narrative branches, but a sprawling open world with intricate crime-power storylines requires narrative coherence and scripted set-pieces. Allowing high player agency in heist execution (multiple routes, outcomes) creates branching narratives that multiply content burden and testing complexity. Constraining agency to curated choices reduces content but risks feeling on-rails. The chosen framework cascades into quest design, dialogue recording, and NPC behavior scripting costs.",
+          "options": [
+            "Establish a 'narrative anchor' model: the main crime-power storyline is fully scripted with predetermined major arcs, while heists and side missions offer 3\u20135 discrete choice branches per activity (route selection, team composition, outcome modality) that feed into a point-based morality meter affecting NPC treatment and ending cinematics, rather than fundamentally altering the macro plot.",
+            "Implement a 'modular narrative' approach where the player's heist choices and morality decisions directly shape which crime syndicates control which city neighborhoods, altering available missions, NPC faction relationships, and access to safehouse upgrades; the main story remains fixed but the world state and mid-tier conflicts respond dynamically to player behavior.",
+            "Adopt a 'choice at narrative junctions' framework: the core story progresses through 8\u201310 major decision points (e.g., betray faction A or B, seize territory or consolidate power) where player choice locks an entire story branch, reducing branching complexity to a manageable tree while allowing meaningful long-term narrative divergence and multiple distinct endings."
+          ],
+          "review_lever": "All three models assume dialogue, cinematics, and NPC behavior can be efficiently authored once narrative structure is locked; none accounts for the production cost of recording character dialogue across multiple heist outcomes or the testing burden of validating state consistency across choice branches. The 'modular narrative' option risks emergent narrative incoherence if NPC factions behave unpredictably in response to player actions.",
+          "lever_classification": "product \u2014 how player agency in heists and morality intersects with narrative coherence"
+        },
+        {
+          "lever_index": 6,
+          "name": "Regional Studio Governance and Creative Authority",
+          "consequences": "With a distributed team (internal core + satellite studios + contractors), decision-making authority must be clarified: centralized authority (core studio makes all design calls) ensures coherence but slows iteration; distributed authority (each studio owns sub-systems) accelerates parallel work but risks fragmented vision and integration conflicts. The chosen model shapes meeting cadence, documentation requirements, and approval workflows, directly impacting team velocity and morale.",
+          "options": [
+            "Establish a 'core creative command' structure: the main studio (Los Angeles or Austin) owns all design decisions, with satellite studios and contractors receiving detailed design documents and weekly sync meetings; satellite studios submit implementation proposals for approval before coding, ensuring consistency but requiring robust documentation and synchronous time-zone overlap.",
+            "Adopt a 'system ownership' model where each satellite studio or contractor team owns a discrete system end-to-end (vehicle customization, NPC behavior, heist mechanics, economy simulation) with clear APIs and interface contracts; the core studio sets high-level vision and conducts quarterly integration testing, while satellite studios have autonomy within their domain.",
+            "Implement a 'design by consensus' approach: weekly remote working sessions where core and satellite leads collaboratively design features in real-time, with decision-making by majority vote on design alternatives; escalate conflicts to a single creative director with veto power, trading administrative overhead for faster iteration and buy-in from distributed teams."
+          ],
+          "review_lever": "Core creative command requires exceptional documentation discipline and assumes time-zone overlap is feasible; system ownership risks integration failures at API boundaries if contracts are underspecified. Consensus design sounds collaborative but can stall decisions if teams disagree, and a creative director's veto power can breed resentment if used frequently. None of the options address what happens when a satellite studio's work is rejected mid-cycle\u2014cost and schedule recovery is unexamined.",
+          "lever_classification": "governance \u2014 how creative and technical decisions are made across distributed studios"
+        },
+        {
+          "lever_index": 7,
+          "name": "Launch Phasing and Live Service Commitment",
+          "consequences": "Shipping a feature-complete 150+ hour open-world game on Day One demands extended crunch and risks post-launch instability (bugs, balance issues, exploit discovery). Alternatively, a phased launch (core game + 4\u20136 month post-launch content roadmap) allows stabilization, player feedback loops, and revenue staggering, but commits the studio to 2+ years of live service overhead and can fragment the player base if Day One content feels incomplete. The choice also shapes art production budgets (which features ship when) and staffing levels post-launch.",
+          "options": [
+            "Launch with a complete single-player campaign (60\u201380 hours), all heist missions playable, core vehicle customization, and multiplayer sandbox mode functional, then deploy a 6-month post-launch roadmap of 2\u20133 new neighborhoods, expanded criminal economy mechanics, and cosmetic customization, scaling down core team by 30% after month 3 post-launch.",
+            "Ship a 'Day One minimum viable experience' (30\u201340 hour main storyline, 3\u20134 heist archetypes, basic multiplayer) to market within the first funding phase window, then commit to 18\u201324 months of live service expansion (new syndicates, procedurally-generated heist variants, cosmetics, narrative DLC), structuring the core team to sustain live operations indefinitely.",
+            "Release a single-player campaign complete (100+ hours, all narratively intended heists) with multiplayer and sandbox features as opt-in post-launch DLC (3\u20134 months after Day One), allowing the core team to focus entirely on single-player stability and depth, then transition 40% of staff to a separate multiplayer-focused studio for asynchronous content updates."
+          ],
+          "review_lever": "Day One completeness accepts crunch risk and delayed bug discovery; phased launches fragment narrative immersion and create expectations for ongoing content that can strain budgets if revenue underperforms. The separate multiplayer studio model assumes clean API separation between single and multiplayer code\u2014if they share architecture, separation creates technical debt. Post-launch staffing assumptions (team scaling, retention, revenue forecasting) are absent from all options.",
+          "lever_classification": "execution \u2014 whether to launch complete or phased, and how much live service post-launch to commit to"
+        }
+      ]
+    },
+    {
+      "strategic_rationale": "GTA's scale and complexity demand balancing three core tensions: (1) maintaining creative vision while managing multi-studio coordination across geographically dispersed teams; (2) managing procedurally-generated content quality against asset creation velocity and budget constraints; and (3) sequencing narrative, mechanics, and live-service infrastructure before launch while keeping production timelines predictable. The following levers address these critical decision points: how to structure quality assurance for emergent gameplay, how to allocate motion-capture and voice talent budgets across diverse character archetypes, when and how to lock asset pipelines, how to balance regional cultural authenticity against global content standards, and how to manage player expectation through selective early access. These levers navigate the fundamental conflict between scope, schedule, and creative integrity.",
+      "levers": [
+        {
+          "lever_index": 1,
+          "name": "Motion Capture and Voice Talent Allocation Strategy",
+          "consequences": "Deciding how to distribute the motion-capture budget and voice acting across primary characters, NPCs, and ambient dialogue directly impacts animation fidelity and narrative depth. Heavy investment in A-list voice talent for main characters and elaborate motion-capture sessions improves marquee story arcs but reduces budget for dynamic NPC dialogue and crowd realism, creating a trade-off between emotional resonance in key scenes and believability of the open world's background population.",
+          "options": [
+            "Concentrate motion-capture resources on 12\u201315 major story characters with Hollywood-caliber voice actors, allocating remaining talent budget to procedurally-varied ambient dialogue and crowd reactions.",
+            "Distribute motion-capture and voice work across 40\u201350 named characters at moderate fidelity, supplemented by AI-assisted voice synthesis for crowd and minor NPC utterances.",
+            "Outsource motion-capture to independent studios in lower-cost regions while retaining A-list voice talent exclusively for villain archetypes and criminal kingpins, routing savings into procedural dialogue expansion."
+          ],
+          "review_lever": "This lever assumes motion-capture quality scales linearly with budget spend, but regional talent pools vary significantly in iteration speed and cultural authenticity. None of the options address how to validate AI-synthesized crowd dialogue against player perception in early playtests \u2014 a risk if generated voices feel uncanny or repetitive.",
+          "lever_classification": "execution \u2014 how to allocate motion-capture and voice talent budgets across character tiers"
+        },
+        {
+          "lever_index": 2,
+          "name": "Asset Pipeline Finalization Cadence",
+          "consequences": "Setting when and how strictly to lock vehicle models, building interiors, and weapon balancing directly affects late-stage design iteration and bug-fixing capacity. Locking pipelines early accelerates testing and reduces animation rework but forecloses late design discoveries that emerge from playtesting; locking late preserves flexibility but compresses the stable-build window needed for polish and optimization.",
+          "options": [
+            "Lock asset pipelines 18 months before launch, allowing a full year of integration testing and bug-fix cycles on stable models and mechanics.",
+            "Implement rolling asset locks by region and feature (vehicles at month 20, interiors at month 16, weapons at month 14), enabling localized iteration while sequencing integration.",
+            "Maintain fluid asset pipelines until 9 months before launch, accepting compressed testing windows in exchange for design responsiveness to mid-production playtesting feedback."
+          ],
+          "review_lever": "Early pipeline locks reduce rework but risk locking in design mistakes discovered only late in playtesting. Late locks maximize responsiveness but may leave insufficient time to validate that final asset changes don't break multiplayer balancing or physics interactions \u2014 a critical gap if patches must roll out post-launch anyway.",
+          "lever_classification": "execution \u2014 when to freeze asset pipelines and lock design for final integration"
+        },
+        {
+          "lever_index": 3,
+          "name": "Cultural Authenticity vs. Global Standardization Framework",
+          "consequences": "Deciding how much regional cultural specificity (Los Angeles gang hierarchies, Detroit economic collapse aftermath, Miami drug-trade folklore) to embed versus sanitizing content for global regulatory compliance directly shapes narrative credibility and market reach. Deep cultural authenticity attracts core audiences and media prestige but invites localization costs, sensitivity review delays, and potential regulatory pushback in key markets; oversanitization reduces friction but dilutes the gritty realism that defines the GTA franchise.",
+          "options": [
+            "Develop fully localized narrative branches and NPC archetypes for three regional settings, with separate dialogue trees and missions reflecting regional power structures, requiring regional sensitivity consultants and staggered launch sequencing.",
+            "Build core criminal economy and gang hierarchies around universal crime-fiction tropes (territory control, supply chains, betrayal) that transcend specific regions, embedding surface-level Los Angeles, Detroit, and Miami references in dialogue and aesthetics.",
+            "Create a modular narrative framework where core story missions are culturally neutral, but optional gang-alliance side content and criminal enterprises unlock region-specific storylines only after players meet certain reputation thresholds, compartmentalizing controversial content."
+          ],
+          "review_lever": "Regional authenticity deepens immersion but assumes players in non-source regions (e.g., European players engaging with Los Angeles gang politics) can distinguish cultural specificity from offensive stereotyping. The options don't account for how regulatory bodies in China, South Korea, and the Middle East may reject region-locked content if it circulates through modding or leaks \u2014 a timing and enforcement problem absent from all three approaches.",
+          "lever_classification": "product \u2014 how to balance regional cultural depth against global regulatory alignment"
+        },
+        {
+          "lever_index": 4,
+          "name": "Early Access Cohort Scope and Gatekeeping",
+          "consequences": "Selecting how many players (and which player segments) to admit to pre-launch early access phases shapes expectations, generates player-driven bug reports, and creates discord between insiders and the general audience at launch. Broad early access (100,000+ players) floods bug reports and reduces day-one surprise but risks viral spoilers and performance complaints; narrow early access (5,000\u201310,000 players) preserves narrative mystery and controls feedback signal-to-noise but yields thinner real-world load testing and may alienate streamers and content creators excluded from early windows.",
+          "options": [
+            "Admit 50,000 invited players across Twitch streamer partnerships and content-creator programs 4 weeks before launch, prioritizing entertainment reach and social proof while capping spoiler exposure through contractual NDAs.",
+            "Release a closed technical stress-test with 8,000 players from established QA panels and regional server infrastructure teams, then open a second 25,000-player narrative-locked phase 2 weeks before launch restricted to specific quests.",
+            "Restrict early access to 3,000 invited critics and esports professionals under embargo, supplemented by anonymous telemetry from gameplay analytics partners, minimizing spoilers while capturing architectural performance data."
+          ],
+          "review_lever": "Streamer-heavy early access generates marketing momentum but outsizes entertainment value over reproducible bug discovery \u2014 top streamers attract audiences that exploit known exploits on stream, setting false player expectations. The options assume NDA enforcement will contain spoilers; in practice, sophisticated players reconstruct mission sequences from leaked footage within 48 hours, collapsing the mystery window regardless of gating strategy.",
+          "lever_classification": "dissemination \u2014 how many and which player segments access the game before launch"
+        },
+        {
+          "lever_index": 5,
+          "name": "Procedural Generation Content Audit and Recourse",
+          "consequences": "Establishing how extensively procedurally-generated world content (NPC dialogue, street-level crimes, random encounters, building interiors) is reviewed for quality, coherence, and regulatory compliance determines production velocity and risk exposure. Comprehensive human audit of generated content (sampling 10\u201320% of procedural outputs) detects quality drift and catches offensive or corrupted generated sequences but extends production timelines; trusting algorithmic filtering and post-launch patching accelerates ship dates but risks day-one player complaints about repetitive or nonsensical NPC behavior, which damages review scores and live-service retention.",
+          "options": [
+            "Implement a three-tier audit: automated linguistic and content filters remove obviously broken or offensive generated dialogue, then a human team of 15\u201320 quality specialists samples 15% of procedural encounters weekly, with recourse triggers that recalibrate the generation algorithm if anomalies exceed 2% of samples.",
+            "Deploy lightweight post-generation validation using trained classifiers to flag edge-case dialogue and NPC routines, with a 72-hour patch cadence post-launch to address the highest-impact anomalies reported by players during the first week.",
+            "Establish a live advisory board of 200 invited players who play-test procedurally-generated content zones throughout the 6 months before launch, reporting coherence and authenticity issues in real-time, with generation algorithm refinements fed directly into pre-launch builds."
+          ],
+          "review_lever": "Sampling audits catch statistical outliers but miss the cumulative effect of low-grade procedural generation that individually passes filters yet creates a perceptually repetitive open world. None of the options measure or budget for the reputational cost if a procedurally-generated NPC sequence is discovered mid-stream by a major creator and goes viral \u2014 the recourse timeline (patch deployment, player re-download, re-testing) may lag media cycle damage.",
+          "lever_classification": "methodology \u2014 how to validate procedurally-generated world content quality and manage recourse"
+        },
+        {
+          "lever_index": 6,
+          "name": "Multiplayer Feature Parity and Launch Window Separation",
+          "consequences": "Deciding whether multiplayer modes (competitive heists, open-world PvP, cooperative criminal enterprises) launch simultaneously with single-player or phase in over months after launch affects server infrastructure costs, balancing complexity, and post-launch engagement cadence. Simultaneous launch demands mature multiplayer balancing by production freeze, increases day-one server load and scaling risk, and compresses the single-player review window; phased multiplayer launch extends player retention across months and permits iterative rebalancing but fractures the audience into sequential cohorts and complicates long-term narrative canon consistency between single and multiplayer economies.",
+          "options": [
+            "Launch multiplayer heist and cooperative crime-family modes alongside single-player 12 weeks after ship, allowing 3 months of single-player player-behavior telemetry to inform multiplayer economy scaling and loot distribution.",
+            "Integrate basic multiplayer skirmish and criminal-territory-control modes on day one using pre-tuned economy parameters derived from previous GTA multiplayer titles, reserving cooperative narrative heist modes for a 6-month post-launch expansion.",
+            "Develop multiplayer as an entirely separate client and server ecosystem with independent balancing and narrative canon, launching 18 months after single-player to avoid cross-economy corruption and permit distinct storytelling arcs."
+          ],
+          "review_lever": "Phased multiplayer launch increases long-term engagement but assumes player cohorts won't segregate by launch window \u2014 early multiplayer adopters may dominate territory and economy, creating a soft paywall for late-joining players who face entrenched competition. None of the options address the overhead of maintaining two separate narrative economies (single-player progression and multiplayer reputation systems) if they remain uncoupled long-term.",
+          "lever_classification": "execution \u2014 when and how to launch multiplayer features relative to single-player release"
+        },
+        {
+          "lever_index": 7,
+          "name": "Government Innovation Grant Compliance and Reporting Overhead",
+          "consequences": "Determining which specific innovation grant programs (R&D tax credits, AI/machine learning development subsidies, regional development incentives) to pursue and how strictly to adhere to their reporting and milestone requirements affects available development capital, budget forecasting certainty, and production schedule inflexibility. Aggressive grant pursuit (multiple concurrent programs) expands funding runway and reduces publisher dependence but introduces external reporting obligations, quarterly milestone audits, and potential clawback clauses if development falters; conservative grant reliance (single program, light compliance) simplifies administration and preserves schedule autonomy but caps supplementary funding and forces heavier reliance on publisher advances.",
+          "options": [
+            "Target three concurrent government R&D and regional development grants with staggered quarterly milestone reporting, allocating 2\u20133 FTE compliance staff to documentation and audit readiness, capturing 15\u201320 million in potential supplementary funding over 30 months.",
+            "Pursue a single national AI innovation grant with annual milestone reporting, accepting lower total funding (6\u20138 million) in exchange for minimal compliance overhead and freedom to adjust development timelines without grant-mandate conflicts.",
+            "Negotiate a hybrid approach: secure one foundational regional development grant (low compliance burden, predictable payout schedule) while opportunistically applying to time-limited AI research partnerships and industry coalition grants as they emerge, balancing runway and flexibility."
+          ],
+          "review_lever": "Multiple concurrent grants increase capital but fragment development priorities if grant milestones diverge from core project needs \u2014 for example, a government AI grant may mandate specific procedural generation architecture choices that don't align with gameplay design best practices. The options assume grant-reporting staff can context-switch seamlessly; in practice, grant compliance often forces schedule delays if auditors require retroactive documentation of design decisions made months prior.",
+          "lever_classification": "governance \u2014 how to structure government grant pursuit and compliance obligations"
+        }
+      ]
+    },
+    {
+      "strategic_rationale": "The GTA project faces a fundamental tension between creative ambition (procedural generation, nuanced morality, dynamic NPCs) and execution realism under time and capital constraints. The most critical levers address: (1) which narrative and gameplay systems truly must ship at launch versus defer to post-launch, (2) how to manage the physical studio footprint and contractor dependencies across three regional narratives, (3) whether to throttle graphical fidelity to preserve development velocity, (4) how to structure partnership obligations without sacrificing creative control, and (5) what quality gates protect against procedurally-generated content degradation at scale. These levers navigate the core trade-off: shipping a coherent, polished experience on time versus deferring feature maturity to live service phases.",
+      "levers": [
+        {
+          "lever_index": 1,
+          "name": "Morality System Implementation Depth",
+          "consequences": "Deciding whether the nuanced morality framework evaluates player choices through consequence-branching narrative (delayed outcomes, NPC memory, faction reputation decay) or through immediate mechanical feedback (karma counters, alignment locks) shapes both narrative design labor and runtime complexity. A consequence-forward approach demands mission scripting for every branch; a mechanic-forward approach reduces branching but may feel hollow to players seeking narrative weight.",
+          "options": [
+            "Implement full consequence-branching where player choices trigger delayed NPC responses, faction trust shifts, and multi-mission narrative branches that lock out alternative paths",
+            "Deploy a lightweight moral-choice interface using real-time alignment meters and immediate mechanical gates (access restrictions, companion availability) without scripting alternate dialogue trees",
+            "Adopt a hybrid model where high-consequence decisions (heist planning, faction betrayals) branch narratively but routine missions use mechanical alignment gates, deferring full consequence-branching to post-launch updates"
+          ],
+          "review_lever": "The morality system design must reconcile narrative authenticity with production velocity; consequence-branching is narratively rich but explodes QA surface area exponentially. None of the options adequately address how procedurally-generated side missions will respect or undermine the moral arc\u2014if random NPC encounters ignore player alignment, the system becomes decorative rather than emergent.",
+          "lever_classification": "product \u2014 whether morality choices trigger narrative branching or mechanical gates"
+        },
+        {
+          "lever_index": 2,
+          "name": "Vehicle Customization and Physics Fidelity Trade-off",
+          "consequences": "Defining the depth of vehicle customization (from cosmetic wraps to engine performance tuning affecting acceleration, handling, top speed) directly impacts both 3D asset libraries and physics engine complexity. Deep customization requires hundreds of engine variants and chassis configurations; shallow customization reduces art burden but limits emergent player expression in heists and traversal.",
+          "options": [
+            "Provide extensive parametric customization where players modify engine displacement, suspension geometry, brake balance, and weight distribution with measurable impact on vehicle performance across multiple scenarios",
+            "Offer cosmetic and preset-based customization (paint, wheels, decals, suspension height) with fixed performance tiers, allowing art teams to curate visual variety without physics modeling overhead",
+            "Lock customization to cosmetics and a limited set of pre-balanced performance packages (sport, heavy, off-road) that players select during heist loadout, deferring parametric tuning to a post-launch simulation update"
+          ],
+          "review_lever": "Vehicle customization balances player agency against asset production and physics QA costs; cosmetic-only approaches preserve velocity but risk diminishing heist replay value. The core tension is whether emergent gameplay (player-tuned vehicles enabling novel heist strategies) justifies the physics validation burden\u2014a burden no option fully quantifies or schedules.",
+          "lever_classification": "product \u2014 the granularity of vehicle performance customization available to players"
+        },
+        {
+          "lever_index": 3,
+          "name": "Heist Procedural vs. Scripted Mission Balance",
+          "consequences": "Determining what proportion of heist complexity emerges from procedural generation (randomized guard routes, dynamic alarm states, variant entry points) versus hand-crafted scripting affects both content scale and narrative coherence. Heavy procedural generation multiplies replayability but risks incoherent mission states; heavy scripting ensures narrative polish but limits player discovery and demands months of mission authoring.",
+          "options": [
+            "Procedurally generate heist setup phases (infiltration approach, guard patrol patterns, alarm configurations) while scripting finale sequences hand-crafted for narrative payoff and spectacle, ensuring coherence at the climax",
+            "Write all major heist missions as fully scripted sequences with hidden variation mechanics (alternate routes, conditional encounters) that reward exploration without relying on procedural systems",
+            "Reserve procedural generation exclusively for dynamic crime encounters and lower-stakes side-objective heists while reserving campaign heists as fully scripted narrative experiences, deferring procedural heist complexity to live service seasons"
+          ],
+          "review_lever": "Balancing procedural heist setup against scripted finales manages replayability risk, but introduces a false seam\u2014players will exploit transitions between procedural and scripted phases if not carefully masked. None of the options address how narrative framing (story coherence across randomized setups) will be maintained or how emergent failures (procedurally-generated guard cascades foiling player plans) will feel authored rather than unfair.",
+          "lever_classification": "product \u2014 the proportion of heist structure generated procedurally versus hand-authored"
+        },
+        {
+          "lever_index": 4,
+          "name": "NPC Crowd Density and Interaction Fidelity",
+          "consequences": "Setting the target NPC population density and depth of individual interaction systems (conversation topics, daily routines, reactive dialogue) determines memory footprint, CPU scheduling, and dialogue authoring scope. High density with rich interactions creates urban vitality but multiplies voice acting costs and behavior state management; low density with shallow interactions reduces labor but risks hollow urban environments.",
+          "options": [
+            "Deploy dense NPC populations (2000+ active per district) with procedurally-generated conversation starters, minimal personalization, and simple state machines managing work/rest/leisure cycles without persistent memory across sessions",
+            "Maintain moderate NPC density (500\u2013800 per district) with hand-authored signature NPCs (store owners, gang members, quest-givers) embedded in procedurally-generated crowds with limited conversation depth, supporting basic faction recognition but not cross-mission memory",
+            "Target sparse but highly-interactive NPC populations (200\u2013300 per district) where every NPC has authored personality, persistent memory of player choices, and voice-acted dialogue, creating intimate urban neighborhoods at the cost of spatial scale"
+          ],
+          "review_lever": "NPC density shapes perceived world aliveness against production cost; sparse, high-fidelity NPCs feel more authorial but underutilize open-world scale, while dense procedural crowds feel hollow if dialogue lacks variation. The core tension unaddressed: how will player-NPC reputation systems feel coherent when most NPCs are procedurally-generated and forgotten? Will sparse-but-authored populations actually deliver the emergent criminal economy or just replicate mission-specific scripting?",
+          "lever_classification": "product \u2014 the target NPC population density and interaction depth per urban district"
+        },
+        {
+          "lever_index": 5,
+          "name": "Graphical Fidelity versus Development Timeline Compression",
+          "consequences": "Selecting the visual target\u2014photorealistic next-gen assets (high ray-tracing, 4K textures, cinematic cutscenes) versus stylized-realism with optimized asset reuse\u2014directly impacts 3D art production velocity and whether the project ships on time or slips into extended post-launch polish. Photorealistic targets demand 18\u201324 months of environment and character iteration; stylized approaches compress art pipelines by 6\u201312 months but may underdeliver on marketing promise.",
+          "options": [
+            "Commit to photorealistic visual targets with extensive ray-traced lighting, 4K+ texture detail, and hand-crafted environmental storytelling across all three city regions, accepting 2+ year extended art production and deferring optimization and some gameplay systems to post-launch",
+            "Adopt a stylized-realism aesthetic emphasizing strong color grading, expressive character animation, and optimized asset modularization that allows rapid environment iteration while maintaining visual impact; ship core gameplay systems on time with visual polish deferred to seasons 1\u20132",
+            "Prioritize character fidelity and cutscene cinematics at photorealistic quality while standardizing environment art using tiling textures and modular building components with procedural variation, balancing narrative presentation against spatial breadth"
+          ],
+          "review_lever": "Graphical fidelity directly throttles art team velocity; photorealistic targets extend timelines while stylized approaches risk marketing misalignment with AAA market expectations for GTA's visual benchmark. The unaddressed tension: which gameplay systems (procedural generation testing, NPC behavior validation, heist scripting) will remain incomplete if art production overruns, and how will live service content creation be staffed once the core product ships?",
+          "lever_classification": "execution \u2014 the visual fidelity target and its impact on art production velocity"
+        },
+        {
+          "lever_index": 6,
+          "name": "Criminal Economy Simulation Complexity",
+          "consequences": "Defining the economic system's scope\u2014from deterministic NPC supply chains and player-influenced market prices to static vendor inventory\u2014shapes both runtime simulation load and emergent gameplay depth. Rich economic simulation enables player-driven market manipulation and organic crime progression; static economics simplify balancing but reduce open-world emergence and player agency.",
+          "options": [
+            "Implement a full dynamic economy where NPC supply chains, player heist targets, and market prices fluctuate based on player actions, faction control, and procedural events; players can corner markets, disrupt rival operations, and shape regional economics through strategic choices",
+            "Deploy a semi-dynamic economy where core vendor prices and heist target value respond to player progress and faction reputation, but NPC supply chains remain deterministic and non-player-accessible, limiting economic manipulation to direct player transactions",
+            "Maintain a static vendor and pricing framework with hand-crafted heist economics (target values, fencing rates) that adjust only through story progression and faction unlocks, deferring dynamic market simulation to post-launch economic system overhauls"
+          ],
+          "review_lever": "Economic simulation depth trades authenticity against balancing burden; full simulation requires constant tuning to prevent player exploits and progression softlocks, while static economics feel authored but limit emergent player strategies. The core weakness: none of the options address how procedurally-generated crime encounters (random robbery targets, drug trafficking events) will integrate with or disrupt the chosen economy without creating balance vacuums or nonsensical pricing.",
+          "lever_classification": "product \u2014 the complexity of the criminal economy and player influence on market dynamics"
+        },
+        {
+          "lever_index": 7,
+          "name": "Studio Location and Remote Work Integration",
+          "consequences": "Choosing whether to consolidate core development in a single physical hub (Los Angeles, Detroit, or Miami) or distribute across three regional studios mirrors the project's three-city narrative structure. A single hub reduces coordination overhead and maintains creative alignment but isolates regional narrative teams; distributed studios deepen local authenticity research but fragment technical pipelines and require robust asynchronous collaboration infrastructure.",
+          "options": [
+            "Establish a primary development studio in Los Angeles with satellite offices in Detroit and Miami staffed by narrative specialists and cultural consultants; route all technical and asset work through LA hub, using remote sites as research and writing outposts",
+            "Distribute core development equally across three regional studios (LA, Detroit, Miami) with autonomous gameplay and narrative teams, connected via weekly synchronization meetings and shared version control; accept higher coordination overhead for deeper local immersion and cultural accuracy",
+            "Consolidate all core development in a centralized technical hub (Los Angeles or Austin) with remote narrative contractors embedded in Detroit and Miami for cultural research; separate narrative writing and world-building from technical production to minimize distributed collaboration friction"
+          ],
+          "review_lever": "Studio distribution embodies the creative tension between narrative authenticity (regional immersion) and technical efficiency (centralized pipelines); a single hub optimizes velocity but risks homogenizing regional character. Distributed teams deepen authenticity but risk fragmenting gameplay feel across regions. The unaddressed challenge: how will procedurally-generated content (which ignores regional boundaries) maintain coherence if narrative authority is distributed, and which studio owns the cross-regional procedural generation pipelines?",
+          "lever_classification": "operations \u2014 the physical distribution of studio teams and its impact on narrative authenticity and technical coordination"
+        }
+      ]
+    }
+  ],
+  "levers": [
+    {
+      "lever_id": "4b824ec2-cf4f-4ce9-bf5a-f9014234c868",
+      "name": "Design Scope Lock Timing",
+      "lever_classification": "methodology \u2014 when core game design features are finalized",
+      "consequences": "Locking the core design specification (map size, heist mechanics, NPC behavior depth) early enables parallel asset production and reduces mid-development feature creep, but prematurely freezes decisions before procedural generation tools mature. Delaying scope lock until year 2 allows technology pilots to inform design, but compresses the production timeline for art and code, risking either cut features or extended crunch.",
+      "options": [
+        "Lock core design pillars (world scale, heist archetypes, NPC interaction tiers) by month 9, allowing art pipeline stabilization and contractor onboarding while reserving procedural generation and morality system refinement for iterative tuning post-alpha.",
+        "Conduct a 12-month parallel technology sprint in year 1 (procedural generation, real-time lighting, NPC behavior simulation) with a small core team, then freeze design only after prototypes prove feasibility, accepting a compressed art production window.",
+        "Adopt a modular design freeze\u2014lock narrative backbone and heist structure by month 6, defer vehicle customization depth and morality permutations to live service roadmap post-launch, trading Day One completeness for faster core loop validation."
+      ],
+      "review": "Early scope lock de-risks production but assumes procedural generation and NPC systems can meet ambition without design iteration; delaying lock risks timeline but requires confidence in technology partners' delivery. None of the options address what happens if a critical system (e.g., real-time NPC behavior in dense urban zones) proves infeasible\u2014the fallback design simplification strategy is absent."
+    },
+    {
+      "lever_id": "804c2ed9-8dfc-4b12-bb14-d3a35eab3061",
+      "name": "Internal Studio Composition vs. Contractor Workforce",
+      "lever_classification": "execution \u2014 balance between internal permanent staff and external contracted workforce",
+      "consequences": "Building a large internal team (500+ developers across design, art, engineering) creates institutional knowledge, continuity, and creative control, but locks in fixed payroll and overhead regardless of project phase. Alternatively, sourcing 60% of specialist roles (motion capture, city design, vehicle modeling) through regional contractors and outsourcing partners reduces fixed costs and enables flexible scaling, but introduces IP ownership complexity, knowledge transfer friction, and dependency on external studio stability.",
+      "options": [
+        "Establish a dedicated 350-person core studio in a major tech hub (Los Angeles or Austin), hiring permanent engineers and designers, while outsourcing animation, motion capture, and vehicle asset production to 2-3 vetted external studios with licensed IP agreements and milestone-based payment structures.",
+        "Assemble a 200-person core team focused on systems architecture, narrative design, and procedural generation pipelines, with 60% of asset production and implementation contracted through a distributed network of 8-12 smaller regional studios, each owning sub-systems (e.g., one studio owns all vehicle physics and customization logic).",
+        "Maintain a lean 150-person internal team handling creative direction and integration, while licensing or acquiring two mid-sized Canadian or European studios (each 100-200 people) to function as permanent satellite teams reporting to core leadership, combining operational flexibility with institutional knowledge."
+      ],
+      "review": "All three options assume contractor relationships are stable and contractual IP terms are enforceable; none adequately address the risk of a key external partner studio pivoting projects, folding, or negotiating unequal IP claims mid-development. Talent retention for permanent staff is also unexamined\u2014how does turnover in a 350-person team affect code coherence over a 5-year cycle?"
+    },
+    {
+      "lever_id": "8ca16c95-0bce-4c74-be63-c73a07c33295",
+      "name": "Funding Source Sequencing and Control Trade-offs",
+      "lever_classification": "governance \u2014 which funding sources to prioritize and how much control each grants",
+      "consequences": "Publisher-led funding (take 60\u201370% upfront capital) accelerates development but subordinates creative decisions to quarterly earnings targets and shareholder pressure. Government innovation grants (R&D tax credits, AI/procedural generation subsidies) are slower to secure and lower-volume but impose no creative veto. Strategic industry partnerships (middleware vendors, GPU manufacturers, cloud providers) inject funding and tech but require long-term exclusivity or marketing commitments. Sequencing these sources shapes governance and timeline pressure throughout development.",
+      "options": [
+        "Secure 60% funding from a major publisher (providing $40\u201360M upfront capital) with creative approval reserved to a steering committee of 5 (2 publisher, 2 internal creative leads, 1 independent), then layer government grants (AI R&D, procedural generation innovation) for 15\u201320% of remaining costs, and negotiate technology partnerships for remaining 20\u201325% without equity stakes.",
+        "Front-load government innovation grants and R&D tax incentives (targeting $15\u201325M over 3 years) as the primary funding anchor to preserve creative autonomy, supplement with a smaller publisher investment (30% of budget, capped at advisory role) and industry partnerships for specialized tech (cloud infrastructure, real-time rendering), accepting slower fund deployment.",
+        "Pursue a hybrid model: secure publisher funding for 50% of budget ($30\u201345M) with a clause preserving creative decisions for core systems (narrative, morality, procedural generation), fund 30% through regional and federal innovation grants targeted at AI and procedural generation research, and negotiate 20% through non-exclusive technology partnerships with GPU and cloud providers."
+      ],
+      "review": "All options prioritize funding security over consideration of how each source's timelines and reporting requirements cascade into team pressure. Government grants require compliance reporting (IP ownership, researcher credits, publication requirements) that can conflict with commercial confidentiality; no option addresses how to structure IP ownership across mixed-source funding."
+    },
+    {
+      "lever_id": "f297d089-cba6-4d8a-95af-1bfec0b9ec2a",
+      "name": "Procedural Generation System Piloting and Risk Containment",
+      "lever_classification": "methodology \u2014 how to validate and integrate procedural generation technology before full-scale deployment",
+      "consequences": "Procedural generation (city layouts, NPC routines, criminal economy simulation) is central to the game's immersion at scale, but unproven at AAA fidelity. Piloting on a sub-system (e.g., generating 1,000 unique NPC routines) early allows risk discovery and team upskilling without blocking core art production. However, partial pilots can create architectural debt if the final full-scale integration differs from prototype assumptions, wasting months of learning.",
+      "options": [
+        "Dedicate a 30-person research strike team (Year 1, months 1\u201312) to build a 'procedural generation laboratory' simulating city block generation, NPC behavior trees, and criminal economy flows in isolation, validating algorithms against quality metrics before integrating into the main game engine and content pipeline.",
+        "Embed procedural generation as a live experiment within the main development pipeline starting month 6: generate NPC behavior for 2\u20133 neighborhood archetypes (warehouse district, beach community, downtown finance core) and test in internal playtests alongside hand-authored content, iterating design in parallel with core game systems.",
+        "Outsource procedural generation R&D to a specialized AI/simulation studio (e.g., a university spinout or boutique middleware firm) under a 18-month contract to deliver a validated procedural generation toolkit, while internal teams in parallel build a traditional scripted prototype of the same systems, then choose which approach to integrate at month 18 gate review."
+      ],
+      "review": "Strike-team piloting isolates risk but can diverge from final integration requirements; parallel embedding accelerates learning but risks polluting core pipelines with unstable code. The outsourcing option mitigates risk but assumes the external studio's toolkit integrates cleanly\u2014if it doesn't, rework costs balloon. None of the options include a documented fallback: what is the hand-authored baseline if procedural generation fails to deliver immersion targets?"
+    },
+    {
+      "lever_id": "eba5834b-2431-4cd9-9b05-3dde0c3b2ac2",
+      "name": "Narrative and Player Agency Conflict Resolution Framework",
+      "lever_classification": "product \u2014 how player agency in heists and morality intersects with narrative coherence",
+      "consequences": "Complex heist mechanics and a nuanced morality system imply player choice and narrative branches, but a sprawling open world with intricate crime-power storylines requires narrative coherence and scripted set-pieces. Allowing high player agency in heist execution (multiple routes, outcomes) creates branching narratives that multiply content burden and testing complexity. Constraining agency to curated choices reduces content but risks feeling on-rails. The chosen framework cascades into quest design, dialogue recording, and NPC behavior scripting costs.",
+      "options": [
+        "Establish a 'narrative anchor' model: the main crime-power storyline is fully scripted with predetermined major arcs, while heists and side missions offer 3\u20135 discrete choice branches per activity (route selection, team composition, outcome modality) that feed into a point-based morality meter affecting NPC treatment and ending cinematics, rather than fundamentally altering the macro plot.",
+        "Implement a 'modular narrative' approach where the player's heist choices and morality decisions directly shape which crime syndicates control which city neighborhoods, altering available missions, NPC faction relationships, and access to safehouse upgrades; the main story remains fixed but the world state and mid-tier conflicts respond dynamically to player behavior.",
+        "Adopt a 'choice at narrative junctions' framework: the core story progresses through 8\u201310 major decision points (e.g., betray faction A or B, seize territory or consolidate power) where player choice locks an entire story branch, reducing branching complexity to a manageable tree while allowing meaningful long-term narrative divergence and multiple distinct endings."
+      ],
+      "review": "All three models assume dialogue, cinematics, and NPC behavior can be efficiently authored once narrative structure is locked; none accounts for the production cost of recording character dialogue across multiple heist outcomes or the testing burden of validating state consistency across choice branches. The 'modular narrative' option risks emergent narrative incoherence if NPC factions behave unpredictably in response to player actions."
+    },
+    {
+      "lever_id": "dbddf684-2927-4859-bd46-d26d243c5d97",
+      "name": "Regional Studio Governance and Creative Authority",
+      "lever_classification": "governance \u2014 how creative and technical decisions are made across distributed studios",
+      "consequences": "With a distributed team (internal core + satellite studios + contractors), decision-making authority must be clarified: centralized authority (core studio makes all design calls) ensures coherence but slows iteration; distributed authority (each studio owns sub-systems) accelerates parallel work but risks fragmented vision and integration conflicts. The chosen model shapes meeting cadence, documentation requirements, and approval workflows, directly impacting team velocity and morale.",
+      "options": [
+        "Establish a 'core creative command' structure: the main studio (Los Angeles or Austin) owns all design decisions, with satellite studios and contractors receiving detailed design documents and weekly sync meetings; satellite studios submit implementation proposals for approval before coding, ensuring consistency but requiring robust documentation and synchronous time-zone overlap.",
+        "Adopt a 'system ownership' model where each satellite studio or contractor team owns a discrete system end-to-end (vehicle customization, NPC behavior, heist mechanics, economy simulation) with clear APIs and interface contracts; the core studio sets high-level vision and conducts quarterly integration testing, while satellite studios have autonomy within their domain.",
+        "Implement a 'design by consensus' approach: weekly remote working sessions where core and satellite leads collaboratively design features in real-time, with decision-making by majority vote on design alternatives; escalate conflicts to a single creative director with veto power, trading administrative overhead for faster iteration and buy-in from distributed teams."
+      ],
+      "review": "Core creative command requires exceptional documentation discipline and assumes time-zone overlap is feasible; system ownership risks integration failures at API boundaries if contracts are underspecified. Consensus design sounds collaborative but can stall decisions if teams disagree, and a creative director's veto power can breed resentment if used frequently. None of the options address what happens when a satellite studio's work is rejected mid-cycle\u2014cost and schedule recovery is unexamined."
+    },
+    {
+      "lever_id": "7bc1d6a7-a7f3-4e38-8fc1-aaf83eca63de",
+      "name": "Launch Phasing and Live Service Commitment",
+      "lever_classification": "execution \u2014 whether to launch complete or phased, and how much live service post-launch to commit to",
+      "consequences": "Shipping a feature-complete 150+ hour open-world game on Day One demands extended crunch and risks post-launch instability (bugs, balance issues, exploit discovery). Alternatively, a phased launch (core game + 4\u20136 month post-launch content roadmap) allows stabilization, player feedback loops, and revenue staggering, but commits the studio to 2+ years of live service overhead and can fragment the player base if Day One content feels incomplete. The choice also shapes art production budgets (which features ship when) and staffing levels post-launch.",
+      "options": [
+        "Launch with a complete single-player campaign (60\u201380 hours), all heist missions playable, core vehicle customization, and multiplayer sandbox mode functional, then deploy a 6-month post-launch roadmap of 2\u20133 new neighborhoods, expanded criminal economy mechanics, and cosmetic customization, scaling down core team by 30% after month 3 post-launch.",
+        "Ship a 'Day One minimum viable experience' (30\u201340 hour main storyline, 3\u20134 heist archetypes, basic multiplayer) to market within the first funding phase window, then commit to 18\u201324 months of live service expansion (new syndicates, procedurally-generated heist variants, cosmetics, narrative DLC), structuring the core team to sustain live operations indefinitely.",
+        "Release a single-player campaign complete (100+ hours, all narratively intended heists) with multiplayer and sandbox features as opt-in post-launch DLC (3\u20134 months after Day One), allowing the core team to focus entirely on single-player stability and depth, then transition 40% of staff to a separate multiplayer-focused studio for asynchronous content updates."
+      ],
+      "review": "Day One completeness accepts crunch risk and delayed bug discovery; phased launches fragment narrative immersion and create expectations for ongoing content that can strain budgets if revenue underperforms. The separate multiplayer studio model assumes clean API separation between single and multiplayer code\u2014if they share architecture, separation creates technical debt. Post-launch staffing assumptions (team scaling, retention, revenue forecasting) are absent from all options."
+    },
+    {
+      "lever_id": "b51e1f67-f0a2-476b-99d4-a67507fba3b4",
+      "name": "Motion Capture and Voice Talent Allocation Strategy",
+      "lever_classification": "execution \u2014 how to allocate motion-capture and voice talent budgets across character tiers",
+      "consequences": "Deciding how to distribute the motion-capture budget and voice acting across primary characters, NPCs, and ambient dialogue directly impacts animation fidelity and narrative depth. Heavy investment in A-list voice talent for main characters and elaborate motion-capture sessions improves marquee story arcs but reduces budget for dynamic NPC dialogue and crowd realism, creating a trade-off between emotional resonance in key scenes and believability of the open world's background population.",
+      "options": [
+        "Concentrate motion-capture resources on 12\u201315 major story characters with Hollywood-caliber voice actors, allocating remaining talent budget to procedurally-varied ambient dialogue and crowd reactions.",
+        "Distribute motion-capture and voice work across 40\u201350 named characters at moderate fidelity, supplemented by AI-assisted voice synthesis for crowd and minor NPC utterances.",
+        "Outsource motion-capture to independent studios in lower-cost regions while retaining A-list voice talent exclusively for villain archetypes and criminal kingpins, routing savings into procedural dialogue expansion."
+      ],
+      "review": "This lever assumes motion-capture quality scales linearly with budget spend, but regional talent pools vary significantly in iteration speed and cultural authenticity. None of the options address how to validate AI-synthesized crowd dialogue against player perception in early playtests \u2014 a risk if generated voices feel uncanny or repetitive."
+    },
+    {
+      "lever_id": "4b99b088-be61-4050-94cc-aa4b3a392108",
+      "name": "Asset Pipeline Finalization Cadence",
+      "lever_classification": "execution \u2014 when to freeze asset pipelines and lock design for final integration",
+      "consequences": "Setting when and how strictly to lock vehicle models, building interiors, and weapon balancing directly affects late-stage design iteration and bug-fixing capacity. Locking pipelines early accelerates testing and reduces animation rework but forecloses late design discoveries that emerge from playtesting; locking late preserves flexibility but compresses the stable-build window needed for polish and optimization.",
+      "options": [
+        "Lock asset pipelines 18 months before launch, allowing a full year of integration testing and bug-fix cycles on stable models and mechanics.",
+        "Implement rolling asset locks by region and feature (vehicles at month 20, interiors at month 16, weapons at month 14), enabling localized iteration while sequencing integration.",
+        "Maintain fluid asset pipelines until 9 months before launch, accepting compressed testing windows in exchange for design responsiveness to mid-production playtesting feedback."
+      ],
+      "review": "Early pipeline locks reduce rework but risk locking in design mistakes discovered only late in playtesting. Late locks maximize responsiveness but may leave insufficient time to validate that final asset changes don't break multiplayer balancing or physics interactions \u2014 a critical gap if patches must roll out post-launch anyway."
+    },
+    {
+      "lever_id": "f381082a-903a-4151-b8ee-f3a4c4c3a052",
+      "name": "Cultural Authenticity vs. Global Standardization Framework",
+      "lever_classification": "product \u2014 how to balance regional cultural depth against global regulatory alignment",
+      "consequences": "Deciding how much regional cultural specificity (Los Angeles gang hierarchies, Detroit economic collapse aftermath, Miami drug-trade folklore) to embed versus sanitizing content for global regulatory compliance directly shapes narrative credibility and market reach. Deep cultural authenticity attracts core audiences and media prestige but invites localization costs, sensitivity review delays, and potential regulatory pushback in key markets; oversanitization reduces friction but dilutes the gritty realism that defines the GTA franchise.",
+      "options": [
+        "Develop fully localized narrative branches and NPC archetypes for three regional settings, with separate dialogue trees and missions reflecting regional power structures, requiring regional sensitivity consultants and staggered launch sequencing.",
+        "Build core criminal economy and gang hierarchies around universal crime-fiction tropes (territory control, supply chains, betrayal) that transcend specific regions, embedding surface-level Los Angeles, Detroit, and Miami references in dialogue and aesthetics.",
+        "Create a modular narrative framework where core story missions are culturally neutral, but optional gang-alliance side content and criminal enterprises unlock region-specific storylines only after players meet certain reputation thresholds, compartmentalizing controversial content."
+      ],
+      "review": "Regional authenticity deepens immersion but assumes players in non-source regions (e.g., European players engaging with Los Angeles gang politics) can distinguish cultural specificity from offensive stereotyping. The options don't account for how regulatory bodies in China, South Korea, and the Middle East may reject region-locked content if it circulates through modding or leaks \u2014 a timing and enforcement problem absent from all three approaches."
+    },
+    {
+      "lever_id": "2728b5b3-3f78-4d3f-8418-f2fff5d8fc8f",
+      "name": "Early Access Cohort Scope and Gatekeeping",
+      "lever_classification": "dissemination \u2014 how many and which player segments access the game before launch",
+      "consequences": "Selecting how many players (and which player segments) to admit to pre-launch early access phases shapes expectations, generates player-driven bug reports, and creates discord between insiders and the general audience at launch. Broad early access (100,000+ players) floods bug reports and reduces day-one surprise but risks viral spoilers and performance complaints; narrow early access (5,000\u201310,000 players) preserves narrative mystery and controls feedback signal-to-noise but yields thinner real-world load testing and may alienate streamers and content creators excluded from early windows.",
+      "options": [
+        "Admit 50,000 invited players across Twitch streamer partnerships and content-creator programs 4 weeks before launch, prioritizing entertainment reach and social proof while capping spoiler exposure through contractual NDAs.",
+        "Release a closed technical stress-test with 8,000 players from established QA panels and regional server infrastructure teams, then open a second 25,000-player narrative-locked phase 2 weeks before launch restricted to specific quests.",
+        "Restrict early access to 3,000 invited critics and esports professionals under embargo, supplemented by anonymous telemetry from gameplay analytics partners, minimizing spoilers while capturing architectural performance data."
+      ],
+      "review": "Streamer-heavy early access generates marketing momentum but outsizes entertainment value over reproducible bug discovery \u2014 top streamers attract audiences that exploit known exploits on stream, setting false player expectations. The options assume NDA enforcement will contain spoilers; in practice, sophisticated players reconstruct mission sequences from leaked footage within 48 hours, collapsing the mystery window regardless of gating strategy."
+    },
+    {
+      "lever_id": "cae862ad-091f-48fa-91b2-4af34ab69ea7",
+      "name": "Procedural Generation Content Audit and Recourse",
+      "lever_classification": "methodology \u2014 how to validate procedurally-generated world content quality and manage recourse",
+      "consequences": "Establishing how extensively procedurally-generated world content (NPC dialogue, street-level crimes, random encounters, building interiors) is reviewed for quality, coherence, and regulatory compliance determines production velocity and risk exposure. Comprehensive human audit of generated content (sampling 10\u201320% of procedural outputs) detects quality drift and catches offensive or corrupted generated sequences but extends production timelines; trusting algorithmic filtering and post-launch patching accelerates ship dates but risks day-one player complaints about repetitive or nonsensical NPC behavior, which damages review scores and live-service retention.",
+      "options": [
+        "Implement a three-tier audit: automated linguistic and content filters remove obviously broken or offensive generated dialogue, then a human team of 15\u201320 quality specialists samples 15% of procedural encounters weekly, with recourse triggers that recalibrate the generation algorithm if anomalies exceed 2% of samples.",
+        "Deploy lightweight post-generation validation using trained classifiers to flag edge-case dialogue and NPC routines, with a 72-hour patch cadence post-launch to address the highest-impact anomalies reported by players during the first week.",
+        "Establish a live advisory board of 200 invited players who play-test procedurally-generated content zones throughout the 6 months before launch, reporting coherence and authenticity issues in real-time, with generation algorithm refinements fed directly into pre-launch builds."
+      ],
+      "review": "Sampling audits catch statistical outliers but miss the cumulative effect of low-grade procedural generation that individually passes filters yet creates a perceptually repetitive open world. None of the options measure or budget for the reputational cost if a procedurally-generated NPC sequence is discovered mid-stream by a major creator and goes viral \u2014 the recourse timeline (patch deployment, player re-download, re-testing) may lag media cycle damage."
+    },
+    {
+      "lever_id": "9a822e04-d1f0-401e-bd46-2a22883d64e5",
+      "name": "Multiplayer Feature Parity and Launch Window Separation",
+      "lever_classification": "execution \u2014 when and how to launch multiplayer features relative to single-player release",
+      "consequences": "Deciding whether multiplayer modes (competitive heists, open-world PvP, cooperative criminal enterprises) launch simultaneously with single-player or phase in over months after launch affects server infrastructure costs, balancing complexity, and post-launch engagement cadence. Simultaneous launch demands mature multiplayer balancing by production freeze, increases day-one server load and scaling risk, and compresses the single-player review window; phased multiplayer launch extends player retention across months and permits iterative rebalancing but fractures the audience into sequential cohorts and complicates long-term narrative canon consistency between single and multiplayer economies.",
+      "options": [
+        "Launch multiplayer heist and cooperative crime-family modes alongside single-player 12 weeks after ship, allowing 3 months of single-player player-behavior telemetry to inform multiplayer economy scaling and loot distribution.",
+        "Integrate basic multiplayer skirmish and criminal-territory-control modes on day one using pre-tuned economy parameters derived from previous GTA multiplayer titles, reserving cooperative narrative heist modes for a 6-month post-launch expansion.",
+        "Develop multiplayer as an entirely separate client and server ecosystem with independent balancing and narrative canon, launching 18 months after single-player to avoid cross-economy corruption and permit distinct storytelling arcs."
+      ],
+      "review": "Phased multiplayer launch increases long-term engagement but assumes player cohorts won't segregate by launch window \u2014 early multiplayer adopters may dominate territory and economy, creating a soft paywall for late-joining players who face entrenched competition. None of the options address the overhead of maintaining two separate narrative economies (single-player progression and multiplayer reputation systems) if they remain uncoupled long-term."
+    },
+    {
+      "lever_id": "235a78f6-6776-4fcb-9b4b-504306c17077",
+      "name": "Government Innovation Grant Compliance and Reporting Overhead",
+      "lever_classification": "governance \u2014 how to structure government grant pursuit and compliance obligations",
+      "consequences": "Determining which specific innovation grant programs (R&D tax credits, AI/machine learning development subsidies, regional development incentives) to pursue and how strictly to adhere to their reporting and milestone requirements affects available development capital, budget forecasting certainty, and production schedule inflexibility. Aggressive grant pursuit (multiple concurrent programs) expands funding runway and reduces publisher dependence but introduces external reporting obligations, quarterly milestone audits, and potential clawback clauses if development falters; conservative grant reliance (single program, light compliance) simplifies administration and preserves schedule autonomy but caps supplementary funding and forces heavier reliance on publisher advances.",
+      "options": [
+        "Target three concurrent government R&D and regional development grants with staggered quarterly milestone reporting, allocating 2\u20133 FTE compliance staff to documentation and audit readiness, capturing 15\u201320 million in potential supplementary funding over 30 months.",
+        "Pursue a single national AI innovation grant with annual milestone reporting, accepting lower total funding (6\u20138 million) in exchange for minimal compliance overhead and freedom to adjust development timelines without grant-mandate conflicts.",
+        "Negotiate a hybrid approach: secure one foundational regional development grant (low compliance burden, predictable payout schedule) while opportunistically applying to time-limited AI research partnerships and industry coalition grants as they emerge, balancing runway and flexibility."
+      ],
+      "review": "Multiple concurrent grants increase capital but fragment development priorities if grant milestones diverge from core project needs \u2014 for example, a government AI grant may mandate specific procedural generation architecture choices that don't align with gameplay design best practices. The options assume grant-reporting staff can context-switch seamlessly; in practice, grant compliance often forces schedule delays if auditors require retroactive documentation of design decisions made months prior."
+    },
+    {
+      "lever_id": "38219b8d-0942-4225-bb74-b6757abd4a72",
+      "name": "Morality System Implementation Depth",
+      "lever_classification": "product \u2014 whether morality choices trigger narrative branching or mechanical gates",
+      "consequences": "Deciding whether the nuanced morality framework evaluates player choices through consequence-branching narrative (delayed outcomes, NPC memory, faction reputation decay) or through immediate mechanical feedback (karma counters, alignment locks) shapes both narrative design labor and runtime complexity. A consequence-forward approach demands mission scripting for every branch; a mechanic-forward approach reduces branching but may feel hollow to players seeking narrative weight.",
+      "options": [
+        "Implement full consequence-branching where player choices trigger delayed NPC responses, faction trust shifts, and multi-mission narrative branches that lock out alternative paths",
+        "Deploy a lightweight moral-choice interface using real-time alignment meters and immediate mechanical gates (access restrictions, companion availability) without scripting alternate dialogue trees",
+        "Adopt a hybrid model where high-consequence decisions (heist planning, faction betrayals) branch narratively but routine missions use mechanical alignment gates, deferring full consequence-branching to post-launch updates"
+      ],
+      "review": "The morality system design must reconcile narrative authenticity with production velocity; consequence-branching is narratively rich but explodes QA surface area exponentially. None of the options adequately address how procedurally-generated side missions will respect or undermine the moral arc\u2014if random NPC encounters ignore player alignment, the system becomes decorative rather than emergent."
+    },
+    {
+      "lever_id": "73feaece-9c4b-4a62-8b5c-50a766e15c33",
+      "name": "Vehicle Customization and Physics Fidelity Trade-off",
+      "lever_classification": "product \u2014 the granularity of vehicle performance customization available to players",
+      "consequences": "Defining the depth of vehicle customization (from cosmetic wraps to engine performance tuning affecting acceleration, handling, top speed) directly impacts both 3D asset libraries and physics engine complexity. Deep customization requires hundreds of engine variants and chassis configurations; shallow customization reduces art burden but limits emergent player expression in heists and traversal.",
+      "options": [
+        "Provide extensive parametric customization where players modify engine displacement, suspension geometry, brake balance, and weight distribution with measurable impact on vehicle performance across multiple scenarios",
+        "Offer cosmetic and preset-based customization (paint, wheels, decals, suspension height) with fixed performance tiers, allowing art teams to curate visual variety without physics modeling overhead",
+        "Lock customization to cosmetics and a limited set of pre-balanced performance packages (sport, heavy, off-road) that players select during heist loadout, deferring parametric tuning to a post-launch simulation update"
+      ],
+      "review": "Vehicle customization balances player agency against asset production and physics QA costs; cosmetic-only approaches preserve velocity but risk diminishing heist replay value. The core tension is whether emergent gameplay (player-tuned vehicles enabling novel heist strategies) justifies the physics validation burden\u2014a burden no option fully quantifies or schedules."
+    },
+    {
+      "lever_id": "bcbdde31-7f39-4c00-8900-e60f41a2c91c",
+      "name": "Heist Procedural vs. Scripted Mission Balance",
+      "lever_classification": "product \u2014 the proportion of heist structure generated procedurally versus hand-authored",
+      "consequences": "Determining what proportion of heist complexity emerges from procedural generation (randomized guard routes, dynamic alarm states, variant entry points) versus hand-crafted scripting affects both content scale and narrative coherence. Heavy procedural generation multiplies replayability but risks incoherent mission states; heavy scripting ensures narrative polish but limits player discovery and demands months of mission authoring.",
+      "options": [
+        "Procedurally generate heist setup phases (infiltration approach, guard patrol patterns, alarm configurations) while scripting finale sequences hand-crafted for narrative payoff and spectacle, ensuring coherence at the climax",
+        "Write all major heist missions as fully scripted sequences with hidden variation mechanics (alternate routes, conditional encounters) that reward exploration without relying on procedural systems",
+        "Reserve procedural generation exclusively for dynamic crime encounters and lower-stakes side-objective heists while reserving campaign heists as fully scripted narrative experiences, deferring procedural heist complexity to live service seasons"
+      ],
+      "review": "Balancing procedural heist setup against scripted finales manages replayability risk, but introduces a false seam\u2014players will exploit transitions between procedural and scripted phases if not carefully masked. None of the options address how narrative framing (story coherence across randomized setups) will be maintained or how emergent failures (procedurally-generated guard cascades foiling player plans) will feel authored rather than unfair."
+    },
+    {
+      "lever_id": "36737b1b-3fc0-40a8-aa92-fcd6ed59b972",
+      "name": "NPC Crowd Density and Interaction Fidelity",
+      "lever_classification": "product \u2014 the target NPC population density and interaction depth per urban district",
+      "consequences": "Setting the target NPC population density and depth of individual interaction systems (conversation topics, daily routines, reactive dialogue) determines memory footprint, CPU scheduling, and dialogue authoring scope. High density with rich interactions creates urban vitality but multiplies voice acting costs and behavior state management; low density with shallow interactions reduces labor but risks hollow urban environments.",
+      "options": [
+        "Deploy dense NPC populations (2000+ active per district) with procedurally-generated conversation starters, minimal personalization, and simple state machines managing work/rest/leisure cycles without persistent memory across sessions",
+        "Maintain moderate NPC density (500\u2013800 per district) with hand-authored signature NPCs (store owners, gang members, quest-givers) embedded in procedurally-generated crowds with limited conversation depth, supporting basic faction recognition but not cross-mission memory",
+        "Target sparse but highly-interactive NPC populations (200\u2013300 per district) where every NPC has authored personality, persistent memory of player choices, and voice-acted dialogue, creating intimate urban neighborhoods at the cost of spatial scale"
+      ],
+      "review": "NPC density shapes perceived world aliveness against production cost; sparse, high-fidelity NPCs feel more authorial but underutilize open-world scale, while dense procedural crowds feel hollow if dialogue lacks variation. The core tension unaddressed: how will player-NPC reputation systems feel coherent when most NPCs are procedurally-generated and forgotten? Will sparse-but-authored populations actually deliver the emergent criminal economy or just replicate mission-specific scripting?"
+    },
+    {
+      "lever_id": "ec0f934b-2aa2-4d2b-96f3-320e178d8c2b",
+      "name": "Graphical Fidelity versus Development Timeline Compression",
+      "lever_classification": "execution \u2014 the visual fidelity target and its impact on art production velocity",
+      "consequences": "Selecting the visual target\u2014photorealistic next-gen assets (high ray-tracing, 4K textures, cinematic cutscenes) versus stylized-realism with optimized asset reuse\u2014directly impacts 3D art production velocity and whether the project ships on time or slips into extended post-launch polish. Photorealistic targets demand 18\u201324 months of environment and character iteration; stylized approaches compress art pipelines by 6\u201312 months but may underdeliver on marketing promise.",
+      "options": [
+        "Commit to photorealistic visual targets with extensive ray-traced lighting, 4K+ texture detail, and hand-crafted environmental storytelling across all three city regions, accepting 2+ year extended art production and deferring optimization and some gameplay systems to post-launch",
+        "Adopt a stylized-realism aesthetic emphasizing strong color grading, expressive character animation, and optimized asset modularization that allows rapid environment iteration while maintaining visual impact; ship core gameplay systems on time with visual polish deferred to seasons 1\u20132",
+        "Prioritize character fidelity and cutscene cinematics at photorealistic quality while standardizing environment art using tiling textures and modular building components with procedural variation, balancing narrative presentation against spatial breadth"
+      ],
+      "review": "Graphical fidelity directly throttles art team velocity; photorealistic targets extend timelines while stylized approaches risk marketing misalignment with AAA market expectations for GTA's visual benchmark. The unaddressed tension: which gameplay systems (procedural generation testing, NPC behavior validation, heist scripting) will remain incomplete if art production overruns, and how will live service content creation be staffed once the core product ships?"
+    },
+    {
+      "lever_id": "6b5c439e-3424-4984-8771-cf65adcfcec4",
+      "name": "Criminal Economy Simulation Complexity",
+      "lever_classification": "product \u2014 the complexity of the criminal economy and player influence on market dynamics",
+      "consequences": "Defining the economic system's scope\u2014from deterministic NPC supply chains and player-influenced market prices to static vendor inventory\u2014shapes both runtime simulation load and emergent gameplay depth. Rich economic simulation enables player-driven market manipulation and organic crime progression; static economics simplify balancing but reduce open-world emergence and player agency.",
+      "options": [
+        "Implement a full dynamic economy where NPC supply chains, player heist targets, and market prices fluctuate based on player actions, faction control, and procedural events; players can corner markets, disrupt rival operations, and shape regional economics through strategic choices",
+        "Deploy a semi-dynamic economy where core vendor prices and heist target value respond to player progress and faction reputation, but NPC supply chains remain deterministic and non-player-accessible, limiting economic manipulation to direct player transactions",
+        "Maintain a static vendor and pricing framework with hand-crafted heist economics (target values, fencing rates) that adjust only through story progression and faction unlocks, deferring dynamic market simulation to post-launch economic system overhauls"
+      ],
+      "review": "Economic simulation depth trades authenticity against balancing burden; full simulation requires constant tuning to prevent player exploits and progression softlocks, while static economics feel authored but limit emergent player strategies. The core weakness: none of the options address how procedurally-generated crime encounters (random robbery targets, drug trafficking events) will integrate with or disrupt the chosen economy without creating balance vacuums or nonsensical pricing."
+    },
+    {
+      "lever_id": "82bda467-0b55-41c7-b35e-b5a649ef144e",
+      "name": "Studio Location and Remote Work Integration",
+      "lever_classification": "operations \u2014 the physical distribution of studio teams and its impact on narrative authenticity and technical coordination",
+      "consequences": "Choosing whether to consolidate core development in a single physical hub (Los Angeles, Detroit, or Miami) or distribute across three regional studios mirrors the project's three-city narrative structure. A single hub reduces coordination overhead and maintains creative alignment but isolates regional narrative teams; distributed studios deepen local authenticity research but fragment technical pipelines and require robust asynchronous collaboration infrastructure.",
+      "options": [
+        "Establish a primary development studio in Los Angeles with satellite offices in Detroit and Miami staffed by narrative specialists and cultural consultants; route all technical and asset work through LA hub, using remote sites as research and writing outposts",
+        "Distribute core development equally across three regional studios (LA, Detroit, Miami) with autonomous gameplay and narrative teams, connected via weekly synchronization meetings and shared version control; accept higher coordination overhead for deeper local immersion and cultural accuracy",
+        "Consolidate all core development in a centralized technical hub (Los Angeles or Austin) with remote narrative contractors embedded in Detroit and Miami for cultural research; separate narrative writing and world-building from technical production to minimize distributed collaboration friction"
+      ],
+      "review": "Studio distribution embodies the creative tension between narrative authenticity (regional immersion) and technical efficiency (centralized pipelines); a single hub optimizes velocity but risks homogenizing regional character. Distributed teams deepen authenticity but risk fragmenting gameplay feel across regions. The unaddressed challenge: how will procedurally-generated content (which ignores regional boundaries) maintain coherence if narrative authority is distributed, and which studio owns the cross-regional procedural generation pipelines?"
+    }
+  ],
+  "metadata": {
+    "metadata_1": {
+      "context_window": 200000,
+      "num_output": 8192,
+      "is_chat_model": true,
+      "is_function_calling_model": true,
+      "model_name": "claude-haiku-4-5-20251001",
+      "system_role": "system",
+      "llm_classname": "Anthropic_LLM"
+    },
+    "metadata_2": {
+      "context_window": 200000,
+      "num_output": 8192,
+      "is_chat_model": true,
+      "is_function_calling_model": true,
+      "model_name": "claude-haiku-4-5-20251001",
+      "system_role": "system",
+      "llm_classname": "Anthropic_LLM"
+    },
+    "metadata_3": {
+      "context_window": 200000,
+      "num_output": 8192,
+      "is_chat_model": true,
+      "is_function_calling_model": true,
+      "model_name": "claude-haiku-4-5-20251001",
+      "system_role": "system",
+      "llm_classname": "Anthropic_LLM"
+    }
+  },
+  "system_prompt": "You are an expert strategic analyst. Generate solution space parameters following these directives:\n\n1. **Output Requirements**\n   - You must generate 5 to 7 levers per response.\n   - Each lever's `options` field must contain exactly 3 qualitative strategic choices as plain strings.\n\n2. **Lever Classification**\n   - `lever_classification`: a brief phrase with the category and what the lever decides.\n   - Format: \"category \u2014 what this lever decides\".\n   - Categories: methodology, execution, governance, dissemination, product, operations.\n   - Examples: \"governance \u2014 who oversees the review process\", \"methodology \u2014 which data collection approach to use\", \"execution \u2014 how to sequence the rollout phases\".\n\n3. **Lever Quality Standards**\n   - Consequences: describe the direct effect of pulling this lever, then at least one downstream implication or trade-off. Be concise and grounded \u2014 only cite specific numbers if the project context provides evidence for them. Do not fabricate percentages or cost estimates. Target length: 2\u20134 sentences.\n   - Options MUST:\n     \u2022 Represent genuinely distinct strategic pathways (not just labels)\n     \u2022 Include at least one unconventional or non-obvious approach\n     \u2022 NO prefixes (e.g., \"Option A:\", \"Choice 1:\")\n\n4. **Strategic Framing**\n   - Name each lever using language drawn directly from the project's own domain \u2014 avoid formulaic patterns or repeated prefixes\n   - Frame options as complete strategic approaches\n   - Ensure levers challenge core project assumptions\n\n5. **Validation Protocols**\n   - For `review_lever`:\n     A short critical review \u2014 name the core tension, then identify a weakness the options miss.\n     Examples:\n     - \"Switching from seasonal contract labor to year-round employees stabilizes harvest quality, but none of the options price in the idle-wage burden during the 5-month off-season.\"\n     - \"Routing the light-rail extension through the historic district unlocks ridership but triggers Section 106 heritage review; the options assume permits will clear on the standard timeline.\"\n     - \"Pooling catastrophe risk across three coastal regions diversifies exposure on paper, but a regional hurricane season can correlate all three simultaneously \u2014 correlation risk absent from every option.\"\n     Do not use square brackets or placeholder text.\n\n6. **Prohibitions**\n   - NO prefixes/labels in options (e.g., \"Option A:\", \"Choice 1:\")\n   - NO generic option labels (e.g., \"Optimize X\", \"Tolerate Y\")\n   - NO placeholder consequences or bracket-wrapped templates\n   - NO fabricated statistics or percentages without evidence from the project context\n   - NO marketing language (e.g., \"game-changing\", \"cutting-edge\", \"revolutionary\")\n\n7. **Option Structure**\n   - Maintain parallel grammatical structure across options\n   - Ensure options are self-contained descriptions\n   - Each option should be a concrete, actionable approach (at least 15 words with an action verb) \u2014 not a short label or vague aspiration",
+  "user_prompt": "File 'plan.txt':\nPlan:\nDevelop the next Grand Theft Auto (GTA), featuring a sprawling, immersive open-world metropolis blending elements of Los Angeles, Detroit, and Miami, filled with intricate narratives of crime, corruption, and power struggles, realistic criminal economies, dynamic NPC interactions, complex heist mechanics, extensive vehicle customization, nuanced morality systems, advanced procedural generation, next-gen graphical fidelity, multiplayer modes, and innovative gameplay funded by strategic industry partnerships, publisher investments, and government innovation grants. Don't go for the most aggressive scenario. Banned words: blockchain, DAO, crowdfunding.\n\nToday's date:\n2026-Mar-13\n\nProject start ASAP\n\nFile 'purpose.md':\n**Purpose:** business\n\n**Purpose Detailed:** Developing a new Grand Theft Auto game with advanced features, complex narratives, and strategic funding.\n\n**Topic:** Grand Theft Auto (GTA) Game Development\n\nFile 'plan_type.md':\nThis plan requires one or more physical locations. It cannot be executed digitally.\n\n**Explanation:** Developing a Grand Theft Auto game, even with advanced procedural generation and cloud-based tools, *inherently requires* a physical development environment, including offices, hardware, and in-person collaboration among developers, artists, and designers. Testing the game also requires physical devices and real-world testing scenarios. Securing funding through partnerships and grants involves physical meetings and presentations. Therefore, this plan is classified as physical."
+}

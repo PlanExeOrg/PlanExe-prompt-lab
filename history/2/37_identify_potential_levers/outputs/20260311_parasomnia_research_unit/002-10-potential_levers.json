@@ -1,0 +1,254 @@
+[
+  {
+    "lever_id": "35dbe70f-26d3-4380-84e2-d64806c9b088",
+    "name": "Tiered Acquisition Depth and Night Scheduling",
+    "lever_classification": "methodology \u2014 which nights deploy full neurophysiology montage and how to trigger escalation monitoring",
+    "consequences": "Deploying enhanced PSG montage (full scalp EEG, EOG, chin EMG, leg EMG) only on scheduled nights (admission, mid-stay, final) rather than every night preserves data quality and technician annotation capacity while accepting that infrequent events on unmapped nights lose subcortical and EMG context. Expanding this to all nights would capture richer phenotype but multiply technician workload and raise per-participant cost, risking insufficient staffing margin for 8 suites.",
+    "options": [
+      "Restrict enhanced PSG to the three scheduled nights per participant protocol and rely on dry-electrode headband EEG plus ambient sensors for event detection on intervening nights, reserving escalation nights only after technician flagging.",
+      "Deploy full PSG montage on all nightly admissions in the first 6 months as a pilot to empirically measure technician annotation burden and event-yield trade-off, then make a data-driven decision to scale or contract.",
+      "Implement a dynamic scheduling rule: offer enhanced PSG on any night where the dry-electrode headband or mattress sensor registers candidate activity within 2 standard deviations of participant baseline, deferring this decision to the data engineer's automated flagging system."
+    ],
+    "review": "The tension here is between fidelity and throughput: richer data on fewer nights accelerates publication but may miss subtle morphology shifts that only emerge across the full stay. None of the three options explicitly price in the retraining cost if technicians rotate between light and heavy monitoring protocols, or the risk that dry-electrode headbands systematically underdetect certain event types (e.g., sleep terrors with minimal cortical arousal signatures), potentially biasing escalation night selection."
+  },
+  {
+    "lever_id": "a0b4dcc1-7ebc-4164-8565-414f49ab90d2",
+    "name": "Event-Triage Algorithm Scope and Confidence Threshold",
+    "lever_classification": "methodology \u2014 how aggressively to automate event detection and at what confidence threshold to report",
+    "consequences": "A semi-automated triage tool that ranks probable parasomnia episodes reduces manual review burden and accelerates publication of Aim 3 results. Setting a low confidence threshold (flag many candidate events) ensures high sensitivity but increases false positives and dual-rater workload; a high threshold minimizes false positives but risks missing low-signal episodes and undercounting event frequency for Aim 2 phenotyping.",
+    "options": [
+      "Train the event-triage algorithm with a 70% sensitivity target (capture 7 of 10 true events) and report sensitivity, specificity, and positive predictive value against dual human scorer consensus, accepting that the remaining 30% of events require secondary manual review.",
+      "Constrain the algorithm to flag only events meeting a 90% confidence threshold, then measure and report the proportion of true events falling below this threshold, explicitly documenting underdetection patterns and limiting the tool's clinical claim to a triage accelerant rather than a screening filter.",
+      "Implement a two-stage cascade: first-pass algorithm flags candidate events at a low threshold, then a rule-based post-processor applies morphology and timing heuristics to re-rank, and only the top-confidence subset is sent for dual review, with all intermediate triage layers documented in the methods."
+    ],
+    "review": "The core tension is between publication speed (flag early, accept false positives) and scientific honesty (clearly report sensitivity and specificity limits). All three options commit to dual human scoring as ground truth, but none explicitly address what happens if the two raters disagreree on 10\u201315% of borderline events \u2014 the triage algorithm will not resolve this discrepancy, and the paper's credibility depends on transparent reporting of this irreducible subjectivity."
+  },
+  {
+    "lever_id": "cadb74c7-fb61-4c32-ac4a-5bfe0931e644",
+    "name": "Participant Screening Stringency and Enrollment Velocity",
+    "lever_classification": "execution \u2014 how stringent the pre-admission screening pathway and who adjudicates entry criteria",
+    "consequences": "Strict pre-admission screening (specialist interview, collateral history, prior PSG, exclusion checklist adjudicated by PI) reduces participant misclassification and false dropouts mid-stay due to undetected apnea or psychiatric crisis, but increases recruitment friction and extends the time-to-enrollment pipeline. Streamlined screening accelerates recruitment toward the target 50\u201370 NREM parasomnia participants but risks admitting borderline cases who require extended stays, escalated clinical intervention, or safety concerns.",
+    "options": [
+      "Require specialist sleep physician evaluation and bed-partner corroboration for all candidates, with the PI personally adjudicating each exclusion checklist before admission, adding 3\u20134 week vetting per participant but ensuring diagnostic confidence.",
+      "Adopt a tiered screening: rapid telephone intake by the study coordinator using a 10-question structured checklist, with full clinical assessment deferred until the participant arrives for the first night, allowing the research technician and clinical psychologist to complete detailed history in-situ and defer enrollment for those who fail exclusion criteria.",
+      "Delegate screening to the regional neurologist referral network by providing them with a written checklist and diagnostic criteria, trusting their clinical judgment to pre-filter participants, and reserve the PI's review for cases with ambiguous seizure history or psychiatric complexity."
+    ],
+    "review": "The tension is between scientific rigor and operational momentum: tighter screening improves data quality but delays enrollment and risks undershooting the 50\u201370 participant target within 3 years, triggering the month-18 review trigger (fewer than 25 enrolled). The option of deferring full assessment to in-situ arrival is operationally efficient but may admit participants partway through a stay only to discover a disqualifying condition, wasting bed-nights and staff time."
+  },
+  {
+    "lever_id": "50981973-2760-4318-b3cf-02958690ddb0",
+    "name": "Residential Suite Expansion Trigger and Capacity Roadmap",
+    "lever_classification": "execution \u2014 when to expand from 8 to 12 active suites and what triggers further build-out",
+    "consequences": "Deferring expansion from 8 to 12 suites until month 12 pilot data demonstrates acceptable data quality, safe staffing ratios, and manageable annotation throughput protects against overbuilding infrastructure if the facility proves operationally fragile. Early expansion (by month 6) would accelerate enrollment and generate event volume faster, but risks overstretching the 3-person technician rotation and creating annotation backlogs that degrade inter-rater reliability or force hire of less-trained scorers.",
+    "options": [
+      "Complete all renovation work for 12 suites upfront by month 6 and activate four additional suites only upon demonstrable progress (month 12 data review and safety sign-off), allowing rapid scaling without further renovation delay if conditions are met.",
+      "Maintain the 8-suite footprint for the entire 3-year period and use any surplus budget for deeper phenotyping (additional scheduled PSG nights, longer participant stays for slower-cycling event types) rather than horizontal expansion.",
+      "Construct scalable infrastructure (fire safety, network backbone, electrical capacity) for 12 suites now but leave physical suite buildout as a contingent expense gate-kept by month 18 data review; if enrollment and event yield meet targets, commit \u20ac200K for suite conversion; if not, redirect funds to extended participant compensation to boost recruitment."
+    ],
+    "review": "The tension is between first-mover momentum and prudent resource management. None of the options explicitly model the staffing scaling law: if one technician safely manages 4 suites per night, adding 4 suites requires 1 FTE additional hire, but that FTE is only justified if enrollment velocity actually ramps. Delaying 12-suite activation until month 12 creates a bottleneck if early data is promising and recruitment interest is high \u2014 the facility will need 2\u20133 month lead time to hire and train new technicians."
+  },
+  {
+    "lever_id": "04535a30-eb22-4f3f-a5f4-c7630c579e81",
+    "name": "Data Sharing and Repository Deposition Strategy",
+    "lever_classification": "dissemination \u2014 whether to publicly deposit data and on what timeline and license terms",
+    "consequences": "Depositing de-identified physiological data (EEG, sensors, events) in a recognized public repository amplifies scientific impact, accelerates methods benchmarking by external groups, and satisfies open-science grant expectations, but requires careful privacy governance and may invite competing groups to develop overlapping algorithms before the home team publishes Aim 3 results. Restricting data to data-use-agreement partners slows external scrutiny but preserves competitive advantage and simplifies privacy compliance.",
+    "options": [
+      "Deposit the full de-identified physiological and sensor dataset (excluding video) into OpenNeuro or a comparable BIDS-compatible repository within 6 months of study closeout, with a standard CC-BY or PDDL license and an accompanying publication detailing the dataset, enabling external algorithm development and meta-analyses.",
+      "Release data only through formal data-use agreements with peer-reviewed research teams, requiring them to acknowledge the primary Aim 2 and Aim 3 publications and report any external algorithms back to the Bonn team for cross-validation before external publication.",
+      "Embargo the dataset for 24 months post-closeout, allowing the Bonn team to secure priority publications on algorithm development and longitudinal phenotyping, then deposit into a public archive with appropriate attribution."
+    ],
+    "review": "The tension is between scientific citizenship and institutional competitiveness: open release builds reputation and attracts collaborators but risks being scooped on algorithmic innovations that external teams can develop faster. None of the options address the practical burden of privacy-preserving anonymization if participant-years of bedroom monitoring contain identifiable audio (voices, ambient sounds), which could leak identity if correlated with external datasets \u2014 the 'de-identified' claim may be weaker than it appears."
+  },
+  {
+    "lever_id": "133588cc-95d5-4455-b698-976bfc92f2b7",
+    "name": "Control Group Enrollment and Matching Criteria",
+    "lever_classification": "methodology \u2014 whether to enroll a dedicated control group and what matching and standardization criteria to apply",
+    "consequences": "A matched control group of adults without NREM parasomnias, monitored under identical residential conditions, provides ground-truth baselines for sensor false-positive rates, normal arousal patterns, and normal nocturnal movement, enabling rigorous benchmarking of the event-triage algorithm. Recruiting and retaining controls is lower-yield (no events to capture, less intrinsic motivation) and adds \u20ac200K\u2013300K per year in participant compensation and technician time. Omitting controls or using retrospective healthy-sleeper polysomnography reduces accuracy of the triage tool's positive predictive value claims.",
+    "options": [
+      "Enroll 20\u201325 matched controls (age, sex, BMI within \u00b15) who undergo identical 1\u20132 week residential stays and are compensated identically to case participants, dedicating one suite to rolling control recruitment in parallel with the parasomnia cohort.",
+      "Recruit 50\u201360 controls via convenience sampling (staff, student volunteers, healthy household members) for brief overnight visits (1\u20133 nights) at the facility during off-peak periods, accepting looser matching and reduced standardization in exchange for lower cost and faster enrollment.",
+      "Use published polysomnography data from a healthy-sleeper reference cohort (e.g., from prior sleep apnea or narcolepsy studies) as a synthetic control baseline, avoiding recruitment friction but accepting that the reference cohort may have different sensor characteristics, demographic distribution, or medication profiles."
+    ],
+    "review": "The tension is between methodological rigor and budget efficiency: true matched controls demand substantial resources and offer no scientific payoff specific to parasomnias, but their absence weakens the specificity claims for the event-triage algorithm. Published reference cohorts from other studies introduce unmeasured confounds (e.g., different montage, recording environment, scoring practices), making cross-study comparison unreliable \u2014 the option claiming synthetic controls may be illusory."
+  },
+  {
+    "lever_id": "e10c2ea0-5317-455c-b71c-0e831358fa46",
+    "name": "Phase-Two Vision and Grant Trajectory",
+    "lever_classification": "governance \u2014 whether to commit to a specific phase-two clinical or mechanistic direction or maintain flexibility pending phase-one results",
+    "consequences": "Submitting a phase-two grant proposal at month 30 for expansion and intervention studies (e.g., targeted arousal suppression, pharmacological agents, or cognitive-behavioral protocols) positions the facility as a long-term research platform and justifies continued core funding, but commits the team to pursue clinical translation and divert effort from deep Aim 2 phenotyping. Limiting the 3-year program to methods validation and characterization (Aim 1\u20132) leaves phase-two open but offers no concrete roadmap, risking funder skepticism about sustainability.",
+    "options": [
+      "Commit to a phase-two trial of a pharmacological intervention (e.g., topiramate or levetiracetam) for NREM parasomnia reduction, using the Aim 2 phenotyping data to stratify participants by event morphology, and design the phase-two proposal around a randomized controlled trial recruiting from the established residential facility.",
+      "Propose a phase-two mechanism study focusing on the neurophysiology of arousal regulation in parasomnias using high-density EEG and overnight cerebrospinal fluid sampling, positioning the Bonn facility as a unique translational neuroscience resource for parasomnia biomarkers.",
+      "Keep the phase-two proposal scope open and agnostic, drafting a brief letter of intent at month 24 that outlines two or three potential expansion pathways (clinical trial, biomarker study, longitudinal neuroimaging follow-up) and allow the Aim 2 and 3 results to inform which direction has the strongest preliminary data and funder appetite."
+    ],
+    "review": "The tension is between strategic clarity and adaptive flexibility: committing to a specific phase-two trial now (options 1 or 2) allows coherent participant selection and baseline measurement in year 1, but locks the team into a clinical direction if Aim 2 data reveal unexpected findings. The agnostic approach (option 3) preserves optionality but may appear vague to conservative funders and risks losing momentum if the primary DFG or University of Bonn funding ends at month 36. None of the options explicitly address how a phase-two clinical trial would be powered or funded \u2014 the phase-two proposal itself will require a separate competitive grant cycle."
+  },
+  {
+    "lever_id": "83308fec-d464-4c52-a5cc-7bebfaa3325d",
+    "name": "Bed Partner Collateral Mandate and Enrollment Gates",
+    "lever_classification": "governance \u2014 whether to use bed partner history as a hard enrollment gate or a post-enrollment backstop.",
+    "consequences": "Requiring bed partner or household member history at screening dramatically improves the pre-admission confidence in parasomnia diagnosis and reduces false-admission risk, but narrows the recruitment funnel and delays enrollment for single-participant households or individuals unwilling to involve family. This trade-off directly affects enrollment velocity and the timeline to reach the 50\u201370 participant target.",
+    "options": [
+      "Make bed partner interview mandatory at baseline and exclude any applicant without a credible collateral source, prioritizing diagnostic precision over speed even if it extends recruitment to month 24.",
+      "Accept bed partner input when available but enroll individuals with documented prior clinical sleep medicine evaluation or treatment, broadening the pool and accelerating enrollment at modest diagnostic-confidence cost.",
+      "Deploy trained research coordinators to conduct structured family-member telephone interviews post-acceptance, making collateral engagement a post-enrollment requirement rather than a barrier, keeping recruitment open but shifting verification labor downstream."
+    ],
+    "review": "The lever addresses the genuine tension between diagnostic confidence and enrollment pace. However, none of the options grapple with the cost and logistics of tracking down geographically distant family members or managing the ethical sensitivity of involving household members in research when the participant may be under-disclosing for privacy or stigma reasons."
+  },
+  {
+    "lever_id": "01dbb0a0-b73e-4967-89ea-0fde99e9f146",
+    "name": "Mattress Sensor Calibration and Nightly Algorithmic Sensitivity",
+    "lever_classification": "execution \u2014 how to tune mattress-sensor sensitivity to balance event capture against technician workload.",
+    "consequences": "Adjusting contact-free mattress sensor sensitivity to detect subtle nocturnal motor events increases the capture of candidate episodes during routine nights but simultaneously raises the false-positive rate, inflating technician annotation workload and downstream dual-scoring burden. Conversely, conservative sensitivity misses genuine low-amplitude events, especially in lighter-weight or restless-control participants.",
+    "options": [
+      "Set mattress sensor thresholds to maximize sensitivity at baseline (capturing 95% of simulated movements) and accept a 40\u201350% false-positive annotation overhead during pilot months, then iteratively tune downward once the technician team reports sustainable workload levels.",
+      "Calibrate sensors to a moderate operating point (70% sensitivity to ground-truth movement) and cross-validate against infrared video during the first 10 enrolled participants, using discrepancies to refine thresholds before full rollout.",
+      "Deploy two independent mattress-sensor configurations in parallel across the 8 suites\u2014high-sensitivity in suites 1\u20134 and moderate-sensitivity in suites 5\u20138\u2014treating the facility as an internal A/B study to quantify the relationship between sensitivity and technician efficiency over the full 3 years."
+    ],
+    "review": "The tension is real: annotation burden can overwhelm night staff and compromise inter-rater reliability scoring. None of the options addresses the challenge that different parasomnia phenotypes (sleepwalking vs. confusional arousal vs. sleep terror) produce genuinely different movement profiles, so a single global sensitivity level may be suboptimal for rare high-amplitude events versus frequent micro-arousal detection."
+  },
+  {
+    "lever_id": "f3899be6-9763-43e1-8831-702ddd3295c6",
+    "name": "Stay Duration Flexibility and Unproductive-Admission Tolerance",
+    "lever_classification": "execution \u2014 whether to fix stay duration strictly, use a tiered approach, or permit adaptive extensions with clinical oversight.",
+    "consequences": "Setting a hard ceiling of 10 weeks and triggering protocol review if 20% of admissions yield zero captured events provides operational predictability and controls costs, but may exclude participants with genuinely sparse episodes or create perverse incentives to extend stays artificially. Conversely, permitting longer or more flexible stays maximizes scientific yield but erodes budget certainty and staff scheduling discipline.",
+    "options": [
+      "Enforce the 10-week absolute maximum and conduct formal protocol amendment if unproductive admissions exceed 20%, accepting that some low-yield participants are discharged without events and treating this as a pricing signal to tighten recruitment criteria.",
+      "Adopt a tiered stay structure\u2014standard 2\u20138 weeks for most participants, with stays extended to 12 weeks only for the first 5 admissions or upon explicit PI approval, capping the flexibility to a known subset and preserving budget control.",
+      "Implement a rolling 4-week extension decision point: after the initial 6-week window, the technician team and PI jointly assess event-capture trends and either discharge the participant or extend in 2-week blocks up to 14 weeks total, with extension data and rationale logged in a formal tracking spreadsheet to inform future recruitment adjustments."
+    ],
+    "review": "The core tension is between maximizing event yield and maintaining operational predictability. The options all assume that extended stays monotonically increase event probability, but do not account for habituation\u2014participants who have resided in the facility for 8 weeks may show suppressed parasomnia frequency due to adaptation to the environment, meaning an extension may not yield additional events and wastes resources."
+  },
+  {
+    "lever_id": "38676e9d-f3e7-4a53-8f71-e363e9c30464",
+    "name": "Independent Dual-Scoring Infrastructure and Rater Recruitment",
+    "lever_classification": "execution \u2014 how to structure the independent dual-scoring process and manage rater recruitment and compensation.",
+    "consequences": "Contracting two independent sleep medicine specialists or trained scorers to review every flagged event and adjudicate disagreements ensures rigorous inter-rater reliability and publishable credibility, but is resource-intensive (estimated \u20ac150\u2013200K over 3 years for per-event payment) and creates scheduling bottlenecks if scorers are external consultants. Using internal postdocs reduces cost but introduces potential bias and reduces scoring independence.",
+    "options": [
+      "Contract two independent external sleep medicine physicians or accredited clinical neurophysiologists at per-event rates (approximately \u20ac40\u201360 per event), ensuring full independence and publishable inter-rater reliability, and accept that this is a fixed cost driver requiring careful event-yield forecasting.",
+      "Train and employ one full-time internal research staff member (e.g., a senior technician or junior clinician) as the primary scorer and use the two postdoctoral researchers as secondary reviewers on a subset basis (e.g., 30% of all flagged events), reducing cost but compromising independence.",
+      "Establish a multi-site academic consortium with three partner sleep medicine centers in Germany (e.g., Charit\u00e9 Berlin, Munich, Heidelberg) who each commit to scoring 2\u20133 events per month on rotating basis under a formal inter-rater reliability protocol, distributing the workload and cost while building external credibility and early publication partnerships."
+    ],
+    "review": "The lever addresses a real cost\u2013credibility trade-off. However, the options underestimate the training burden: external scorers unfamiliar with this study's sensor-rich context (mattress pressure, microphones, infrared video) may require extensive familiarization before achieving reliable AASM-criteria application, and this ramp-up cost and timeline is not priced into any option."
+  },
+  {
+    "lever_id": "ae276fa7-2e58-4af0-87e9-d5f07c8a9b0c",
+    "name": "Infant-Publication Strategy and Preliminary Findings Disclosure",
+    "lever_classification": "dissemination \u2014 whether to publish preliminary findings at month 18 or consolidate and publish a mature dataset at month 30\u201336.",
+    "consequences": "Publishing initial methods-validation and pilot-cohort results (e.g., 'residential capture of NREM parasomnia: a feasibility study in 20 participants') at 18\u201324 months builds early credibility, secures the team's intellectual territory, and strengthens the phase-two grant proposal, but risks overselling incomplete data and invites scrutiny from skeptical journals or industry competitors. Waiting until 36 months for a mature dataset allows for larger effect sizes and longitudinal phenotyping but delays academic impact and may reduce phase-two funding competitiveness.",
+    "options": [
+      "Target a methods-focused open-access publication in a tier-2 sleep medicine journal at month 18, presenting the feasibility and inter-rater reliability findings from the first 20\u201325 participants, with clear caveats on preliminary phenotyping, and reserve the larger longitudinal characterization paper for month 30\u201332.",
+      "Submit a narrative review or technical methods paper to a methodological venue (e.g., a medical instrumentation or clinical neurophysiology journal) describing the residential capture platform, sensor integration, and annotation workflows independent of event yield, positioning the team as methodological innovators while deferring outcome claims.",
+      "Prioritize one high-impact flagship publication at month 30\u201336 that integrates methods validation, inter-rater reliability, and preliminary longitudinal findings across the full 50\u201370 participant cohort, accepting a delayed publication timeline in exchange for a stronger, more defensible story for phase-two grant review."
+    ],
+    "review": "The tension between early visibility and data maturity is real. However, the options do not account for the risk of negative or null findings\u2014if inter-rater reliability is poor (e.g., Cohen's kappa <0.60) or event capture rates fall short of projections, early publication could damage credibility irreversibly, whereas delaying disclosure allows for protocol adjustment or data re-annotation without public commitment."
+  },
+  {
+    "lever_id": "d36728d6-c349-4f48-ad66-19a155007faf",
+    "name": "Video Data Lifecycle and Archival Boundary",
+    "lever_classification": "governance \u2014 when and under what conditions to retain or delete raw bedroom video recordings.",
+    "consequences": "Retaining raw bedroom video for the full 3-year study duration enables retrospective event verification and phenotypic re-review as analysis methods evolve, but creates long-term GDPR compliance and physical storage costs (estimated \u20ac20\u201330K over 3 years for encrypted archival); deletion after a fixed retention window (e.g., 12 months post-participant discharge) reduces liability and cost but forecloses post-hoc verification if publication disputes arise.",
+    "options": [
+      "Store all raw video on encrypted local NAS with weekly backup to university archive for 24 months post-participant discharge, then delete all footage automatically, and rely on frame grabs, infrared still images, and the technician's contemporaneous annotations as the permanent research record.",
+      "Retain raw video indefinitely in university-managed secure storage with restricted access (PI and data manager only), treating it as a permanent reference for any published events, and budget the ongoing storage and GDPR compliance cost as a research operations line item.",
+      "Delete video immediately after the independent dual-scoring process is complete and archived (approximately 2\u20134 weeks post-event), preserving only de-identified still-frame annotations and structured event metadata, and institute a formal data retention policy requiring participant consent for any future re-review."
+    ],
+    "review": "The lever correctly identifies the tension between scientific rigor and privacy burden. The options, however, all assume that deletion or archival decisions are static and irreversible; none account for the practical risk that a published finding might be contested by a participant or reviewer post-hoc, requiring evidence that no longer exists, or that regulatory scrutiny might emerge requiring video retrieval\u2014making permanent deletion a potentially costly irreversible decision."
+  },
+  {
+    "lever_id": "fa2c5067-0f39-40d9-8e13-164677a1eaa9",
+    "name": "Pharmaceutical Industry Partnership Terms and Publication Rights",
+    "lever_classification": "governance \u2014 whether to accept pharmaceutical funding and under what partnership and publication-rights terms.",
+    "consequences": "A pharma industry partnership (conditional in the current budget) could provide \u20ac500K\u20131M in additional funding, accelerating participant recruitment and enabling expanded REM sleep behavior disorder cohort enrollment, but risks creating pressure to prioritize commercially viable findings or delay publication of null or inconvenient results. Retaining a 30-day pre-publication comment window for the partner is a compromise but does not prevent reputational or institutional conflicts if the partner objects strongly to a finding.",
+    "options": [
+      "Reject pharmaceutical partnerships entirely and rely exclusively on DFG and University of Bonn funding, preserving complete editorial independence and publication freedom, accepting the financial constraint and potential limits on RBD cohort expansion and phase-two ambition.",
+      "Accept a pharma partnership with a formal written clause guaranteeing academic publication rights regardless of results, the 30-day comment window, and a commitment that any partner-funded work is clearly disclosed in all publications, with escalation to the University of Bonn legal and ethics offices if disputes arise.",
+      "Establish a Strategic Research Consortium with 2\u20133 pharma partners under a shared governance model (e.g., a consortium board meeting quarterly) where each partner co-funds specific cohort modules (e.g., one partner funds RBD screening and assessment, another funds longitudinal biomarker collection) and publications are jointly authored or credited, bundling funding with explicit multi-party accountability."
+    ],
+    "review": "The tension between financial sustainability and editorial independence is genuine, and the 30-day window does provide a buffer against unilateral veto. However, none of the options addresses the subtler risk: pharma employees may serve as collaborators or advisors, and their presence in meetings and draft reviews can create unspoken pressure to frame findings favorably, even without explicit publication control\u2014institutional safeguards and conflict-of-interest policies are assumed but not specified."
+  },
+  {
+    "lever_id": "508b3cdc-dd09-40f3-9020-a7c2f804f5d4",
+    "name": "Nightly Sensor Load and Event Sensitivity Trade-Off",
+    "lever_classification": "methodology \u2014 nightly monitoring intensity versus participant tolerance and event detection completeness",
+    "consequences": "Running the minimal tiered acquisition (headband EEG, mattress, camera, ambient audio only) every night maximizes participant comfort and naturalistic behavior but may miss lower-amplitude or brief events that full PSG can resolve; conversely, nightly full PSG improves event detection but increases clinical intrusiveness, participant drop-out risk, and sensor artifact burden. The choice fundamentally shapes data quality at the cost of recruitment and retention.",
+    "options": [
+      "Deploy low-burden monitoring nightly with full PSG only on first, mid-stay, and final nights as planned, accepting that brief or atypical arousals may remain undetected outside the scheduled windows.",
+      "Rotate full PSG montage across all participants on a randomized schedule (e.g., 2 random nights per 6-night stay) to distribute the compliance burden while maintaining higher detection coverage without nightly clinical overhead.",
+      "Implement adaptive escalation: start all participants on low-burden monitoring, but flag participants whose low-burden data show high arousal rates and escalate them to nightly full PSG after 3 nights to optimize detection for those most likely to yield events."
+    ],
+    "review": "The tension here is between detection completeness and ecological validity: a true nocturnal event-capture model may demand more intensive monitoring than a genuinely naturalistic home environment can tolerate. None of the options directly address participant feedback thresholds \u2014 if even the scheduled three-night full PSG protocol causes perceptible sleep fragmentation that participants report, you may be capturing artifactually disrupted events rather than authentic parasomnia patterns."
+  },
+  {
+    "lever_id": "3eb60b86-aba6-4780-9ed2-1ff4c7b24ff7",
+    "name": "Dual-Rater Scoring Allocation and Bottleneck Relief",
+    "lever_classification": "execution \u2014 scoring workflow architecture and rater deployment",
+    "consequences": "Requiring two independent AASM-trained raters to score every captured event ensures inter-rater reliability but creates a severe annotation bottleneck; if 70\u201380% of admits yield \u22651 event and event morphology is complex, the 3-person technician team plus a clinical psychologist cannot sustain real-time and post-hoc dual scoring without external contract labor or AI-assisted pre-screening. The choice determines publication credibility, operational throughput, and contingency cost.",
+    "options": [
+      "Restrict dual-scoring to a core subset (e.g., all first admitted events per participant, plus a random 30% of subsequent events) and score remaining events single-blind by the senior technician, reporting the dual-scored subset's agreement and acknowledging single-scored variance in the methods.",
+      "Contract three part-time independent raters (e.g., sleep technologists from regional clinics) paid per event scored, rotating blind assignment so no rater is consistently paired, and reserve in-house scoring for quality-control spot-checks and inter-rater training calibration every 4 weeks.",
+      "Develop a two-tier scoring workflow: junior technicians flag and annotate probable events with a confidence score in real time, then the clinical psychologist and one senior rater jointly review only high-confidence flags and resolve disagreements on complex cases, treating technician pre-screening as a time-saving filter rather than full dual independence."
+    ],
+    "review": "The core tension is speed versus methodological purity: dual-scoring is gold-standard but expensive and slow, while single-scoring or tiered confidence-filtering introduces rater bias and publication-credibility risk. The options assume sufficient available independent raters in the Bonn region; if clinical sleep technologists are scarce or reluctant to score outside their own facility, contract labor costs and timeline delays will exceed budget and delay publications."
+  },
+  {
+    "lever_id": "1dac4cbc-c072-4cc0-8459-4fd2f9947162",
+    "name": "Facility Expansion Timing and Capacity Risk Appetite",
+    "lever_classification": "operations \u2014 residential capacity expansion trigger and growth trajectory",
+    "consequences": "Maintaining 8 active suites for the full 36 months preserves operational focus and allows the core team to master low-volume protocols, but caps total enrollment at approximately 50\u201370 participants and limits event yield, potentially underpowering Aim 2 phenotyping analyses. Expanding to 10\u201312 suites in year 2 (with additional night technician hires) multiplies event capture and publication potential but demands renovation capital mid-project, introduces staffing onboarding friction, and risks operational chaos if data-quality or safety metrics are unstable.",
+    "options": [
+      "Remain at 8 active suites through month 36, treat expansion as a phase-two activity contingent on successful grant renewal, and accept the tighter enrollment ceiling as a controlled, publication-friendly cohort design.",
+      "Expand to 10 active suites in month 18 upon evidence of stable safety and data-quality metrics (e.g., <5% false alarm rate, <2% adverse events, >90% annotation completion within 48 hours), recruiting and onboarding a fourth night technician concurrently to distribute workload.",
+      "Commit to 12 active suites by month 12, execute the renovation and technician hiring in parallel with pilot operations (months 6\u201312), and accept short-term operational friction and higher early-stage error rates as the cost of maximizing longitudinal event density for publication competitiveness."
+    ],
+    "review": "The tension is between operational robustness and scientific ambition: early expansion (option 3) compounds staffing complexity, training overhead, and technical debt during the methodological validation phase, yet delays mean lost event-capture months and a weaker grant-renewal package. The options do not account for the housing market in Bonn or ongoing renovation financing logistics \u2014 if the residential property has limited expansion potential (e.g., only 8 suites can be safely retrofitted within existing building code), some options become infeasible mid-project."
+  },
+  {
+    "lever_id": "c404cbc1-fdc7-4bfc-8bc2-8ac5d64ff53d",
+    "name": "Enrollment Inclusion Criteria Stringency and Productivity-Admission Tolerance",
+    "lever_classification": "execution \u2014 participant inclusion stringency and admission-outcome risk tolerance",
+    "consequences": "Strict inclusion criteria (e.g., \u22654 self-reported episodes per month, confirmed bed-partner collateral, prior PSG documentation) minimize unproductive admissions (those yielding no captured events) but reduce eligible referral population by an estimated 30\u201340%, slowing recruitment velocity and enrollment targets. Relaxed criteria (e.g., \u22651 episode per month reported, collateral optional, interview-only confirmation) accelerate enrollment but increase unproductive-admission rate above the 20% protocol ceiling, triggering costly recruitment-criteria review and protocol extensions.",
+    "options": [
+      "Maintain the current \u22652 episodes per month threshold with mandatory bed-partner confirmation or prior PSG, accepting unproductive admissions up to the 20% ceiling as a buffer, and activate the recruitment-review trigger only if the rate persistently exceeds 25% across a 10-participant rolling window.",
+      "Lower the inclusion threshold to \u22651 episode per month with collateral history optional (interview-confirmed only), monitor unproductive admission rate intensively (weekly rather than rolling aggregates), and implement a mid-point protocol pause at month 18 to reassess event-capture yield before continuing year-two enrollment scaling.",
+      "Implement a two-tier enrollment pathway: tier 1 admits high-confidence participants (\u22654 episodes/month, collateral, prior PSG) for standard 2\u20138 week stays; tier 2 enrolls lower-confidence participants (\u22651 episode/month, interview only) for shorter exploratory 1-week visits with the explicit goal of collecting baseline nocturnal data even if no events occur, treating tier-2 data as method-validation rather than event-yield cohort."
+    ],
+    "review": "The core tension is recruitment velocity versus event yield efficiency: relaxed criteria flood the unit with participants but generate false negatives (null admissions that consume resources), while strict criteria preserve data quality but risk missing the 36-month enrollment target and triggering external review. The options assume collateral availability is the binding constraint, but in practice, participant self-report bias and recollection errors may be driving unproductive admissions \u2014 none of the options directly propose pre-admission structured sleep diaries or actigraphy screening to improve participant self-awareness."
+  },
+  {
+    "lever_id": "cca88fe8-6ebf-472a-b81f-ed3170189ebc",
+    "name": "Real-Time Safety Decision Authority and Crisis Escalation",
+    "lever_classification": "governance \u2014 real-time safety authority distribution and crisis-response latency",
+    "consequences": "Granting the night technician authority to halt monitoring, discharge a participant, or escalate to on-call physician during suspected safety events (e.g., confusion, injury risk, fall) enables rapid response but risks inconsistent decision-making across shifts and potential liability exposure if judgment is wrong. Centralizing all real-time decisions through the PI or clinical psychologist (on-call rotation) ensures consistency but delays response time by 15\u201330 minutes during night hours, potentially worsening outcomes.",
+    "options": [
+      "Empower night technicians as the de facto first responders: develop a three-tier decision tree (routine observation and annotation, direct participant check-in and reassurance, immediate on-call physician consultation) with technician authority to escalate independently, supported by fortnightly safety-decision simulations and a 24-hour incident-review debrief protocol.",
+      "Implement a hybrid model where technicians gather real-time data and context during suspected events (vital signs, behavioral video, environmental sensor logs) and relay to an on-call sleep physician via secure video call for joint assessment within 10 minutes; technician may act unilaterally only if imminent injury risk is clear (fall, head trauma, cardiac dysrhythmia).",
+      "Require all real-time safety decisions to funnel through a single clinical coordinator who is trained in sleep-disorder recognition and protocols, stationed on-site during peak hours (8 PM\u20136 AM) and on-call outside those hours, serving as a human buffer between technician observation and physician escalation to ensure consistent adjudication."
+    ],
+    "review": "The tension is responsiveness versus consistency: night technicians are present and have real-time sensory data, but are not physicians; physicians ensure clinical judgment but may be 30 minutes away from effective intervention. The options underspecify the liability framework \u2014 if a participant is discharged or restrained based on technician judgment and later claims harm, who bears the legal and institutional risk, and does University Hospital Bonn's insurance cover independent technician decision-making authority?"
+  },
+  {
+    "lever_id": "52014483-24eb-437b-9b27-42294776646b",
+    "name": "Phase-Two Grant Narrative and Clinical-Translation Ambition",
+    "lever_classification": "dissemination \u2014 grant-renewal scope and translational-research trajectory",
+    "consequences": "Pitching phase two as 'methods expansion and larger event cohort' (conservative) aligns with 36-month publications and external-review gatekeeping but signals modest scientific scope, limiting appeal to larger federal funders and reducing leverage for pharma partnerships. Proposing 'intervention trials (e.g., cognitive behavioral therapy, pharmacologic pre-screening) and longitudinal prognostic modeling' (ambitious) attracts higher-tier grant competitions and pharma interest but requires committing to designs not yet informed by phase-one data, risking overpromise and timeline slippage.",
+    "options": [
+      "Construct the phase-two proposal as a natural follow-up to phase-one phenotyping: 'longitudinal event trajectories and within-person trigger analysis in an expanded 40\u201350 participant cohort,' positioning the work as foundational science rather than intervention-ready, targeting Deutsche Forschungsgemeinschaft (DFG) continuation funding and conservative pharma co-sponsorship.",
+      "Design phase two as a hybrid: publish phase-one methods and phenotyping work in months 24\u201336, then launch a parallel small proof-of-concept intervention arm (e.g., structured sleep hygiene coaching or beta-blocker pre-treatment in a 15-participant subgroup) during year two, testing both the intervention feasibility and the biomarker predictors needed for larger trials.",
+      "Explicitly scope phase two as 'clinical translation and diagnostic decision-support:' develop the event-triage algorithm into a decision-support tool for neurologists managing parasomnia patients, validate against real-world clinic referrals outside Bonn, and partner with a pharma or diagnostics company to fund a multi-center pilot, positioning the residential unit as the training and benchmarking core rather than the recruitment engine."
+    ],
+    "review": "The tension is scientific ambition versus execution risk: ambitious phase-two goals (interventions, multi-center translation) improve long-term funding and pharma appeal but demand successful phase-one phenotyping and algorithm development on a compressed timeline. The options assume that phase-one event-capture and phenotyping will be sufficiently mature by month 24 to warrant intervention design; if event yield falls short or inter-rater reliability is poor, the phase-two narrative becomes threadbare and delays the grant resubmission cycle."
+  },
+  {
+    "lever_id": "15659ae3-8d36-4189-a96d-9ecd01bc6e2d",
+    "name": "Bed Partner Involvement Depth and Collateral-Data Inclusion",
+    "lever_classification": "methodology \u2014 bed-partner collateral involvement and dyadic observational-data collection",
+    "consequences": "Recruiting bed partners or household members to reside in the facility or visit regularly for in-person collateral interviews and observational data strengthens event contextual richness (who witnessed what, sleep disruption, environmental triggers) and improves participant engagement, but adds significant recruitment complexity, housing cost, and participant-privacy entanglement. Relying on pre-admission structured telephone interviews with bed partners reduces operational burden but yields thinner, retrospective collateral data vulnerable to recall bias.",
+    "options": [
+      "Restrict bed-partner involvement to pre-admission structured clinical interviews conducted by phone or in the sleep clinic, with optional post-discharge debrief calls; do not invite partners to reside in or visit the facility, avoiding housing and privacy complications and keeping the unit as a participant-only research space.",
+      "Offer optional bed-partner overnight visits (one per week, separate sleeping quarters) with structured morning debriefs; compensate partners at \u20ac20 per visit, formalize confidentiality agreements, and use their observations as secondary narrative corroboration (not primary event-identification data) to enrich phenotyping context.",
+      "Actively recruit bed partners as co-residents during the participant's stay (especially for couples willing to share a larger suite if available), providing them with the same consent and daily activity structure, and treat the partner as a secondary observer and data source; collect bed-partner sleep and movement data as a control-comparison, yielding dyadic behavioral data not otherwise available."
+    ],
+    "review": "The tension is methodological richness versus operational simplicity and participant autonomy: including partners improves contextual understanding of parasomnia triggers and witnessed behaviors, but introduces a third party into intimate nocturnal data collection, complicates privacy safeguards, and may alter participant behavior more than a clinician observer. The options assume bed partners are willing and available; if recruitment targets are not met because eligible participants lack available partners or partners decline to participate, the collateral-data strategies become moot and the facility risks operating as a single-observer model."
+  }
+]
