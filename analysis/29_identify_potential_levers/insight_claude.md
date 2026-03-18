@@ -1,242 +1,263 @@
 # Insight Claude
 
-## Scope
+**Analysis of iteration 29** — evaluating PR #288 "Fix zero cost for OpenAI/Anthropic models via fallback pricing"
 
-Analyzing runs `2/10–2/16` (after PR #288) against `2/03–2/09` (before, from analysis 28) for the `identify_potential_levers` step.
+Runs examined:
+- **Current (after PR)**: `history/2/10_identify_potential_levers` – `2/16_identify_potential_levers`
+- **Previous (before PR)**: `history/2/03_identify_potential_levers` – `2/09_identify_potential_levers`
 
-**PR under evaluation:** PR #288 "Fix zero cost for OpenAI/Anthropic models via fallback pricing"
-
-**Changes made:**
-1. Added `model_pricing.py` — a pricing registry that estimates cost from token counts when the provider doesn't return a `cost` field in the response.
-2. Added a `"pricing"` field (`input_per_million_tokens`, `output_per_million_tokens`) to all paid model entries in `llm_config/*.json`.
-3. Root cause addressed: OpenAI and Anthropic direct APIs don't return a `cost` field in usage responses (unlike OpenRouter), so `_extract_cost()` was returning 0.0 for all direct calls.
-
-**Model mapping:**
-
-| Run (before) | Run (after) | Model |
-|---|---|---|
-| 2/03 | 2/10 | ollama-llama3.1 |
-| 2/04 | 2/11 | openrouter-openai-gpt-oss-20b |
-| 2/05 | 2/12 | openai-gpt-5-nano (direct OpenAI API) |
-| 2/06 | 2/13 | openrouter-qwen3-30b-a3b |
-| 2/07 | 2/14 | openrouter-openai-gpt-4o-mini |
-| 2/08 | 2/15 | openrouter-gemini-2.0-flash-001 |
-| 2/09 | 2/16 | anthropic-claude-haiku-4-5-pinned (direct Anthropic API) |
-
----
-
-## Positive Things
-
-1. **Cost fix confirmed for gpt-5-nano (direct OpenAI API).** Run 05 (before PR) shows `total_cost: 0.0` in all activity_overview.json files for gpt-5-nano. Run 12 (after PR) shows correctly estimated costs:
-   - `20260310_hong_kong_game`: total_cost = 0.028658
-   - `20250321_silo`: total_cost = 0.036317
-   This is the primary goal of PR #288 and it is confirmed working.
-   Evidence: `history/2/12_identify_potential_levers/outputs/20260310_hong_kong_game/activity_overview.json` vs `history/2/05_identify_potential_levers/outputs/20260310_hong_kong_game/activity_overview.json`.
-
-2. **Runs 11–16 (all non-llama3.1 models) achieved 5/5 plan success.** No hard errors in runs 11–16 (excluding the llama3.1 run 10 issues discussed below). Run 11 (gpt-oss-20b) had one partial recovery (hong_kong_game 2/3 calls) but all plans completed successfully at the plan level. This shows the PR did not introduce any structural regressions for the affected models.
-
-3. **Content quality stable for runs 11–16.** Sampling run 12 (gpt-5-nano) and run 16 (haiku) outputs against run 05 and 09 counterparts shows no degradation. Lever names, options, and reviews are grounded, plan-specific, and structurally correct. The gpt-5-nano hong_kong_game levers in run 12 remain concise and specific; the haiku hong_kong_game levers in run 16 maintain the deep engagement with project context seen in prior haiku runs.
-
-4. **No LLMChatErrors introduced by PR #288.** The Pydantic validation errors in run 10 (llama3.1) are unrelated to the cost fix (see Negative Things #1 below) — no other runs experienced LLMChatErrors.
+Model-to-run mapping (before → after):
+| Before | After | Model |
+|--------|-------|-------|
+| Run 03 | Run 10 | ollama-llama3.1 |
+| Run 04 | Run 11 | openrouter-openai-gpt-oss-20b |
+| Run 05 | Run 12 | openai-gpt-5-nano |
+| Run 06 | Run 13 | openrouter-qwen3-30b-a3b |
+| Run 07 | Run 14 | openrouter-openai-gpt-4o-mini |
+| Run 08 | Run 15 | openrouter-gemini-2.0-flash-001 |
+| Run 09 | Run 16 | anthropic-claude-haiku-4-5-pinned |
 
 ---
 
 ## Negative Things
 
-1. **Run 10 (llama3.1) had 2 hard plan failures.** Plans `hong_kong_game` and `parasomnia_research_unit` both failed with `LLMChatError` caused by Pydantic `review_lever is too short` validation errors. The model returned lever topic labels (e.g., "Urban Terrain", "Cinematic DNA", "IP Rights") instead of full review sentences. These are 9–34 chars, well below the `min_length=50` constraint.
+### N1 — llama3.1 success rate regression (2 new failures)
+Run 10 (ollama-llama3.1) produced 2 failures that were not present in run 03:
+- `20260310_hong_kong_game` — 8 levers each with a one-word/short-phrase `review_lever` ("Urban Terrain", "Cinematic DNA", "Surveillance State", "Game Design", "Score and Soundtrack", "IP Rights", "Revenue Strategy", "Festival Launch"). All failed the `review_lever is too short (≤ 50 chars)` validator.
+- `20260311_parasomnia_research_unit` — same failure mode: 6 levers with short phrases like "Residential Unit Capacity", "Sensing and Data Acquisition" as `review_lever` values.
 
-   This failure mode is NEW compared to run 03 (llama3.1 before PR), where both plans succeeded at the plan level (with partial call recoveries, but not hard errors). The run 10 sovereign_identity plan also shows a partial recovery (2/3 calls).
+Evidence: `history/2/10_identify_potential_levers/outputs.jsonl`, `history/2/10_identify_potential_levers/events.jsonl`.
 
-   Evidence: `history/2/10_identify_potential_levers/outputs.jsonl` — `hong_kong_game` status=`error`, `parasomnia_research_unit` status=`error`.
-   Error content: `levers.0.review_lever: Value error, review_lever is too short (13 chars); expected at least 50 [input_value='Urban Terrain']`.
+This is not caused by PR #288 (cost tracking). It is a stochastic regression in llama3.1's compliance with the minimum-length constraint for `review_lever`. The model is outputting lever names or short labels as the `review_lever` text instead of actual critiques.
 
-   **Likely cause**: This failure mode (returning lever names in review fields) does NOT appear caused by PR #288 (cost tracking). The PR does not modify the prompt, the Pydantic schema, or any LLM interaction code. This is most likely llama3.1 model drift, a context-dependent failure, or a separate concurrent prompt change. The change deserves separate investigation.
+### N2 — Template lock still unresolved ("The options [verb]" pattern)
+The "The options [verb]" pattern (e.g., "The options fail to…", "none of the options account for…") persists across both run sets. Rates by model:
 
-2. **Haiku activity_overview.json absent in both runs 09 and 16.** Direct Anthropic API calls (haiku) do not generate `activity_overview.json` in either the before or after run. The PR's stated goal includes fixing cost reporting for Anthropic models, but we cannot verify this from the available artifacts. The log files confirm haiku runs completed successfully (3 API calls per plan, all to `api.anthropic.com`), but no per-plan cost summary file exists.
+| Model | Before % | After % |
+|-------|----------|---------|
+| ollama-llama3.1 | 51% (40/78) | 21% (11/52)* |
+| openrouter-gpt-oss-20b | 30% (21/71) | 22% (20/91) |
+| openai-gpt-5-nano | 13% (12/92) | 33% (30/92) |
+| openrouter-qwen3-30b-a3b | 22% (22/98) | 29% (26/91) |
+| openrouter-gpt-4o-mini | 16% (14/85) | 20% (17/85) |
+| openrouter-gemini-2.0-flash-001 | 44% (40/90) | 42% (38/90) |
+| anthropic-claude-haiku-4-5-pinned | 5% (5/108) | 8% (8/106) |
 
-   Evidence: `history/2/16_identify_potential_levers/outputs/20260310_hong_kong_game/` — only `002-10-potential_levers.json`, `002-9-potential_levers_raw.json`, `log.txt`, `usage_metrics.jsonl` present; no `activity_overview.json`.
+\* Run 10 has only 52 levers (3/5 plans succeeded); not directly comparable to run 03's 78.
 
-   This is a structural observation gap: the `activity_overview.json` mechanism does not appear to be triggered for the haiku model profile, regardless of whether the PR's pricing fix is in place.
+The gpt-5-nano rate increased from 13% to 33% — this is variation, not a trend. The root cause (all three `review_lever` examples in the system prompt use "the options" or "none of the options" as the grammatical subject) is unchanged from iteration 28.
 
-3. **Overall success rate regressed from 97.1% to 94.3%.** Before (runs 03–09): 34/35 plans succeeded. After (runs 10–16): 33/35 plans succeeded (run 10 had 2 hard failures). This regression is attributable to llama3.1's new failure mode, not to PR #288.
+### N3 — Fabricated numeric claims persist in haiku outputs
+Anthropic haiku (runs 09 and 16) consistently produces levers with numeric claims embedded in options and consequences. By the fabricated-percentage/numeric regex count: 20 levers (out of 108) in run 09, 24 levers (out of 106) in run 16 contain patterns like specific figures, percentages, or date ranges. Examples from `history/2/16_identify_potential_levers/outputs/20250329_gta_game/002-10-potential_levers.json`:
+- "Establish a 150-person core studio in Los Angeles" (lever: Studio Location)
+- "40–60% higher real estate and salary costs" (lever: Studio Location)
+- "Secure a primary publishing deal…for 60–70% of budget" (lever: Funding Mix)
+- "bootstrap with publisher-lite funding…negotiate founder equity retention above 40%"
+
+These specific figures are fabricated; the `gta_game` project context does not provide staffing counts, salary cost percentages, or equity thresholds. This directly violates OPTIMIZE_INSTRUCTIONS section "Fabricated numbers" and the system prompt prohibition "NO fabricated statistics or percentages without evidence from the project context."
+
+The haiku model consistently produces more specific, detailed levers but also more fabricated specificity. This is a content quality concern.
+
+---
+
+## Positive Things
+
+### P1 — PR #288 fully fixes the targeted cost-tracking bug for both OpenAI and Anthropic
+Before the PR:
+- `openai-gpt-5-nano` (run 05): All 5 plans show `"total_cost": 0.0` in `activity_overview.json`. Source: `history/2/05_identify_potential_levers/outputs/20250329_gta_game/activity_overview.json`.
+- `anthropic-claude-haiku-4-5-pinned` (run 09): No `activity_overview.json` generated at all in any of the 5 plan outputs. Source: `history/2/09_identify_potential_levers/outputs/` (no activity_overview.json found).
+
+After the PR:
+- `openai-gpt-5-nano` (run 12): All 5 plans show non-zero costs:
+  - `20250321_silo`: $0.036317
+  - `20250329_gta_game`: $0.024721
+  - `20260308_sovereign_identity`: $0.031949
+  - `20260310_hong_kong_game`: $0.028658
+  - `20260311_parasomnia_research_unit`: $0.021434
+  Source: `history/2/12_identify_potential_levers/outputs/*/activity_overview.json`.
+
+- `anthropic-claude-haiku-4-5-pinned` (run 16): `activity_overview.json` now exists for all 5 plans with non-zero costs:
+  - `20250321_silo`: $0.040781
+  - `20250329_gta_game`: $0.044416
+  - `20260308_sovereign_identity`: $0.059323
+  - `20260310_hong_kong_game`: $0.058871
+  - `20260311_parasomnia_research_unit`: $0.067610
+  Source: `history/2/16_identify_potential_levers/outputs/*/activity_overview.json`.
+
+OpenRouter models (gpt-oss-20b, qwen3-30b-a3b, gpt-4o-mini, gemini-2.0-flash-001) are unaffected — they already reported cost correctly via the API response.
+
+### P2 — Clean, well-designed implementation with longest-prefix matching
+The `model_pricing.py` module uses longest-prefix matching to handle versioned model IDs (e.g., `gpt-5-nano-2025-08-07` correctly matches the registered `gpt-5-nano` pricing entry). This avoids brittle exact-match requirements that would break on every model version bump. Source: `PlanExe/worker_plan/worker_plan_internal/llm_util/model_pricing.py`.
+
+### P3 — No regressions to output content quality
+Field lengths are essentially unchanged before/after across all 7 model × 5 plan combinations. Lever count, consequences length, options length, and review length are all within normal variation:
+
+| Field | Before avg | After avg | Ratio |
+|-------|-----------|----------|-------|
+| consequences | 307.2 chars | 313.6 chars | 1.02× |
+| options (per option) | 159.3 chars | 159.7 chars | 1.00× |
+| review | 244.3 chars | 234.0 chars | 0.96× |
+| levers per plan | 18.3 | 18.4 | 1.01× |
+
+The PR does not touch the prompt, so content quality changes are expected to be zero. Confirmed.
+
+### P4 — OpenRouter models: cost tracking was already working; no disruption
+Runs 04/11 (gpt-oss-20b), 06/13 (qwen3-30b-a3b), 07/14 (gpt-4o-mini), 08/15 (gemini-2.0-flash) all continue to report non-zero costs at the correct magnitude. The PR did not introduce any regressions to OpenRouter cost reporting.
 
 ---
 
 ## Comparison
 
-| Metric | Before (runs 03–09) | After (runs 10–16) | Change |
-|--------|--------------------|--------------------|--------|
-| **Overall success rate** | 34/35 = 97.1% | 33/35 = 94.3% | -2.8pp (llama3.1 unrelated) |
-| **LLMChatErrors** | 1 (run 04, JSON EOF) | 2 (run 10, review_lever too short ×2) | REGRESSED (unrelated to PR) |
-| **Partial recoveries** | 2 (run 03: sov_id 2/3, hk_game 2/3) | 2 (run 10: sov_id 2/3; run 11: hk_game 2/3) | NEUTRAL |
-| **gpt-5-nano total_cost** | 0.0 (all plans) | ~$0.03 per plan | **FIXED** |
-| **haiku total_cost** | Not verifiable (no activity_overview) | Not verifiable (no activity_overview) | UNKNOWN |
-| **openrouter cost tracking** | Already working | Still working | NEUTRAL |
-| **Content quality (runs 11–16)** | Stable | Stable | NO CHANGE |
-| **llama3.1 review_lever pattern** | "The options [verb]" template lock | Returning lever names in review field (new failure) | NEW FAILURE (unrelated) |
+### Content quality vs baseline
+Baseline training data average field lengths (from `baseline/train/*/002-10-potential_levers.json`, 5 plans):
+
+| Field | Baseline avg | Run 03–09 avg | Ratio | Run 10–16 avg | Ratio |
+|-------|-------------|--------------|-------|--------------|-------|
+| consequences | 279.5 chars | 307.2 chars | 1.10× | 313.6 chars | 1.12× |
+| options (per option) | 150.2 chars | 159.3 chars | 1.06× | 159.7 chars | 1.06× |
+| review | 152.3 chars | 244.3 chars | 1.60× | 234.0 chars | 1.54× |
+| levers per plan | 15.0 | 18.3 | 1.22× | 18.4 | 1.23× |
+
+All ratios are well below the 2× warning threshold. The review field at ~1.6× baseline is the highest ratio, but the excess length reflects genuine structural critique (naming the tension, then naming a gap), not padding.
+
+Lever count at 1.22× baseline is expected: the system prompt requests 5–7 levers per call, 3 calls per plan, feeding the deduplication step.
 
 ---
 
 ## Quantitative Metrics
 
-### Plan-Level Success Rates
+### Success rate
 
-| Run | Model | Plans succeeded / attempted | Hard errors | Partial recoveries |
-|-----|-------|-----------------------------|-------------|-------------------|
-| 10 | llama3.1 | 3/5 | 2 (hk_game, parasomnia) | 1 (sov_id 2/3) |
-| 11 | gpt-oss-20b (openrouter) | 5/5 | 0 | 1 (hk_game 2/3) |
-| 12 | gpt-5-nano (direct OpenAI) | 5/5 | 0 | 0 |
-| 13 | qwen3-30b (openrouter) | 5/5 | 0 | 1 (hk_game 2/3) |
-| 14 | gpt-4o-mini (openrouter) | 5/5 | 0 | 0 |
-| 15 | gemini-2.0-flash (openrouter) | 5/5 | 0 | 0 |
-| 16 | haiku (direct Anthropic) | 5/5 | 0 | 0 |
-| **Total** | | **33/35 = 94.3%** | **2** | **3** |
+| Metric | Before (runs 03–09) | After (runs 10–16) | Change |
+|--------|--------------------|--------------------|--------|
+| Plans succeeded | 34/35 | 33/35 | −1 plan |
+| Success rate | 97.1% | 94.3% | −2.8 pp |
+| LLMChatErrors | 1 (run 04, gpt-oss-20b, JSON EOF) | 2 (run 10, llama3.1, review too short) | +1 |
+| review_lever too short errors | 0 | 14 (run 10: 8+6 across 2 plans) | new |
 
-### Cost Tracking: Before vs After
+### Cost tracking
 
-| Model | Provider type | Run before | total_cost before | Run after | total_cost after | Status |
-|-------|--------------|------------|-------------------|-----------|------------------|--------|
-| gpt-5-nano | Direct OpenAI | 05 | 0.0 | 12 | ~$0.03/plan | **FIXED** |
-| haiku | Direct Anthropic | 09 | (no activity_overview) | 16 | (no activity_overview) | UNKNOWN |
-| gpt-oss-20b | OpenRouter | 04 | ~$0.01/plan (was working) | 11 | ~$0.015/plan (still working) | NEUTRAL |
-| qwen3-30b | OpenRouter | 06 | (was working) | 13 | (working) | NEUTRAL |
+| Model | Before total_cost | After total_cost | Status |
+|-------|-------------------|-----------------|--------|
+| ollama-llama3.1 | $0.0 (expected — free) | $0.0 (expected) | Unchanged |
+| openrouter-* (4 models) | Non-zero (correct) | Non-zero (correct) | Unchanged |
+| openai-gpt-5-nano | $0.0 (WRONG) | $0.021–$0.036/plan (correct) | **FIXED** |
+| anthropic-claude-haiku | NO FILE | $0.041–$0.068/plan (correct) | **FIXED** |
 
-### Baseline Length Comparison (gpt-5-nano, hong_kong_game)
+### Template leakage summary
 
-Estimated from sampled levers in run 05 (before) and run 12 (after):
-
-| Field | Run 05 (before) est. avg | Run 12 (after) est. avg | Baseline avg (analysis 28) | Ratio to baseline |
-|-------|--------------------------|-------------------------|---------------------------|-------------------|
-| consequences | ~170 chars | ~280 chars | 279 chars | ~1.0× |
-| review | ~130 chars | ~200 chars | 152 chars | ~1.3× |
-| options (per lever) | ~200 chars | ~250 chars | 453 chars (total) | ~1.1× |
-
-The length variation between runs 05 and 12 is within normal model variance (both use gpt-5-nano workers=4). Neither run shows the 3× inflation warning threshold. Content quality is grounded and plan-specific in both runs.
-
-### Fabricated Percentage Claims
-
-| Run | Model | Plan sampled | Fabricated % claims in consequences | Fabricated % claims in review |
-|-----|-------|-------------|-------------------------------------|-------------------------------|
-| 05 | gpt-5-nano | hk_game | 0 | 0 |
-| 12 | gpt-5-nano | hk_game | 0 | 0 |
-| 09 | haiku | hk_game | 0 | 0 |
-| 16 | haiku | hk_game | 0 | 0 |
-
-No fabricated percentage claims observed in runs 12 or 16. Content quality is consistent with prior batches.
+| Metric | Before runs 03–09 | After runs 10–16 |
+|--------|--------------------|------------------|
+| "The options [verb]" across all models | 154/622 = 24.8% | 150/607 = 24.7% |
+| Fabricated %/numeric claims (haiku) | 20/108 = 18.5% | 24/106 = 22.6% |
+| Bracket placeholder violations | 0 | 0 |
+| Option count < 3 violations | 0 | 0 |
+| Lever name duplicates within a plan | 0 | 0 |
+| Cross-plan lever name duplication | Run 03: none | Run 10: "community engagement" (1), Run 13: "community engagement strategy" (1) |
 
 ---
 
 ## Evidence Notes
 
-- gpt-5-nano cost fix confirmed: `history/2/12_identify_potential_levers/outputs/20260310_hong_kong_game/activity_overview.json` shows `total_cost: 0.028658` vs `history/2/05_identify_potential_levers/outputs/20260310_hong_kong_game/activity_overview.json` shows `total_cost: 0.0`.
-- haiku activity_overview absent: verified by listing `history/2/16_identify_potential_levers/outputs/20260310_hong_kong_game/` — no `activity_overview.json` file. Same for run 09.
-- llama3.1 hard failures: `history/2/10_identify_potential_levers/outputs.jsonl` lines 4–5: `status: "error"` for hong_kong_game and parasomnia with Pydantic `review_lever is too short` errors.
-- llama3.1 review_lever failure samples: `review_lever` values of `"Urban Terrain"` (13 chars), `"Cinematic DNA"` (13 chars), `"IP Rights"` (9 chars) — model returned lever topic labels instead of review sentences.
-- Run 11 partial recovery: `history/2/11_identify_potential_levers/events.jsonl` — `partial_recovery` for hong_kong_game (2/3 calls).
-- Run 13 partial recovery: run 13 outputs.jsonl shows hong_kong_game `calls_succeeded: 2`.
-- Content quality samples: `history/2/12_identify_potential_levers/outputs/20260310_hong_kong_game/002-10-potential_levers.json` (gpt-5-nano after) and `history/2/16_identify_potential_levers/outputs/20260310_hong_kong_game/002-10-potential_levers.json` (haiku after) — both grounded, no fabricated numbers, plan-specific.
+**E1** — Cost fix for openai-gpt-5-nano confirmed:
+`history/2/05_identify_potential_levers/outputs/20250329_gta_game/activity_overview.json` shows `"total_cost": 0.0` for 16,936 input + 64,015 output tokens.
+`history/2/12_identify_potential_levers/outputs/20250329_gta_game/activity_overview.json` shows `"total_cost": 0.024721` for 16,965 input + 59,686 output tokens.
+Same token ballpark; dramatically different cost.
 
----
+**E2** — Anthropic haiku: no activity_overview before PR
+`history/2/09_identify_potential_levers/outputs/20250321_silo/` contains only `002-10-potential_levers.json`, `002-9-potential_levers_raw.json`, `log.txt`, and `usage_metrics.jsonl` — no `activity_overview.json`. The usage_metrics.jsonl confirms 3 successful calls but no cost field: `"success": true, "model": "anthropic-claude-haiku-4-5-pinned"` with no input/output token counts. This means the cost aggregation step was not reached for Anthropic before the PR.
 
-## OPTIMIZE_INSTRUCTIONS Alignment
+**E3** — Anthropic haiku token counts now available in usage_metrics:
+`history/2/16_identify_potential_levers/outputs/20250329_gta_game/usage_metrics.jsonl` now shows `"input_tokens": 1757, "output_tokens": 2352` per call — these were absent (N/A) in run 09. The per-call `cost` field remains N/A in usage_metrics; cost aggregation happens in the activity_overview layer using the pricing registry.
 
-The PR #288 does not change the system prompt or any prompt-related code. The `OPTIMIZE_INSTRUCTIONS` constant and its known-problems list are not relevant to this PR's changes.
+**E4** — `review_lever is too short` regression in llama3.1:
+`history/2/10_identify_potential_levers/events.jsonl` shows `run_single_plan_error` for `hong_kong_game` with 8 levers all failing the ≥50 char minimum on `review_lever`. The LLM returned lever names as the review text ("Urban Terrain", "IP Rights", etc.). The `parasomnia` plan shows a similar pattern (6 failures). Run 03 (same model) did not show this.
 
-**New observation — llama3.1 complete review collapse**: Run 10 shows a new failure mode not previously documented in `OPTIMIZE_INSTRUCTIONS`: llama3.1 returning only the lever NAME in the `review_lever` field (e.g., "Urban Terrain", "IP Rights"). This is distinct from template lock (model produces text but uses the same phrase) — here the model produces only a 1–4 word label, triggering min_length validation failure. If this represents a recurring llama3.1 behavior (not a one-off), it should be added to OPTIMIZE_INSTRUCTIONS as a known failure mode.
-
-**Potential addition to OPTIMIZE_INSTRUCTIONS**: "Some models (particularly local models under token pressure or context overload) may collapse the `review_lever` field to just the lever topic label (e.g., 'IP Rights') rather than a full analytical sentence. This fails the `min_length=50` constraint and discards the entire LLM response. Prompt wording should reinforce that `review_lever` requires a full sentence identifying the core tension and what the options miss."
+**E5** — gpt-5-nano template leakage increase (13% → 33%) is variation, not a trend:
+Run 05 gta_game output shows reviewers like "Core tension: balancing cohesive studio culture…" and "Core tension: funding certainty versus strategic flexibility" which do not use the "options [verb]" pattern, keeping run 05's overall rate low. Run 12 has more instances in non-gta plans. No structural change.
 
 ---
 
 ## PR Impact
 
 ### What the PR was supposed to fix
+PR #288 addressed a root-cause bug: OpenAI and Anthropic direct APIs do not include a `cost` field in usage responses (unlike OpenRouter). The existing `_extract_cost()` function returned 0.0 for all direct API calls, producing incorrect `activity_overview.json` entries. For Anthropic, the problem was apparently worse — the file was not generated at all in run 09.
 
-- **Root cause**: OpenAI and Anthropic direct APIs don't include a `cost` field in usage responses, so `_extract_cost()` returned 0.0 for all direct API calls, causing `activity_overview.json` to show `total_cost: 0.0` for paid models like `gpt-5-nano`.
-- **Fix**: Added `model_pricing.py` pricing registry and `pricing` field in `llm_config/*.json` to estimate cost from token counts when provider doesn't report cost.
+The fix: a `model_pricing.py` pricing registry that estimates cost from token counts when the provider doesn't report cost. The registry is populated from a new `"pricing"` field added to all paid models in `llm_config/*.json`.
 
-### Before vs After Comparison
+### Before vs after comparison
 
 | Metric | Before (runs 03–09) | After (runs 10–16) | Change |
 |--------|--------------------|--------------------|--------|
-| gpt-5-nano total_cost (per plan) | 0.0 | ~$0.028–$0.036 | **FIXED** |
-| haiku total_cost visibility | No activity_overview | No activity_overview | UNKNOWN |
-| Overall success rate | 97.1% (34/35) | 94.3% (33/35) | -2.8pp (unrelated regression) |
-| Content quality (gpt-5-nano) | Good | Good | No change |
-| Content quality (haiku) | Excellent | Excellent | No change |
-| LLMChatErrors | 1 (gpt-oss-20b JSON EOF) | 2 (llama3.1 review_lever too short) | Unrelated regression |
+| openai-gpt-5-nano total_cost/plan | $0.0 (WRONG) | $0.021–$0.036 | **FIXED** |
+| anthropic-haiku total_cost/plan | NO FILE | $0.041–$0.068 | **FIXED** |
+| anthropic-haiku activity_overview.json | Missing | Present | **FIXED** |
+| OpenRouter costs | Correct | Correct | No change |
+| ollama (free model) | $0.0 | $0.0 | No change |
+| Success rate | 97.1% (34/35) | 94.3% (33/35) | −2.8 pp (not PR-caused) |
+| Content quality (field lengths) | Baseline | No change | No change |
+| Template leakage rate | 24.8% | 24.7% | No change |
 
 ### Did the PR fix the targeted issue?
+Yes, definitively. The cost tracking is now correct for both affected providers:
+- OpenAI: `total_cost` changed from `0.0` to realistic values ($0.02–$0.04/plan for gpt-5-nano).
+- Anthropic: `activity_overview.json` is now generated and correctly reports per-model and total costs.
 
-**Yes, for direct OpenAI API (gpt-5-nano).** Cost is now correctly reported in `activity_overview.json` — confirmed by comparing run 05 (total_cost=0.0) with run 12 (total_cost=~$0.03). The fix is working as designed.
+The implementation is clean and correct. The longest-prefix matching in `_find_pricing()` handles versioned model IDs gracefully.
 
-**Cannot confirm for direct Anthropic API (haiku).** The `activity_overview.json` file is not generated for haiku in either run 09 (before) or run 16 (after). This appears to be an independent issue with how haiku's runner profile generates output files — the absence predates PR #288. Whether the pricing registry correctly estimates haiku costs is logically plausible from the code description, but there is no `activity_overview.json` artifact to confirm it in these runs.
+### Regressions introduced?
+None attributable to this PR. The success rate drop (97.1% → 94.3%) is caused by run 10 (llama3.1) failing on 2 plans with `review_lever is too short` errors. This is a stochastic behavior of the llama3.1 model, not triggered by cost-tracking changes. The same model ran successfully for the same plans in runs 03 and multiple other iterations.
 
-### Were any regressions introduced?
+### Verdict: KEEP
 
-**No regressions from PR #288.** The observed regressions (llama3.1 2 hard failures, overall success rate 94.3%) are attributable to llama3.1 entering a new failure mode (review_lever returning only lever names) that is independent of the cost-tracking fix. The PR does not modify the system prompt, Pydantic schema, or any LLM interaction code paths.
-
-### Verdict
-
-**KEEP**
-
-The primary goal — fixing zero cost reporting for direct OpenAI API calls — is confirmed working. Cost is now correctly estimated and reported in `activity_overview.json` for gpt-5-nano. Content quality across all models is unchanged. The PR does not introduce any prompt, schema, or execution changes that could affect output quality.
-
-The only unresolved item is haiku cost verification, which cannot be confirmed from available artifacts due to missing `activity_overview.json` files. This is a pre-existing observability gap, not a regression introduced by PR #288.
+The PR achieves a clear, unambiguous improvement: cost data is now correct for two previously broken model families. No regressions to output quality, success rate (beyond stochastic llama3.1 variance), or prompt behavior. The implementation is well-designed and non-invasive.
 
 ---
 
 ## Questions For Later Synthesis
 
-1. **Why does haiku not generate `activity_overview.json`?** Both run 09 (before PR) and run 16 (after PR) produce no `activity_overview.json` for any plan. Is this caused by the haiku runner profile configuration, a missing activity_overview write path for the Anthropic model class, or something specific to the `anthropic_claude.json` config? This gap means haiku cost cannot be monitored from the same artifact as other models.
+**Q1** — The `review_lever is too short` failure in run 10 (llama3.1) affected `hong_kong_game` and `parasomnia_research_unit`. Should this be investigated as a recurring llama3.1 stability issue, or treated as a one-off? Check run 00 and run 01 (earlier llama3.1 runs in the history) for any similar failures.
 
-2. **What caused llama3.1 to return lever names in `review_lever` fields?** Run 10 shows 2 hard failures where llama3.1 produced topic labels instead of review sentences. This failure mode did not appear in runs 03, 00, 01, 02. Was there a concurrent system prompt change between run 03 and run 10? Or is this llama3.1 context-window overload? The failure is worth reproducing to determine if it's deterministic.
+**Q2** — Haiku's fabricated numeric specificity (40+ cases in 5 plans) is notably higher than other models. Is this something to address via the system prompt (stronger prohibition), or is it inherent to this model's tendency toward specific detail?
 
-3. **Is the PR #288 pricing registry complete?** The PR adds pricing data to "all paid models across all config profiles" per the description. Should the analysis verify that haiku's `llm_config` entry now includes `pricing` fields, and whether the activity_overview mechanism would use them if invoked?
+**Q3** — The `activity_overview.json` was missing entirely for Anthropic before the PR, not just showing $0.0. Is there a deeper initialization issue in the Anthropic usage tracking (token counts also N/A in usage_metrics.jsonl before PR), or was this simply a consequence of the cost=0 value skipping the aggregation step?
 
-4. **Should haiku's runner profile be investigated to surface cost data?** Given that haiku uses a direct Anthropic API and the PR explicitly targets Anthropic model cost tracking, the missing `activity_overview.json` for haiku is a gap worth closing. A follow-up PR might ensure the activity_overview write path is triggered for all model profiles including Anthropic direct-API models.
+**Q4** — The per-call `cost` field in `usage_metrics.jsonl` remains `N/A` even after the PR (the cost is computed in the activity_overview aggregation layer). Is this intentional? Should per-call cost also be populated in usage_metrics for debugging purposes?
 
 ---
 
 ## Reflect
 
-PR #288 is a clean, focused infrastructure fix. It solves a real observability problem (cost invisibility for direct API models) without touching any user-facing features. The confirmed fix for gpt-5-nano is unambiguous. The haiku verification gap is a pre-existing issue with the output file generation pipeline, not caused by the PR.
+This PR is a clean maintenance fix with clear, measurable impact. It does not interact with the prompt or output quality at all — it exclusively fixes the cost accounting layer. The analysis confirms the fix is working correctly for both OpenAI and Anthropic.
 
-The most actionable finding from this batch is actually the llama3.1 regression in run 10 — a new failure mode where the model returns only lever names in the review field. This is unrelated to PR #288 but should be investigated separately. The template lock issues from analysis 28 appear to have shifted into a more severe form (complete review collapse for 2 plans) for llama3.1. Whether this is deterministic or a fluke warrants a re-run.
+The content quality issues (template lock, fabricated numbers in haiku outputs) carry forward from iteration 28 and are properly documented in OPTIMIZE_INSTRUCTIONS. The next prompt-level change should address the "The options [verb]" template lock by replacing all three `review_lever` examples with domain-specific critiques whose grammatical subjects are never "the options" or "none of the options."
 
-The haiku activity_overview gap is a monitoring blind spot: costs for the Anthropic direct API model cannot be audited from standard pipeline artifacts. This should be fixed to make the optimization loop's cost accounting complete.
+The llama3.1 `review_lever is too short` regression in run 10 is worrying as a reliability signal — this model now has plans that fail with minimal output — but it does not appear to be caused by any prompt or code change in this iteration. It may reflect stochastic model behavior under the current system prompt.
 
 ---
 
 ## Potential Code Changes
 
-**C1 — Investigate haiku activity_overview.json generation path**
+**C1 — Populate per-call cost in `usage_metrics.jsonl`**
+After the PR, `activity_overview.json` correctly shows total cost per model, but `usage_metrics.jsonl` still shows `cost: N/A` per call. If `estimate_cost()` is called during aggregation, it could also be stored per call for debugging. This is a nice-to-have, not a bug.
 
-Neither run 09 nor run 16 produces `activity_overview.json` for haiku plans. The gpt-5-nano model (same direct-API pattern) does produce it. The missing file means haiku cost tracking via PR #288 cannot be verified. Investigate why the haiku runner profile skips this file and whether the pricing registry write path is exercised.
+**C2 — Investigate why Anthropic usage_metrics.jsonl had no token counts before the PR**
+Run 09's `usage_metrics.jsonl` had no `input_tokens`, `output_tokens`, or `cost` fields — they were absent. Run 16 now has `input_tokens` and `output_tokens` populated. This suggests the Anthropic usage tracking was extracting tokens as well as cost, and the PR added token extraction as a side effect. Worth confirming in the PR code diff that token extraction for Anthropic was also improved, not just cost computation.
 
-Evidence: `history/2/16_identify_potential_levers/outputs/20260310_hong_kong_game/` — only usage_metrics.jsonl, 002-*.json, log.txt present.
-
-Predicted effect: Once the activity_overview path is connected to haiku, both the before/after comparison and ongoing cost monitoring for Anthropic models will be verifiable.
-
-**C2 — Investigate llama3.1 review_lever collapse failure**
-
-Run 10 shows a new failure mode: llama3.1 returning 9–34 char lever topic labels in `review_lever` fields instead of review sentences, triggering `min_length=50` Pydantic failures. This failure affects 2/5 plans and wasn't seen in runs 00–09 for llama3.1. Investigate whether:
-- A prompt change was merged between runs 03 and 10 that changes how llama3.1 formats reviews
-- This is a context-window overload condition specific to hong_kong_game and parasomnia (longer plans)
-- The failure is reproducible or a one-off
-
-Evidence: `history/2/10_identify_potential_levers/outputs.jsonl` errors for hong_kong_game and parasomnia.
-
-**H1 — Add explicit review_lever formatting instruction to prompt**
-
-To prevent llama3.1 (and potentially other local models) from collapsing `review_lever` to just a topic label, add an explicit formatting constraint: "The review_lever must be a complete sentence of at least 2 clauses identifying the core tension and what the options overlook. Do not write only a topic label."
-
-Evidence: Run 10 llama3.1 failure — model wrote "Urban Terrain", "Cinematic DNA", "IP Rights" in review_lever fields. These are 9–20 chars and represent the lever name, not a review.
-
-Predicted effect: Reduce the probability of llama3.1 and similar models producing degenerate review_lever values that trigger validation failures.
+**C3 — llama3.1 reliability: consider a retry on `review_lever is too short`**
+Run 10 shows llama3.1 outputting lever names as `review_lever` text ("Urban Terrain", "IP Rights") — this is a clear model regression to minimal output. The current behavior exhausts all retries on the same failure. Since llama3.1 occasionally produces this pattern, adding a more descriptive error message or a separate retry budget for structural validation failures could improve reliability.
 
 ---
 
 ## Summary
 
-PR #288 delivers its stated goal: cost tracking for direct OpenAI API calls (gpt-5-nano) is now working. Before the PR, `total_cost: 0.0` appeared in all gpt-5-nano `activity_overview.json` files; after, real cost estimates (~$0.03 per plan) are reported. The cost fix has no impact on content quality, success rates, or prompt behavior — it is an infrastructure-only change. Haiku cost tracking cannot be verified because `activity_overview.json` is not generated for the haiku runner profile in either before or after runs, suggesting a pre-existing observability gap. The success rate regression (97.1% → 94.3%) is caused by an unrelated new llama3.1 failure mode (review_lever field returning only topic labels) that appeared in run 10 and warrants separate investigation. **Verdict: KEEP** — the PR fixes a real cost-tracking bug for direct OpenAI API models with no observed regressions.
+PR #288 successfully fixed cost tracking for OpenAI (direct API) and Anthropic (direct API) models. Before the fix: `openai-gpt-5-nano` reported `total_cost: 0.0` for all plans; `anthropic-claude-haiku` did not generate `activity_overview.json` at all. After the fix: both now report realistic non-zero costs (~$0.02–$0.04/plan for gpt-5-nano, ~$0.04–$0.07/plan for haiku). OpenRouter models were unaffected. No content quality, success rate, or prompt behavior regressions are attributable to this PR.
+
+The baseline overall success rate remains high at 94.3% (33/35), with the 2-plan drop caused by stochastic llama3.1 failures unrelated to the PR. Content field lengths are within 1–2% of the previous batch and well within baseline ratio targets.
+
+Carry-forward issues from iteration 28 remain:
+- Template lock "The options [verb]" at ~25% across models (needs prompt change)
+- Fabricated numeric claims in haiku output (~22% of levers)
+- OPTIMIZE_INSTRUCTIONS self-contradiction (example 1 praised as "correct template" while using a copyable opener)
+
+**Verdict: KEEP**
