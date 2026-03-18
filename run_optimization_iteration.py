@@ -25,7 +25,7 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 PROMPT_LAB_DIR = SCRIPT_DIR
 PLANEXE_DIR = Path("/Users/neoneye/git/PlanExeGroup/PlanExe")
 BASELINE_DIR = PROMPT_LAB_DIR / "baseline" / "train"
-STEP_NAME = "identify_potential_levers"
+DEFAULT_STEP_NAME = "identify_potential_levers"
 
 # Python interpreter that has PlanExe dependencies (llama_index, etc.).
 # sys.executable may point to a different Python version without these packages.
@@ -78,17 +78,19 @@ def _dir_index(d: Path) -> int:
     return int(d.name.split("_", 1)[0])
 
 
-def get_latest_analysis_dir() -> Path:
+def get_latest_analysis_dir(step_name: str) -> Path | None:
     """Find the most recent analysis directory for this step.
 
     Sorts numerically by index prefix, not lexicographically — otherwise
     '9_step' sorts after '11_step'.
+
+    Returns None if no analysis directories exist (e.g. first run of a new step).
     """
     analysis_root = PROMPT_LAB_DIR / "analysis"
-    dirs = [d for d in analysis_root.glob(f"*_{STEP_NAME}") if d.is_dir()]
+    dirs = [d for d in analysis_root.glob(f"*_{step_name}") if d.is_dir()]
     dirs.sort(key=_dir_index)
     if not dirs:
-        sys.exit(f"ERROR: No analysis directories found for {STEP_NAME}")
+        return None
     return dirs[-1]
 
 
@@ -261,10 +263,11 @@ def _load_model_configs() -> dict:
     return merged
 
 
-def _build_runner_cmd(model: str, history_dirs: dict[str, Path] | None) -> list[str]:
+def _build_runner_cmd(model: str, history_dirs: dict[str, Path] | None, step_name: str = DEFAULT_STEP_NAME) -> list[str]:
     """Build the runner subprocess command for a model."""
     cmd = [
         PLANEXE_PYTHON, "-m", "self_improve.runner",
+        "--step", step_name,
         "--baseline-dir", str(BASELINE_DIR),
         "--model", model,
     ]
@@ -290,6 +293,7 @@ def step_runner(
     models: list[str],
     history_dirs: dict[str, Path] | None = None,
     events_path: Path | None = None,
+    step_name: str = DEFAULT_STEP_NAME,
 ) -> None:
     """Run runner.py for each model.
 
@@ -330,7 +334,7 @@ def step_runner(
         idx += 1
         print(f"\n--- [{idx}/{len(models)}] {model} (sequential) ---")
 
-        cmd = _build_runner_cmd(model, history_dirs)
+        cmd = _build_runner_cmd(model, history_dirs, step_name)
         env = _build_runner_env(model)
         if CUSTOM_PROFILE_MODELS.get(model):
             print(f"  (using custom profile: {CUSTOM_PROFILE_MODELS[model]})")
@@ -356,7 +360,7 @@ def step_runner(
             idx += 1
             print(f"\n--- [{idx}/{len(models)}] {model} (parallel) ---")
 
-            cmd = _build_runner_cmd(model, history_dirs)
+            cmd = _build_runner_cmd(model, history_dirs, step_name)
             env = _build_runner_env(model)
             if CUSTOM_PROFILE_MODELS.get(model):
                 print(f"  (using custom profile: {CUSTOM_PROFILE_MODELS[model]})")
@@ -429,6 +433,13 @@ def main():
         help="Skip the analysis pipeline.",
     )
     parser.add_argument(
+        "--step",
+        type=str,
+        default=DEFAULT_STEP_NAME,
+        choices=["identify_potential_levers", "identify_documents"],
+        help=f"Pipeline step to optimize (default: {DEFAULT_STEP_NAME}).",
+    )
+    parser.add_argument(
         "--models",
         type=str,
         default=None,
@@ -440,29 +451,35 @@ def main():
     )
     args = parser.parse_args()
 
+    step_name = args.step
     models = resolve_models(args.models)
 
     # Read the latest synthesis (only required when implementing).
-    latest_analysis_dir = get_latest_analysis_dir()
-    print("Latest analysis: " + str(latest_analysis_dir.relative_to(PROMPT_LAB_DIR)))
+    latest_analysis_dir = get_latest_analysis_dir(step_name)
 
     synthesis = None
     recommendation = None
-    synthesis_path = latest_analysis_dir / "synthesis.md"
-    if synthesis_path.is_file():
-        synthesis = synthesis_path.read_text()
-        recommendation = extract_recommendation(synthesis)
-        print()
-        print("Top recommendation:")
-        print("-" * 40)
-        for line in recommendation.split("\n")[:8]:
-            print(f"  {line}")
-        print("  ...")
-        print("-" * 40)
+    if latest_analysis_dir:
+        print("Latest analysis: " + str(latest_analysis_dir.relative_to(PROMPT_LAB_DIR)))
+        synthesis_path = latest_analysis_dir / "synthesis.md"
+        if synthesis_path.is_file():
+            synthesis = synthesis_path.read_text()
+            recommendation = extract_recommendation(synthesis)
+            print()
+            print("Top recommendation:")
+            print("-" * 40)
+            for line in recommendation.split("\n")[:8]:
+                print(f"  {line}")
+            print("  ...")
+            print("-" * 40)
+        elif not args.skip_implement:
+            sys.exit(f"ERROR: synthesis.md not found at {synthesis_path} (required for implement step)")
+        else:
+            print("  (no synthesis.md — skipped, not needed with --skip-implement)")
     elif not args.skip_implement:
-        sys.exit(f"ERROR: synthesis.md not found at {synthesis_path} (required for implement step)")
+        sys.exit(f"ERROR: No analysis directories found for {step_name} (required for implement step)")
     else:
-        print("  (no synthesis.md — skipped, not needed with --skip-implement)")
+        print(f"  (no prior analysis for {step_name} — first run)")
 
     # Step 1: Implement the recommendation.
     pr_arg = args.pr
@@ -493,14 +510,14 @@ def main():
 
         if not args.skip_runner:
             result = prepare(
-                step_name=STEP_NAME,
+                step_name=step_name,
                 pr_arg=pr_arg,
                 models=models,
             )
         else:
             # Skipping runner: create analysis dir from existing unanalyzed runs.
             result = prepare_analysis_from_existing(
-                step_name=STEP_NAME,
+                step_name=step_name,
                 pr_arg=pr_arg,
             )
 
@@ -517,9 +534,9 @@ def main():
     if not args.skip_runner:
         if events_path:
             with EventTimer(events_path, "runner", model_count=len(models)):
-                step_runner(models, history_dirs, events_path)
+                step_runner(models, history_dirs, events_path, step_name)
         else:
-            step_runner(models, history_dirs)
+            step_runner(models, history_dirs, step_name=step_name)
     else:
         print("\n[Skipping runner step]")
 
