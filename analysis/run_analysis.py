@@ -20,6 +20,7 @@ Usage:
 import argparse
 import subprocess
 import sys
+import time
 from pathlib import Path
 
 
@@ -125,6 +126,12 @@ def main():
 
         script_path = SCRIPT_DIR / script_name
 
+        # Allow generous wall-clock time: the --timeout flag controls
+        # per-agent timeout inside the phase script; this outer timeout
+        # is a safety net so subprocess.run() never blocks forever.
+        # 2 agents can run sequentially inside a phase, so allow 2× plus margin.
+        subprocess_timeout = args.timeout * 2 + 120
+
         succeeded = False
         for attempt in range(1, args.max_retries + 1):
             # Clean up error markers from previous failed attempts so
@@ -139,7 +146,14 @@ def main():
                 str(analysis_dir),
                 "--timeout", str(args.timeout),
             ]
-            result = subprocess.run(cmd, cwd=REPO_ROOT)
+            try:
+                result = subprocess.run(cmd, cwd=REPO_ROOT, timeout=subprocess_timeout)
+            except subprocess.TimeoutExpired:
+                print(f"  {script_name} killed after {subprocess_timeout}s (subprocess timeout)")
+                if attempt < args.max_retries:
+                    print(f"  Will retry ({attempt}/{args.max_retries} attempts used)")
+                print()
+                continue
 
             if result.returncode == 0:
                 succeeded = True
