@@ -1,0 +1,14 @@
+{
+  "pr_url": "https://github.com/PlanExeOrg/PlanExe/pull/288",
+  "pr_title": "Fix zero cost for OpenAI/Anthropic models via fallback pricing",
+  "pr_description": "Root cause:** OpenAI and Anthropic APIs don't return a `cost` field in usage responses (unlike OpenRouter), so `_extract_cost()` returns 0.0 for all direct API calls. This caused `activity_overview.json` to show `total_cost: 0.0` for paid models like `gpt-5-nano`. Fix:** Add a pricing registry (`model_pricing.py`) that estimates cost from token counts when the provider doesn't report cost. The registry is populated from a new `\"pricing\"` field in `llm_config/*.json` entries. Add structured `pricing` data (`input_per_million_tokens`, `output_per_million_tokens`) to all paid models across all config profiles.",
+  "history": [
+    "2/10_identify_potential_levers",
+    "2/11_identify_potential_levers",
+    "2/12_identify_potential_levers",
+    "2/13_identify_potential_levers",
+    "2/14_identify_potential_levers",
+    "2/15_identify_potential_levers",
+    "2/16_identify_potential_levers"
+  ]
+}
