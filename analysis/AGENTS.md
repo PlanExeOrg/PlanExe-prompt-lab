@@ -10,16 +10,32 @@ Each step gets its own directory:
 - `analysis/<index>_<step_name>/insight_<agent>.md`
 - `analysis/<index>_<step_name>/code_<agent>.md`
 - `analysis/<index>_<step_name>/synthesis.md`
-- `analysis/<index>_<step_name>/assessment.md` (from index 1 onward)
+- `analysis/<index>_<step_name>/assessment.md` (when a prior analysis for the same step exists)
+- `analysis/<index>_<step_name>/baseline_comparison.md` (when no prior analysis exists — first run of a step)
+
+## Supported Steps
+
+The optimization loop supports multiple pipeline steps. Each step has its own
+system prompt, runner logic, and output files:
+
+| Step | Source file | Output files |
+|------|-----------|-------------|
+| `identify_potential_levers` | `identify_potential_levers.py` | `002-10-potential_levers.json` |
+| `identify_documents` | `identify_documents.py` | `017-5-identified_documents_to_find.json`, `017-6-identified_documents_to_create.json` |
+
+## Directory Indexing
+
+**Indexes are globally unique across all steps.** The sequence does not restart
+for each step — a new `identify_documents` analysis after `29_identify_potential_levers`
+becomes `30_identify_documents`, not `0_identify_documents`. This prevents
+collisions and keeps the timeline clear when steps are interleaved.
 
 Example:
 
-- `analysis/0_identify_potential_levers/meta.json`
-- `analysis/0_identify_potential_levers/insight_codex.md`
-- `analysis/0_identify_potential_levers/insight_claude.md`
-- `analysis/0_identify_potential_levers/code_codex.md`
-- `analysis/0_identify_potential_levers/code_claude.md`
-- `analysis/0_identify_potential_levers/synthesis.md`
+- `analysis/28_identify_potential_levers/`
+- `analysis/29_identify_potential_levers/`
+- `analysis/30_identify_documents/` (first identify_documents analysis)
+- `analysis/31_identify_potential_levers/` (next levers analysis)
 
 ## Optimization Pipeline Context
 
@@ -55,10 +71,11 @@ python analysis/run_analysis.py analysis/22_identify_potential_levers
 python analysis/run_analysis.py analysis/22_identify_potential_levers --timeout 900
 ```
 
-`run_analysis.py` runs insight → code review → synthesis → assessment in
-order, passing `--timeout` (default 600s / 10 min per agent) through to each
-phase. Assessment is auto-skipped for index-0 directories (no "before" to
-compare against). Exits non-zero if any phase fails.
+`run_analysis.py` runs insight → code review → synthesis → phase 4 in
+order, passing `--timeout` (default 1200s / 20 min per agent) through to each
+phase. Phase 4 is either **assessment** (when a prior analysis for the same
+step exists) or **baseline comparison** (when this is the first run of a step).
+Exits non-zero if any phase fails.
 
 Each agent has a per-process timeout. If an agent exceeds it, the process is
 killed and a placeholder error file is written so downstream phases can
@@ -129,16 +146,17 @@ since synthesis must reconcile the independent analyses into one view.
 
 Phase 3 depends on phases 1 and 2.
 
-### Phase 4: Assessment
+### Phase 4: Assessment (when prior analysis exists)
 
 ```bash
-python analysis/run_assessment.py analysis/1_identify_potential_levers
+python analysis/run_assessment.py analysis/29_identify_potential_levers
+python analysis/run_assessment.py analysis/29_identify_potential_levers --before analysis/28_identify_potential_levers
 ```
 
-Compares the current analysis against the previous one (auto-detected by
-index - 1, or specified with `--before`). Reads all insight, code review, and
-synthesis files from both directories, plus samples of actual output files
-from `history/`, and produces an `assessment.md` that answers:
+Compares the current analysis against the most recent prior analysis **for the
+same step** (auto-detected, or specified with `--before`). Reads all insight,
+code review, and synthesis files from both directories, plus samples of actual
+output files from `history/`, and produces an `assessment.md` that answers:
 
 - Did the PR fix the issue it was supposed to fix?
 - Did output quality improve or worsen? (metric-by-metric comparison table)
@@ -148,6 +166,30 @@ from `history/`, and produces an `assessment.md` that answers:
 Phase 4 depends on phase 3 and requires `pr_url`/`pr_title`/`pr_description`
 in the after directory's `meta.json` (see "Registering the PR" below).
 
+**Note:** The "before" directory is found by scanning for the highest-indexed
+analysis directory with the same step name, not by subtracting 1 from the
+current index. This handles interleaved steps correctly.
+
+### Phase 4 (alternative): Baseline Comparison (first run of a step)
+
+```bash
+python analysis/run_baseline_comparison.py analysis/30_identify_documents
+```
+
+When no prior analysis exists for a step (e.g., the first `identify_documents`
+run), `run_analysis.py` automatically runs baseline comparison instead of
+assessment. This compares experiment outputs directly against the gold-standard
+`baseline/train/` data and produces a `baseline_comparison.md` that covers:
+
+- Success rate per model
+- Quantitative metrics vs baseline (document count, description length, etc.)
+- Quality assessment (completeness, specificity, verbosity)
+- Model ranking
+- **Overall verdict**: BETTER / COMPARABLE / MIXED / WORSE
+
+The step-specific output files to compare are configured in
+`STEP_OUTPUT_FILES` inside `run_baseline_comparison.py`.
+
 ### Registering the PR (before analysis)
 
 The PR is registered in `meta.json` **during phase 0** (`prepare_iteration.py`).
@@ -155,21 +197,29 @@ The insight, code review, synthesis, and assessment agents all use this PR info
 to focus their analysis.
 
 The `run_optimization_iteration.py` orchestrator calls `prepare_iteration`
-automatically before running experiments. When running phases manually:
+automatically before running experiments. It accepts `--step` to select which
+pipeline step to optimize (default: `identify_potential_levers`):
 
 ```bash
-python analysis/prepare_iteration.py identify_potential_levers 285       # Phase 0 (creates dir + registers PR)
-python analysis/run_analysis.py analysis/12_identify_potential_levers    # Phases 1-4 (all at once)
+python run_optimization_iteration.py --skip-implement --pr 342 --step identify_documents
+```
+
+When running phases manually:
+
+```bash
+python analysis/prepare_iteration.py identify_documents 342              # Phase 0 (creates dir + registers PR)
+python analysis/run_analysis.py analysis/30_identify_documents           # Phases 1-4 (all at once)
 ```
 
 Or run individual phases:
 
 ```bash
-python analysis/prepare_iteration.py identify_potential_levers 285       # Phase 0
-python analysis/run_insight.py analysis/12_identify_potential_levers     # Phase 1
-python analysis/run_code_review.py analysis/12_identify_potential_levers # Phase 2
-python analysis/run_synthesis.py analysis/12_identify_potential_levers   # Phase 3
-python analysis/run_assessment.py analysis/12_identify_potential_levers  # Phase 4
+python analysis/prepare_iteration.py identify_documents 342              # Phase 0
+python analysis/run_insight.py analysis/30_identify_documents            # Phase 1
+python analysis/run_code_review.py analysis/30_identify_documents        # Phase 2
+python analysis/run_synthesis.py analysis/30_identify_documents          # Phase 3
+python analysis/run_assessment.py analysis/30_identify_documents         # Phase 4a (if prior analysis exists)
+python analysis/run_baseline_comparison.py analysis/30_identify_documents # Phase 4b (if no prior analysis)
 ```
 
 `prepare_iteration.py` accepts a bare PR number or a full URL. It fetches
@@ -220,10 +270,16 @@ In these cases, write files manually:
 
 ### System Prompt
 
-The runner always uses the `IDENTIFY_POTENTIAL_LEVERS_SYSTEM_PROMPT` constant
-from PlanExe's code. There is no external prompt file or CLI override — the
-prompt is whatever is committed in the PlanExe repo at run time. To change the
-prompt, modify `identify_potential_levers.py` and merge the PR before running
+The runner uses the step's system prompt constant from PlanExe's code. There is
+no external prompt file or CLI override — the prompt is whatever is committed
+in the PlanExe repo at run time.
+
+| Step | Constant | Notes |
+|------|----------|-------|
+| `identify_potential_levers` | `IDENTIFY_POTENTIAL_LEVERS_SYSTEM_PROMPT` | Single prompt |
+| `identify_documents` | `IDENTIFY_DOCUMENTS_BUSINESS_SYSTEM_PROMPT` / `_PERSONAL_` / `_OTHER_` | Selected at runtime based on `identify_purpose_dict` |
+
+To change a prompt, modify the source file and merge the PR before running
 experiments.
 
 ## Purpose
@@ -236,8 +292,9 @@ should compare the insight files and decide what is most promising.
 ## Directory Naming
 
 - Directory pattern: `<index>_<step_name>`
-- `<index>` is a zero-based integer that matches the analysis sequence.
-- `<step_name>` should match the pipeline step name and prompt folder name when possible.
+- `<index>` is a globally unique integer across all steps (see "Directory Indexing" above).
+- `<step_name>` matches the pipeline step name (e.g., `identify_potential_levers`,
+  `identify_documents`).
 
 ## `meta.json` Rules
 
@@ -404,7 +461,9 @@ Ground claims in repository artifacts whenever possible.
 
 Prefer citing:
 
-- `history/.../outputs/<plan>/002-10-potential_levers.json`
+- `history/.../outputs/<plan>/002-10-potential_levers.json` (levers step)
+- `history/.../outputs/<plan>/017-5-identified_documents_to_find.json` (documents step)
+- `history/.../outputs/<plan>/017-6-identified_documents_to_create.json` (documents step)
 - `history/.../outputs.jsonl`
 - `history/.../meta.json`
 - `baseline/train/...`
@@ -449,7 +508,8 @@ The exact metrics depend on the step, but useful patterns include:
   "15-20% increase"). These are almost always fabricated by the LLM since the
   project context rarely contains supporting evidence for specific numbers.
 - **Baseline length comparison**: compare average field lengths against the
-  baseline training data (`baseline/train/<plan>/002-10-potential_levers.json`).
+  baseline training data (e.g., `baseline/train/<plan>/002-10-potential_levers.json`
+  for levers, `017-5-*` / `017-6-*` for documents).
   Report the ratio (e.g. "consequences are 3.6× longer than baseline"). A ratio
   above 2× for any field is a warning sign for verbosity without substance.
 
@@ -466,18 +526,31 @@ Useful minimums for insight files:
 
 ## OPTIMIZE_INSTRUCTIONS Alignment
 
-The PlanExe source file `identify_potential_levers.py` contains an
-`OPTIMIZE_INSTRUCTIONS` constant that defines the project-level goals and known
-pitfalls for lever generation. Every analysis agent should read it (it is near
-the top of the file, after imports). When proposing improvements, agents should:
+Several PlanExe source files contain an `OPTIMIZE_INSTRUCTIONS` constant that
+defines project-level goals and known pitfalls for the self-improve loop. These
+constants are **self-improve guidance only — they are intentionally NOT injected
+into the LLM system prompt at runtime**. They serve as documentation for the
+optimization loop, not as runtime instructions.
+
+| Step | File | Purpose |
+|------|------|---------|
+| `identify_potential_levers` | `identify_potential_levers.py` | Goals and pitfalls for lever generation |
+| `identify_documents` | `identify_documents.py` | Goals and pitfalls for document identification |
+
+Every analysis agent should read the relevant `OPTIMIZE_INSTRUCTIONS` (near the
+top of the file, after imports). When proposing improvements, agents should:
 
 - **Check alignment**: Does the current system prompt, Pydantic schema, and
   validator code align with `OPTIMIZE_INSTRUCTIONS`? If not, flag the mismatch.
 - **Propose updates to OPTIMIZE_INSTRUCTIONS itself**: If analysis reveals a new
   recurring problem (e.g., a pattern not yet documented), propose adding it to
   the known-problems list. The constant is living documentation, not frozen.
-- **Guard plan quality, not just lever quality**: The instructions emphasize that
-  levers must lead to *realistic, feasible, actionable* plans. An option that
+- **Do NOT propose injecting OPTIMIZE_INSTRUCTIONS into the system prompt**: The
+  constants are self-improve guidance. If a constraint from OPTIMIZE_INSTRUCTIONS
+  should reach the LLM, propose adding it directly to the system prompt text,
+  not injecting the constant.
+- **Guard plan quality, not just structural quality**: The instructions emphasize
+  that outputs must lead to *realistic, feasible, actionable* plans. An item that
   sounds strategic but cannot be scheduled, resourced, or executed by a human or
   AI agent is a failure — even if it passes all structural validators.
 - **Watch for optimism bias**: The downstream scenario picker tends to select the
@@ -632,6 +705,45 @@ successful plan less credible is a net negative.
 (e.g., 34/35) are higher priority than structural fixes that recover one
 failed plan (e.g., 1/35). Both matter, but quality × breadth outweighs
 compliance × edge-case.
+
+### Baseline comparison for new steps
+
+**Context**: When `identify_documents` was first added to the optimization loop
+(iteration 30), the assessment phase failed because there was no prior analysis
+to compare against. The `run_assessment.py` script requires a "before" directory.
+
+**Solution**: `run_baseline_comparison.py` was added as an alternative phase 4.
+When no prior analysis exists for a step, `run_analysis.py` automatically runs
+baseline comparison instead of assessment. This compares experiment outputs
+directly against the gold-standard `baseline/train/` data.
+
+**What to watch for in analysis**:
+- First-run iterations for a new step will always lack a before/after
+  comparison. The baseline comparison provides the initial quality benchmark.
+- Document count, description length, and field completeness are the key
+  metrics for `identify_documents`. Baseline averages ~29 documents total per
+  plan with ~230-270 char descriptions.
+- `max_length` constraints on Pydantic fields must be calibrated against baseline
+  norms. A cap of 6 when baseline has 12-17 items is too aggressive and will
+  both reduce output quantity and cause validation failures.
+
+### OPTIMIZE_INSTRUCTIONS is self-improve guidance, not runtime code
+
+**Context**: During iteration 30 (`identify_documents`), both the insight and
+code review agents identified `OPTIMIZE_INSTRUCTIONS` in `identify_documents.py`
+as "dead code" because it is never appended to the system prompt. They ranked
+injecting it as the top priority fix.
+
+**Reality**: `OPTIMIZE_INSTRUCTIONS` is intentionally not injected. It serves as
+documentation for the self-improve optimization loop — describing what the
+ideal output looks like, what problems to watch for, and what constraints
+matter. It guides the analysis agents and humans, not the LLM at runtime.
+
+**Principle**: When proposing to inject `OPTIMIZE_INSTRUCTIONS` into the system
+prompt, verify whether the constant is runtime code or self-improve guidance.
+If constraints from it should reach the LLM, add them directly to the system
+prompt text as explicit prompt instructions, rather than injecting the
+self-improve constant verbatim.
 
 ## Editing Guidance
 
