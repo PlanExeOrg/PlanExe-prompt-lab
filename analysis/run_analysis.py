@@ -43,6 +43,7 @@ PHASE_OUTPUTS: dict[str, list[str]] = {
     "run_code_review.py": ["code_claude.md", "code_codex.md"],
     "run_synthesis.py": ["synthesis.md"],
     "run_assessment.py": ["assessment.md"],
+    "run_baseline_comparison.py": ["baseline_comparison.md"],
 }
 
 ERROR_MARKER = "# ERROR:"
@@ -114,7 +115,8 @@ def main():
     if has_before:
         phases.append(("run_assessment.py", "Assessment (phase 4)"))
     else:
-        print("  No previous analysis found — PR impact section will be skipped")
+        print("  No previous analysis found — using baseline comparison instead")
+        phases.append(("run_baseline_comparison.py", "Baseline comparison (phase 4)"))
 
     print(f"Analysis pipeline for: {analysis_dir}")
     print(f"  Phases: {len(phases)}")
