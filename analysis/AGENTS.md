@@ -153,10 +153,17 @@ python analysis/run_assessment.py analysis/29_identify_potential_levers
 python analysis/run_assessment.py analysis/29_identify_potential_levers --before analysis/28_identify_potential_levers
 ```
 
-Compares the current analysis against the most recent prior analysis **for the
-same step** (auto-detected, or specified with `--before`). Reads all insight,
-code review, and synthesis files from both directories, plus samples of actual
-output files from `history/`, and produces an `assessment.md` that answers:
+Compares the current analysis against a known-good baseline analysis **for the
+same step**. The "before" directory is determined by:
+
+1. Checking `analysis/best.json` for the step's known-good baseline (preferred).
+2. Falling back to scanning for the highest-indexed analysis directory with the
+   same step name.
+3. Using `--before` to override both (explicit path).
+
+Reads all insight, code review, and synthesis files from both directories, plus
+samples of actual output files from `history/`, and produces an `assessment.md`
+that answers:
 
 - Did the PR fix the issue it was supposed to fix?
 - Did output quality improve or worsen? (metric-by-metric comparison table)
@@ -166,9 +173,24 @@ output files from `history/`, and produces an `assessment.md` that answers:
 Phase 4 depends on phase 3 and requires `pr_url`/`pr_title`/`pr_description`
 in the after directory's `meta.json` (see "Registering the PR" below).
 
-**Note:** The "before" directory is found by scanning for the highest-indexed
-analysis directory with the same step name, not by subtracting 1 from the
-current index. This handles interleaved steps correctly.
+### `analysis/best.json`
+
+Tracks the best known-good analysis directory per step. Updated only when a PR
+is merged with a YES verdict. Assessment and insight phases compare against
+this baseline instead of auto-detecting the most recent prior directory (which
+may be a failed or low-quality run).
+
+```json
+{
+    "comment": "...",
+    "analysis": [
+        { "step": "identify_potential_levers", "name": "28_identify_potential_levers", "pr": 340 }
+    ]
+}
+```
+
+If a step is not listed, the scripts fall back to auto-detection. If no prior
+analysis exists at all, `run_analysis.py` uses baseline comparison instead.
 
 ### Phase 4 (alternative): Baseline Comparison (first run of a step)
 

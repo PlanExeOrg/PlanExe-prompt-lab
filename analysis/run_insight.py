@@ -100,13 +100,35 @@ Do not write any other files. Do not modify meta.json or events.jsonl.
 
 
 def find_before_dir(analysis_dir: str) -> str | None:
-    """Find the analysis directory immediately before the given one."""
+    """Find the best analysis directory to compare against.
+
+    First checks analysis/best.json for a known-good baseline for this step.
+    Falls back to checking index - 1 with the same step name.
+    """
     after_path = REPO_ROOT / analysis_dir
     parts = after_path.name.split("_", 1)
     if len(parts) < 2:
         return None
     step_name = parts[1]
     after_index = int(parts[0])
+
+    # Prefer the known-good baseline from best.json.
+    best_path = REPO_ROOT / "analysis" / "best.json"
+    if best_path.is_file():
+        try:
+            data = json.loads(best_path.read_text())
+            for entry in data.get("analysis", []):
+                if entry.get("step") == step_name:
+                    name = entry.get("name")
+                    if name:
+                        candidate = REPO_ROOT / "analysis" / name
+                        best_index = int(name.split("_", 1)[0])
+                        if candidate.is_dir() and best_index != after_index:
+                            return str(candidate.relative_to(REPO_ROOT))
+        except (json.JSONDecodeError, KeyError, ValueError):
+            pass
+
+    # Fall back to index - 1.
     if after_index == 0:
         return None
     candidate = after_path.parent / f"{after_index - 1}_{step_name}"

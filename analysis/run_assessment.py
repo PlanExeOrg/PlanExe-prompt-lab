@@ -185,18 +185,51 @@ Do not write any other files. Do not modify meta.json or events.jsonl.
 """
 
 
-def find_before_dir(after_dir: str) -> str | None:
-    """Find the most recent analysis directory for the same step before the given one.
+def _find_best_for_step(step_name: str) -> str | None:
+    """Look up the best analysis directory for a step from analysis/best.json.
 
-    Scans all directories matching *_{step_name} with a lower index, returning
-    the one with the highest index. This handles gaps in numbering caused by
-    interleaved steps (e.g. 28_levers, 29_levers, 30_documents → before for
-    30_documents is None, before for 29_levers is 28_levers).
+    Returns a relative path like 'analysis/28_identify_potential_levers',
+    or None if the step is not listed or the file doesn't exist.
+    """
+    best_path = REPO_ROOT / "analysis" / "best.json"
+    if not best_path.is_file():
+        return None
+    try:
+        data = json.loads(best_path.read_text())
+        for entry in data.get("analysis", []):
+            if entry.get("step") == step_name:
+                name = entry.get("name")
+                if name:
+                    return f"analysis/{name}"
+    except (json.JSONDecodeError, KeyError):
+        pass
+    return None
+
+
+def find_before_dir(after_dir: str) -> str | None:
+    """Find the best analysis directory to compare against.
+
+    First checks analysis/best.json for a known-good baseline for this step.
+    Falls back to scanning for the most recent prior analysis directory with
+    the same step name and a lower index.
+
+    If neither is found, returns None (caller should use baseline comparison).
     """
     after_path = REPO_ROOT / after_dir
     step_name = after_path.name.split("_", 1)[1]
     after_index = int(after_path.name.split("_", 1)[0])
 
+    # Prefer the known-good baseline from best.json.
+    best = _find_best_for_step(step_name)
+    if best:
+        best_path = REPO_ROOT / best
+        if best_path.is_dir():
+            # Don't compare against ourselves.
+            best_index = int(best_path.name.split("_", 1)[0])
+            if best_index != after_index:
+                return best
+
+    # Fall back to auto-detecting the most recent prior analysis.
     analysis_root = after_path.parent
     candidates = []
     for d in analysis_root.iterdir():
