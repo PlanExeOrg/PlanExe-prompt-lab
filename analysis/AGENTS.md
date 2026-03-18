@@ -268,19 +268,20 @@ In these cases, write files manually:
 
 4. Optionally write a `pr_status.md` with evidence about the PR's impact.
 
-### System Prompt
+### Step Source Files
 
-The runner uses the step's system prompt constant from PlanExe's code. There is
-no external prompt file or CLI override — the prompt is whatever is committed
-in the PlanExe repo at run time.
+The runner imports and executes the step's source files directly from PlanExe's
+code. There is no external prompt file or CLI override — the system prompt,
+Pydantic schema, and validation logic are whatever is committed in the PlanExe
+repo at run time.
 
-| Step | Constant | Notes |
-|------|----------|-------|
-| `identify_potential_levers` | `IDENTIFY_POTENTIAL_LEVERS_SYSTEM_PROMPT` | Single prompt |
-| `identify_documents` | `IDENTIFY_DOCUMENTS_BUSINESS_SYSTEM_PROMPT` / `_PERSONAL_` / `_OTHER_` | Selected at runtime based on `identify_purpose_dict` |
+| Step | Source file | Key elements |
+|------|-----------|-------------|
+| `identify_potential_levers` | `identify_potential_levers.py` | System prompt, Pydantic schema, validators |
+| `identify_documents` | `identify_documents.py` | System prompts (business/personal/other), Pydantic schema |
 
-To change a prompt, modify the source file and merge the PR before running
-experiments.
+To change a prompt, schema, or validation logic, modify the source file on the
+PR branch before running experiments.
 
 ## Purpose
 
