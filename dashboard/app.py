@@ -131,6 +131,7 @@ function filtered() {
   const g = document.getElementById('groupSelect').value;
   const m = document.getElementById('modelSelect').value;
   return allData.filter(r =>
+    r.analysis_iteration != null &&
     (g === 'all' || String(r.history_group) === g) &&
     (m === 'all' || r.model === m)
   );
@@ -173,14 +174,14 @@ function render() {
     data: {
       datasets: Object.entries(byModel).map(([m, rows]) => ({
         label: m,
-        data: rows.map(r => ({ x: r.history_group * 1000 + r.iteration, y: r.success_rate * 100 })),
+        data: rows.map(r => ({ x: r.analysis_iteration, y: r.success_rate * 100 })),
         borderColor: modelColor(m),
         backgroundColor: modelColor(m) + '33',
         ...CHART_DEFAULTS,
       })),
     },
     options: {
-      scales: { x: { title: { display: true, text: 'Iteration', color: '#888' }, ticks: { color: '#888' } }, y: { title: { display: true, text: 'Success %', color: '#888' }, min: 0, max: 100, ticks: { color: '#888' } } },
+      scales: { x: { type: 'linear', title: { display: true, text: 'Analysis Iteration', color: '#888' }, ticks: { color: '#888', stepSize: 1 } }, y: { title: { display: true, text: 'Success %', color: '#888' }, min: 0, max: 100, ticks: { color: '#888' } } },
       plugins: { legend: { labels: { color: '#ccc', boxWidth: 12 } } },
     },
   });
@@ -191,14 +192,14 @@ function render() {
     data: {
       datasets: Object.entries(byModel).map(([m, rows]) => ({
         label: m,
-        data: rows.map(r => ({ x: r.history_group * 1000 + r.iteration, y: r.avg_duration_seconds })),
+        data: rows.map(r => ({ x: r.analysis_iteration, y: r.avg_duration_seconds })),
         borderColor: modelColor(m),
         backgroundColor: modelColor(m) + '33',
         ...CHART_DEFAULTS,
       })),
     },
     options: {
-      scales: { x: { title: { display: true, text: 'Iteration', color: '#888' }, ticks: { color: '#888' } }, y: { title: { display: true, text: 'Seconds', color: '#888' }, min: 0, ticks: { color: '#888' } } },
+      scales: { x: { type: 'linear', title: { display: true, text: 'Analysis Iteration', color: '#888' }, ticks: { color: '#888', stepSize: 1 } }, y: { title: { display: true, text: 'Seconds', color: '#888' }, min: 0, ticks: { color: '#888' } } },
       plugins: { legend: { labels: { color: '#ccc', boxWidth: 12 } } },
     },
   });
@@ -303,7 +304,7 @@ function render() {
         label: pn,
         data: data.map(r => {
           const p = r.plans.find(pp => pp.plan_name === pn);
-          return p ? { x: r.history_group * 1000 + r.iteration, y: p.duration_seconds } : null;
+          return p ? { x: r.analysis_iteration, y: p.duration_seconds } : null;
         }).filter(Boolean),
         borderColor: COLORS[i % COLORS.length],
         backgroundColor: COLORS[i % COLORS.length] + '33',
@@ -311,7 +312,7 @@ function render() {
       })),
     },
     options: {
-      scales: { x: { title: { display: true, text: 'Iteration', color: '#888' }, ticks: { color: '#888' } }, y: { title: { display: true, text: 'Seconds', color: '#888' }, min: 0, ticks: { color: '#888' } } },
+      scales: { x: { type: 'linear', title: { display: true, text: 'Analysis Iteration', color: '#888' }, ticks: { color: '#888', stepSize: 1 } }, y: { title: { display: true, text: 'Seconds', color: '#888' }, min: 0, ticks: { color: '#888' } } },
       plugins: { legend: { labels: { color: '#ccc', boxWidth: 12 } } },
     },
   });

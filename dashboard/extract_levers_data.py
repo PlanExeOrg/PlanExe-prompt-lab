@@ -11,7 +11,24 @@ import sys
 from pathlib import Path
 
 BASE = Path(__file__).parent.parent / "history"
+ANALYSIS = Path(__file__).parent.parent / "analysis"
 OUTPUT = Path(__file__).parent / "levers_chart_data.jsonl"
+
+# Build mapping from history path (e.g. "0/05_identify_potential_levers") to analysis iteration
+history_to_analysis = {}
+analysis_meta = {}
+for meta_path in sorted(ANALYSIS.glob("*_identify_potential_levers/meta.json")):
+    analysis_dir = meta_path.parent.name  # e.g. "25_identify_potential_levers"
+    analysis_iter = int(analysis_dir.split("_")[0])
+    with open(meta_path) as f:
+        ameta = json.load(f)
+    analysis_meta[analysis_iter] = {
+        "prompt": ameta.get("prompt"),
+        "pr_url": ameta.get("pr_url"),
+        "pr_title": ameta.get("pr_title"),
+    }
+    for h in ameta.get("history", []):
+        history_to_analysis[h] = analysis_iter
 
 rows = []
 
@@ -101,9 +118,16 @@ for events_path in sorted(glob.glob(str(BASE / "*/*_identify_potential_levers/ev
                 model = m.group(1)
                 break
 
+    # Map to analysis iteration
+    history_key = f"{history_group}/{iteration_dir}"
+    ai = history_to_analysis.get(history_key)
+    ai_meta = analysis_meta.get(ai, {}) if ai is not None else {}
+
     row = {
         "history_group": int(history_group),
         "iteration": iteration,
+        "analysis_iteration": ai,
+        "analysis_pr_title": ai_meta.get("pr_title"),
         "timestamp": run_timestamp,
         "model": model,
         "prompt_sha256": prompt_sha256,
