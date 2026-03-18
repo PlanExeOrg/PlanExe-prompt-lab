@@ -1,0 +1,350 @@
+{
+  "responses": [
+    {
+      "strategic_rationale": "The project must balance rapid, representative enrollment, efficient staffing, high\u2011quality annotation, and robust event\u2011triage development while staying within a tight budget and maintaining participant engagement. These levers target the core tensions between speed, cost, data quality, and scientific rigor. By explicitly choosing recruitment channels, staffing patterns, annotation workflows, algorithmic approaches, compensation schemes, and data\u2011sharing policies, the team can navigate trade\u2011offs that directly influence enrollment thresholds, event capture rates, annotation throughput, and downstream publication timelines. The selected levers therefore provide a focused decision framework that aligns operational realities with the scientific objectives of a longitudinal parasomnia research unit.",
+      "levers": [
+        {
+          "lever_index": 1,
+          "name": "Recruitment Channel Optimization",
+          "lever_type": "execution",
+          "decision_axis": "This lever controls recruitment speed and sample diversity by choosing between hospital-based referrals, community outreach, and digital pre-screening.",
+          "consequences": "Pulling this lever accelerates enrollment when hospital referrals dominate, but may bias the cohort toward patients already engaged with tertiary care. Community outreach expands reach to underserved populations, yet increases logistical overhead and screening burden. Digital pre-screening offers rapid triage and cost savings, yet risks lower data quality if participants self-select without clinical confirmation. Each option trades off speed, representativeness, and resource intensity.",
+          "options": [
+            "Recruit participants through hospital-based referrals, leveraging existing clinical pathways to streamline enrollment and reduce screening time.",
+            "Engage community outreach programs, partnering with local sleep clinics and patient advocacy groups to broaden demographic representation and increase enrollment volume.",
+            "Implement digital pre-screening, deploying an online questionnaire and automated eligibility filter to identify potential participants before in-person visits."
+          ],
+          "review_lever": "The tension lies between enrollment speed and cohort representativeness; the options overlook the impact of screening accuracy on downstream data quality and the potential for digital pre-screening to miss subtle clinical nuances."
+        },
+        {
+          "lever_index": 2,
+          "name": "Staffing Shift Structure",
+          "lever_type": "operations",
+          "decision_axis": "This lever controls staffing fatigue and coverage efficiency by choosing between 8\u2011hour shifts, 12\u2011hour shifts, and flexible shift rotation.",
+          "consequences": "Choosing 8\u2011hour shifts maximizes technician alertness but increases staffing costs and administrative complexity. Opting for 12\u2011hour shifts reduces payroll overhead but heightens fatigue risk and may compromise event response quality. Flexible shift rotation offers a balance, allowing technicians to alternate shift lengths and maintain coverage while mitigating burnout, yet requires sophisticated scheduling systems and may complicate training consistency.",
+          "options": [
+            "Adopt 8\u2011hour shifts, scheduling technicians in two consecutive blocks to maintain high alertness during peak event monitoring periods.",
+            "Implement 12\u2011hour shifts, rotating technicians weekly to reduce payroll expenses while ensuring continuous coverage across all suites.",
+            "Introduce flexible shift rotation, allowing technicians to alternate between 8\u2011hour and 12\u2011hour blocks based on workload forecasts and personal fatigue metrics."
+          ],
+          "review_lever": "The core tension is balancing technician well\u2011being against operational cost; the options fail to address how shift patterns influence inter\u2011rater reliability during annotation and the potential need for cross\u2011training across shift types."
+        },
+        {
+          "lever_index": 3,
+          "name": "Data Annotation Workflow",
+          "lever_type": "execution",
+          "decision_axis": "This lever controls annotation throughput and data quality by choosing between real\u2011time annotation, batch annotation, and hybrid annotation.",
+          "consequences": "Real\u2011time annotation ensures immediate feedback and reduces backlog, but demands high technician availability and may compromise accuracy under fatigue. Batch annotation allows technicians to focus on a larger dataset at once, improving consistency, yet delays data availability for analysis. Hybrid annotation combines initial real\u2011time flagging with subsequent batch refinement, potentially balancing speed and precision but requiring additional coordination and software support.",
+          "options": [
+            "Perform real\u2011time annotation, having technicians label events immediately during each night to capture context and reduce post\u2011hoc error.",
+            "Adopt batch annotation, assigning technicians to review and score entire nights after data transfer, enabling systematic quality checks and inter\u2011rater calibration.",
+            "Implement hybrid annotation, flagging probable events in real\u2011time and refining them in batch sessions to combine speed with thoroughness."
+          ],
+          "review_lever": "The tension is between speed and accuracy; the options overlook how annotation workflow choices affect inter\u2011rater reliability and the need for automated quality assurance checks."
+        },
+        {
+          "lever_index": 4,
+          "name": "Event Triage Algorithm Development",
+          "lever_type": "product",
+          "decision_axis": "This lever controls diagnostic efficiency by choosing between rule\u2011based heuristics, machine learning classifiers, and hybrid rule\u2011plus\u2011ML models.",
+          "consequences": "Rule\u2011based heuristics provide transparent, low\u2011resource solutions but may miss subtle event patterns, limiting sensitivity. Machine learning classifiers can capture complex signatures, improving detection rates, yet require large labeled datasets and risk overfitting. Hybrid rule\u2011plus\u2011ML models blend domain knowledge with data\u2011driven insights, potentially achieving higher accuracy while maintaining interpretability, but increase development complexity and validation burden.",
+          "options": [
+            "Develop rule\u2011based heuristics, encoding expert sleep\u2011medicine criteria into threshold\u2011based algorithms to flag likely parasomnia events.",
+            "Train machine learning classifiers, feeding annotated PSG and sensor data into supervised models to learn complex event signatures.",
+            "Combine rule\u2011based and machine learning approaches, applying heuristic filters before feeding data into classifiers to reduce false positives and improve interpretability."
+          ],
+          "review_lever": "The core tension is balancing interpretability against detection performance; the options ignore the need for continuous model retraining as new event types emerge during the longitudinal study."
+        },
+        {
+          "lever_index": 5,
+          "name": "Participant Compensation Model",
+          "lever_type": "governance",
+          "decision_axis": "This lever controls recruitment motivation and retention by choosing between flat per\u2011night fee, tiered compensation, and incentive\u2011based bonus.",
+          "consequences": "Flat per\u2011night fee offers predictable budgeting and straightforward communication, but may not sufficiently motivate participants with high travel costs. Tiered compensation rewards longer stays, encouraging data completeness, yet complicates payment schedules and may create inequity among participants. Incentive\u2011based bonuses tied to event capture or study milestones can boost engagement and data yield, but risk introducing selection bias and require careful monitoring to avoid coercion.",
+          "options": [
+            "Offer a flat per\u2011night fee, paying participants \u20ac80 each night regardless of event occurrence to simplify budgeting and communication.",
+            "Implement tiered compensation, increasing nightly payment for each consecutive week of stay to incentivize longer participation and richer data capture.",
+            "Introduce incentive\u2011based bonuses, awarding participants a bonus for each confirmed parasomnia event they contribute to the dataset to encourage active engagement."
+          ],
+          "review_lever": "The tension is between motivating participants and maintaining data integrity; the options fail to consider how compensation structures might influence event reporting accuracy or introduce differential dropout rates."
+        },
+        {
+          "lever_index": 6,
+          "name": "Data Sharing Policy",
+          "lever_type": "dissemination",
+          "decision_axis": "This lever controls data accessibility and privacy compliance by choosing between restricted de\u2011identified sharing, open repository with controlled access, and embargoed release.",
+          "consequences": "Restricted de\u2011identified sharing limits external reuse but ensures strict privacy compliance and aligns with current ethics approvals. Open repository with controlled access accelerates scientific collaboration and citation potential, yet requires robust data governance and monitoring of downstream use. Embargoed release postpones public availability until after primary publication, protecting competitive advantage but delaying broader community benefit and potentially reducing transparency.",
+          "options": [
+            "Maintain restricted de\u2011identified sharing, providing only anonymized physiological data to vetted researchers under signed agreements.",
+            "Publish data in an open repository with controlled access, allowing external scientists to request datasets after completing a data\u2011use agreement.",
+            "Adopt an embargoed release, withholding full dataset until after the first set of peer\u2011reviewed publications to safeguard intellectual property."
+          ],
+          "review_lever": "The tension lies between privacy protection and scientific openness; the options overlook how embargoed release may delay external validation and the need for a clear data\u2011governance framework to manage controlled access."
+        }
+      ]
+    },
+    {
+      "strategic_rationale": "The residential parasomnia unit must navigate competing demands of data fidelity, participant safety, and fiscal sustainability. These levers target core tensions: environmental control versus naturalistic behavior, participant engagement versus staffing load, ethics oversight versus administrative efficiency, data stewardship versus regulatory compliance, interdisciplinary coordination versus siloed expertise, and funding resilience versus stakeholder influence. By explicitly framing each lever as a crisp decision axis, the team can evaluate trade\u2011offs, allocate resources, and monitor progress against success criteria. The chosen levers collectively address the unit\u2019s operational, methodological, and governance challenges, ensuring that early\u2011stage validation work proceeds with rigor while preserving flexibility for future expansion.",
+      "levers": [
+        {
+          "lever_index": 1,
+          "name": "Sleep Suite Environmental Calibration",
+          "lever_type": "methodology",
+          "decision_axis": "This lever controls environmental noise reduction by choosing between acoustic paneling, active noise cancellation, and adaptive ventilation.",
+          "consequences": "Implementing acoustic paneling reduces ambient noise, improving signal quality for EEG recordings, but increases renovation cost and may alter room aesthetics. Active noise cancellation offers real\u2011time noise suppression, potentially enhancing data fidelity, yet requires continuous power and maintenance. Adaptive ventilation controls airflow to reduce humidity and mold risk, supporting participant comfort, but may introduce airflow noise that could interfere with sensor data.",
+          "options": [
+            "Install acoustic paneling throughout all suites to dampen external and internal noise while preserving a domestic feel.",
+            "Deploy active noise cancellation units in each suite to suppress ambient sound during recording sessions.",
+            "Configure adaptive ventilation systems to maintain optimal humidity while minimizing airflow noise that could interfere with sensor data."
+          ],
+          "review_lever": "Balancing acoustic quality against aesthetic integrity and cost; options overlook the impact of paneling on naturalistic behavior and the need for routine maintenance of active systems."
+        },
+        {
+          "lever_index": 2,
+          "name": "Participant Engagement Protocol",
+          "lever_type": "execution",
+          "decision_axis": "This lever controls participant adherence by choosing between structured pre\u2011stay orientation, real\u2011time feedback loops, and post\u2011stay debriefing.",
+          "consequences": "Providing a structured orientation improves participant understanding of procedures, potentially reducing drop\u2011outs, but adds scheduling overhead. Real\u2011time feedback loops, such as nightly summaries, may increase engagement and data quality, yet require additional staff time. Post\u2011stay debriefing can capture participant insights for protocol refinement, but may delay data analysis if not integrated efficiently.",
+          "options": [
+            "Offer a structured pre\u2011stay orientation session that explains monitoring equipment and daily routines and expectations.",
+            "Implement nightly real\u2011time feedback loops that summarize sleep metrics and encourage participants to adjust habits.",
+            "Conduct post\u2011stay debriefing interviews to gather participant experiences and identify protocol improvements for future studies."
+          ],
+          "review_lever": "Balancing engagement depth with resource constraints; options miss the trade\u2011off between participant burden and data richness."
+        },
+        {
+          "lever_index": 3,
+          "name": "Ethics Oversight Cadence",
+          "lever_type": "governance",
+          "decision_axis": "This lever controls ethics review frequency by choosing between quarterly, bi\u2011annual, and event\u2011driven reviews.",
+          "consequences": "Quarterly reviews ensure rapid response to emerging issues, but may strain board capacity. Bi\u2011annual reviews reduce administrative load, yet risk delayed detection of compliance gaps. Event\u2011driven reviews trigger only after incidents, minimizing routine burden but potentially allowing problems to accumulate.",
+          "options": [
+            "Schedule ethics board reviews every quarter to promptly address emerging participant concerns and safety protocols.",
+            "Conduct ethics board reviews twice a year to balance oversight with administrative efficiency and compliance.",
+            "Trigger ethics board reviews only after documented incidents to reduce routine oversight and ensure accountability."
+          ],
+          "review_lever": "Tension between oversight rigor and administrative burden; options overlook the need for continuous monitoring of data security practices."
+        },
+        {
+          "lever_index": 4,
+          "name": "Data Retention and Archival Strategy",
+          "lever_type": "operations",
+          "decision_axis": "This lever controls data storage duration by choosing between 5\u2011year, 10\u2011year, and indefinite retention.",
+          "consequences": "A 5\u2011year retention aligns with typical grant reporting, reducing storage costs but limiting long\u2011term reuse. A 10\u2011year retention supports extended research but increases storage and security obligations. Indefinite retention preserves all data for future studies but requires ongoing compliance with evolving privacy regulations.",
+          "options": [
+            "Maintain all collected data for five years, then archive securely to meet grant reporting requirements.",
+            "Store data for ten years, implementing tiered access controls to balance research utility and privacy.",
+            "Retain data indefinitely, establishing a governance framework to manage evolving legal and ethical standards over."
+          ],
+          "review_lever": "Balancing archival depth with regulatory compliance; options ignore the cost of long\u2011term data stewardship and the need for periodic audit."
+        },
+        {
+          "lever_index": 5,
+          "name": "Interdisciplinary Collaboration Framework",
+          "lever_type": "governance",
+          "decision_axis": "This lever controls cross\u2011disciplinary integration by choosing between siloed project teams, joint task forces, and shared governance councils.",
+          "consequences": "Siloed teams allow focused expertise but risk misalignment of objectives. Joint task forces promote real\u2011time collaboration, enhancing innovation, yet require coordination overhead. Shared governance councils provide strategic alignment across disciplines, but may slow decision\u2011making due to broader representation.",
+          "options": [
+            "Organize siloed project teams that focus exclusively on their domain expertise to streamline deliverables.",
+            "Establish joint task forces that meet weekly to coordinate data collection, analysis, and protocol adjustments.",
+            "Create a shared governance council that includes representatives from all core disciplines to set strategic priorities."
+          ],
+          "review_lever": "Tension between specialization and integration; options fail to address the challenge of aligning incentives across disciplines."
+        },
+        {
+          "lever_index": 6,
+          "name": "Funding Diversification Pathways",
+          "lever_type": "governance",
+          "decision_axis": "This lever controls funding sources by choosing between single grant reliance, diversified public\u2011private mix, and contingency reserve building.",
+          "consequences": "Relying on a single grant simplifies budgeting but exposes the project to funding cuts. A diversified public\u2011private mix spreads risk and may unlock additional resources, yet introduces complex stakeholder expectations. Building a contingency reserve cushions against shortfalls but requires upfront capital allocation.",
+          "options": [
+            "Maintain reliance on the primary DFG grant, allocating all budgetary planning around its timelines and and.",
+            "Pursue a diversified public\u2011private funding mix, securing supplemental support from university and industry partners for.",
+            "Establish a contingency reserve equal to 10% of total budget, funded through early cost\u2011overrun provisions."
+          ],
+          "review_lever": "Balancing financial stability with stakeholder complexity; options overlook the impact of funding mix on research independence."
+        }
+      ]
+    }
+  ],
+  "levers": [
+    {
+      "lever_id": "8458d2b0-7833-444b-90ce-f69e60fbc17d",
+      "name": "Recruitment Channel Optimization",
+      "lever_type": "execution",
+      "decision_axis": "This lever controls recruitment speed and sample diversity by choosing between hospital-based referrals, community outreach, and digital pre-screening.",
+      "consequences": "Pulling this lever accelerates enrollment when hospital referrals dominate, but may bias the cohort toward patients already engaged with tertiary care. Community outreach expands reach to underserved populations, yet increases logistical overhead and screening burden. Digital pre-screening offers rapid triage and cost savings, yet risks lower data quality if participants self-select without clinical confirmation. Each option trades off speed, representativeness, and resource intensity.",
+      "options": [
+        "Recruit participants through hospital-based referrals, leveraging existing clinical pathways to streamline enrollment and reduce screening time.",
+        "Engage community outreach programs, partnering with local sleep clinics and patient advocacy groups to broaden demographic representation and increase enrollment volume.",
+        "Implement digital pre-screening, deploying an online questionnaire and automated eligibility filter to identify potential participants before in-person visits."
+      ],
+      "review": "The tension lies between enrollment speed and cohort representativeness; the options overlook the impact of screening accuracy on downstream data quality and the potential for digital pre-screening to miss subtle clinical nuances."
+    },
+    {
+      "lever_id": "8dbe6951-5420-4934-bbed-183802f58b1c",
+      "name": "Staffing Shift Structure",
+      "lever_type": "operations",
+      "decision_axis": "This lever controls staffing fatigue and coverage efficiency by choosing between 8\u2011hour shifts, 12\u2011hour shifts, and flexible shift rotation.",
+      "consequences": "Choosing 8\u2011hour shifts maximizes technician alertness but increases staffing costs and administrative complexity. Opting for 12\u2011hour shifts reduces payroll overhead but heightens fatigue risk and may compromise event response quality. Flexible shift rotation offers a balance, allowing technicians to alternate shift lengths and maintain coverage while mitigating burnout, yet requires sophisticated scheduling systems and may complicate training consistency.",
+      "options": [
+        "Adopt 8\u2011hour shifts, scheduling technicians in two consecutive blocks to maintain high alertness during peak event monitoring periods.",
+        "Implement 12\u2011hour shifts, rotating technicians weekly to reduce payroll expenses while ensuring continuous coverage across all suites.",
+        "Introduce flexible shift rotation, allowing technicians to alternate between 8\u2011hour and 12\u2011hour blocks based on workload forecasts and personal fatigue metrics."
+      ],
+      "review": "The core tension is balancing technician well\u2011being against operational cost; the options fail to address how shift patterns influence inter\u2011rater reliability during annotation and the potential need for cross\u2011training across shift types."
+    },
+    {
+      "lever_id": "31c9d77c-30a1-44be-bae1-e296939de269",
+      "name": "Data Annotation Workflow",
+      "lever_type": "execution",
+      "decision_axis": "This lever controls annotation throughput and data quality by choosing between real\u2011time annotation, batch annotation, and hybrid annotation.",
+      "consequences": "Real\u2011time annotation ensures immediate feedback and reduces backlog, but demands high technician availability and may compromise accuracy under fatigue. Batch annotation allows technicians to focus on a larger dataset at once, improving consistency, yet delays data availability for analysis. Hybrid annotation combines initial real\u2011time flagging with subsequent batch refinement, potentially balancing speed and precision but requiring additional coordination and software support.",
+      "options": [
+        "Perform real\u2011time annotation, having technicians label events immediately during each night to capture context and reduce post\u2011hoc error.",
+        "Adopt batch annotation, assigning technicians to review and score entire nights after data transfer, enabling systematic quality checks and inter\u2011rater calibration.",
+        "Implement hybrid annotation, flagging probable events in real\u2011time and refining them in batch sessions to combine speed with thoroughness."
+      ],
+      "review": "The tension is between speed and accuracy; the options overlook how annotation workflow choices affect inter\u2011rater reliability and the need for automated quality assurance checks."
+    },
+    {
+      "lever_id": "3f5aad90-a534-4330-8435-c0ae16124a68",
+      "name": "Event Triage Algorithm Development",
+      "lever_type": "product",
+      "decision_axis": "This lever controls diagnostic efficiency by choosing between rule\u2011based heuristics, machine learning classifiers, and hybrid rule\u2011plus\u2011ML models.",
+      "consequences": "Rule\u2011based heuristics provide transparent, low\u2011resource solutions but may miss subtle event patterns, limiting sensitivity. Machine learning classifiers can capture complex signatures, improving detection rates, yet require large labeled datasets and risk overfitting. Hybrid rule\u2011plus\u2011ML models blend domain knowledge with data\u2011driven insights, potentially achieving higher accuracy while maintaining interpretability, but increase development complexity and validation burden.",
+      "options": [
+        "Develop rule\u2011based heuristics, encoding expert sleep\u2011medicine criteria into threshold\u2011based algorithms to flag likely parasomnia events.",
+        "Train machine learning classifiers, feeding annotated PSG and sensor data into supervised models to learn complex event signatures.",
+        "Combine rule\u2011based and machine learning approaches, applying heuristic filters before feeding data into classifiers to reduce false positives and improve interpretability."
+      ],
+      "review": "The core tension is balancing interpretability against detection performance; the options ignore the need for continuous model retraining as new event types emerge during the longitudinal study."
+    },
+    {
+      "lever_id": "1ee148f4-58ac-49ee-9dd4-4fdf4f040690",
+      "name": "Participant Compensation Model",
+      "lever_type": "governance",
+      "decision_axis": "This lever controls recruitment motivation and retention by choosing between flat per\u2011night fee, tiered compensation, and incentive\u2011based bonus.",
+      "consequences": "Flat per\u2011night fee offers predictable budgeting and straightforward communication, but may not sufficiently motivate participants with high travel costs. Tiered compensation rewards longer stays, encouraging data completeness, yet complicates payment schedules and may create inequity among participants. Incentive\u2011based bonuses tied to event capture or study milestones can boost engagement and data yield, but risk introducing selection bias and require careful monitoring to avoid coercion.",
+      "options": [
+        "Offer a flat per\u2011night fee, paying participants \u20ac80 each night regardless of event occurrence to simplify budgeting and communication.",
+        "Implement tiered compensation, increasing nightly payment for each consecutive week of stay to incentivize longer participation and richer data capture.",
+        "Introduce incentive\u2011based bonuses, awarding participants a bonus for each confirmed parasomnia event they contribute to the dataset to encourage active engagement."
+      ],
+      "review": "The tension is between motivating participants and maintaining data integrity; the options fail to consider how compensation structures might influence event reporting accuracy or introduce differential dropout rates."
+    },
+    {
+      "lever_id": "6b480ac3-e1ec-434f-8ab7-e8accf82999a",
+      "name": "Data Sharing Policy",
+      "lever_type": "dissemination",
+      "decision_axis": "This lever controls data accessibility and privacy compliance by choosing between restricted de\u2011identified sharing, open repository with controlled access, and embargoed release.",
+      "consequences": "Restricted de\u2011identified sharing limits external reuse but ensures strict privacy compliance and aligns with current ethics approvals. Open repository with controlled access accelerates scientific collaboration and citation potential, yet requires robust data governance and monitoring of downstream use. Embargoed release postpones public availability until after primary publication, protecting competitive advantage but delaying broader community benefit and potentially reducing transparency.",
+      "options": [
+        "Maintain restricted de\u2011identified sharing, providing only anonymized physiological data to vetted researchers under signed agreements.",
+        "Publish data in an open repository with controlled access, allowing external scientists to request datasets after completing a data\u2011use agreement.",
+        "Adopt an embargoed release, withholding full dataset until after the first set of peer\u2011reviewed publications to safeguard intellectual property."
+      ],
+      "review": "The tension lies between privacy protection and scientific openness; the options overlook how embargoed release may delay external validation and the need for a clear data\u2011governance framework to manage controlled access."
+    },
+    {
+      "lever_id": "293a468a-ce3d-4765-8f9d-5411f4b3aadd",
+      "name": "Sleep Suite Environmental Calibration",
+      "lever_type": "methodology",
+      "decision_axis": "This lever controls environmental noise reduction by choosing between acoustic paneling, active noise cancellation, and adaptive ventilation.",
+      "consequences": "Implementing acoustic paneling reduces ambient noise, improving signal quality for EEG recordings, but increases renovation cost and may alter room aesthetics. Active noise cancellation offers real\u2011time noise suppression, potentially enhancing data fidelity, yet requires continuous power and maintenance. Adaptive ventilation controls airflow to reduce humidity and mold risk, supporting participant comfort, but may introduce airflow noise that could interfere with sensor data.",
+      "options": [
+        "Install acoustic paneling throughout all suites to dampen external and internal noise while preserving a domestic feel.",
+        "Deploy active noise cancellation units in each suite to suppress ambient sound during recording sessions.",
+        "Configure adaptive ventilation systems to maintain optimal humidity while minimizing airflow noise that could interfere with sensor data."
+      ],
+      "review": "Balancing acoustic quality against aesthetic integrity and cost; options overlook the impact of paneling on naturalistic behavior and the need for routine maintenance of active systems."
+    },
+    {
+      "lever_id": "a7198a71-bf59-45c6-b1b5-d74839642021",
+      "name": "Participant Engagement Protocol",
+      "lever_type": "execution",
+      "decision_axis": "This lever controls participant adherence by choosing between structured pre\u2011stay orientation, real\u2011time feedback loops, and post\u2011stay debriefing.",
+      "consequences": "Providing a structured orientation improves participant understanding of procedures, potentially reducing drop\u2011outs, but adds scheduling overhead. Real\u2011time feedback loops, such as nightly summaries, may increase engagement and data quality, yet require additional staff time. Post\u2011stay debriefing can capture participant insights for protocol refinement, but may delay data analysis if not integrated efficiently.",
+      "options": [
+        "Offer a structured pre\u2011stay orientation session that explains monitoring equipment and daily routines and expectations.",
+        "Implement nightly real\u2011time feedback loops that summarize sleep metrics and encourage participants to adjust habits.",
+        "Conduct post\u2011stay debriefing interviews to gather participant experiences and identify protocol improvements for future studies."
+      ],
+      "review": "Balancing engagement depth with resource constraints; options miss the trade\u2011off between participant burden and data richness."
+    },
+    {
+      "lever_id": "05efb447-25fa-42f9-a2e1-bb61a97941a5",
+      "name": "Ethics Oversight Cadence",
+      "lever_type": "governance",
+      "decision_axis": "This lever controls ethics review frequency by choosing between quarterly, bi\u2011annual, and event\u2011driven reviews.",
+      "consequences": "Quarterly reviews ensure rapid response to emerging issues, but may strain board capacity. Bi\u2011annual reviews reduce administrative load, yet risk delayed detection of compliance gaps. Event\u2011driven reviews trigger only after incidents, minimizing routine burden but potentially allowing problems to accumulate.",
+      "options": [
+        "Schedule ethics board reviews every quarter to promptly address emerging participant concerns and safety protocols.",
+        "Conduct ethics board reviews twice a year to balance oversight with administrative efficiency and compliance.",
+        "Trigger ethics board reviews only after documented incidents to reduce routine oversight and ensure accountability."
+      ],
+      "review": "Tension between oversight rigor and administrative burden; options overlook the need for continuous monitoring of data security practices."
+    },
+    {
+      "lever_id": "87f344fb-76da-4f73-9a70-8d86a1d8c91d",
+      "name": "Data Retention and Archival Strategy",
+      "lever_type": "operations",
+      "decision_axis": "This lever controls data storage duration by choosing between 5\u2011year, 10\u2011year, and indefinite retention.",
+      "consequences": "A 5\u2011year retention aligns with typical grant reporting, reducing storage costs but limiting long\u2011term reuse. A 10\u2011year retention supports extended research but increases storage and security obligations. Indefinite retention preserves all data for future studies but requires ongoing compliance with evolving privacy regulations.",
+      "options": [
+        "Maintain all collected data for five years, then archive securely to meet grant reporting requirements.",
+        "Store data for ten years, implementing tiered access controls to balance research utility and privacy.",
+        "Retain data indefinitely, establishing a governance framework to manage evolving legal and ethical standards over."
+      ],
+      "review": "Balancing archival depth with regulatory compliance; options ignore the cost of long\u2011term data stewardship and the need for periodic audit."
+    },
+    {
+      "lever_id": "f28a16f3-6089-4ca8-8c9c-b4e59a0b5978",
+      "name": "Interdisciplinary Collaboration Framework",
+      "lever_type": "governance",
+      "decision_axis": "This lever controls cross\u2011disciplinary integration by choosing between siloed project teams, joint task forces, and shared governance councils.",
+      "consequences": "Siloed teams allow focused expertise but risk misalignment of objectives. Joint task forces promote real\u2011time collaboration, enhancing innovation, yet require coordination overhead. Shared governance councils provide strategic alignment across disciplines, but may slow decision\u2011making due to broader representation.",
+      "options": [
+        "Organize siloed project teams that focus exclusively on their domain expertise to streamline deliverables.",
+        "Establish joint task forces that meet weekly to coordinate data collection, analysis, and protocol adjustments.",
+        "Create a shared governance council that includes representatives from all core disciplines to set strategic priorities."
+      ],
+      "review": "Tension between specialization and integration; options fail to address the challenge of aligning incentives across disciplines."
+    },
+    {
+      "lever_id": "6b3c1421-0957-4054-ae3d-20fe5c509d58",
+      "name": "Funding Diversification Pathways",
+      "lever_type": "governance",
+      "decision_axis": "This lever controls funding sources by choosing between single grant reliance, diversified public\u2011private mix, and contingency reserve building.",
+      "consequences": "Relying on a single grant simplifies budgeting but exposes the project to funding cuts. A diversified public\u2011private mix spreads risk and may unlock additional resources, yet introduces complex stakeholder expectations. Building a contingency reserve cushions against shortfalls but requires upfront capital allocation.",
+      "options": [
+        "Maintain reliance on the primary DFG grant, allocating all budgetary planning around its timelines and and.",
+        "Pursue a diversified public\u2011private funding mix, securing supplemental support from university and industry partners for.",
+        "Establish a contingency reserve equal to 10% of total budget, funded through early cost\u2011overrun provisions."
+      ],
+      "review": "Balancing financial stability with stakeholder complexity; options overlook the impact of funding mix on research independence."
+    }
+  ],
+  "metadata": {
+    "metadata_1": {
+      "context_window": 3900,
+      "num_output": 8192,
+      "is_chat_model": true,
+      "is_function_calling_model": false,
+      "model_name": "openai/gpt-oss-20b",
+      "system_role": "system",
+      "llm_classname": "OpenRouter_LLM"
+    },
+    "metadata_2": {
+      "context_window": 3900,
+      "num_output": 8192,
+      "is_chat_model": true,
+      "is_function_calling_model": false,
+      "model_name": "openai/gpt-oss-20b",
+      "system_role": "system",
+      "llm_classname": "OpenRouter_LLM"
+    }
+  },
+  "system_prompt": "You are an expert strategic analyst. Generate solution space parameters following these directives:\n\n1. **Output Requirements**\n   - You must generate 5 to 7 levers per response.\n   - Each lever's `options` field must contain exactly 3 qualitative strategic choices as plain strings.\n\n2. **Lever Classification**\n   - `lever_type`: classify each lever as one of: methodology, execution, governance, dissemination, product, operations.\n   - `decision_axis`: write one sentence describing the controllable choice. Use the template: \"This lever controls X by choosing between A, B, and C.\" The axis must be a single, crisp decision \u2014 not a topic or workstream.\n\n3. **Lever Quality Standards**\n   - Consequences: describe the direct effect of pulling this lever, then at least one downstream implication or trade-off. Be concise and grounded \u2014 only cite specific numbers if the project context provides evidence for them. Do not fabricate percentages or cost estimates. Target length: 2\u20134 sentences.\n   - Options MUST:\n     \u2022 Represent genuinely distinct strategic pathways (not just labels)\n     \u2022 Include at least one unconventional or non-obvious approach\n     \u2022 NO prefixes (e.g., \"Option A:\", \"Choice 1:\")\n\n4. **Strategic Framing**\n   - Name each lever using language drawn directly from the project's own domain \u2014 avoid formulaic patterns or repeated prefixes\n   - Frame options as complete strategic approaches\n   - Ensure levers challenge core project assumptions\n\n5. **Validation Protocols**\n   - For `review_lever`:\n     A short critical review \u2014 name the core tension, then identify a weakness the options miss.\n     Examples:\n     - \"Switching from seasonal contract labor to year-round employees stabilizes harvest quality, but none of the options price in the idle-wage burden during the 5-month off-season.\"\n     - \"Routing the light-rail extension through the historic district unlocks ridership but triggers Section 106 heritage review; the options assume permits will clear on the standard timeline.\"\n     - \"Pooling catastrophe risk across three coastal regions diversifies exposure on paper, but a regional hurricane season can correlate all three simultaneously \u2014 correlation risk absent from every option.\"\n     Do not use square brackets or placeholder text.\n\n6. **Prohibitions**\n   - NO prefixes/labels in options (e.g., \"Option A:\", \"Choice 1:\")\n   - NO generic option labels (e.g., \"Optimize X\", \"Tolerate Y\")\n   - NO placeholder consequences or bracket-wrapped templates\n   - NO fabricated statistics or percentages without evidence from the project context\n   - NO marketing language (e.g., \"game-changing\", \"cutting-edge\", \"revolutionary\")\n\n7. **Option Structure**\n   - Maintain parallel grammatical structure across options\n   - Ensure options are self-contained descriptions\n   - Each option should be a concrete, actionable approach (at least 15 words with an action verb) \u2014 not a short label or vague aspiration",
+  "user_prompt": "File 'plan.txt':\nPlan:\nEstablish a 3-year residential longitudinal research unit in Bonn, Germany, for the study of adult NREM parasomnias \u2014 sleepwalking, confusional arousals, and sleep terrors \u2014 with a secondary exploratory arm for REM sleep behavior disorder under a separate protocol with dedicated neurologic screening, reflecting RBD's distinct clinical trajectory per current AASM guidance. The facility is affiliated with University Hospital Bonn's Department of Epileptology, leveraging its existing long-term video-EEG monitoring culture, and addresses a specific methodological gap: traditional single-night polysomnography rarely captures infrequent parasomnia events, while outpatient actigraphy lacks physiological resolution. The unit houses 8 active sleep suites at launch in a converted residential property in a quiet Bonn neighborhood, renovated for safety (padded corridor edges, restricted-opening windows, silent exterior door alarms, fire safety, acoustic treatment, network cabling, accessibility modifications) while preserving a domestic feel \u2014 if the environment is too clinical, naturalistic behavior is suppressed. Physical capacity exists for 12 suites, but expansion is deferred until the pilot proves acceptable data quality, manageable false alarm rates, safe staffing ratios, and usable annotation throughput. Sensing uses a tiered acquisition model: nightly low-burden monitoring via dry-electrode EEG headbands, contact-free mattress sensors, unobtrusively mounted infrared cameras, ambient microphones, and environmental sensors; scheduled enhanced nights with fuller PSG montage including standard scalp EEG, EOG, chin EMG, and leg EMG on the first night, one mid-stay night, and the final night per participant; and escalation nights deploying full PSG after technician-flagged events to capture recurrence at clinical-grade resolution. All streams are time-synchronized and stored in EEG-BIDS-compatible format on a local NAS with nightly encrypted backup to university storage, annotated in real time by the night technician and later scored by two independent raters using AASM criteria with inter-rater reliability reported. Public data sharing is limited to de-identified physiological and sensor data under data use agreements \u2014 bedroom video carries severe privacy constraints and is not deposited in public repositories. The scientific program has three explicit aims: Aim 1, establish and operationally validate the residential capture model as safe, ethics-approved, and sustainable; Aim 2, characterize within-person and between-person parasomnia patterns longitudinally, including episode frequency, morphology, triggers, and temporal clustering; Aim 3, develop and benchmark semi-automated event-triage tools that rank probable parasomnia episodes and reduce manual review burden, evaluated against dual human scorer agreement rather than promising autonomous diagnosis.\n\nParticipant recruitment targets adults aged 18\u201365 with NREM parasomnia confirmed through a structured pre-admission pathway: specialist clinical interview, collateral history from bed partner or household member where available, prior or screening polysomnography, and a structured exclusion checklist adjudicated by the PI. Explicit exclusions are nocturnal epilepsy or suspected epilepsy mimics, untreated obstructive sleep apnea, active major substance use disorder, severe psychiatric instability, and wandering or injury risk beyond facility capability. Recruitment channels are the University Hospital Bonn sleep clinic, regional neurologist referrals, and the Deutsche Gesellschaft f\u00fcr Schlafforschung und Schlafmedizin network, with per-night compensation of \u20ac80 plus meals. A matched control group provides baseline nocturnal movement, arousal patterns, and false-positive sensor activity under identical residential monitoring conditions, enabling benchmarking of the event-triage tools against normal nocturnal behavior. Event-yield planning assumes that based on the inclusion criterion of at least 2 self-reported episodes per month, approximately 70\u201380% of admitted participants will produce at least one captured and adjudicated event during a 2\u20138 week stay; stays may be extended up to 2 additional weeks for participants with zero captured events after the initial period, capped at 10 weeks total, with a protocol ceiling of 20% unproductive admissions before triggering a recruitment-criteria review. The core team is 9 people: a PI who is a board-certified sleep medicine physician, 2 postdoctoral researchers in sleep neurophysiology and computational neuroscience respectively, 3 research technicians rotating night shifts to ensure safe coverage of 8 active suites with adequate margin for event response and annotation, a clinical psychologist specializing in sleep disorders, a data engineer managing the sensor pipeline, and a study coordinator handling recruitment, consent, scheduling, and ethics compliance.\n\nBudget is \u20ac3.8 million over 3 years, gated: \u20ac1.8M year one covering property lease and renovation at approximately \u20ac750K, equipment at approximately \u20ac450K, staff hiring accounting for German social insurance contributions and actual overnight coverage, ethics approval, and a pilot cohort of 15\u201320 participants; \u20ac1.2M year two covering full operations with 30\u201335 participants, the enhanced-night PSG program, first publications, and event-triage algorithm development; \u20ac800K year three conditional on demonstrable progress by month 24. Personnel costs are approximately \u20ac2M over three years and remaining funds cover participant compensation, independent scoring time, data storage and retention, regulatory and legal work, and contingency. Funding sources are DFG research grant and University of Bonn internal research funding as the primary pillars, with a pharmaceutical industry partnership as optional upside rather than a feasibility requirement \u2014 if secured, the academic team retains full publication rights with the pharma partner receiving a 30-day pre-publication comment window only. Success criteria at 36 months: safe residential monitoring operations sustained for at least 24 months, enrollment of 50\u201370 NREM parasomnia participants plus matched controls, capture of a prespecified minimum number of independently adjudicated parasomnia events sufficient for Aim 2 phenotyping analysis, 2\u20133 peer-reviewed publications in sleep medicine journals covering methods validation and longitudinal characterization, a benchmarked semi-automated event-triage model with reported sensitivity, specificity, and agreement against dual human scoring, de-identified physiological dataset deposited in a recognized repository, and a submitted phase-two grant proposal for expansion and intervention studies. Failure triggers: if by month 18 the facility has enrolled fewer than 25 participants or captured fewer than 40 adjudicated events, the program undergoes external review. Governance is a 3-member external scientific advisory board reviewing progress every 6 months, with the PI holding operational authority and budget reallocations above \u20ac50K requiring board approval. Banned words: AI, blockchain, app, VR, AR, gamification, wearable startup, consumer product, DAO, NFT, metaverse, smart home, autonomous diagnosis, digital therapeutic, SaaS, marketplace, validated (in the context of claiming a mature deployable system). Pick a realistic scenario \u2014 this is an early-stage clinical research facility producing methods validation and phenotyping work, not a finished diagnostic platform.\n\nToday's date:\n2026-Mar-11\n\nProject start ASAP\n\nFile 'purpose.md':\n**Purpose:** business\n\n**Purpose Detailed:** Research facility establishment, data collection, and analysis for scientific publication and grant funding.\n\n**Topic:** Establishment of a residential research unit for the study of adult NREM parasomnias\n\nFile 'plan_type.md':\nThis plan requires one or more physical locations. It cannot be executed digitally.\n\n**Explanation:** This plan *unequivocally requires* a physical location (the research unit in Bonn, Germany), physical renovations, physical equipment, in-person staffing, and physical participants. The entire research project *revolves around* physical data collection and analysis in a real-world setting. The plan also requires physical travel to the location."
+}

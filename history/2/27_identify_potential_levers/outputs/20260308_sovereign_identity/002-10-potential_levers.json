@@ -1,0 +1,249 @@
+[
+  {
+    "lever_id": "510016f9-8613-4162-9863-78fcc820e714",
+    "name": "Fallback Authentication Architecture",
+    "lever_type": "product",
+    "decision_axis": "This lever controls the technical foundation of fallback authentication by choosing between open standards-based solutions, hardware token integration, and browser-centric authentication models.",
+    "consequences": "Prioritizing open standards accelerates interoperability but risks underestimating user adoption challenges. Hardware token integration enhances security but introduces cost and distribution barriers. Browser-centric models reduce dependency on OS platforms but may compromise device integrity verification. A hybrid approach could create fragmented user experiences if not carefully coordinated.",
+    "options": [
+      "Design a FIDO2/WebAuthn-based fallback system using GrapheneOS as the primary trust anchor",
+      "Develop a hardware token ecosystem compatible with multiple OS platforms and browser environments",
+      "Implement a browser-passkey-only authentication flow that bypasses OS-level integrity checks"
+    ],
+    "review": "The lever prioritizes technical robustness over user convenience, but none of the options address the potential backlash from incumbent platform providers who may resist browser-centric models as a threat to their ecosystem control."
+  },
+  {
+    "lever_id": "9bf2fdfe-59bd-414b-9488-7248a039fd26",
+    "name": "Stakeholder Coalition Strategy",
+    "lever_type": "governance",
+    "decision_axis": "This lever controls coalition-building approach by choosing between top-down institutional engagement, bottom-up civil society mobilization, or cross-sector public-private partnerships.",
+    "consequences": "Top-down engagement secures immediate policy influence but risks exclusion of grassroots perspectives. Bottom-up mobilization builds broad support but may lack institutional credibility. Cross-sector partnerships balance influence and legitimacy but require significant coordination overhead. Political alignment with Folketinget members could accelerate policy adoption but might dilute technical focus.",
+    "options": [
+      "Leverage academic and security researcher networks to pressure Digitaliseringsstyrelsen through technical audits",
+      "Form a civil society coalition focused on digital sovereignty to amplify grassroots advocacy",
+      "Establish a public-private working group with AltID stakeholders to co-design procurement requirements"
+    ],
+    "review": "The lever assumes institutional openness to external input, but none of the options account for the risk of coalition fragmentation due to conflicting interests among public-sector stakeholders and private platform providers."
+  },
+  {
+    "lever_id": "4cf4dbfc-724b-4724-b7e4-d8cb91fe999b",
+    "name": "Regulatory Framing Narrative",
+    "lever_type": "dissemination",
+    "decision_axis": "This lever controls the policy justification for platform neutrality by choosing between resilience-focused risk mitigation, procurement compliance mandates, or democratic accountability arguments.",
+    "consequences": "Resilience framing aligns with public-sector risk management but may be dismissed as technical jargon. Procurement compliance arguments create legal pressure but risk being circumvented through contractual loopholes. Democratic accountability narratives resonate politically but lack immediate operational urgency. A mixed approach could dilute the core message across different stakeholder groups.",
+    "options": [
+      "Position platform neutrality as a critical infrastructure resilience requirement under NSIS standards",
+      "Frame fallback authentication as a mandatory procurement condition for public-sector identity systems",
+      "Emphasize digital sovereignty as a democratic imperative to limit foreign technology influence"
+    ],
+    "review": "The lever overlooks the potential for regulatory capture by existing platform providers, who could influence eIDAS2 standards to maintain their dominance despite the policy arguments presented."
+  },
+  {
+    "lever_id": "08c3b8c1-4927-4391-9071-8eb655dab1b5",
+    "name": "Demonstrator Development Scope",
+    "lever_type": "execution",
+    "decision_axis": "This lever controls the technical demonstration strategy by choosing between minimal viable product development, full-stack replication of MitID, or modular component testing.",
+    "consequences": "A minimal viable product ensures timely delivery but may lack the technical depth to convince skeptical stakeholders. Full-stack replication creates a direct alternative but risks excessive complexity and resource drain. Modular testing allows focused validation of key components but may fail to demonstrate end-to-end feasibility. The chosen approach will directly impact the project's credibility with technical reviewers.",
+    "options": [
+      "Build a lightweight WebAuthn-based demonstrator with limited integration to public-sector test environments",
+      "Create a full-featured alternative identity stack replicating MitID's core functionality without platform dependencies",
+      "Test individual authentication components (e.g., device attestation, token validation) in isolation"
+    ],
+    "review": "The lever assumes technical demonstrability without addressing potential legal barriers to replicating existing authentication protocols, which could delay or invalidate the project's outputs."
+  },
+  {
+    "lever_id": "d22aa699-78ce-4132-bd28-f8525bf71eb5",
+    "name": "Institutional Engagement Protocol",
+    "lever_type": "operations",
+    "decision_axis": "This lever controls the project's physical workspace strategy by choosing between university-affiliated labs, independent research institutes, or co-located government facilities.",
+    "consequences": "University labs provide academic credibility but may lack necessary security clearances. Independent institutes offer operational flexibility but face trust-building challenges. Co-located facilities enhance access to decision-makers but risk political entanglement. The choice directly impacts the project's ability to conduct secure research and engage with sensitive stakeholders.",
+    "options": [
+      "Establish a secure research lab at a Danish university with access-controlled workspace for stakeholder meetings",
+      "Partner with an independent research institution specializing in digital identity security",
+      "Secure co-location space within a government digital infrastructure facility for direct stakeholder interaction"
+    ],
+    "review": "The lever focuses on physical security requirements but does not address the potential for political interference in projects hosted within government facilities, which could compromise neutrality."
+  },
+  {
+    "lever_id": "507dd533-3f0a-43cd-b1b9-d08aa9c8d0e4",
+    "name": "Procurement Influence Mechanism",
+    "lever_type": "governance",
+    "decision_axis": "This lever controls the strategy for shaping AltID procurement requirements by choosing between direct policy lobbying, indirect standards advocacy, or third-party certification pressure.",
+    "consequences": "Direct lobbying creates immediate influence but risks being perceived as partisan. Standards advocacy builds long-term impact but requires sustained technical engagement. Certification pressure leverages existing compliance frameworks but may lack enforcement power. The chosen approach will determine the project's ability to affect concrete procurement outcomes.",
+    "options": [
+      "Draft binding procurement language for AltID requiring platform-neutral authentication options",
+      "Influence eIDAS2 technical working groups to include fallback authentication requirements",
+      "Collaborate with certification bodies to develop standards for platform-independent identity systems"
+    ],
+    "review": "The lever assumes technical standards bodies will prioritize digital sovereignty, but none of the options address the risk of industry-led standardization efforts that could entrench existing platform dependencies."
+  },
+  {
+    "lever_id": "991b3842-9d6f-4eae-b327-f7116ddee2a4",
+    "name": "Standardization Alignment Strategy",
+    "lever_type": "methodology",
+    "decision_axis": "This lever controls the extent of alignment with eIDAS2 standards versus proprietary platform protocols by choosing between strict compliance, hybrid integration, or open-standard advocacy.",
+    "consequences": "Prioritizing eIDAS2 compliance ensures regulatory acceptance but may delay innovation. Open-standard advocacy risks institutional resistance but could create long-term interoperability benefits. Hybrid integration balances immediate needs with future flexibility, though it may complicate technical implementation.",
+    "options": [
+      "Advocate for eIDAS2-compliant fallback mechanisms through formal regulatory submissions",
+      "Develop hybrid authentication workflows that blend platform-specific signals with open-standard fallbacks",
+      "Pilot open-source authentication protocols independent of eIDAS2 to test alternative compliance models"
+    ],
+    "review": "Balancing eIDAS2 compliance with open-standard innovation creates a tension between regulatory certainty and technical experimentation. The options understate the risk of regulatory capture by existing platform vendors during standardization processes."
+  },
+  {
+    "lever_id": "5a0cdebd-1dc3-4ca4-886d-8474b0064ae4",
+    "name": "Procurement Mandate Framing",
+    "lever_type": "governance",
+    "decision_axis": "This lever controls how procurement requirements are structured by choosing between mandatory platform-neutral clauses, voluntary compliance incentives, or third-party audit mandates.",
+    "consequences": "Mandatory clauses create legal binding but face procurement resistance. Voluntary incentives encourage adoption without enforcement but lack accountability. Third-party audits add credibility but increase administrative burden and cost.",
+    "options": [
+      "Embed platform-neutral authentication requirements in public-sector procurement contracts",
+      "Create a certification framework for fallback authentication solutions through independent technical audits",
+      "Develop voluntary compliance guidelines for private-sector identity providers aligned with national resilience goals"
+    ],
+    "review": "The tension between enforceable mandates and voluntary adoption risks underestimating procurement bureaucracy. None of the options adequately address potential legal challenges from platform vendors seeking to block restrictive clauses."
+  },
+  {
+    "lever_id": "edb68ffd-c09b-44fe-bb26-8d2e5a77df26",
+    "name": "Demonstrator Deployment Model",
+    "lever_type": "execution",
+    "decision_axis": "This lever controls the scope and scale of technical demonstrators by choosing between phased incremental testing, parallel system deployment, or modular component validation.",
+    "consequences": "Phased testing ensures controlled risk but slows momentum. Parallel deployment creates immediate utility but strains resources. Modular validation accelerates development but may lack holistic integration testing.",
+    "options": [
+      "Deploy demonstrators in parallel with existing MitID infrastructure to showcase immediate compatibility",
+      "Release modular authentication components for independent validation by security researchers and institutions",
+      "Implement phased testing across public-sector use cases to build incremental trust in fallback mechanisms"
+    ],
+    "review": "The choice between parallel deployment and modular validation overlooks potential integration challenges with legacy systems. The options fail to account for the resource intensity of maintaining dual authentication infrastructures during testing."
+  },
+  {
+    "lever_id": "02608d45-84ae-412d-ad40-f97fbf201254",
+    "name": "Policy Narrative Reframing",
+    "lever_type": "dissemination",
+    "decision_axis": "This lever controls the framing of digital sovereignty arguments by choosing between resilience-focused messaging, privacy-centric advocacy, or economic-risk analysis.",
+    "consequences": "Resilience framing aligns with institutional priorities but may downplay privacy concerns. Privacy-centric messaging gains civil society support but risks appearing ideological. Economic-risk analysis provides concrete evidence but requires complex data integration.",
+    "options": [
+      "Position platform neutrality as a critical infrastructure resilience requirement for public services",
+      "Leverage privacy advocates to highlight risks of foreign data governance over existing authentication systems",
+      "Quantify supplier-concentration risks through economic impact models for public-sector decision-makers"
+    ],
+    "review": "The resilience vs. privacy framing tension neglects the interdependence of these issues. The options miss the opportunity to directly link supplier concentration to specific national security vulnerabilities."
+  },
+  {
+    "lever_id": "cb4aa9f6-75d5-4789-88d3-deddd9f161d7",
+    "name": "Fallback Access Certification",
+    "lever_type": "product",
+    "decision_axis": "This lever controls the criteria for certifying fallback authentication methods by choosing between strict compliance with existing trust frameworks, adaptive risk-based evaluation, or community-driven peer validation.",
+    "consequences": "Strict compliance ensures trust but limits innovation. Risk-based evaluation allows flexibility but requires ongoing oversight. Peer validation builds grassroots credibility but lacks formal recognition.",
+    "options": [
+      "Establish a certification process for fallback mechanisms aligned with NSIS Substantial level requirements",
+      "Create adaptive evaluation criteria that evolve with emerging authentication technologies and threat landscapes",
+      "Develop a community-driven validation network of security researchers and public-sector stakeholders"
+    ],
+    "review": "The certification approach risks over-reliance on existing frameworks that favor incumbent platforms. The options do not address how to reconcile formal certification with the need for rapid technological iteration."
+  },
+  {
+    "lever_id": "c7686c7d-41d0-4c5d-b5c6-61aedc01f9fe",
+    "name": "Institutional Liaison Protocol",
+    "lever_type": "operations",
+    "decision_axis": "This lever controls engagement strategies with public-sector institutions by choosing between direct policy advocacy, indirect stakeholder influence, or academic partnership-driven research.",
+    "consequences": "Direct advocacy creates immediate visibility but faces bureaucratic resistance. Indirect influence builds gradual support but lacks urgency. Academic partnerships lend credibility but may delay practical implementation.",
+    "options": [
+      "Establish direct dialogue with Digitaliseringsstyrelsen to integrate fallback requirements into AltID specifications",
+      "Leverage academic institutions to publish research validating platform-neutral authentication risks and solutions",
+      "Create a multi-stakeholder working group with public-sector representatives to co-design fallback requirements"
+    ],
+    "review": "The direct vs. indirect engagement tension underestimates the complexity of institutional decision-making processes. The options fail to account for the potential for conflicting priorities among public-sector stakeholders."
+  },
+  {
+    "lever_id": "726b378b-f3bf-46b1-8595-aee5e5580d35",
+    "name": "Interoperability Standards Alignment",
+    "lever_type": "methodology",
+    "decision_axis": "This lever controls standardization strategy by choosing between open-source protocol adoption, hybrid legacy integration, and proprietary framework extension.",
+    "consequences": "Prioritizing open-source protocols accelerates technical credibility but risks delaying alignment with existing eIDAS2 infrastructure. Hybrid integration preserves continuity but fragments long-term sovereignty gains. Proprietary extensions maintain vendor relationships but entrench existing dependencies.",
+    "options": [
+      "Adopt FIDO2/WebAuthn as the baseline for all authentication interfaces",
+      "Develop a middleware layer to translate platform-specific signals into open-standard equivalents",
+      "Leverage eIDAS2's 'Substantial' compliance criteria to mandate interoperability in procurement contracts"
+    ],
+    "review": "Balancing open standards with legacy systems creates friction between technical idealism and institutional inertia. None of the options adequately address the political capital required to override existing vendor lobbying efforts."
+  },
+  {
+    "lever_id": "ef51f874-ea9f-4a9f-a7c0-dbe60e5a5c16",
+    "name": "Cross-Sector Partnership Framework",
+    "lever_type": "governance",
+    "decision_axis": "This lever controls stakeholder collaboration by choosing between centralized coalition management, decentralized node-based engagement, or dual-track institutional alignment.",
+    "consequences": "Centralized management ensures coordinated messaging but risks becoming a bureaucratic bottleneck. Decentralized engagement fosters agility but dilutes influence. Dual-track alignment maintains access to both public and private stakeholders but strains resource capacity.",
+    "options": [
+      "Establish a formal consortium with public-sector digital leads and privacy advocates",
+      "Create node-based partnerships with regional municipalities and sector-specific regulators",
+      "Maintain parallel engagement channels with AltID developers and platform vendor representatives"
+    ],
+    "review": "The dual-track approach risks entanglement in conflicting stakeholder interests. The options fail to account for the potential for internal coalition fragmentation under pressure from incumbent vendors."
+  },
+  {
+    "lever_id": "5969abf4-321b-45f2-8810-0d73dc71886d",
+    "name": "Legal Safeguard Mandate",
+    "lever_type": "governance",
+    "decision_axis": "This lever controls regulatory enforcement by choosing between binding procurement mandates, advisory policy recommendations, or voluntary industry guidelines.",
+    "consequences": "Binding mandates create enforceable change but face legislative delays. Advisory recommendations allow faster adoption but lack compliance mechanisms. Voluntary guidelines maintain industry cooperation but fail to address systemic risks.",
+    "options": [
+      "Propose amendments to public procurement laws requiring platform-neutral authentication in critical services",
+      "Develop non-binding but influential policy guidelines for digital identity resilience",
+      "Leverage NSIS compliance requirements to mandate fallback path documentation"
+    ],
+    "review": "The focus on legal mandates overlooks the practical challenges of enforcement. None of the options address the potential for regulatory capture by existing platform vendors."
+  },
+  {
+    "lever_id": "81f44dd2-0d60-4ef1-9830-11f85e892e36",
+    "name": "EU Regulatory Synergy Strategy",
+    "lever_type": "dissemination",
+    "decision_axis": "This lever controls European alignment by choosing between direct EU body engagement, national advocacy alignment, or cross-border coalition building.",
+    "consequences": "Direct engagement with EU bodies increases influence but requires specialized expertise. National alignment ensures local relevance but limits broader impact. Cross-border coalitions create momentum but face coordination challenges.",
+    "options": [
+      "Submit technical input to the European Digital Identity Wallet working group",
+      "Align national policy proposals with EU interoperability mandates",
+      "Form a Nordic regulatory coordination network for digital identity resilience"
+    ],
+    "review": "The EU alignment strategy assumes harmonized regulatory priorities that may not exist. The options neglect the risk of conflicting national interests undermining collective advocacy efforts."
+  },
+  {
+    "lever_id": "a126d09b-2a87-4de6-8a27-180678cd5bde",
+    "name": "Technical Demonstration Scope",
+    "lever_type": "execution",
+    "decision_axis": "This lever controls demonstrator focus by choosing between mobile-first validation, browser-based alternatives, or hardware-token integration.",
+    "consequences": "Mobile-first demonstrations validate current usage patterns but reinforce platform dependencies. Browser-based approaches challenge OS monopolies but face adoption barriers. Hardware-token solutions enhance security but increase implementation complexity.",
+    "options": [
+      "Build a GrapheneOS-based demonstrator for mobile authentication resilience",
+      "Develop a browser extension that bypasses platform-specific authentication APIs",
+      "Prototype a hardware token integration with FIDO2 standards"
+    ],
+    "review": "The focus on technical validation may overshadow procurement realities. None of the options address the institutional resistance to adopting non-traditional authentication methods in public services."
+  },
+  {
+    "lever_id": "5773d699-a640-43b7-8dac-25cb8926444a",
+    "name": "Contingency Planning Integration",
+    "lever_type": "operations",
+    "decision_axis": "This lever controls risk mitigation by choosing between proactive scenario modeling, reactive policy adaptation, or hybrid contingency frameworks.",
+    "consequences": "Proactive modeling creates preparedness but requires ongoing resource investment. Reactive adaptation allows flexibility but risks delayed responses. Hybrid frameworks balance both but complicate implementation.",
+    "options": [
+      "Integrate platform-neutral fallback scenarios into national continuity-of-service protocols",
+      "Develop reactive contingency plans for sudden platform policy changes",
+      "Create a hybrid framework that combines scenario modeling with adaptive policy mechanisms"
+    ],
+    "review": "The hybrid approach risks becoming a bureaucratic compromise. The options fail to address the political challenges of institutionalizing contingency planning without immediate visible benefits."
+  },
+  {
+    "lever_id": "0bbd7c86-a873-423f-a430-a7bcaf9d0f07",
+    "name": "Public-Private Innovation Pact",
+    "lever_type": "governance",
+    "decision_axis": "This lever controls vendor engagement by choosing between collaborative innovation agreements, competitive benchmarking, or regulatory pressure tactics.",
+    "consequences": "Collaborative agreements foster cooperation but may dilute sovereignty goals. Competitive benchmarking drives innovation but risks vendor resistance. Regulatory pressure creates compliance but invites legal challenges.",
+    "options": [
+      "Establish joint innovation labs with platform vendors for fallback path development",
+      "Publish benchmarking reports comparing authentication resilience across platforms",
+      "Leverage competition law frameworks to challenge exclusive platform agreements"
+    ],
+    "review": "The collaborative approach risks compromising strategic independence. None of the options adequately address the long-term power dynamics between public institutions and private technology providers."
+  }
+]
