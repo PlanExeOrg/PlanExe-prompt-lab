@@ -186,18 +186,32 @@ Do not write any other files. Do not modify meta.json or events.jsonl.
 
 
 def find_before_dir(after_dir: str) -> str | None:
-    """Find the analysis directory immediately before the given one."""
+    """Find the most recent analysis directory for the same step before the given one.
+
+    Scans all directories matching *_{step_name} with a lower index, returning
+    the one with the highest index. This handles gaps in numbering caused by
+    interleaved steps (e.g. 28_levers, 29_levers, 30_documents → before for
+    30_documents is None, before for 29_levers is 28_levers).
+    """
     after_path = REPO_ROOT / after_dir
     step_name = after_path.name.split("_", 1)[1]
     after_index = int(after_path.name.split("_", 1)[0])
 
-    if after_index == 0:
-        return None
+    analysis_root = after_path.parent
+    candidates = []
+    for d in analysis_root.iterdir():
+        if not d.is_dir() or "_" not in d.name or not d.name[0].isdigit():
+            continue
+        parts = d.name.split("_", 1)
+        idx = int(parts[0])
+        name = parts[1]
+        if name == step_name and idx < after_index:
+            candidates.append((idx, d))
 
-    candidate = after_path.parent / f"{after_index - 1}_{step_name}"
-    if candidate.is_dir():
-        return str(candidate.relative_to(REPO_ROOT))
-    return None
+    if not candidates:
+        return None
+    candidates.sort()
+    return str(candidates[-1][1].relative_to(REPO_ROOT))
 
 
 def _stderr_tail(proc: subprocess.Popen, max_chars: int = 500) -> str:

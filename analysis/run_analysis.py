@@ -106,12 +106,15 @@ def main():
     if not (analysis_path / "meta.json").is_file():
         sys.exit(f"ERROR: No meta.json found in {analysis_path}")
 
-    # Assessment only makes sense from index 1 onward (needs a "before").
-    index = int(analysis_path.name.split("_", 1)[0])
+    # Assessment only makes sense when a prior analysis for the same step exists.
+    from run_assessment import find_before_dir
+    has_before = find_before_dir(analysis_dir) is not None
 
     phases = list(PHASES)
-    if index > 0:
+    if has_before:
         phases.append(("run_assessment.py", "Assessment (phase 4)"))
+    else:
+        print("  No previous analysis found — PR impact section will be skipped")
 
     print(f"Analysis pipeline for: {analysis_dir}")
     print(f"  Phases: {len(phases)}")
