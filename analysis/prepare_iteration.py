@@ -156,11 +156,20 @@ def find_all_history_runs(step_name: str) -> list[str]:
 
 
 def get_next_analysis_index(step_name: str) -> int:
-    """Find the next available analysis directory index."""
-    analysis_dirs = find_analysis_dirs(step_name)
-    if not analysis_dirs:
+    """Find the next available analysis directory index.
+
+    Scans ALL analysis directories (across all steps) so the index sequence
+    is globally unique, not per-step.
+    """
+    analysis_root = REPO_ROOT / "analysis"
+    all_dirs = [
+        d for d in analysis_root.iterdir()
+        if d.is_dir() and d.name[0].isdigit() and "_" in d.name
+    ]
+    if not all_dirs:
         return 0
-    return _dir_index(analysis_dirs[-1]) + 1
+    all_dirs.sort(key=_dir_index)
+    return _dir_index(all_dirs[-1]) + 1
 
 
 
