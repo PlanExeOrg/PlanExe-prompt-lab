@@ -1,0 +1,218 @@
+[
+  {
+    "lever_id": "ab2ab99d-192f-4e88-b42e-57a9598c0dea",
+    "name": "Staffing Coverage Model",
+    "lever_classification": "operations \u2014 staffing coverage per night",
+    "consequences": "Changing the staffing model alters payroll, coverage reliability, and response times to captured events. A more rigid schedule may reduce overtime costs but increase technician fatigue, potentially affecting annotation quality. Conversely, a flexible model can improve coverage but may raise training and supervision expenses.",
+    "options": [
+      "Maintain three full\u2011time technicians rotating 8\u2011hour shifts with a dedicated on\u2011call senior technician to cover all eight suites, ensuring continuous coverage and rapid response to events.",
+      "Implement a hybrid staffing model that pairs part\u2011time night technicians with an on\u2011call senior technician, allowing flexible coverage while reducing payroll costs.",
+      "Outsource night coverage to a specialized sleep monitoring service that provides trained technicians and real\u2011time data integration, freeing internal staff for research tasks."
+    ],
+    "review": "Balancing cost against continuous coverage; options ignore potential technician burnout and skill drift during extended shifts."
+  },
+  {
+    "lever_id": "2cc415a8-2441-45c8-8216-14e5828bb648",
+    "name": "Event Capture Frequency",
+    "lever_classification": "methodology \u2014 event capture strategy",
+    "consequences": "Adjusting the frequency of enhanced PSG nights changes data resolution and participant burden. More frequent PSGs increase event capture probability but raise costs and may reduce participant compliance. Fewer PSGs lower expenses but risk missing rare parasomnia episodes.",
+    "options": [
+      "Increase the frequency of enhanced PSG nights to every third night, thereby capturing more high\u2011resolution events while maintaining participant comfort.",
+      "Deploy adaptive sensor thresholds that trigger full PSG only when preliminary data indicates a high probability of an event, optimizing resource use.",
+      "Introduce a pre\u2011admission home PSG to pre\u2011screen participants and schedule enhanced nights based on detected event frequency, reducing unnecessary PSG nights."
+    ],
+    "review": "Maximizing event yield versus participant burden; options do not address long\u2011term compliance or data storage load."
+  },
+  {
+    "lever_id": "d4cf30cc-0d9b-412c-b9bd-6f0889100203",
+    "name": "Data Sharing Governance",
+    "lever_classification": "governance \u2014 data sharing policy",
+    "consequences": "The chosen data sharing policy determines openness, privacy compliance, and potential collaborations. A restrictive model limits external reuse but safeguards participant confidentiality, while a more open model may attract collaborators but increases regulatory scrutiny.",
+    "options": [
+      "Share only de\u2011identified physiological data with controlled access, requiring collaborators to sign data use agreements that prohibit re\u2011identification.",
+      "Provide a public repository for raw sensor data with strict privacy filters that remove any video or audio containing identifiable features.",
+      "Offer a subscription\u2011based data access model to collaborators with usage agreements, generating revenue while maintaining control over data distribution."
+    ],
+    "review": "Openness versus privacy; options overlook legal audit requirements and future regulatory changes."
+  },
+  {
+    "lever_id": "94cce983-fb50-4d7b-9e0e-a569f971632d",
+    "name": "Event\u2011Triage Algorithm",
+    "lever_classification": "product \u2014 event\u2011triage tool development",
+    "consequences": "The algorithmic approach influences development time, validation rigor, and interpretability. A rule\u2011based system is quick to implement but may miss subtle patterns, whereas a machine\u2011learning model can capture complex signals but requires extensive labeled data and may be opaque to reviewers.",
+    "options": [
+      "Build a rule\u2011based scoring system that applies thresholded sensor metrics to flag probable parasomnia episodes, enabling rapid triage.",
+      "Train a supervised machine\u2011learning classifier on annotated events, using cross\u2011validation to optimize sensitivity and specificity.",
+      "Combine rule\u2011based and ML outputs in an ensemble that weighs each method\u2019s confidence, improving overall detection performance."
+    ],
+    "review": "Speed versus rigor; options fail to consider integration with annotation workflow or explainability for reviewers."
+  },
+  {
+    "lever_id": "c2f64da1-824c-4eda-82ae-0d520129e1d8",
+    "name": "Recruitment\u2011Yield Optimization",
+    "lever_classification": "execution \u2014 recruitment\u2011yield optimization",
+    "consequences": "Modifying recruitment strategies affects enrollment numbers, budget, and participant diversity. Expanding referral sources can increase sample size but may introduce selection bias, while higher compensation accelerates enrollment but raises costs.",
+    "options": [
+      "Expand recruitment to additional regional sleep clinics, broadening the participant pool and increasing event capture opportunities.",
+      "Offer higher per\u2011night compensation to attract participants, thereby improving enrollment speed while raising budgetary demands.",
+      "Implement a pre\u2011admission screening video call to triage eligibility, reducing screening time and ensuring only suitable candidates are admitted."
+    ],
+    "review": "Enrollment speed versus cost; options miss potential selection bias or participant attrition."
+  },
+  {
+    "lever_id": "7602cbf5-541b-4029-aacf-01d59b143bc7",
+    "name": "Publication Strategy",
+    "lever_classification": "dissemination \u2014 publication strategy",
+    "consequences": "The dissemination plan shapes the speed of knowledge transfer, peer\u2011review rigor, and institutional visibility. Prioritizing high\u2011impact journals may delay publication but enhance credibility, whereas open\u2011access venues accelerate reach but may attract less scrutiny.",
+    "options": [
+      "Prioritize methods validation papers in high\u2011impact sleep journals, establishing credibility and attracting future collaborators.",
+      "Publish longitudinal phenotyping results in open\u2011access venues, maximizing reach among clinicians and researchers worldwide.",
+      "Release a preprint series to accelerate community feedback, allowing rapid iteration before formal peer review."
+    ],
+    "review": "Speed of dissemination versus rigor; options neglect embargo periods or institutional review board constraints."
+  },
+  {
+    "lever_id": "e91d5141-dc03-4795-815f-8aee7cf8dc7e",
+    "name": "Participant Safety Protocol",
+    "lever_classification": "operations \u2014 what this lever decides",
+    "consequences": "Pulling this lever establishes robust safety oversight, reducing incident risk and improving participant confidence. However, increased staffing and monitoring may raise operational costs and require additional training. Real\u2011time logging also generates data that must be securely stored, adding IT overhead.",
+    "options": [
+      "Implement a tiered safety monitoring system that assigns a dedicated safety officer to each suite, conducts nightly risk assessments, and logs incidents in real time.",
+      "Deploy an automated environmental alert network that triggers immediate staff response when motion, temperature, or door status deviates from predefined thresholds, while maintaining participant privacy.",
+      "Introduce a peer\u2011review safety audit where participants and staff jointly evaluate safety measures after each stay, feeding feedback into continuous improvement."
+    ],
+    "review": "Balancing rigorous safety with participant comfort and operational feasibility; options assume staff availability and participant willingness to engage in audits, missing potential delays from regulatory approvals for automated alert systems."
+  },
+  {
+    "lever_id": "5e45a98b-2b9a-46f9-8d36-dae40e88df6a",
+    "name": "Suite Utilization Efficiency",
+    "lever_classification": "operations \u2014 what this lever decides",
+    "consequences": "Pulling this lever increases suite occupancy, reducing idle costs and accelerating data collection. However, tighter scheduling may compress staff shift planning and increase risk of over\u2011extension. Short\u2011stay packages may dilute event yield per participant.",
+    "options": [
+      "Schedule staggered admission windows that align participant stay durations with suite turnover, maximizing occupancy while preserving rest periods for staff.",
+      "Introduce a dynamic booking algorithm that reallocates suites in real time based on event frequency and technician availability, ensuring high utilization.",
+      "Offer flexible short\u2011stay packages for participants with low event probability, allowing them to occupy suites for fewer nights without compromising data quality."
+    ],
+    "review": "Maximizing occupancy versus maintaining data quality and staff well\u2011being; options overlook potential regulatory constraints on participant stay lengths and the impact of rapid turnover on infection control protocols."
+  },
+  {
+    "lever_id": "5aa52111-4a78-4edb-8113-f53b981de4e7",
+    "name": "Ethics Compliance Cadence",
+    "lever_classification": "governance \u2014 what this lever decides",
+    "consequences": "Pulling this lever ensures continuous oversight, reducing risk of ethical breaches and enhancing participant trust. Yet, increased reporting may burden staff and slow decision cycles. Frequent reviews could also lead to conservative data handling that limits analytic flexibility.",
+    "options": [
+      "Conduct quarterly ethics board reviews that incorporate interim data summaries, participant feedback, and risk assessments to preemptively address emerging concerns.",
+      "Implement a rolling ethics audit where a dedicated compliance officer submits monthly progress reports and corrective action plans to the board.",
+      "Establish a real\u2011time ethics dashboard that aggregates key metrics and flags deviations, enabling the board to intervene proactively between formal meetings."
+    ],
+    "review": "Maintaining rigorous ethics oversight while preserving research agility; options assume board availability and may not account for delays in obtaining approvals for new monitoring technologies."
+  },
+  {
+    "lever_id": "c05f1d47-b23f-4c5b-9988-26df25103fdf",
+    "name": "Data Annotation Workflow",
+    "lever_classification": "execution \u2014 what this lever decides",
+    "consequences": "Pulling this lever streamlines annotation, improving throughput and consistency. However, added automation and audits may increase upfront development costs and require training. Consensus algorithms could introduce bias if not properly validated.",
+    "options": [
+      "Adopt a two\u2011tier annotation pipeline where technicians perform initial labeling, followed by automated quality checks that flag inconsistencies for senior review.",
+      "Deploy a collaborative annotation platform that allows multiple raters to annotate simultaneously, with built\u2011in consensus algorithms to resolve disagreements.",
+      "Introduce a periodic annotation audit where a random sample of scored nights is re\u2011evaluated by an external expert to calibrate inter\u2011rater reliability."
+    ],
+    "review": "Balancing speed of annotation with accuracy and reliability; options do not address potential data privacy concerns arising from external expert involvement."
+  },
+  {
+    "lever_id": "61834d7a-647b-4cff-89de-a01a3de290a1",
+    "name": "Technology Refresh Cycle",
+    "lever_classification": "product \u2014 what this lever decides",
+    "consequences": "Pulling this lever maintains high\u2011quality data capture and reduces downtime, supporting research goals. Yet, frequent upgrades may strain budget and require staff retraining. Vendor\u2011agnostic policy could lead to compatibility issues across data pipelines.",
+    "options": [
+      "Schedule bi\u2011annual hardware refreshes that replace aging sensors with newer models, ensuring signal fidelity and reducing maintenance downtime.",
+      "Implement a phased upgrade strategy that pilots emerging sensor technologies in a subset of suites before full deployment, minimizing disruption.",
+      "Adopt a vendor\u2011agnostic procurement policy that allows rapid acquisition of alternative equipment when performance thresholds fall below defined benchmarks."
+    ],
+    "review": "Ensuring cutting\u2011edge data quality versus budget constraints and system stability; options overlook the need for long\u2011term data format compatibility and potential regulatory approvals for new equipment."
+  },
+  {
+    "lever_id": "e901166c-b269-42af-98e0-ccaa95e81172",
+    "name": "Funding Milestone Alignment",
+    "lever_classification": "governance \u2014 what this lever decides",
+    "consequences": "Pulling this lever aligns financial resources with project progress, reducing risk of overspending and ensuring timely completion. However, strict milestone gating may delay necessary expenditures and create administrative overhead. Rolling models may reduce flexibility for unexpected opportunities.",
+    "options": [
+      "Tie budget releases to quarterly deliverables, requiring formal progress reports and milestone verification before disbursement.",
+      "Introduce a rolling funding model that allocates a fixed percentage of total funds each month, with adjustments based on real\u2011time cost tracking.",
+      "Establish a contingency reserve that automatically triggers additional funding when key performance indicators fall below predefined thresholds."
+    ],
+    "review": "Financial control versus operational flexibility; options assume predictable cost structures and may not account for inflation or currency fluctuations affecting budget."
+  },
+  {
+    "lever_id": "fb54776a-e0f5-4807-a6a6-5f8b77a8b066",
+    "name": "Participant Retention Incentive Model",
+    "lever_classification": "execution \u2014 how to keep participants engaged throughout stay",
+    "consequences": "Increasing compensation or flexibility raises average stay duration, potentially boosting event capture rates but also raising per\u2011participant cost and logistical complexity. Longer stays may improve data richness but risk higher dropout if compensation or flexibility is insufficient. The balance between financial sustainability and participant satisfaction must be monitored closely.",
+    "options": [
+      "Offer a tiered compensation structure that increases with length of stay, encouraging participants to remain for full monitoring period.",
+      "Provide personalized sleep education sessions during the stay, creating perceived value that motivates continued participation.",
+      "Implement a flexible scheduling system that allows participants to adjust nightly activities, reducing perceived burden and fostering loyalty."
+    ],
+    "review": "Core tension between maximizing data yield and controlling participant cost; options overlook potential regulatory limits on compensation and the impact of extended stays on staffing workload."
+  },
+  {
+    "lever_id": "adf4fee5-d914-477e-843b-c6994df89214",
+    "name": "Night Shift Staffing Flexibility",
+    "lever_classification": "operations \u2014 how to schedule staff for night coverage",
+    "consequences": "Adjusting staffing models can reduce overtime expenses and improve coverage reliability, but may increase training overhead and affect consistency of annotation quality. Cross\u2011training may dilute expertise, while part\u2011time hires could introduce variability in adherence to protocols. Staffing flexibility must be weighed against the risk of reduced technician morale.",
+    "options": [
+      "Deploy a rotating 12\u2011hour shift schedule that aligns technician availability with peak event\u2011response windows.",
+      "Introduce a cross\u2011training program enabling technicians to cover both monitoring and annotation duties during night shifts.",
+      "Utilize a part\u2011time night\u2011shift specialist pool sourced from local universities to supplement core staff during high\u2011volume periods."
+    ],
+    "review": "Tension between cost efficiency and maintaining high annotation fidelity; options fail to address potential legal constraints on part\u2011time labor and the risk of reduced technician morale with rotating schedules."
+  },
+  {
+    "lever_id": "a202896f-98d9-4e74-ad5d-f0f410f6cc54",
+    "name": "Data Annotation Quality Assurance",
+    "lever_classification": "methodology \u2014 how to ensure annotation accuracy",
+    "consequences": "Strengthening QA improves inter\u2011rater reliability and data validity, but adds time and personnel costs. Quarterly audits may catch drift early but require additional administrative effort. Senior adjudication can resolve conflicts but may delay data availability for analysis.",
+    "options": [
+      "Institute a double\u2011blind scoring protocol where two independent raters annotate each event without knowledge of each other's results.",
+      "Deploy a periodic inter\u2011rater reliability audit that recalibrates scoring thresholds every quarter.",
+      "Introduce a senior reviewer who adjudicates discrepancies after initial scoring, ensuring final consensus."
+    ],
+    "review": "Core tension between data quality and turnaround speed; options do not consider the impact of increased annotation time on participant throughput or the potential for reviewer fatigue."
+  },
+  {
+    "lever_id": "8858f011-461f-4253-a439-7faf6f57e9d1",
+    "name": "Environmental Noise Mitigation",
+    "lever_classification": "product \u2014 how to reduce ambient noise affecting recordings",
+    "consequences": "Reducing environmental noise enhances signal\u2011to\u2011noise ratio, improving event detection accuracy, but requires upfront material costs and ongoing maintenance. Real\u2011time monitoring can prompt immediate corrective action but may increase technician workload. Noise mitigation must preserve the domestic feel to avoid suppressing naturalistic behavior.",
+    "options": [
+      "Install acoustic panels on all suite walls and ceilings to absorb low\u2011frequency vibrations from neighboring traffic.",
+      "Deploy white\u2011noise generators in each suite synchronized with ambient sound levels to mask sporadic external noises.",
+      "Implement a real\u2011time noise\u2011monitoring system that alerts technicians when decibel thresholds exceed acceptable limits."
+    ],
+    "review": "Tension between improving recording fidelity and budget constraints; options ignore the potential for noise mitigation measures to alter the domestic feel of the suites, possibly affecting participant naturalistic behavior."
+  },
+  {
+    "lever_id": "2536c64f-8ee1-4dcd-ac9d-b3eb40fb6d0c",
+    "name": "Funding Contingency Allocation",
+    "lever_classification": "governance \u2014 how to allocate reserves for budget overruns",
+    "consequences": "A dedicated contingency fund safeguards against budget overruns, but ties up capital that could be used for early recruitment. Milestone\u2011based release aligns funds with progress, potentially delaying availability during crises. In\u2011kind support reduces cash burn but may introduce dependency on external partners.",
+    "options": [
+      "Reserve 10% of the total budget as a contingency fund to cover unforeseen equipment repairs or staffing shortages.",
+      "Allocate contingency funds on a milestone basis, releasing reserves only after meeting predefined operational targets.",
+      "Partner with a local university to secure in\u2011kind support, reducing the need for a large cash contingency."
+    ],
+    "review": "Core tension between financial risk mitigation and operational flexibility; options overlook the risk of delayed fund release impacting critical mid\u2011project interventions."
+  },
+  {
+    "lever_id": "ab92c261-3fdc-49c9-bdb2-d196977208e5",
+    "name": "Publication Dissemination Timing",
+    "lever_classification": "dissemination \u2014 when to publish findings",
+    "consequences": "Early publication can boost reputation and funding prospects but may expose incomplete data, risking credibility. Waiting until full data set is available ensures robust findings but delays dissemination and potential impact. Conference abstracts keep stakeholders informed while awaiting full journal submissions.",
+    "options": [
+      "Publish preliminary methods validation results within 12 months of project start to secure early visibility and attract collaborators.",
+      "Delay first publication until after the 24\u2011month data collection phase to ensure comprehensive longitudinal findings.",
+      "Release a series of conference abstracts during the project to maintain engagement while awaiting full journal submissions."
+    ],
+    "review": "Tension between rapid visibility and data completeness; options fail to account for the impact of early publication on participant confidentiality agreements and the need for data de\u2011identification before public release."
+  }
+]

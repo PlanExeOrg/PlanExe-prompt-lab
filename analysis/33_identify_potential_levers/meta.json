@@ -1,0 +1,14 @@
+{
+  "pr_url": "https://github.com/PlanExeOrg/PlanExe/pull/349",
+  "pr_title": "Add lever_classification field, fix haiku config, adaptive retry loop",
+  "pr_description": "Add `lever_classification` field \u2014 a brief phrase combining category and decision axis (e.g. \"governance \u2014 who oversees the review process\"). Placed last in schema so llama3.1 fills important fields first (ollama generates JSON sequentially) Fix haiku `max_tokens` from 16000 to 8192 (actual API cap), preventing JSON truncation on large plans Relax `review_lever` minimum from 50 to 10 chars \u2014 the enrich step adds detail downstream Replace fixed 3-call loop with adaptive retry: keeps calling the LLM until 15 unique levers are accumulated (max 5 calls), fixing cases where validation failures discard entire batches leaving as few as 6 levers Implements proposals 1+2 from `docs/proposals/119-lever-pipeline-impl.md` (section 3.1).",
+  "history": [
+    "2/38_identify_potential_levers",
+    "2/39_identify_potential_levers",
+    "2/40_identify_potential_levers",
+    "2/41_identify_potential_levers",
+    "2/42_identify_potential_levers",
+    "2/43_identify_potential_levers",
+    "2/44_identify_potential_levers"
+  ]
+}
