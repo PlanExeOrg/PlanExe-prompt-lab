@@ -1,0 +1,448 @@
+{
+  "responses": [
+    {
+      "strategic_rationale": "This project balances scientific rigor with practical constraints in a novel residential research setting. The core tensions involve maximizing data capture while ensuring participant safety and ethical compliance, managing costs within a fixed budget, and achieving sufficient statistical power for meaningful analysis. The selected levers address these tensions by focusing on participant recruitment strategies, data acquisition methods, staffing models, and the balance between manual and automated data analysis. These choices directly impact the project's ability to meet its scientific aims and sustainability goals.",
+      "levers": [
+        {
+          "lever_index": 1,
+          "name": "Participant Compensation Model",
+          "consequences": "The compensation model directly impacts recruitment rates and participant demographics. Higher compensation may attract more participants but increases costs. Lower compensation may limit the pool of potential participants and introduce selection bias. The chosen model must balance recruitment needs with budgetary constraints and ethical considerations.",
+          "options": [
+            "Offer a flat per-study completion bonus in addition to the per-night compensation, incentivizing retention and reducing dropout rates",
+            "Implement a tiered compensation structure based on the number of captured events, rewarding participants who exhibit more frequent parasomnia episodes",
+            "Provide non-monetary incentives such as detailed sleep reports, consultations with sleep specialists, and access to relaxation therapies, reducing direct cash outlays"
+          ],
+          "review_lever": "Compensation influences participant motivation, but the options overlook the potential for adverse selection \u2014 participants with more severe or frequent episodes may be systematically different from the broader parasomnia population, skewing the sample."
+        },
+        {
+          "lever_index": 2,
+          "name": "Data Acquisition Tiering",
+          "consequences": "The tiered data acquisition model balances comprehensive data collection with participant comfort and technician workload. More frequent full PSG montages provide richer data but increase participant burden and require more technician time for setup and scoring. Less frequent full PSG montages reduce burden but may miss critical events or limit the ability to characterize episode morphology fully. The chosen tiering strategy must optimize data quality while minimizing disruption and cost.",
+          "options": [
+            "Implement adaptive PSG scheduling based on real-time event detection from low-burden sensors, triggering enhanced nights only after a potential parasomnia episode",
+            "Reduce the number of enhanced nights but extend the duration of each enhanced night to capture more variability within a single session",
+            "Replace scheduled enhanced nights with a fixed number of randomly selected nights per participant, ensuring unbiased sampling of sleep patterns"
+          ],
+          "review_lever": "Tiering aims to balance data richness and participant burden, but the options don't address the risk of habituation \u2014 parasomnia frequency may decrease over the study duration as participants adapt to the monitored environment."
+        },
+        {
+          "lever_index": 3,
+          "name": "Staffing Model for Night Coverage",
+          "consequences": "The staffing model directly impacts participant safety, data quality, and operational costs. More technicians on duty provide greater capacity for event response and real-time annotation but increase personnel expenses. Fewer technicians reduce costs but may compromise safety and data quality, especially during periods of high event frequency. The chosen staffing model must balance safety, data integrity, and budgetary constraints.",
+          "options": [
+            "Cross-train the data engineer and clinical psychologist to provide backup night coverage during peak periods or technician absences, increasing staffing flexibility",
+            "Implement a remote monitoring system with centralized event flagging, allowing a single technician to oversee multiple suites simultaneously",
+            "Partner with a local sleep technology company to provide on-call technician support for urgent event response, reducing the need for full-time night staff"
+          ],
+          "review_lever": "Staffing levels determine response capacity, but the options neglect the impact of shift work on technician alertness and annotation accuracy \u2014 fatigue-related errors could undermine data reliability."
+        },
+        {
+          "lever_index": 4,
+          "name": "Event-Triage Model Training Data",
+          "consequences": "The training data used to develop the event-triage model directly impacts its accuracy and generalizability. Training on a limited dataset may result in overfitting and poor performance on novel data. Training on a biased dataset may perpetuate existing biases and limit the model's applicability to diverse populations. The chosen training data strategy must ensure the model is accurate, robust, and unbiased.",
+          "options": [
+            "Incorporate simulated parasomnia events generated from existing physiological data to augment the training dataset and improve model robustness",
+            "Actively solicit and incorporate data from external sleep labs to increase the diversity of the training dataset and improve generalizability",
+            "Implement an active learning approach where the model iteratively requests annotations for the most uncertain events, maximizing information gain from limited human scoring resources"
+          ],
+          "review_lever": "Training data quality determines model performance, but the options don't account for the potential for 'label noise' \u2014 disagreements between human scorers can introduce errors that degrade model accuracy."
+        },
+        {
+          "lever_index": 5,
+          "name": "Recruitment Channel Prioritization",
+          "consequences": "The choice of recruitment channels affects the speed and cost of participant enrollment, as well as the demographic characteristics of the study population. Relying solely on the University Hospital Bonn sleep clinic may limit the sample to patients already seeking treatment. Expanding to regional neurologist referrals may broaden the reach but increase screening costs. The chosen recruitment strategy must balance enrollment efficiency with sample representativeness.",
+          "options": [
+            "Launch a targeted social media campaign to reach individuals with suspected parasomnia who may not be actively seeking medical care, expanding the recruitment pool",
+            "Partner with general practitioners in the Bonn area to proactively screen patients for parasomnia symptoms during routine checkups, increasing early detection",
+            "Offer free screening polysomnography to individuals who respond to recruitment advertisements, incentivizing participation and streamlining the enrollment process"
+          ],
+          "review_lever": "Recruitment channels determine sample composition, but the options don't address the risk of self-selection bias \u2014 individuals who volunteer for sleep studies may have pre-existing beliefs or expectations that influence their behavior."
+        },
+        {
+          "lever_index": 6,
+          "name": "Data Sharing Scope",
+          "consequences": "The scope of data sharing impacts the project's scientific impact and reputation, as well as participant privacy and data security. Sharing only de-identified physiological data limits the risk of privacy breaches but may restrict the ability of other researchers to replicate or extend the findings. Sharing more comprehensive data, including carefully anonymized video, could accelerate scientific progress but requires more stringent privacy safeguards. The chosen data sharing strategy must balance scientific openness with ethical responsibility.",
+          "options": [
+            "Create a secure, access-controlled platform for sharing anonymized video data with qualified researchers under strict data use agreements and IRB oversight",
+            "Develop a synthetic dataset that mimics the statistical properties of the original data while preserving participant privacy, enabling broader access for algorithm development",
+            "Publish detailed summary statistics and aggregate trends derived from the video data without sharing the raw video files, balancing transparency with privacy protection"
+          ],
+          "review_lever": "Data sharing promotes scientific progress, but the options overlook the potential for 're-identification' \u2014 even anonymized data can be linked to individuals through sophisticated statistical techniques or external datasets."
+        }
+      ]
+    },
+    {
+      "strategic_rationale": "The Bonn sleep research unit faces inherent tensions between ecological validity and experimental control, participant comfort and data fidelity, and manual annotation effort versus automated triage. These levers address these conflicts by modulating the intrusiveness of the monitoring setup, the intensity of data capture, the balance between human and machine scoring, the criteria for extending participant stays, the breadth of the control group, and the stringency of the exclusion criteria. These choices directly impact the quality and quantity of data, the feasibility of long-term monitoring, and the generalizability of findings.",
+      "levers": [
+        {
+          "lever_index": 1,
+          "name": "Sensor Modality Intrusiveness",
+          "consequences": "More intrusive sensors (e.g., full PSG on all nights) yield higher-resolution data and fewer missed events, but can disrupt sleep architecture and suppress naturalistic behaviors. Less intrusive sensors (e.g., dry-electrode EEG only) improve participant comfort and adherence, but may sacrifice data quality and increase false negatives. The balance affects the ecological validity of the study and the generalizability of findings.",
+          "options": [
+            "Prioritize participant comfort by using only low-burden sensors (dry-electrode EEG, contact-free mattress sensors) on all nights, foregoing full PSG except for escalation nights triggered by technician-flagged events",
+            "Implement full PSG montages on a fixed schedule (e.g., every third night) for all participants, regardless of observed events, to capture a consistent baseline of high-resolution data",
+            "Employ a hybrid approach, using low-burden sensors for initial habituation and then transitioning to full PSG after the first week to balance comfort and data richness"
+          ],
+          "review_lever": "The trade-off between ecological validity and data resolution is central to sleep research, but the options neglect the potential for habituation effects over the 2\u20138 week study duration \u2014 participants may become accustomed to even intrusive sensors, mitigating the initial disruption."
+        },
+        {
+          "lever_index": 2,
+          "name": "Data Capture Intensity",
+          "consequences": "Continuous, high-density data capture across all modalities maximizes the chance of capturing rare events and characterizing their full temporal evolution, but it also generates a massive data volume that strains storage, annotation, and analysis resources. Sparse, targeted data capture reduces the data burden but risks missing subtle or brief events, potentially skewing the characterization of parasomnia episodes. The choice impacts the feasibility of long-term monitoring and the statistical power of subsequent analyses.",
+          "options": [
+            "Record all sensor streams continuously at the highest possible sampling rate, regardless of event occurrence, to ensure no data is missed and to enable retrospective analysis of pre-event activity",
+            "Implement event-triggered recording, activating high-density data capture only when a potential parasomnia event is detected by the technician or automated algorithms, to minimize data volume",
+            "Capture data at a moderate sampling rate across all modalities continuously, then selectively upsample specific channels or time windows of interest during annotation to balance data volume and resolution"
+          ],
+          "review_lever": "Data volume is a key constraint, but the options overlook the cost of data transfer \u2014 moving large volumes of high-resolution data from the local NAS to university storage nightly could become a bottleneck, especially with encrypted backups."
+        },
+        {
+          "lever_index": 3,
+          "name": "Scoring Workflow Automation",
+          "consequences": "Relying solely on manual scoring by two independent raters ensures high accuracy and reliability, but it is labor-intensive and limits the throughput of the study. Implementing semi-automated event-triage tools reduces the manual review burden, but introduces the risk of false positives and false negatives, potentially biasing the characterization of parasomnia episodes. The balance affects the scalability of the study and the generalizability of the event-triage model.",
+          "options": [
+            "Maintain a fully manual scoring workflow, with all events reviewed and scored independently by two raters, to prioritize accuracy and minimize bias",
+            "Implement a semi-automated event-triage tool that flags potential parasomnia episodes for manual review, reducing the number of events that require full scoring",
+            "Develop a fully automated scoring pipeline that classifies events without human intervention, accepting a higher error rate in exchange for increased throughput"
+          ],
+          "review_lever": "The tension between accuracy and throughput is fundamental, but the options fail to address the potential for rater drift over the 3-year study \u2014 even with independent scoring, systematic biases can emerge over time, especially with subtle or ambiguous events."
+        },
+        {
+          "lever_index": 4,
+          "name": "Stay-Extension Criteria",
+          "consequences": "Extending participant stays increases the likelihood of capturing parasomnia events, especially for individuals with infrequent episodes, but it also increases the cost per participant and the risk of attrition. Limiting stay extensions reduces costs and attrition, but may result in an underestimation of episode frequency and an incomplete characterization of parasomnia patterns. The choice impacts the statistical power of the study and the generalizability of findings.",
+          "options": [
+            "Offer stay extensions to all participants who have not experienced a captured event during their initial stay, regardless of cost or attrition risk, to maximize event yield",
+            "Limit stay extensions to a fixed percentage of participants, selected based on pre-admission episode frequency or other clinical factors, to control costs and attrition",
+            "Implement a dynamic stay-extension policy, adjusting the extension criteria based on the overall event yield and the remaining budget, to optimize event capture within resource constraints"
+          ],
+          "review_lever": "Balancing event yield and cost is critical, but the options don't consider the ethical implications of extending stays for participants who are not experiencing events \u2014 prolonged monitoring without benefit could be perceived as burdensome or exploitative."
+        },
+        {
+          "lever_index": 5,
+          "name": "Control Group Composition",
+          "consequences": "A narrowly defined control group, closely matched to the parasomnia participants on key demographic and clinical variables, increases the statistical power of the study to detect differences in nocturnal behavior, but it may limit the generalizability of findings to the broader population. A broadly defined control group, representative of the general population, increases generalizability but reduces statistical power. The choice impacts the validity and applicability of the event-triage model.",
+          "options": [
+            "Recruit a highly matched control group, carefully selecting participants to match the parasomnia group on age, sex, BMI, and other relevant variables, to maximize statistical power",
+            "Recruit a demographically representative control group, mirroring the age, sex, and socioeconomic distribution of the Bonn population, to enhance generalizability",
+            "Recruit a stratified control group, oversampling specific subgroups (e.g., individuals with insomnia or restless legs syndrome) to control for potential confounding factors"
+          ],
+          "review_lever": "Control group design is crucial for benchmarking, but the options overlook the potential for selection bias in the control group \u2014 recruiting through the same channels as the parasomnia group (e.g., the University Hospital Bonn sleep clinic) could introduce systematic differences."
+        },
+        {
+          "lever_index": 6,
+          "name": "Exclusion Criteria Stringency",
+          "consequences": "Stringent exclusion criteria minimize the risk of confounding factors and ensure a homogenous study population, but they also reduce the number of eligible participants and limit the generalizability of findings to individuals with 'pure' parasomnias. Relaxed exclusion criteria increase the number of eligible participants and enhance generalizability, but they also increase the risk of confounding factors and require more complex statistical analyses. The choice impacts the feasibility of recruitment and the interpretability of results.",
+          "options": [
+            "Enforce strict exclusion criteria, excluding any participant with comorbid sleep disorders, psychiatric conditions, or medication use, to ensure a homogenous study population",
+            "Relax exclusion criteria, allowing participants with well-controlled comorbid conditions or stable medication regimens, to increase recruitment and enhance generalizability",
+            "Implement a tiered exclusion approach, stratifying participants based on the severity of their comorbid conditions and adjusting the statistical analyses accordingly"
+          ],
+          "review_lever": "Exclusion criteria affect both recruitment and data interpretation, but the options don't address the potential for undiagnosed or unreported conditions \u2014 relying solely on self-report and screening polysomnography may miss subtle or subclinical comorbidities."
+        }
+      ]
+    },
+    {
+      "strategic_rationale": "The Bonn sleep research unit faces a core tension between ecological validity and experimental control. The need to capture naturalistic parasomnia events in a comfortable, home-like setting conflicts with the requirements for rigorous physiological monitoring, safety protocols, and efficient data annotation. The levers below address this tension by modulating the intensity of monitoring, the criteria for escalating to high-resolution data capture, the balance between automation and human expertise in event triage, and the approach to managing participant safety and comfort. These levers directly impact the unit's ability to generate high-quality, reliable data while maintaining participant well-being and operational efficiency.",
+      "levers": [
+        {
+          "lever_index": 1,
+          "name": "PSG Escalation Triggers",
+          "consequences": "The criteria for escalating to full PSG montage directly impact technician workload and participant burden. More sensitive triggers increase the number of enhanced-resolution recordings, potentially capturing more subtle events but also increasing false positives and annotation effort. Less sensitive triggers reduce workload but risk missing critical data, skewing the observed parasomnia phenotype.",
+          "options": [
+            "Escalate to full PSG only after a pre-defined number of low-burden sensor events within a single night, indicating a pattern of activity",
+            "Escalate to full PSG based on real-time technician assessment of unusual behavior captured by infrared video, prioritizing clinical judgment",
+            "Escalate to full PSG based on a combination of sensor thresholds and technician observation, weighting sensor data more heavily during overnight hours"
+          ],
+          "review_lever": "The escalation trigger threshold determines the trade-off between data richness and technician burden, but the options overlook the potential for adaptive escalation based on individual participant characteristics or baseline event frequency."
+        },
+        {
+          "lever_index": 2,
+          "name": "Facility Access Control",
+          "consequences": "The stringency of access control measures balances participant safety with the creation of a comfortable, home-like environment. Tighter controls, such as locked doors and constant monitoring, minimize wandering risk but may increase participant anxiety and suppress naturalistic behavior. Looser controls promote a sense of freedom but increase the potential for safety incidents and require more intensive staff supervision.",
+          "options": [
+            "Implement a tiered access system, granting participants increasing levels of freedom within the facility based on demonstrated compliance and risk assessment",
+            "Rely primarily on unobtrusive monitoring and staff presence to guide participants, intervening only when safety is demonstrably compromised",
+            "Establish a buddy system where participants are paired and encouraged to monitor each other, reducing staff burden while maintaining a degree of oversight"
+          ],
+          "review_lever": "Access control impacts participant comfort and safety, but the options do not address the potential for leveraging technology, such as geofencing or smart locks, to provide a balance between security and autonomy."
+        },
+        {
+          "lever_index": 3,
+          "name": "Annotation Team Composition",
+          "consequences": "The composition of the annotation team influences the speed and reliability of event scoring. Relying solely on highly trained sleep technicians ensures consistent application of AASM criteria but creates a bottleneck and increases labor costs. Incorporating less-specialized personnel, such as undergraduate research assistants, can accelerate annotation but requires rigorous training and quality control measures.",
+          "options": [
+            "Employ a team of exclusively board-certified sleep technologists for all annotation tasks, ensuring the highest level of expertise and consistency",
+            "Utilize a tiered annotation system, with initial event flagging performed by trained research assistants and final adjudication by senior sleep technologists",
+            "Outsource a portion of the annotation workload to a specialized sleep scoring service, balancing cost and turnaround time"
+          ],
+          "review_lever": "Annotation team composition affects scoring throughput and reliability, but the options fail to consider the potential for incorporating automated pre-scoring tools to reduce the manual annotation burden for all team members."
+        },
+        {
+          "lever_index": 4,
+          "name": "Environmental Sensor Integration",
+          "consequences": "The degree to which environmental sensor data (e.g., temperature, humidity, light levels, noise) is integrated into the analysis pipeline affects the ability to identify potential environmental triggers for parasomnia events. Comprehensive integration requires significant data processing and analysis expertise but may reveal valuable insights into environmental influences. Limited integration reduces analytical complexity but risks overlooking important contextual factors.",
+          "options": [
+            "Continuously monitor and record a wide range of environmental parameters, correlating changes with parasomnia events to identify potential triggers",
+            "Focus environmental monitoring on a pre-selected set of parameters known to influence sleep quality, such as temperature and noise levels",
+            "Use environmental sensors primarily for facility management and safety monitoring, with limited integration into the parasomnia event analysis"
+          ],
+          "review_lever": "Environmental sensor integration impacts the ability to identify triggers, but the options do not address the potential for using participant questionnaires to gather subjective data on perceived environmental conditions and their impact on sleep."
+        },
+        {
+          "lever_index": 5,
+          "name": "Control Group Matching Criteria",
+          "consequences": "The criteria used to match control participants to parasomnia participants influence the validity of the benchmarked event-triage tools. Stringent matching on demographic and sleep-related variables minimizes confounding factors but makes recruitment more difficult and time-consuming. Looser matching simplifies recruitment but increases the risk that differences in event-triage performance are due to factors other than the presence of parasomnia.",
+          "options": [
+            "Match control participants to parasomnia participants on a comprehensive set of demographic, sleep-related, and psychological variables, prioritizing statistical power",
+            "Match control participants primarily on age, sex, and general sleep quality, simplifying recruitment while controlling for major confounding factors",
+            "Recruit a convenience sample of healthy sleepers as a general control group, accepting a higher degree of heterogeneity in the control data"
+          ],
+          "review_lever": "Control group matching impacts the validity of the event-triage benchmark, but the options overlook the potential for using within-subject control data (e.g., nights without parasomnia events) to reduce the need for external control participants."
+        },
+        {
+          "lever_index": 6,
+          "name": "Data Retention Policy",
+          "consequences": "The data retention policy determines the long-term availability of the collected data for future research. Longer retention periods maximize the potential for secondary analyses and collaborations but increase storage costs and data security risks. Shorter retention periods reduce these burdens but limit the potential for future discoveries.",
+          "options": [
+            "Retain all raw and processed data indefinitely, ensuring maximum availability for future research and meta-analyses",
+            "Retain raw data for 10 years and processed data indefinitely, balancing long-term research potential with storage costs",
+            "Retain raw data for 5 years and processed data for 10 years, aligning with common data retention practices in sleep research"
+          ],
+          "review_lever": "Data retention impacts long-term research potential and storage costs, but the options do not address the potential for tiered retention policies, where more valuable or unique data is retained for longer periods than less critical data."
+        }
+      ]
+    }
+  ],
+  "levers": [
+    {
+      "lever_id": "454760dc-752c-48e9-a564-fa869f859b20",
+      "name": "Participant Compensation Model",
+      "consequences": "The compensation model directly impacts recruitment rates and participant demographics. Higher compensation may attract more participants but increases costs. Lower compensation may limit the pool of potential participants and introduce selection bias. The chosen model must balance recruitment needs with budgetary constraints and ethical considerations.",
+      "options": [
+        "Offer a flat per-study completion bonus in addition to the per-night compensation, incentivizing retention and reducing dropout rates",
+        "Implement a tiered compensation structure based on the number of captured events, rewarding participants who exhibit more frequent parasomnia episodes",
+        "Provide non-monetary incentives such as detailed sleep reports, consultations with sleep specialists, and access to relaxation therapies, reducing direct cash outlays"
+      ],
+      "review": "Compensation influences participant motivation, but the options overlook the potential for adverse selection \u2014 participants with more severe or frequent episodes may be systematically different from the broader parasomnia population, skewing the sample."
+    },
+    {
+      "lever_id": "040cd391-98d4-4e2d-a373-93cd66ead473",
+      "name": "Data Acquisition Tiering",
+      "consequences": "The tiered data acquisition model balances comprehensive data collection with participant comfort and technician workload. More frequent full PSG montages provide richer data but increase participant burden and require more technician time for setup and scoring. Less frequent full PSG montages reduce burden but may miss critical events or limit the ability to characterize episode morphology fully. The chosen tiering strategy must optimize data quality while minimizing disruption and cost.",
+      "options": [
+        "Implement adaptive PSG scheduling based on real-time event detection from low-burden sensors, triggering enhanced nights only after a potential parasomnia episode",
+        "Reduce the number of enhanced nights but extend the duration of each enhanced night to capture more variability within a single session",
+        "Replace scheduled enhanced nights with a fixed number of randomly selected nights per participant, ensuring unbiased sampling of sleep patterns"
+      ],
+      "review": "Tiering aims to balance data richness and participant burden, but the options don't address the risk of habituation \u2014 parasomnia frequency may decrease over the study duration as participants adapt to the monitored environment."
+    },
+    {
+      "lever_id": "a1b06ef8-907f-4eb7-92ba-93b3092476da",
+      "name": "Staffing Model for Night Coverage",
+      "consequences": "The staffing model directly impacts participant safety, data quality, and operational costs. More technicians on duty provide greater capacity for event response and real-time annotation but increase personnel expenses. Fewer technicians reduce costs but may compromise safety and data quality, especially during periods of high event frequency. The chosen staffing model must balance safety, data integrity, and budgetary constraints.",
+      "options": [
+        "Cross-train the data engineer and clinical psychologist to provide backup night coverage during peak periods or technician absences, increasing staffing flexibility",
+        "Implement a remote monitoring system with centralized event flagging, allowing a single technician to oversee multiple suites simultaneously",
+        "Partner with a local sleep technology company to provide on-call technician support for urgent event response, reducing the need for full-time night staff"
+      ],
+      "review": "Staffing levels determine response capacity, but the options neglect the impact of shift work on technician alertness and annotation accuracy \u2014 fatigue-related errors could undermine data reliability."
+    },
+    {
+      "lever_id": "0bfe0b41-8c31-47c2-bb56-ef2945aa0e19",
+      "name": "Event-Triage Model Training Data",
+      "consequences": "The training data used to develop the event-triage model directly impacts its accuracy and generalizability. Training on a limited dataset may result in overfitting and poor performance on novel data. Training on a biased dataset may perpetuate existing biases and limit the model's applicability to diverse populations. The chosen training data strategy must ensure the model is accurate, robust, and unbiased.",
+      "options": [
+        "Incorporate simulated parasomnia events generated from existing physiological data to augment the training dataset and improve model robustness",
+        "Actively solicit and incorporate data from external sleep labs to increase the diversity of the training dataset and improve generalizability",
+        "Implement an active learning approach where the model iteratively requests annotations for the most uncertain events, maximizing information gain from limited human scoring resources"
+      ],
+      "review": "Training data quality determines model performance, but the options don't account for the potential for 'label noise' \u2014 disagreements between human scorers can introduce errors that degrade model accuracy."
+    },
+    {
+      "lever_id": "15973fd7-bcbf-4278-a461-a0ed88ec71e3",
+      "name": "Recruitment Channel Prioritization",
+      "consequences": "The choice of recruitment channels affects the speed and cost of participant enrollment, as well as the demographic characteristics of the study population. Relying solely on the University Hospital Bonn sleep clinic may limit the sample to patients already seeking treatment. Expanding to regional neurologist referrals may broaden the reach but increase screening costs. The chosen recruitment strategy must balance enrollment efficiency with sample representativeness.",
+      "options": [
+        "Launch a targeted social media campaign to reach individuals with suspected parasomnia who may not be actively seeking medical care, expanding the recruitment pool",
+        "Partner with general practitioners in the Bonn area to proactively screen patients for parasomnia symptoms during routine checkups, increasing early detection",
+        "Offer free screening polysomnography to individuals who respond to recruitment advertisements, incentivizing participation and streamlining the enrollment process"
+      ],
+      "review": "Recruitment channels determine sample composition, but the options don't address the risk of self-selection bias \u2014 individuals who volunteer for sleep studies may have pre-existing beliefs or expectations that influence their behavior."
+    },
+    {
+      "lever_id": "e41dba88-8d58-4b6c-8f06-e830b1009632",
+      "name": "Data Sharing Scope",
+      "consequences": "The scope of data sharing impacts the project's scientific impact and reputation, as well as participant privacy and data security. Sharing only de-identified physiological data limits the risk of privacy breaches but may restrict the ability of other researchers to replicate or extend the findings. Sharing more comprehensive data, including carefully anonymized video, could accelerate scientific progress but requires more stringent privacy safeguards. The chosen data sharing strategy must balance scientific openness with ethical responsibility.",
+      "options": [
+        "Create a secure, access-controlled platform for sharing anonymized video data with qualified researchers under strict data use agreements and IRB oversight",
+        "Develop a synthetic dataset that mimics the statistical properties of the original data while preserving participant privacy, enabling broader access for algorithm development",
+        "Publish detailed summary statistics and aggregate trends derived from the video data without sharing the raw video files, balancing transparency with privacy protection"
+      ],
+      "review": "Data sharing promotes scientific progress, but the options overlook the potential for 're-identification' \u2014 even anonymized data can be linked to individuals through sophisticated statistical techniques or external datasets."
+    },
+    {
+      "lever_id": "6bc3ec38-ae65-40d7-a282-f7dc975d40ae",
+      "name": "Sensor Modality Intrusiveness",
+      "consequences": "More intrusive sensors (e.g., full PSG on all nights) yield higher-resolution data and fewer missed events, but can disrupt sleep architecture and suppress naturalistic behaviors. Less intrusive sensors (e.g., dry-electrode EEG only) improve participant comfort and adherence, but may sacrifice data quality and increase false negatives. The balance affects the ecological validity of the study and the generalizability of findings.",
+      "options": [
+        "Prioritize participant comfort by using only low-burden sensors (dry-electrode EEG, contact-free mattress sensors) on all nights, foregoing full PSG except for escalation nights triggered by technician-flagged events",
+        "Implement full PSG montages on a fixed schedule (e.g., every third night) for all participants, regardless of observed events, to capture a consistent baseline of high-resolution data",
+        "Employ a hybrid approach, using low-burden sensors for initial habituation and then transitioning to full PSG after the first week to balance comfort and data richness"
+      ],
+      "review": "The trade-off between ecological validity and data resolution is central to sleep research, but the options neglect the potential for habituation effects over the 2\u20138 week study duration \u2014 participants may become accustomed to even intrusive sensors, mitigating the initial disruption."
+    },
+    {
+      "lever_id": "8eb8f69d-01bc-4ab7-b8e8-f6c21bab3978",
+      "name": "Data Capture Intensity",
+      "consequences": "Continuous, high-density data capture across all modalities maximizes the chance of capturing rare events and characterizing their full temporal evolution, but it also generates a massive data volume that strains storage, annotation, and analysis resources. Sparse, targeted data capture reduces the data burden but risks missing subtle or brief events, potentially skewing the characterization of parasomnia episodes. The choice impacts the feasibility of long-term monitoring and the statistical power of subsequent analyses.",
+      "options": [
+        "Record all sensor streams continuously at the highest possible sampling rate, regardless of event occurrence, to ensure no data is missed and to enable retrospective analysis of pre-event activity",
+        "Implement event-triggered recording, activating high-density data capture only when a potential parasomnia event is detected by the technician or automated algorithms, to minimize data volume",
+        "Capture data at a moderate sampling rate across all modalities continuously, then selectively upsample specific channels or time windows of interest during annotation to balance data volume and resolution"
+      ],
+      "review": "Data volume is a key constraint, but the options overlook the cost of data transfer \u2014 moving large volumes of high-resolution data from the local NAS to university storage nightly could become a bottleneck, especially with encrypted backups."
+    },
+    {
+      "lever_id": "e77e0f02-51ed-443a-baa8-b31ede011d14",
+      "name": "Scoring Workflow Automation",
+      "consequences": "Relying solely on manual scoring by two independent raters ensures high accuracy and reliability, but it is labor-intensive and limits the throughput of the study. Implementing semi-automated event-triage tools reduces the manual review burden, but introduces the risk of false positives and false negatives, potentially biasing the characterization of parasomnia episodes. The balance affects the scalability of the study and the generalizability of the event-triage model.",
+      "options": [
+        "Maintain a fully manual scoring workflow, with all events reviewed and scored independently by two raters, to prioritize accuracy and minimize bias",
+        "Implement a semi-automated event-triage tool that flags potential parasomnia episodes for manual review, reducing the number of events that require full scoring",
+        "Develop a fully automated scoring pipeline that classifies events without human intervention, accepting a higher error rate in exchange for increased throughput"
+      ],
+      "review": "The tension between accuracy and throughput is fundamental, but the options fail to address the potential for rater drift over the 3-year study \u2014 even with independent scoring, systematic biases can emerge over time, especially with subtle or ambiguous events."
+    },
+    {
+      "lever_id": "971d3a4b-9a20-4184-9df6-56419c3af1b0",
+      "name": "Stay-Extension Criteria",
+      "consequences": "Extending participant stays increases the likelihood of capturing parasomnia events, especially for individuals with infrequent episodes, but it also increases the cost per participant and the risk of attrition. Limiting stay extensions reduces costs and attrition, but may result in an underestimation of episode frequency and an incomplete characterization of parasomnia patterns. The choice impacts the statistical power of the study and the generalizability of findings.",
+      "options": [
+        "Offer stay extensions to all participants who have not experienced a captured event during their initial stay, regardless of cost or attrition risk, to maximize event yield",
+        "Limit stay extensions to a fixed percentage of participants, selected based on pre-admission episode frequency or other clinical factors, to control costs and attrition",
+        "Implement a dynamic stay-extension policy, adjusting the extension criteria based on the overall event yield and the remaining budget, to optimize event capture within resource constraints"
+      ],
+      "review": "Balancing event yield and cost is critical, but the options don't consider the ethical implications of extending stays for participants who are not experiencing events \u2014 prolonged monitoring without benefit could be perceived as burdensome or exploitative."
+    },
+    {
+      "lever_id": "ecd9c6bd-425e-4fbe-a205-589460551ff5",
+      "name": "Control Group Composition",
+      "consequences": "A narrowly defined control group, closely matched to the parasomnia participants on key demographic and clinical variables, increases the statistical power of the study to detect differences in nocturnal behavior, but it may limit the generalizability of findings to the broader population. A broadly defined control group, representative of the general population, increases generalizability but reduces statistical power. The choice impacts the validity and applicability of the event-triage model.",
+      "options": [
+        "Recruit a highly matched control group, carefully selecting participants to match the parasomnia group on age, sex, BMI, and other relevant variables, to maximize statistical power",
+        "Recruit a demographically representative control group, mirroring the age, sex, and socioeconomic distribution of the Bonn population, to enhance generalizability",
+        "Recruit a stratified control group, oversampling specific subgroups (e.g., individuals with insomnia or restless legs syndrome) to control for potential confounding factors"
+      ],
+      "review": "Control group design is crucial for benchmarking, but the options overlook the potential for selection bias in the control group \u2014 recruiting through the same channels as the parasomnia group (e.g., the University Hospital Bonn sleep clinic) could introduce systematic differences."
+    },
+    {
+      "lever_id": "25ac6cb6-17d2-427a-bc05-40bc30082592",
+      "name": "Exclusion Criteria Stringency",
+      "consequences": "Stringent exclusion criteria minimize the risk of confounding factors and ensure a homogenous study population, but they also reduce the number of eligible participants and limit the generalizability of findings to individuals with 'pure' parasomnias. Relaxed exclusion criteria increase the number of eligible participants and enhance generalizability, but they also increase the risk of confounding factors and require more complex statistical analyses. The choice impacts the feasibility of recruitment and the interpretability of results.",
+      "options": [
+        "Enforce strict exclusion criteria, excluding any participant with comorbid sleep disorders, psychiatric conditions, or medication use, to ensure a homogenous study population",
+        "Relax exclusion criteria, allowing participants with well-controlled comorbid conditions or stable medication regimens, to increase recruitment and enhance generalizability",
+        "Implement a tiered exclusion approach, stratifying participants based on the severity of their comorbid conditions and adjusting the statistical analyses accordingly"
+      ],
+      "review": "Exclusion criteria affect both recruitment and data interpretation, but the options don't address the potential for undiagnosed or unreported conditions \u2014 relying solely on self-report and screening polysomnography may miss subtle or subclinical comorbidities."
+    },
+    {
+      "lever_id": "21137aff-f030-4d75-9f99-f94d5a45f904",
+      "name": "PSG Escalation Triggers",
+      "consequences": "The criteria for escalating to full PSG montage directly impact technician workload and participant burden. More sensitive triggers increase the number of enhanced-resolution recordings, potentially capturing more subtle events but also increasing false positives and annotation effort. Less sensitive triggers reduce workload but risk missing critical data, skewing the observed parasomnia phenotype.",
+      "options": [
+        "Escalate to full PSG only after a pre-defined number of low-burden sensor events within a single night, indicating a pattern of activity",
+        "Escalate to full PSG based on real-time technician assessment of unusual behavior captured by infrared video, prioritizing clinical judgment",
+        "Escalate to full PSG based on a combination of sensor thresholds and technician observation, weighting sensor data more heavily during overnight hours"
+      ],
+      "review": "The escalation trigger threshold determines the trade-off between data richness and technician burden, but the options overlook the potential for adaptive escalation based on individual participant characteristics or baseline event frequency."
+    },
+    {
+      "lever_id": "6ef4b2c7-adfd-4873-aef6-fb763d3ea181",
+      "name": "Facility Access Control",
+      "consequences": "The stringency of access control measures balances participant safety with the creation of a comfortable, home-like environment. Tighter controls, such as locked doors and constant monitoring, minimize wandering risk but may increase participant anxiety and suppress naturalistic behavior. Looser controls promote a sense of freedom but increase the potential for safety incidents and require more intensive staff supervision.",
+      "options": [
+        "Implement a tiered access system, granting participants increasing levels of freedom within the facility based on demonstrated compliance and risk assessment",
+        "Rely primarily on unobtrusive monitoring and staff presence to guide participants, intervening only when safety is demonstrably compromised",
+        "Establish a buddy system where participants are paired and encouraged to monitor each other, reducing staff burden while maintaining a degree of oversight"
+      ],
+      "review": "Access control impacts participant comfort and safety, but the options do not address the potential for leveraging technology, such as geofencing or smart locks, to provide a balance between security and autonomy."
+    },
+    {
+      "lever_id": "c99c5510-2d79-4180-9a79-c8a50efc6476",
+      "name": "Annotation Team Composition",
+      "consequences": "The composition of the annotation team influences the speed and reliability of event scoring. Relying solely on highly trained sleep technicians ensures consistent application of AASM criteria but creates a bottleneck and increases labor costs. Incorporating less-specialized personnel, such as undergraduate research assistants, can accelerate annotation but requires rigorous training and quality control measures.",
+      "options": [
+        "Employ a team of exclusively board-certified sleep technologists for all annotation tasks, ensuring the highest level of expertise and consistency",
+        "Utilize a tiered annotation system, with initial event flagging performed by trained research assistants and final adjudication by senior sleep technologists",
+        "Outsource a portion of the annotation workload to a specialized sleep scoring service, balancing cost and turnaround time"
+      ],
+      "review": "Annotation team composition affects scoring throughput and reliability, but the options fail to consider the potential for incorporating automated pre-scoring tools to reduce the manual annotation burden for all team members."
+    },
+    {
+      "lever_id": "9ecbf2fa-0bde-4c4e-a17d-daf8d4650e0e",
+      "name": "Environmental Sensor Integration",
+      "consequences": "The degree to which environmental sensor data (e.g., temperature, humidity, light levels, noise) is integrated into the analysis pipeline affects the ability to identify potential environmental triggers for parasomnia events. Comprehensive integration requires significant data processing and analysis expertise but may reveal valuable insights into environmental influences. Limited integration reduces analytical complexity but risks overlooking important contextual factors.",
+      "options": [
+        "Continuously monitor and record a wide range of environmental parameters, correlating changes with parasomnia events to identify potential triggers",
+        "Focus environmental monitoring on a pre-selected set of parameters known to influence sleep quality, such as temperature and noise levels",
+        "Use environmental sensors primarily for facility management and safety monitoring, with limited integration into the parasomnia event analysis"
+      ],
+      "review": "Environmental sensor integration impacts the ability to identify triggers, but the options do not address the potential for using participant questionnaires to gather subjective data on perceived environmental conditions and their impact on sleep."
+    },
+    {
+      "lever_id": "f931adc5-147d-4c6d-8937-fd70a3f5ec1a",
+      "name": "Control Group Matching Criteria",
+      "consequences": "The criteria used to match control participants to parasomnia participants influence the validity of the benchmarked event-triage tools. Stringent matching on demographic and sleep-related variables minimizes confounding factors but makes recruitment more difficult and time-consuming. Looser matching simplifies recruitment but increases the risk that differences in event-triage performance are due to factors other than the presence of parasomnia.",
+      "options": [
+        "Match control participants to parasomnia participants on a comprehensive set of demographic, sleep-related, and psychological variables, prioritizing statistical power",
+        "Match control participants primarily on age, sex, and general sleep quality, simplifying recruitment while controlling for major confounding factors",
+        "Recruit a convenience sample of healthy sleepers as a general control group, accepting a higher degree of heterogeneity in the control data"
+      ],
+      "review": "Control group matching impacts the validity of the event-triage benchmark, but the options overlook the potential for using within-subject control data (e.g., nights without parasomnia events) to reduce the need for external control participants."
+    },
+    {
+      "lever_id": "9217d93b-8660-4428-89ae-148acef568df",
+      "name": "Data Retention Policy",
+      "consequences": "The data retention policy determines the long-term availability of the collected data for future research. Longer retention periods maximize the potential for secondary analyses and collaborations but increase storage costs and data security risks. Shorter retention periods reduce these burdens but limit the potential for future discoveries.",
+      "options": [
+        "Retain all raw and processed data indefinitely, ensuring maximum availability for future research and meta-analyses",
+        "Retain raw data for 10 years and processed data indefinitely, balancing long-term research potential with storage costs",
+        "Retain raw data for 5 years and processed data for 10 years, aligning with common data retention practices in sleep research"
+      ],
+      "review": "Data retention impacts long-term research potential and storage costs, but the options do not address the potential for tiered retention policies, where more valuable or unique data is retained for longer periods than less critical data."
+    }
+  ],
+  "metadata": {
+    "metadata_1": {
+      "context_window": 3900,
+      "num_output": 8192,
+      "is_chat_model": true,
+      "is_function_calling_model": false,
+      "model_name": "google/gemini-2.0-flash-001",
+      "system_role": "system",
+      "llm_classname": "OpenRouter_LLM"
+    },
+    "metadata_2": {
+      "context_window": 3900,
+      "num_output": 8192,
+      "is_chat_model": true,
+      "is_function_calling_model": false,
+      "model_name": "google/gemini-2.0-flash-001",
+      "system_role": "system",
+      "llm_classname": "OpenRouter_LLM"
+    },
+    "metadata_3": {
+      "context_window": 3900,
+      "num_output": 8192,
+      "is_chat_model": true,
+      "is_function_calling_model": false,
+      "model_name": "google/gemini-2.0-flash-001",
+      "system_role": "system",
+      "llm_classname": "OpenRouter_LLM"
+    }
+  },
+  "system_prompt": "You are an expert strategic analyst. Generate solution space parameters following these directives:\n\n1. **Output Requirements**\n   - You must generate 5 to 7 levers per response.\n   - Each lever's `options` field must contain exactly 3 qualitative strategic choices as plain strings.\n\n2. **Lever Quality Standards**\n   - Consequences: describe the direct effect of pulling this lever, then at least one downstream implication or trade-off. Be concise and grounded \u2014 only cite specific numbers if the project context provides evidence for them. Do not fabricate percentages or cost estimates. Target length: 2\u20134 sentences.\n   - Options MUST:\n     \u2022 Represent genuinely distinct strategic pathways (not just labels)\n     \u2022 Include at least one unconventional or non-obvious approach\n     \u2022 NO prefixes (e.g., \"Option A:\", \"Choice 1:\")\n\n3. **Strategic Framing**\n   - Name each lever using language drawn directly from the project's own domain \u2014 avoid formulaic patterns or repeated prefixes\n   - Frame options as complete strategic approaches\n   - Ensure levers challenge core project assumptions\n\n4. **Validation Protocols**\n   - For `review_lever`:\n     A short critical review \u2014 name the core tension, then identify a weakness the options miss.\n     Examples:\n     - \"Switching from seasonal contract labor to year-round employees stabilizes harvest quality, but the idle-wage burden during the 5-month off-season adds a fixed cost that erases the per-unit savings unless utilization reaches year-round levels.\"\n     - \"Each additional clinical site requires its own IRB approval, site-initiation visit, and staff credentialing \u2014 a sequential overhead of 8\u201314 weeks per site that compounds rather than parallelizes, so doubling site count does not halve enrollment time.\"\n     - \"Migrating the rendering pipeline to GPU compute cuts frame time from 12 ms to 4 ms in benchmarks, yet every asset authored for the CPU path must be re-profiled, and the team has no GPU debugging toolchain \u2014 the migration cost is hidden in artist-hours, not engineering-hours.\"\n     Do not use square brackets or placeholder text.\n\n5. **Prohibitions**\n   - NO prefixes/labels in options (e.g., \"Option A:\", \"Choice 1:\")\n   - NO generic option labels (e.g., \"Optimize X\", \"Tolerate Y\")\n   - NO placeholder consequences or bracket-wrapped templates\n   - NO fabricated statistics or percentages without evidence from the project context\n   - NO marketing language (e.g., \"game-changing\", \"cutting-edge\", \"revolutionary\")\n   - NO starting review_lever with \"The options\", \"These options\", \"The lever\", or \"These levers\" as the grammatical subject \u2014 name a specific mechanism, constraint, or risk instead\n\n6. **Option Structure**\n   - Maintain parallel grammatical structure across options\n   - Ensure options are self-contained descriptions\n   - Each option should be a concrete, actionable approach (at least 15 words with an action verb) \u2014 not a short label or vague aspiration",
+  "user_prompt": "File 'plan.txt':\nPlan:\nEstablish a 3-year residential longitudinal research unit in Bonn, Germany, for the study of adult NREM parasomnias \u2014 sleepwalking, confusional arousals, and sleep terrors \u2014 with a secondary exploratory arm for REM sleep behavior disorder under a separate protocol with dedicated neurologic screening, reflecting RBD's distinct clinical trajectory per current AASM guidance. The facility is affiliated with University Hospital Bonn's Department of Epileptology, leveraging its existing long-term video-EEG monitoring culture, and addresses a specific methodological gap: traditional single-night polysomnography rarely captures infrequent parasomnia events, while outpatient actigraphy lacks physiological resolution. The unit houses 8 active sleep suites at launch in a converted residential property in a quiet Bonn neighborhood, renovated for safety (padded corridor edges, restricted-opening windows, silent exterior door alarms, fire safety, acoustic treatment, network cabling, accessibility modifications) while preserving a domestic feel \u2014 if the environment is too clinical, naturalistic behavior is suppressed. Physical capacity exists for 12 suites, but expansion is deferred until the pilot proves acceptable data quality, manageable false alarm rates, safe staffing ratios, and usable annotation throughput. Sensing uses a tiered acquisition model: nightly low-burden monitoring via dry-electrode EEG headbands, contact-free mattress sensors, unobtrusively mounted infrared cameras, ambient microphones, and environmental sensors; scheduled enhanced nights with fuller PSG montage including standard scalp EEG, EOG, chin EMG, and leg EMG on the first night, one mid-stay night, and the final night per participant; and escalation nights deploying full PSG after technician-flagged events to capture recurrence at clinical-grade resolution. All streams are time-synchronized and stored in EEG-BIDS-compatible format on a local NAS with nightly encrypted backup to university storage, annotated in real time by the night technician and later scored by two independent raters using AASM criteria with inter-rater reliability reported. Public data sharing is limited to de-identified physiological and sensor data under data use agreements \u2014 bedroom video carries severe privacy constraints and is not deposited in public repositories. The scientific program has three explicit aims: Aim 1, establish and operationally validate the residential capture model as safe, ethics-approved, and sustainable; Aim 2, characterize within-person and between-person parasomnia patterns longitudinally, including episode frequency, morphology, triggers, and temporal clustering; Aim 3, develop and benchmark semi-automated event-triage tools that rank probable parasomnia episodes and reduce manual review burden, evaluated against dual human scorer agreement rather than promising autonomous diagnosis.\n\nParticipant recruitment targets adults aged 18\u201365 with NREM parasomnia confirmed through a structured pre-admission pathway: specialist clinical interview, collateral history from bed partner or household member where available, prior or screening polysomnography, and a structured exclusion checklist adjudicated by the PI. Explicit exclusions are nocturnal epilepsy or suspected epilepsy mimics, untreated obstructive sleep apnea, active major substance use disorder, severe psychiatric instability, and wandering or injury risk beyond facility capability. Recruitment channels are the University Hospital Bonn sleep clinic, regional neurologist referrals, and the Deutsche Gesellschaft f\u00fcr Schlafforschung und Schlafmedizin network, with per-night compensation of \u20ac80 plus meals. A matched control group provides baseline nocturnal movement, arousal patterns, and false-positive sensor activity under identical residential monitoring conditions, enabling benchmarking of the event-triage tools against normal nocturnal behavior. Event-yield planning assumes that based on the inclusion criterion of at least 2 self-reported episodes per month, approximately 70\u201380% of admitted participants will produce at least one captured and adjudicated event during a 2\u20138 week stay; stays may be extended up to 2 additional weeks for participants with zero captured events after the initial period, capped at 10 weeks total, with a protocol ceiling of 20% unproductive admissions before triggering a recruitment-criteria review. The core team is 9 people: a PI who is a board-certified sleep medicine physician, 2 postdoctoral researchers in sleep neurophysiology and computational neuroscience respectively, 3 research technicians rotating night shifts to ensure safe coverage of 8 active suites with adequate margin for event response and annotation, a clinical psychologist specializing in sleep disorders, a data engineer managing the sensor pipeline, and a study coordinator handling recruitment, consent, scheduling, and ethics compliance.\n\nBudget is \u20ac3.8 million over 3 years, gated: \u20ac1.8M year one covering property lease and renovation at approximately \u20ac750K, equipment at approximately \u20ac450K, staff hiring accounting for German social insurance contributions and actual overnight coverage, ethics approval, and a pilot cohort of 15\u201320 participants; \u20ac1.2M year two covering full operations with 30\u201335 participants, the enhanced-night PSG program, first publications, and event-triage algorithm development; \u20ac800K year three conditional on demonstrable progress by month 24. Personnel costs are approximately \u20ac2M over three years and remaining funds cover participant compensation, independent scoring time, data storage and retention, regulatory and legal work, and contingency. Funding sources are DFG research grant and University of Bonn internal research funding as the primary pillars, with a pharmaceutical industry partnership as optional upside rather than a feasibility requirement \u2014 if secured, the academic team retains full publication rights with the pharma partner receiving a 30-day pre-publication comment window only. Success criteria at 36 months: safe residential monitoring operations sustained for at least 24 months, enrollment of 50\u201370 NREM parasomnia participants plus matched controls, capture of a prespecified minimum number of independently adjudicated parasomnia events sufficient for Aim 2 phenotyping analysis, 2\u20133 peer-reviewed publications in sleep medicine journals covering methods validation and longitudinal characterization, a benchmarked semi-automated event-triage model with reported sensitivity, specificity, and agreement against dual human scoring, de-identified physiological dataset deposited in a recognized repository, and a submitted phase-two grant proposal for expansion and intervention studies. Failure triggers: if by month 18 the facility has enrolled fewer than 25 participants or captured fewer than 40 adjudicated events, the program undergoes external review. Governance is a 3-member external scientific advisory board reviewing progress every 6 months, with the PI holding operational authority and budget reallocations above \u20ac50K requiring board approval. Banned words: AI, blockchain, app, VR, AR, gamification, wearable startup, consumer product, DAO, NFT, metaverse, smart home, autonomous diagnosis, digital therapeutic, SaaS, marketplace, validated (in the context of claiming a mature deployable system). Pick a realistic scenario \u2014 this is an early-stage clinical research facility producing methods validation and phenotyping work, not a finished diagnostic platform.\n\nToday's date:\n2026-Mar-11\n\nProject start ASAP\n\nFile 'purpose.md':\n**Purpose:** business\n\n**Purpose Detailed:** Research facility establishment, data collection, and analysis for scientific publication and grant funding.\n\n**Topic:** Establishment of a residential research unit for the study of adult NREM parasomnias\n\nFile 'plan_type.md':\nThis plan requires one or more physical locations. It cannot be executed digitally.\n\n**Explanation:** This plan *unequivocally requires* a physical location (the research unit in Bonn, Germany), physical renovations, physical equipment, in-person staffing, and physical participants. The entire research project *revolves around* physical data collection and analysis in a real-world setting. The plan also requires physical travel to the location."
+}

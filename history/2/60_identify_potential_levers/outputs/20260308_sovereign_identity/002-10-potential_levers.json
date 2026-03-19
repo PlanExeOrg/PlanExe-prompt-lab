@@ -1,0 +1,200 @@
+[
+  {
+    "lever_id": "b14c4a22-65e3-4aa4-a5dd-370b4eb2f77d",
+    "name": "Platform-Integrity Signal Redesign",
+    "consequences": "Pulling this lever eliminates reliance on Apple and Google integrity signals, replacing them with a Danish attestation service. The new trust anchor introduces operational overhead for maintaining the service and may increase the complexity of client integration. However, it removes the single point of failure associated with foreign platform policies and strengthens sovereignty over device integrity verification.",
+    "options": [
+      "Redesign the integrity verification layer to accept signed attestations from a Danish national attestation service, thereby eliminating platform vendor signals.",
+      "Introduce a lightweight, open-source attestation daemon that runs on all client devices, providing a platform-neutral integrity check without vendor involvement.",
+      "Leverage existing hardware-backed secure enclaves to generate device integrity proofs, then publish these proofs to a public ledger for cross-verification."
+    ],
+    "review": "The core tension is balancing vendor independence with the need for a trusted attestation source; the options overlook the operational overhead of maintaining a national attestation service and the potential for fragmentation if multiple attestation mechanisms coexist."
+  },
+  {
+    "lever_id": "6e779274-84ce-4ab2-83c9-631c1a544706",
+    "name": "Fallback Authentication Path Development",
+    "consequences": "Pulling this lever creates an alternative authentication route that does not depend on mobile OS integrity checks. It may increase user friction and require additional user education, but it provides a resilient fallback that can be activated if platform policies change or services become unavailable.",
+    "options": [
+      "Develop a browser-based fallback that uses QR code scanning to a dedicated hardware token, enabling authentication without mobile OS dependencies.",
+      "Create a lightweight desktop application that communicates with a local secure element, providing a fallback path for users lacking mobile devices.",
+      "Implement a server-side challenge-response protocol that accepts biometric verification via a trusted third-party device, bypassing platform integrity checks."
+    ],
+    "review": "The core tension lies between ensuring a seamless user experience and providing a truly platform-independent fallback; the options ignore the need for robust user onboarding and the risk of fragmenting authentication flows across devices."
+  },
+  {
+    "lever_id": "c8659fe2-f056-46b1-869b-aa9973ed340a",
+    "name": "Procurement Language Framing",
+    "consequences": "Pulling this lever influences future procurement documents to mandate platform-neutral authentication methods. It may face resistance from procurement officials and could delay procurement cycles, but it embeds resilience requirements into the contract language, making vendor lock-in harder to achieve.",
+    "options": [
+      "Draft procurement clauses that mandate inclusion of at least one platform-neutral authentication method, citing resilience and sovereignty requirements.",
+      "Propose a scoring rubric that rewards vendors for providing fallback authentication pathways, thereby incentivizing platform-neutral design.",
+      "Introduce a mandatory audit requirement that verifies vendor compliance with platform-neutral standards before contract award."
+    ],
+    "review": "The core tension is balancing procurement speed with the need for stringent platform-neutral criteria; the options fail to address how to integrate these clauses into existing procurement timelines without causing significant delays."
+  },
+  {
+    "lever_id": "7d2ce9e4-2130-456c-a5a0-0dda3248e684",
+    "name": "Stakeholder Coalition Expansion",
+    "consequences": "Pulling this lever broadens the support base across civil society, academia, and industry, increasing political pressure for platform neutrality. It may increase coordination overhead and dilute focus, but it creates a unified front that can influence policy and procurement decisions.",
+    "options": [
+      "Organize a cross-sector summit that brings together civil society, academia, and industry to co-create a shared platform-neutral roadmap.",
+      "Launch a public consultation portal that invites feedback on fallback authentication requirements, ensuring transparency and broad participation.",
+      "Establish a formal advisory board composed of privacy experts, security researchers, and procurement officials to guide policy drafting."
+    ],
+    "review": "The core tension is coordinating diverse stakeholder agendas while maintaining project momentum; the options overlook the risk of stakeholder fatigue and the challenge of aligning incentives across sectors."
+  },
+  {
+    "lever_id": "e9bb592a-ca77-47d6-9721-e33ae36654d1",
+    "name": "Regulatory Engagement Strategy",
+    "consequences": "Pulling this lever engages regulators to formalize platform-neutral requirements, potentially accelerating policy adoption. It may encounter bureaucratic delays and require legal expertise, but it positions Denmark to embed fallback authentication into national digital identity regulations.",
+    "options": [
+      "Submit a formal regulatory impact assessment that quantifies the resilience benefits of platform-neutral authentication, targeting Digitaliseringsstyrelsen.",
+      "Coordinate a series of workshops with EU digital identity working groups to align Danish fallback requirements with emerging EU standards.",
+      "Draft a legislative brief that proposes amendments to eIDAS provisions, ensuring fallback authentication is codified as a mandatory resilience feature."
+    ],
+    "review": "The core tension is reconciling rapid policy change with the slow legislative process; the options ignore the potential for regulatory pushback and the need for continuous stakeholder engagement to sustain momentum."
+  },
+  {
+    "lever_id": "5ad7d479-2cd2-4a07-9ac4-5d8d92c92c89",
+    "name": "EU Standards Alignment",
+    "consequences": "Pulling this lever aligns Danish fallback requirements with EU Digital Identity Wallet specifications, strengthening interoperability and resilience across member states. It may require significant coordination with EU working groups and risk duplicating existing efforts, but it ensures Denmark\u2019s platform-neutral stance is reflected in pan-European standards.",
+    "options": [
+      "Map Danish fallback requirements onto the European Digital Identity Wallet specifications, highlighting gaps and proposing harmonized extensions.",
+      "Contribute a technical annex to the EU working group that formalizes platform-neutral authentication as a core resilience pillar.",
+      "Lead a cross-border pilot that demonstrates fallback authentication interoperability between Danish and neighboring member state identity wallets."
+    ],
+    "review": "The core tension is balancing national sovereignty with EU harmonization; the options overlook the risk of duplicating EU efforts and the challenge of securing cross-border cooperation within tight timelines."
+  },
+  {
+    "lever_id": "d042de31-a403-4694-a87c-f6704259bfe5",
+    "name": "Supplier Concentration Risk Mitigation",
+    "consequences": "Pulling this lever reduces reliance on Apple/Google by diversifying platform providers, but may increase integration complexity and require additional certification cycles.",
+    "options": [
+      "Establish a formal vendor diversification policy that mandates inclusion of at least two alternative mobile OS ecosystems in all future identity applications.",
+      "Create a cross\u2011platform compatibility framework that standardizes API contracts across Android, iOS, and emerging open\u2011source mobile platforms.",
+      "Launch a procurement pilot that tests identity app deployment on a privacy\u2011focused Linux\u2011based mobile distribution to evaluate feasibility."
+    ],
+    "review": "Diversifying vendors increases integration effort; options ignore the requirement for a shared security audit framework that spans all chosen platforms."
+  },
+  {
+    "lever_id": "5510ce0e-f971-4f7a-b914-2d8b96647011",
+    "name": "Platform\u2011Neutral Authentication Architecture",
+    "consequences": "Pulling this lever shifts design toward authentication flows that do not rely on platform\u2011specific integrity signals, potentially improving resilience but may require new trust anchors and could delay deployment.",
+    "options": [
+      "Design an authentication protocol that relies on hardware\u2011backed attestation from device\u2011level secure enclaves rather than OS\u2011provided integrity APIs.",
+      "Implement a server\u2011side verification layer that cross\u2011checks user device fingerprints against a national registry of certified hardware tokens.",
+      "Adopt a federated identity model where the national identity provider issues short\u2011lived tokens that can be validated by any compliant client without platform checks."
+    ],
+    "review": "Shifting to platform\u2011neutral flows may introduce latency; options fail to address potential performance penalties in low\u2011bandwidth environments."
+  },
+  {
+    "lever_id": "729cca41-5d26-4934-8d65-0549be1cb225",
+    "name": "Fallback Path Standardization",
+    "consequences": "Pulling this lever formalizes a fallback authentication mechanism that can be invoked when primary platform signals fail, enhancing continuity but may increase operational overhead for users and administrators.",
+    "options": [
+      "Define a standardized QR\u2011code based challenge\u2011response protocol that can be executed on any device with a camera, independent of OS integrity checks.",
+      "Mandate the inclusion of a hardware\u2011token fallback option in all identity applications, ensuring users can authenticate via USB\u2011C or NFC devices.",
+      "Create a browser\u2011based fallback portal that uses out\u2011of\u2011band email or SMS verification to confirm user identity when mobile integrity signals are unavailable."
+    ],
+    "review": "Standardizing fallback paths may reduce user convenience; options overlook the need for a seamless transition experience between primary and fallback methods."
+  },
+  {
+    "lever_id": "945610e8-22a7-466b-bd70-96f6883a46d8",
+    "name": "Procurement Language Enforcement",
+    "consequences": "Pulling this lever embeds explicit platform\u2011neutral and fallback requirements into procurement documents, potentially slowing procurement cycles but increasing resilience.",
+    "options": [
+      "Insert mandatory clauses that require vendors to provide platform\u2011agnostic authentication endpoints and documented fallback procedures in all contract specifications.",
+      "Adopt a scoring rubric for vendor proposals that assigns higher points to solutions demonstrating proven fallback capabilities and cross\u2011platform compatibility.",
+      "Require a formal risk assessment in procurement bids that evaluates the impact of platform lock\u2011in on service continuity and outlines mitigation plans."
+    ],
+    "review": "Embedding requirements in procurement may delay delivery; options ignore the potential for increased administrative burden on small vendors."
+  },
+  {
+    "lever_id": "8b0756fe-4b5c-4257-917a-8f970ed7fcab",
+    "name": "Stakeholder Engagement Amplification",
+    "consequences": "Pulling this lever expands coalition outreach to include non\u2011traditional actors, potentially broadening support but risking dilution of focus and slower consensus building.",
+    "options": [
+      "Organize a series of interdisciplinary workshops that bring together cybersecurity researchers, privacy advocates, and consumer rights groups to co\u2011define fallback standards.",
+      "Launch a public consultation portal that solicits feedback on fallback authentication designs from citizens, developers, and industry stakeholders.",
+      "Establish a cross\u2011government advisory board that includes representatives from health, finance, and transportation ministries to align fallback requirements with sectoral needs."
+    ],
+    "review": "Broadening engagement may slow decision\u2011making; options fail to address coordination mechanisms that keep discussions focused and actionable."
+  },
+  {
+    "lever_id": "8f51cac4-1ec6-4ed2-b3e0-ceea859d4be8",
+    "name": "EU Digital Identity Alignment",
+    "consequences": "Pulling this lever ensures Danish fallback strategies are compatible with EU Digital Identity Wallet specifications, potentially easing cross\u2011border interoperability but may require additional compliance work.",
+    "options": [
+      "Map Danish fallback authentication flows against the EU Digital Identity Wallet reference architecture and publish a compliance gap analysis for stakeholders.",
+      "Participate in EU working groups to propose amendments that explicitly allow platform\u2011neutral fallback mechanisms within the Digital Identity Wallet framework.",
+      "Develop a cross\u2011border testbed that demonstrates the interoperability of Danish fallback tokens with EU member state identity providers."
+    ],
+    "review": "Aligning with EU standards may introduce additional regulatory layers; options overlook the need for a dedicated compliance monitoring process."
+  },
+  {
+    "lever_id": "230f7d03-2423-4528-9da4-18bbbe642ef9",
+    "name": "Cross-Platform Credential Synchronization",
+    "consequences": "Pulling this lever would shift the authentication flow to allow credentials to be stored and validated across multiple operating systems, reducing reliance on a single platform's integrity signals. This would increase the attack surface for credential compromise but also provide a more resilient access path if one OS vendor changes policy. The need for secure synchronization protocols may raise development complexity and regulatory scrutiny around data residency.",
+    "options": [
+      "Deploy a federated credential store that synchronizes user keys between iOS, Android, and a Linux-based kiosk, ensuring each device can authenticate independently.",
+      "Introduce a blockchain-backed distributed ledger that records credential attestations, allowing any compliant device to verify ownership without platform-specific APIs.",
+      "Leverage a cloud-based key management service with strict access controls, enabling cross-device authentication while abstracting platform integrity checks."
+    ],
+    "review": "Core tension between reducing platform lock\u2011in and maintaining secure key storage; options overlook the operational overhead of synchronizing keys across heterogeneous devices and the potential for increased latency in authentication flows."
+  },
+  {
+    "lever_id": "78842f86-7089-4073-bf99-5f72a93e3622",
+    "name": "Hardware Token Integration Pathway",
+    "consequences": "Pulling this lever would enable users to authenticate via USB\u2011C or NFC hardware tokens, bypassing mobile OS integrity checks. This increases physical security but requires widespread token distribution and user education. It may also create supply chain dependencies on token manufacturers and complicate integration with existing eIDAS workflows.",
+    "options": [
+      "Partner with a certified hardware token vendor to issue EU\u2011compliant FIDO2 tokens that can be used across all Danish public services.",
+      "Develop an open\u2011source hardware token design that can be manufactured locally, reducing supply chain risk and enabling rapid deployment.",
+      "Create a mobile\u2011app\u2011backed virtual token that emulates a hardware device, allowing fallback authentication on devices lacking physical token support."
+    ],
+    "review": "Tension between physical security benefits and logistical challenges of token provisioning; options miss the cost and time required to establish a national token distribution network and the need for user onboarding support."
+  },
+  {
+    "lever_id": "3c37798b-4229-4ea7-b51f-ce6023c05db4",
+    "name": "Open-Source Trust Anchor Development",
+    "consequences": "Pulling this lever would replace proprietary platform integrity APIs with an open\u2011source trust anchor that can be audited and deployed on any device. This increases transparency but may reduce performance compared to vendor\u2011optimized solutions and could face resistance from platform providers. It also requires a community to maintain the code and ensure compatibility with evolving OS updates.",
+    "options": [
+      "Release a modular trust\u2011anchor library under an OSI\u2011approved license, allowing developers to integrate it into custom ROMs and secure enclaves.",
+      "Build a containerized trust\u2011anchor service that runs on edge servers, providing integrity verification for any client device regardless of OS.",
+      "Create a cross\u2011platform trust\u2011anchor SDK that leverages hardware\u2011based attestation, enabling verification without relying on platform\u2011specific APIs."
+    ],
+    "review": "Core tension between openness and performance; options overlook the challenge of keeping the open\u2011source trust anchor up\u2011to\u2011date with rapid OS changes and the potential for fragmentation across device manufacturers."
+  },
+  {
+    "lever_id": "a65c96e2-8467-4fed-92b7-cf6bbb0c245f",
+    "name": "Stakeholder-Driven Resilience Blueprint",
+    "consequences": "Pulling this lever would formalize a resilience framework that incorporates input from civil society, academia, and industry, guiding procurement and policy decisions. This could accelerate adoption of fallback mechanisms but may dilute technical rigor if stakeholder priorities conflict. It also risks politicization of technical standards.",
+    "options": [
+      "Convene a multi\u2011stakeholder working group that drafts a resilience charter, specifying fallback authentication requirements for all future digital identity procurements.",
+      "Publish a public resilience roadmap that maps current dependencies and proposes phased de\u2011platformization milestones, inviting community feedback through open consultations.",
+      "Launch a crowdsourced resilience challenge that rewards innovative fallback solutions, fostering grassroots innovation while aligning with policy goals."
+    ],
+    "review": "Tension between inclusive governance and technical precision; options miss the need for a clear decision\u2011making hierarchy to resolve conflicting stakeholder demands and ensure timely policy adoption."
+  },
+  {
+    "lever_id": "c0697f5c-4142-47cf-aec6-7ca9db9698c9",
+    "name": "Regulatory Sandbox for Fallback Authentication",
+    "consequences": "Pulling this lever would establish a controlled testing environment where alternative authentication methods can be evaluated under real\u2011world conditions. This could uncover unforeseen integration issues but may delay deployment if sandbox approvals are slow. It also requires regulatory resources and clear exit criteria.",
+    "options": [
+      "Request a temporary exemption from Digitaliseringsstyrelsen to pilot fallback authentication on a subset of public services, collecting performance and security data.",
+      "Create a joint sandbox with the Ministry of Finance and the Ministry of Health, allowing cross\u2011agency testing of fallback mechanisms in a secure network.",
+      "Develop an industry\u2011led sandbox platform that simulates Danish identity providers, enabling rapid prototyping of fallback solutions without full regulatory approval."
+    ],
+    "review": "Core tension between regulatory oversight and innovation speed; options overlook the administrative burden of sandbox governance and the risk of sandbox findings not translating into policy change."
+  },
+  {
+    "lever_id": "707618c4-e64d-4161-b724-58b196e55cb2",
+    "name": "EU Digital Identity Wallet Alignment Initiative",
+    "consequences": "Pulling this lever would align Danish fallback requirements with EU Digital Identity Wallet specifications, ensuring interoperability and shared standards. This could streamline procurement but may lock Denmark into EU\u2011centric design choices that limit domestic flexibility. It also requires coordination with EU working groups and potential trade\u2011offs in national sovereignty.",
+    "options": [
+      "Submit a formal EU working\u2011group proposal that embeds platform\u2011neutral fallback clauses into the Digital Identity Wallet architecture.",
+      "Co\u2011author a white paper that maps Danish fallback needs onto EU standards, providing concrete implementation guidelines for member states.",
+      "Organize a cross\u2011border workshop that brings Danish stakeholders and EU experts together to negotiate fallback interoperability requirements."
+    ],
+    "review": "Tension between EU alignment and national autonomy; options miss the challenge of aligning fallback mechanisms with divergent national procurement cycles and the potential for EU standards to lag behind domestic innovation."
+  }
+]

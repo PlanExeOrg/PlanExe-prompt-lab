@@ -1,0 +1,200 @@
+[
+  {
+    "lever_id": "c8b71855-1508-4c04-8b19-d7bff5759d99",
+    "name": "Physical footprint and phased expansion",
+    "consequences": "Expanding to 12 suites immediately increases upfront capital outlay and ongoing staffing needs, elevating occupancy carrying costs if utilization remains below forecast. Downstream, higher capacity enables faster recruitment and more data per cohort, accelerating milestones but also heightening risk of underutilization or safety staffing gaps if timelines slip.",
+    "options": [
+      "Expand to 12 suites immediately by converting adjacent spaces and hiring additional night staff, thereby increasing enrollment capacity and potential data yield, but elevating upfront capital risk and ongoing occupancy costs that may outpace early data returns.",
+      "Maintain eight-suite footprint while focusing on throughput optimization, including tightened scheduling, improved pre-screening, and reduced turn-around times between stays to maximize data per occupancy without new capital outlays.",
+      "Implement modular, reconfigurable spaces within the existing property to scale capacity on demand, preserving domestic feel while limiting permanent capital exposure."
+    ],
+    "review": "Core tension: balancing capital-intensive expansion with data-quality resilience; a weakness: none of the options explicitly address a depreciation or financing strategy to absorb capital risk, nor a contingency for safety staffing in surge scenarios."
+  },
+  {
+    "lever_id": "d320ee37-e504-4106-9fdd-4db286c020a3",
+    "name": "Sensing modality strategy and data fidelity",
+    "consequences": "Adopting a mixed sensing approach enriches datasets with multi-modal signals, improving event characterization and cross-validation of triage outputs. However, it increases data storage, processing, and privacy management requirements, and can heighten annotation burden if streams diverge in quality across modalities.",
+    "options": [
+      "Prioritize dry-electrode EEG headbands and contact-free mattress sensors for continuous nightly monitoring to minimize participant burden and safety concerns while maintaining adequate sensitivity for parasomnia detection.",
+      "Invest in privacy-forward video and infrared capture with strict access controls and data minimization, enabling contextual event interpretation without overexposing participants.",
+      "Implement a synchronized multi-modal data pipeline with standardized ontologies (EEG-BIDS) and robust time-stamping to enable cross-modal annotations and scalable downstream scoring."
+    ],
+    "review": "Core tension: data richness vs privacy and operational burden; a weakness: the options do not address regulatory approvals across EU GDPR and cross-border data transfer complexities."
+  },
+  {
+    "lever_id": "816c8060-fb8b-4511-9ba7-244f415ecf09",
+    "name": "Data governance, privacy and data sharing",
+    "consequences": "Implementing strict de-identification and access controls strengthens participant privacy and compliance with institutional policies. Downstream, external validation opportunities increase, but data sharing constraints may slow cross-institution reproducibility and delay publication timelines.",
+    "options": [
+      "De-identify all physiological data and restrict video to access-controlled repositories under strict data use agreements to facilitate external validation while preserving participant privacy.",
+      "Establish tiered access governance with approved researchers, audit trails, and data-use review to balance openness with privacy.",
+      "Publish a curated de-identified dataset in controlled repositories while maintaining a secure internal analytics environment for researchers with approved access."
+    ],
+    "review": "Core tension between open data validation and participant privacy; a weakness: lacks a strategy for dynamic consent management for future data reuse and for evolving data-use agreements."
+  },
+  {
+    "lever_id": "7ec5fa86-e6b5-4ee8-92f6-c331f13c9adf",
+    "name": "Recruitment model and retention strategy",
+    "consequences": "Adjusting recruitment channels and stay durations directly shapes event yield and study timelines; broader channels increase enrollment velocity but may dilute sample quality if pre-screening isn't rigorous. Longer stays raise costs and staffing demands; a protocol ceiling of unproductive admissions may trigger external review.",
+    "options": [
+      "Broaden recruitment channels through regional sleep clinics and GP referrals while maintaining strict pre-admission screening to sustain event yield and data quality.",
+      "Adopt flexible stay durations (2\u201310 weeks) with a structured escalation protocol to maximize event capture while maintaining staff coverage and budget.",
+      "Offer per-night participant compensation and meals with targeted outreach to diverse populations, ensuring equity while monitoring budget impact."
+    ],
+    "review": "Core tension: recruitment breadth vs screening rigor; a weakness: compensation-based recruitment can introduce selection bias if not carefully managed."
+  },
+  {
+    "lever_id": "1a025ca8-2961-44b1-ad75-423e5a0b6b7a",
+    "name": "Event triage tool development and validation",
+    "consequences": "Developing a semi-automated triage system reduces manual scoring burden and accelerates feedback loops, supporting Aim 3; but algorithmic misclassification risk could miss subtle parasomnia patterns, requiring robust two-reviewer adjudication and fallback processes.",
+    "options": [
+      "Develop a semi-automated triage system using machine-learning-assisted scoring with a double-human confirmatory loop to reduce reviewer burden while preserving accuracy.",
+      "Partner with external sleep research labs to benchmark and validate the event-triage model against gold-standard adjudication and inter-rater reliability metrics.",
+      "Publish a transparent evaluation plan and maintain publication rights with the academic team, ensuring open reporting of limitations and non-deployable aspects."
+    ],
+    "review": "Core tension between automation benefits and preservation of expert judgment; a weakness: reliance on external benchmarks can slow internal progress and lacks in-house drift monitoring and cross-site consistency checks."
+  },
+  {
+    "lever_id": "8b40c20e-b9b5-48a3-b98c-9048736df68f",
+    "name": "Governance, funding and external partnerships",
+    "consequences": "Establishing governance and funding strategies aligns milestones with resource availability and reduces financial risk; but external funding and pharma partnerships may introduce publication restrictions or delays in data sharing; contingency funds protect against delays.",
+    "options": [
+      "Pursue staged grant renewals and internal Bonn funding while keeping pharma partnerships optional and with a strict publication-right window to protect academic output.",
+      "Institute an external scientific advisory board with milestone-based budget approvals to improve governance and reduce scope creep.",
+      "Create a contingency fund and cost-control measures, including phased procurement and vendor contracting, to absorb regulatory delays or recruitment slippage."
+    ],
+    "review": "Core tension between long-term sustainability and partner-driven risk sharing; a weakness: omits a clear plan for IP rights and data ownership in industry collaboration, which could affect downstream dissemination."
+  },
+  {
+    "lever_id": "0e7db385-e1fa-46c4-b987-3c3f874ec4ad",
+    "name": "Sensing architecture modularization and escalation cadence",
+    "consequences": "Adopting a modular sensing stack allows dynamic switching between baseline low-burden monitoring and enhanced PSG nights, improving capture efficiency without expanding overnight staffing. Downstream, the approach increases system integration complexity and requires rigorous data alignment to EEG-BIDS, raising setup and validation overhead.",
+    "options": [
+      "Implement a modular sensing stack that toggles baseline monitoring and escalation nights based on near real-time flagging, improving event capture without overburdening staff.",
+      "Adopt a fixed escalation cadence on a subset of participants to standardize data across nights, ensuring comparability but increasing resource use.",
+      "Pilot a fully automated trigger that routes high-risk nights to full PSG while keeping routine nights with low-burden sensors, balancing fidelity and throughput."
+    ],
+    "review": "Core tension lies between maximizing data fidelity and minimizing resource drain; a weakness the options miss is that real-time flagging may lag or misclassify events, leading to suboptimal allocation of escalation nights."
+  },
+  {
+    "lever_id": "7cb6e97e-85c7-439e-9024-c24ed3f9491e",
+    "name": "Staffing and shift design for continuous coverage",
+    "consequences": "Ensures safety and data collection across 8 suites, maintaining operational continuity and consistent data quality. Downstream, these choices raise fixed labor costs and necessitate fatigue management, but cross-training can reduce single points of failure.",
+    "options": [
+      "Establish cross-trained sleep technicians with rotating night shifts to maintain 8-room coverage while distributing fatigue risk.",
+      "Contract a flexible on-call pool of researchers to cover peak nights, reducing fixed payroll but increasing coordination overhead.",
+      "Adopt a fixed, extended-night rotation with premium compensation to guarantee throughput, raising annual personnel costs."
+    ],
+    "review": "Core tension centers on staffing costs versus coverage reliability; a weakness is that reliance on on-call pools may delay responses if notification systems lag, and fatigue management protocols must be explicit."
+  },
+  {
+    "lever_id": "b2b29755-7247-463a-a622-e0d81ef934ef",
+    "name": "Privacy-preserving data sharing and de-identification framework expansion",
+    "consequences": "Strengthens participant trust and regulatory compliance, enabling broader collaboration. Downstream, privacy-preserving measures may reduce data granularity and complicate external replication or validation.",
+    "options": [
+      "Institute tiered data access with controlled de-identified datasets under strict DUAs to enable broader collaboration while preserving privacy.",
+      "Deploy on-site processing for sensitive streams to minimize raw data leaving the facility, preserving privacy but complicating external validation.",
+      "Pilot synthetic data generation for non-identifiable patterns to enable public sharing while maintaining privacy principles."
+    ],
+    "review": "Core tension involves balancing external data sharing with privacy constraints; a weakness is that synthetic data may fail to capture rare event signatures, and real data access delays could hamper replication."
+  },
+  {
+    "lever_id": "82416812-a7b6-482d-85fd-9aa46b08a330",
+    "name": "Pre-admission screening optimization and inclusion criteria refinement",
+    "consequences": "Tighter screening can improve yield of analyzable events but risks recruitment bias and slower enrollment. Downstream, it can reduce resource waste yet affect representativeness of findings.",
+    "options": [
+      "Refine pre-admission questionnaires to better stratify candidates by expected event likelihood, improving yield while risk of sample bias increases.",
+      "Integrate at-home screening using actigraphy and structured history to triage before admission, reducing screening overhead.",
+      "Expand language accessibility and transportation support to broaden reach, potentially increasing enrollment but adding logistical complexity."
+    ],
+    "review": "Core tension pits enrollment efficiency against sample representativeness; a weakness is that at-home screening may misclassify candidates, and diversity controls need explicit tracking."
+  },
+  {
+    "lever_id": "44ffd594-08c6-492c-b7c8-cbce8a1ed895",
+    "name": "Ethics governance integration and ongoing protocol amendments",
+    "consequences": "Improves agility in safety and regulatory compliance, allowing safe adaptations without sacrificing oversight. Downstream, faster iterations may require tighter definition of thresholds to avoid scope creep.",
+    "options": [
+      "Create a quarterly ethics review that approves minor protocol amendments under predefined thresholds, accelerating safe adaptations.",
+      "Implement an external rapid-approval channel for urgent safety adaptations, preserving board oversight for high-impact changes.",
+      "Maintain a living risk register with a transparent change log to document decisions and rationale for protocol updates."
+    ],
+    "review": "Core tension is speed of protocol evolution versus safeguarding; a weakness is that rapid approvals could be exploited if thresholds are not rigorously enforced."
+  },
+  {
+    "lever_id": "a6fa04fb-057b-490f-a786-1ac42a207287",
+    "name": "Facility space utilization and renovation backlog prioritization",
+    "consequences": "Prioritizes high-impact safety and data throughput upgrades, improving current operations. Downstream, less-visible amenities may lag, potentially affecting participant experience and long-term scalability.",
+    "options": [
+      "Rank renovation tasks by safety-critical impact and data throughput improvement, sequencing work to minimize downtime while maximizing experimentation time.",
+      "Adopt modular retrofit kits to rapidly upgrade spaces for privacy and acoustics without full renovations.",
+      "Explore external partnerships for shared lab space to increase capacity while postponing internal remodeling efforts."
+    ],
+    "review": "Core tension involves capital constraints versus long-term capacity; a weakness is that external partnerships may introduce access and governance inconsistencies that require formal agreements and clear roles."
+  },
+  {
+    "lever_id": "79b763b9-27c6-400d-83c8-bf213a0e7185",
+    "name": "Diversified recruitment channels and eligibility automation",
+    "consequences": "Expands the recruitment pool and accelerates initial screening by routing candidates through multiple channels and automating pre-screen questions. However, the broader funnel increases consent handling and risk of inconsistent eligibility capture if automation isn't carefully calibrated, potentially inflating screen failures or missed eligible participants.",
+    "options": [
+      "Expand recruitment through regional sleep clinics, bed partner networks, and patient advocacy groups while implementing an automated pre-screen questionnaire to rapidly filter candidates.",
+      "Partner with primary care clinics and regional neurologists to flag eligible candidates and streamline intake pathways through standardized forms.",
+      "Implement a remote pre-screening interview kiosk to reduce on-site screening load and reallocate staff to overnight monitoring."
+    ],
+    "review": "Core tension: breadth of recruitment versus consistent eligibility verification; weakness: automated pre-screen processes may miss subtleties in exclusion criteria that require clinician judgment."
+  },
+  {
+    "lever_id": "ae9243e9-d928-49c1-a550-247163e00e83",
+    "name": "Data-driven expansion gating tied to quality benchmarks",
+    "consequences": "Linking capacity growth to measurable data quality protects downstream analyses from compromised data while enabling disciplined governance. The trade-off is potential growth delays if targets are stringent or data variability slows ramp-up, requiring adaptive governance and frequent checkpoints.",
+    "options": [
+      "Publish a formal data quality scorecard and require concordant scoring across raters before approving addition of new suites.",
+      "Adopt a two-stage expansion pathway with predefined data quality thresholds and a fixed review cadence before capacity increases.",
+      "Pilot a flexible scheduling model that scales staffing with real-time event capture rates to avoid idle rooms."
+    ],
+    "review": "Core tension: throughput goals versus data integrity; weakness: thresholds may be rigid and not account for initial learning curve or site heterogeneity."
+  },
+  {
+    "lever_id": "ed39d17e-b014-409d-a74e-5c955dec8ce2",
+    "name": "Ethical privacy governance for video with opt-in tiers",
+    "consequences": "Strengthens privacy compliance and participant trust by limiting video exposure and controlling access, but may reduce data richness and complicate cross-site validation where full video would otherwise aid adjudication.",
+    "options": [
+      "Implement video minimization with on-site storage and tiered access to protect privacy while preserving auditability.",
+      "Establish external ethics audits on de-identified datasets while gating public video access behind redaction and documented rationale.",
+      "Create a participant consent framework allowing optional video use with explicit opt-in scopes and revocation processes."
+    ],
+    "review": "Core tension: privacy constraints versus analytical utility; weakness: opt-in models can introduce selection bias if opt-out participants differ in relevant ways."
+  },
+  {
+    "lever_id": "e848f141-a50b-4629-bd7e-a2dff4bef2f1",
+    "name": "Hybrid event-triage with clinician-in-the-loop escalation",
+    "consequences": "Enhances event adjudication accuracy by combining automation with clinician oversight; as a trade-off, it can increase overnight clinician workload and scheduling complexity, potentially affecting responsiveness during high-volume nights.",
+    "options": [
+      "Extend semi-automated triage with scheduled clinician reviews during overnight peaks to calibrate false positives consistently.",
+      "Route uncertain events to on-call neurologist for rapid adjudication with defined SLA to avoid delays.",
+      "Benchmark triage performance against manual scoring on a weekly cadence and recalibrate operational thresholds accordingly to maintain reliability."
+    ],
+    "review": "Core tension: automation savings versus clinician workload; weakness: on-call availability can bottleneck during busy nights."
+  },
+  {
+    "lever_id": "8e6d0b18-0f02-4570-b82f-19182cca6ea1",
+    "name": "Resilient staffing and cross-coverage design",
+    "consequences": "Enhances safety and operational flexibility by enabling rapid response and reduced fatigue. However, it increases payroll costs and coordination overhead, and may erode schedule predictability if the cross-coverage pool fluctuates.",
+    "options": [
+      "Adopt cross-trained sleep technicians who rotate rooms to ensure rapid response and reduce fatigue across shifts.",
+      "Institute a dynamic rostering system that adjusts overnight staff-to-participant ratios based on real-time alarm load.",
+      "Contract with a vetted on-call pool to cover unexpected vacancies while preserving core team continuity."
+    ],
+    "review": "Core tension: safety expectations versus cost and staffing complexity; weakness: on-call pools may vary in reliability and impact continuity if not managed carefully."
+  },
+  {
+    "lever_id": "bf11cf1b-6603-432e-99bb-54c24642c431",
+    "name": "External benchmarking through de-identified datasets and synthetic controls",
+    "consequences": "Broadens external validation and generalizability while maintaining privacy; however, synthetic data may not capture rare edge cases or site-specific noise, limiting transferability.",
+    "options": [
+      "Establish data-sharing partnerships with other sleep labs to benchmark algorithms using fully de-identified datasets across multiple institutions.",
+      "Create synthetic data that mirrors sensor streams to validate triage performance without exposing real patient data.",
+      "Publish limited aggregate metrics and methodological details in preprints to balance transparency and privacy considerations."
+    ],
+    "review": "Core tension: external validation versus privacy and data richness; weakness: de-identified data may still pose residual re-identification risk and may not reflect all real-world variability."
+  }
+]
