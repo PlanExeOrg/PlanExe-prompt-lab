@@ -1,0 +1,14 @@
+{
+  "pr_url": "https://github.com/PlanExeOrg/PlanExe/pull/351",
+  "pr_title": "fix: adaptive retry loop, haiku max_tokens, relax review_lever",
+  "pr_description": "Adaptive retry loop**: Replace fixed 3-call loop with min-15-levers / max-5-calls strategy. Stops early when enough levers are accumulated; tolerates mid-loop failures without discarding prior results. Haiku max_tokens**: Reduce from 16000 to 8192 to match haiku's actual API output cap, preventing JSON truncation. review_lever relaxed**: Lower hard limit from 50 to 10 chars. The enrich step adds detail downstream, so 50 is a soft target only. Fixes llama3.1 batch rejections on short but valid reviews. Remove lever_classification**: Reverted \u2014 the required field regressed success rate from 97.1% to 88.6% (iter 33 assessment).",
+  "history": [
+    "2/45_identify_potential_levers",
+    "2/46_identify_potential_levers",
+    "2/47_identify_potential_levers",
+    "2/48_identify_potential_levers",
+    "2/49_identify_potential_levers",
+    "2/50_identify_potential_levers",
+    "2/51_identify_potential_levers"
+  ]
+}
