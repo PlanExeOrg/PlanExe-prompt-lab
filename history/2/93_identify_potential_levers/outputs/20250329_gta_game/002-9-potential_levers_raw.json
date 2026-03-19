@@ -1,0 +1,390 @@
+{
+  "responses": [
+    {
+      "strategic_rationale": "GTA development faces a trilemma: delivering next-gen fidelity and procedural complexity demands sustained technical investment and extended timelines, yet modern player expectations require launch-ready multiplayer and dynamic NPC systems that grow iteratively. Simultaneously, the scale of partnerships, government grants, and publisher oversight creates competing governance pressures that can fragment creative direction. The seven levers below address the core tensions between feature ambition versus ship date, centralized creative control versus distributed studio partnerships, and upfront infrastructure cost versus phased hiring and tooling maturity.",
+      "levers": [
+        {
+          "lever_index": 1,
+          "name": "Narrative Scope and Branching Complexity",
+          "consequences": "Expanding the three-city interconnected story threads increases emotional depth and replayability but multiplies dialogue recording, motion-capture sessions, and NPC behavior scripting. Each additional narrative branch exponentially increases QA testing cycles and creates risk that players exhaust content before endgame systems stabilize.",
+          "options": [
+            "Anchor the campaign to two core cities with the third as an explorable but narrative-light expansion zone, reserving full branching dialogue trees for main-story NPCs while applying procedural variation to side-character interactions.",
+            "Develop a central crime-family story thread with full voice acting and cinematics, then populate secondary narratives using AI-assisted dialogue generation and motion-capture retargeting to reduce recording overhead while maintaining believable NPC interactions.",
+            "Implement a modular narrative system where each city operates on its own story cycle independent of the others, allowing asynchronous development and post-launch content drops without requiring synchronized voice-acting campaigns."
+          ],
+          "review_lever": "Expanded narrative branches lock creative resources into VO, motion capture, and scripting, but none of the three options address how to avoid narrative bloat creep if player engagement data post-launch demands story additions."
+        },
+        {
+          "lever_index": 2,
+          "name": "Procedural Generation Fidelity versus Hand-Crafted Districts",
+          "consequences": "Heavy reliance on procedural generation for buildings, street layouts, and NPC routines accelerates map production and reduces file size, but procedurally generated districts often feel repetitive and lack the architectural character that players expect from a premium title. Hand-crafted iconic neighborhoods anchor player memory and social sharing but consume months of environment artist time.",
+          "options": [
+            "Designate 40% of each city as hand-crafted signature districts (financial centers, harbor fronts, gang territories) with full detail and unique architecture, then use advanced procedural tools to generate the remaining 60% of residential and industrial zones with constrained stylistic parameters.",
+            "Build the entire city using procedural systems trained on real architectural data from Los Angeles, Detroit, and Miami, then deploy a post-generation human curation phase where senior environment artists flag and manually refine high-traffic areas and landmark zones.",
+            "Develop a hybrid streaming system where core multiplayer zones and heist locations are hand-crafted and fully optimized, while single-player exploration zones load procedurally on demand, allowing players to discover new neighborhoods without loading the entire city into memory."
+          ],
+          "review_lever": "Hand-crafted districts guarantee visual polish but strain production capacity; procedural approaches scale faster but risk homogeneity. None of the options addresses how to maintain narrative coherence across procedurally generated neighborhoods where crime-family territories should reflect emergent social geography."
+        },
+        {
+          "lever_index": 3,
+          "name": "Multiplayer Launch Parity versus Single-Player Content Depth",
+          "consequences": "Shipping with feature-rich multiplayer (heists, cooperative crime rings, territory control) alongside a complete single-player campaign splits engineering effort and extends QA scope. Delaying multiplayer to post-launch frees single-player development but risks hemorrhaging launch-week player retention and long-term engagement forecasts that publisher forecasts depend upon.",
+          "options": [
+            "Launch with a fully-featured single-player campaign and asynchronous multiplayer modes (leaderboards, crime-scene replay challenges, territory ownership persistence), deferring cooperative heist multiplayer and player-versus-player competitive modes to month-three and beyond.",
+            "Develop a unified mission framework where single-player heist sequences can be played cooperatively in multiplayer with AI-controlled crew members in solo mode, allowing code and asset reuse while letting players choose their preferred engagement style from the start.",
+            "Ship multiplayer as a separate client with its own progression system and economy isolated from single-player, allowing each mode to be balanced independently and post-launch patched without destabilizing the other, accepting the overhead of dual testing and infrastructure."
+          ],
+          "review_lever": "Delaying multiplayer reduces launch risk but concedes Day One engagement advantage to competitors; unified frameworks reduce testing overhead but couple single-player stability to multiplayer server health. No option addresses how to prevent single-player narrative spoilers from leaking into multiplayer cosmetics and story cosmetics."
+        },
+        {
+          "lever_index": 4,
+          "name": "Government Innovation Grant Compliance versus Creative Autonomy",
+          "consequences": "Government innovation grants (if secured) typically carry IP tracking, domestic-hiring mandates, and progress-reporting requirements that can slow decision velocity and impose transparency obligations conflicting with commercial competition. Avoiding government funding preserves creative freedom but raises capital requirements and limits access to subsidized R&D infrastructure.",
+          "options": [
+            "Pursue government innovation grants explicitly for R&D infrastructure (procedural generation tooling, AI-assisted animation, server architecture) while ring-fencing core game design and narrative from grant oversight by positioning them as publisher-funded IP, creating a clean separation between public and commercial development.",
+            "Decline government innovation grants and rely entirely on publisher capital and industry partnerships, accepting higher cost of capital but retaining full decision authority and allowing the team to pivot creative direction without reporting quarterly compliance milestones.",
+            "Structure grant participation through a subsidiary or research partnership with a local university, where government funding supports academic research outcomes (procedural algorithms, NPC behavior models) while the commercial game studio operates independently under publisher oversight."
+          ],
+          "review_lever": "Government grants reduce capital risk but introduce reporting overhead and hiring constraints; declining them preserves autonomy but increases burn rate. None of the options addresses how to maintain export-control compliance if procedural generation or NPC AI models attract international regulatory scrutiny."
+        },
+        {
+          "lever_index": 5,
+          "name": "Vehicle Customization Depth versus Physics and Gameplay Balance",
+          "consequences": "Extensive vehicle customization (engine tuning, aerodynamics, drivetrain swaps) creates emergent metagames and player expression but exponentially increases physics simulation branches and balance tuning. Over-tuned customization can render stock vehicles obsolete, fracturing the multiplayer economy and making competitive racing dependent on cosmetic pay-walls rather than skill.",
+          "options": [
+            "Implement cosmetic-only customization (paint, decals, interior trim) paired with performance tiers (speed class, handling class) that players unlock through gameplay, preventing pay-to-win imbalance while allowing visual expression and keeping physics simulation tractable within console performance budgets.",
+            "Offer deep mechanical customization (turbochargers, suspension geometry, weight distribution) but tier it behind specific vehicle platforms and cap the performance delta at 15% variance from stock, ensuring a heavily tuned vehicle cannot outperform a stock hypercar, maintaining competitive fairness while preserving build diversity.",
+            "Create a separate cosmetic customization economy from a performance-tuning economy, where cosmetic mods are purchased and swapped freely in a garage, while performance upgrades consume vehicle-bound resources (fuel, wear, maintenance) that reset in multiplayer sessions, decoupling cosmetic investment from competitive advantage."
+          ],
+          "review_lever": "Deep customization drives engagement and metagame complexity but risks balance fragmentation; cosmetic-only approaches ensure fairness but reduce player agency. None addresses whether vehicle physics simulation can scale to server-side validation if customization parameters are client-side configurable."
+        },
+        {
+          "lever_index": 6,
+          "name": "Studio Location and Physical Collaboration Model",
+          "consequences": "Establishing a primary development hub in a single city (Los Angeles, Austin, or Montreal) concentrates talent, shortens approval cycles, and simplifies hardware asset management, but creates geographic dependency and limits access to specialized skill pools. Distributed multi-city studios increase talent diversity and reduce relocation barriers but fragment communication, extend approval cycles, and multiply office infrastructure overhead.",
+          "options": [
+            "Establish a single primary studio in a major game-development hub (Los Angeles or Montreal) with a 150+ core team handling engine, graphics, and mission design, while contracting motion-capture, localization, and QA to specialized vendors in secondary cities, minimizing coordination complexity.",
+            "Operate a primary creative studio co-located with the publisher headquarters for daily creative oversight, paired with a secondary technical studio in a lower-cost region (Austin, Toronto) handling graphics optimization and server infrastructure, with weekly video syncs and monthly in-person milestone reviews.",
+            "Distribute development across three regional studios (one per represented city) with each handling its geographic sector's design, narrative, and assets, while centralizing engine, multiplayer infrastructure, and cross-city systems in a lean virtual-first coordination layer supported by shared cloud development environments."
+          ],
+          "review_lever": "Single-site studios reduce communication friction but create geographic talent constraints; distributed models access wider talent pools but multiply coordination overhead and complicate real-time asset iteration. No option addresses how to maintain consistent visual or gameplay identity across geographically separated art and design teams."
+        },
+        {
+          "lever_index": 7,
+          "name": "Graphical Fidelity Target and Hardware Platform Strategy",
+          "consequences": "Targeting cutting-edge next-gen console graphics (ray-traced lighting, 4K, 60fps) requires extended optimization phases and reduces cross-platform portability, extending development by 6\u201312 months. Accepting lower fidelity standards (1440p, 30fps, baked lighting) accelerates ship date and enables faster platform ports but risks perceived quality disadvantage against competitor releases.",
+          "options": [
+            "Launch on current-generation consoles at 1440p/30fps with ray-traced reflections in high-traffic areas, then post-launch deploy a next-gen upgrade patch offering 4K/60fps with enhanced global illumination, allowing launch within 18 months while planning optimization work in parallel.",
+            "Develop the entire game using PC-first asset pipelines and target a 4K/60fps baseline on high-end gaming PCs and next-gen consoles, deferring current-gen console versions to a 12-month post-launch update with auto-scaled resolution and simplified lighting, accepting a longer development timeline but guaranteeing premium visuals at launch.",
+            "Implement a dynamic resolution and frame-rate system that targets 60fps during gameplay while dropping to 30fps during cinematics, using variable graphical settings per-scene to maintain visual consistency without over-engineering per-platform optimization, shipping simultaneously across all platforms by month 24."
+          ],
+          "review_lever": "Aggressive graphical targets extend development and create multi-platform testing burden; lower targets ship faster but risk perceived quality gap at launch. None of the options addresses how to prevent visual pop-in or streaming bottlenecks if procedural generation systems interact with ray-traced reflections."
+        },
+        {
+          "lever_index": 8,
+          "name": "Morality System Integration and Narrative Consequence Design",
+          "consequences": "A nuanced morality system where player choices affect NPC behavior, faction relationships, and available missions creates deep emergent narratives but multiplies dialogue branches, NPC state tracking, and QA edge cases exponentially. Linear moral choices (good/evil) simplify implementation but diminish replayability and player perception of agency.",
+          "options": [
+            "Implement a three-axis reputation system (street credibility, corruption index, community trust) where player actions incrementally shift relationships with competing crime families and law enforcement, opening or closing mission paths dynamically without branching dialogue or cutscene variations.",
+            "Develop choice-based narrative where major plot decisions lock out specific heist opportunities and faction storylines, creating hard narrative branches that reward replays but require full campaign duplication for each major choice path, accepting higher content development cost.",
+            "Build a soft-consequence system where player moral actions trigger emergent NPC responses (patrols increase, territories become hostile, safe houses relocate) without explicitly blocking missions, allowing story progression regardless of choice but changing encounter difficulty and available resources dynamically."
+          ],
+          "review_lever": "Hard narrative branching maximizes player agency but multiplies QA and VO costs; soft-consequence systems scale better but can feel illusory if all paths lead to the same destination. None addresses how to prevent sequence breaks where players exploit moral consequences to bypass intended heist prerequisites."
+        },
+        {
+          "lever_index": 9,
+          "name": "Industry Partnership Structure and Revenue Sharing",
+          "consequences": "Strategic partnerships with vehicle manufacturers, music labels, and technology platforms accelerate content licensing and provide marketing co-investment but introduce third-party approval cycles and brand-safety constraints. Self-sourced licensing and original music reduce partnership dependencies but increases licensing budget and extends soundtrack production timelines.",
+          "options": [
+            "Negotiate exclusive in-game partnerships with vehicle manufacturers and music streaming platforms, securing co-marketing commitments and in-game branded content (dealerships, concert venues) in exchange for realistic product representation and brand-safe gameplay contexts, offsetting 15\u201320% of licensing costs.",
+            "License music exclusively from independent and emerging artists through flat-rate arrangements, building a curator-driven soundtrack that avoids major-label approval delays while generating artist goodwill and word-of-mouth discovery, accepting lower streaming revenue share but controlling release timing completely.",
+            "Structure partnerships as limited-term, category-exclusive agreements where one vehicle platform, one music platform, and one technology partner secure premium in-game placements, preventing brand oversaturation while maintaining negotiating leverage for future extensions and managing approval complexity."
+          ],
+          "review_lever": "Partnerships accelerate licensing and reduce costs but introduce external approval gates that can delay launches; independent licensing costs more but avoids brand constraints. None addresses how partnerships handle live-service cosmetics and seasonal content updates that may require retroactive approval."
+        }
+      ]
+    },
+    {
+      "strategic_rationale": "This GTA project must navigate three core tensions: balancing open-world scale against development time and budget constraints; managing the creative autonomy needed for a culturally rich narrative experience against regulatory and funder compliance requirements; and sequencing feature depth (heists, criminal economies, NPC interactions) against the risk of scope creep delaying launch. The critical levers below isolate decisions about feature prioritization, city structure, content rollout timing, live-service economics, and localization strategy\u2014each exposing fundamental trade-offs between ambition, resource constraint, and market timing.",
+      "levers": [
+        {
+          "lever_index": 1,
+          "name": "City District Density and Progression Unlock Strategy",
+          "consequences": "Designing whether the player-accessible world map opens fully at launch or unlocks progressively through campaign milestones directly shapes both the perceived scope at release and the development workload for a feature-complete launch build. A fully open map at day one demands complete NPC routines, criminal economy simulation, and heist location setup across all districts; progressive unlocking stretches content discovery across the 60\u201380 hour campaign but risks feeling artificially gated if transitions feel arbitrary.",
+          "options": [
+            "Release the entire metropolitan area as explorable from hour one, with all criminal economy systems and NPC faction activity live simultaneously across Los Angeles, Detroit, and Miami hybrid districts, forcing comprehensive world-building and testing before launch",
+            "Unlock major districts sequentially through three main campaign acts, where each act's completion opens a new city zone with its own criminal underworld, alliance structure, and heist opportunities, allowing phased feature development and staggered QA cycles",
+            "Deploy a core downtown district fully playable at launch with dynamic economy and heist infrastructure, while secondary neighborhoods and industrial zones remain explorable but with randomized NPC patrols and economy simulation, deferring detailed hand-crafted criminal faction storylines to post-launch seasonal updates"
+          ],
+          "review_lever": "A fully open map demands front-loaded world-building resources; progressive unlocking extends campaign flow but creates a two-tier development debt where post-campaign content must feel as polished as the main path. None of the options address how NPC memory and inter-factional conflict persist across district boundaries if players revisit earlier zones."
+        },
+        {
+          "lever_index": 2,
+          "name": "Heist Mechanic Branching Depth versus Mission Modularity",
+          "consequences": "Every heist can support either deep, fixed narrative branches (setup phase determines available approaches, player choices lock subsequent steps, failure resets the entire heist) or modular mission chains (repeatable task variations, randomized obstacles within a fixed skeleton, minimal narrative consequence). Deep branching creates memorable, cinematic moments but multiplies QA and voiceover costs; modularity allows replayability and faster scaling but flattens emotional stakes.",
+          "options": [
+            "Construct five to eight flagship heists with full narrative branching\u2014each heist route (stealth, aggressive, social engineering) unlocks distinct dialogue, NPC reactions, and consequence chains that reshape subsequent story missions and criminal faction relationships, requiring multiple full cinematics and performance-capture sessions per heist",
+            "Design heists as modular frameworks where the core objective remains fixed but approach variables (entry point, distraction method, escape route) randomize within a curated set, allowing 12\u201315 heist variations with minimal additional voiceover and narrative scripting beyond the primary objective",
+            "Develop a hybrid structure with two or three flagship narrative-driven heists featuring full branching and cinematic consequence, supplemented by eight to ten repeatable heist-like missions (bank runs, cargo raids, faction hits) using modular obstacle sets and randomized NPC patrol patterns that provide replayability without requiring new dialogue or story integration"
+          ],
+          "review_lever": "Deep branching maximizes narrative impact but creates exponential QA and voice-acting debt; modularity scales faster but risks feeling mechanical and repetitive. None of the options account for how player choice in one heist affects NPC faction trust meters dynamically in subsequent free-world encounters."
+        },
+        {
+          "lever_index": 3,
+          "name": "Criminal Economy Realism versus Gameplay Accessibility",
+          "consequences": "A hyper-realistic criminal economy would simulate drug-supply chains, arms-trafficking routes, money-laundering mechanics with tax evasion consequences, and faction profit-loss cycles that players must navigate. A simplified economy reduces learning curve friction but undermines the immersive power of actually running a criminal enterprise; hybrid approaches risk confusing players with inconsistent simulation depth across different illegal activities.",
+          "options": [
+            "Implement a full-fidelity criminal economy where players accumulate territory, manage supply-chain operations, pay faction-members from operational revenue, face IRS/law-enforcement audits, and experience faction collapse if profitability drops below payroll, requiring tutorial sequences and in-game economic advisors to teach systems",
+            "Abstract the criminal economy into a simplicity model where completing missions and capturing territory directly awards player-controlled faction treasury funds without simulation of underlying supply chains, allowing players to feel the power fantasy of running an empire without learning economic mechanics",
+            "Develop layered economy mechanics where core activities (robbery, hijacking, protection rackets) use simple risk-reward math (complete task, earn fixed cash, advance faction standing), while optional deep systems (drug-cultivation timers, money-laundering networks, cross-border smuggling routes) unlock for players who seek additional complexity and reward them with passive income streams"
+          ],
+          "review_lever": "Hyper-realism overwhelms casual players and demands tutorial depth that delays story gameplay; abstraction flattens the criminal-enterprise fantasy. The three options do not address how law-enforcement pursuit and heat mechanics interact with economy transparency\u2014whether wanted levels should block legitimate-business operations."
+        },
+        {
+          "lever_index": 4,
+          "name": "Launch Multiplayer Feature Scope and Concurrent World Stability",
+          "consequences": "Multiplayer modes ranging from 4\u20138 player heist-focused cooperative teams to 64+ player persistent-world PvP sandbox each require different networking architecture, server stability assumptions, and anti-cheat infrastructure. Launching with limited cooperative heists minimizes server load and allows stable experience but constrains the 'live multiplayer empire' narrative; a persistent sandbox at launch risks matchmaking delays, economy-balancing nightmares, and griefing-control overhead that destabilizes single-player progression.",
+          "options": [
+            "Launch with cooperative-only multiplayer limited to 8-player team-based heist replay missions that connect to the single-player economy (completed heists trigger faction influence changes visible in single-player world), deferring competitive PvP and larger-scale multiplayer zones to post-launch seasonal rollouts with their own server infrastructure",
+            "Implement a hybrid approach where single-player and multiplayer use the same game client but separate server instances: cooperative heists support up to 16 players, while a separate competitive multiplayer 'criminal underworld' mode uses instanced 32-player matches with minimal connection to single-player faction standing, allowing independent balancing and anti-cheat strategies",
+            "Deploy a unified persistent multiplayer world at launch where all players inhabit the same server cluster, shared criminal territories dynamically shift based on player faction warfare and heist operations, economy fluctuates based on collective player supply-and-demand decisions, and single-player and multiplayer progression interweave, forcing aggressive server redundancy and real-time economy rollback systems"
+          ],
+          "review_lever": "Cooperative-only launch de-risks server stability but abandons the PvP sandbox fantasy; persistent unified world maximizes ambition but creates economy-balancing and griefing-prevention debt that bleeds into single-player stability. None of the options detail how the single-player economy resets if players corrupt the multiplayer economy through coordinated farming."
+        },
+        {
+          "lever_index": 5,
+          "name": "NPC Routine Complexity and Simulation Density",
+          "consequences": "NPCs can follow simple daily schedules (faction members appear at fixed safehouses during set windows, random civilians spawn and despawn on street corners) or rich individual routines (each faction member has home, workplace, sleep cycle, family connections, financial debts, and behavioral responses to player actions that persist across sessions). Complexity deepens immersion and world believability but requires actor-behavior trees, persistent state tracking, and memory systems that compound save-file size and encounter-loading times.",
+          "options": [
+            "Construct emergent NPC routines where each significant faction character maintains a persistent daily schedule tied to their role (lieutenant enforces territories between 8am\u20136pm, sleeps at specified safehouse, attends faction meetings on specific weekdays), with memory systems tracking player reputation, past heist outcomes, and owed favors that influence dialogue and mission availability",
+            "Deploy simplified NPC scheduling where faction members and allied gang leaders appear reliably at designated faction hubs (safehouses, warehouses, nightclubs) during broad windows (morning, afternoon, evening), eliminating persistent home/workplace state while using context-sensitive dialogue that references recent player missions without requiring session-spanning memory",
+            "Implement a tiered NPC model where tier-one faction leaders use full routine persistence (home, workplace, sleep cycles, financial tracking), while tier-two crew members use simplified fixed-location patrol patterns, and background civilians are purely ambient spawning-pool NPCs with no persistence, concentrating development resources on high-player-interaction characters"
+          ],
+          "review_lever": "Emergent routines create believable worlds but multiply save-file corruption risk and loading-time complexity during heavy player interaction; simplification reduces technical debt but flattens NPC believability and emotional investment. None of the options specify how the simulation handles scenario gaps where players kill or permanently disable a routine-dependent NPC mid-game."
+        },
+        {
+          "lever_index": 6,
+          "name": "Narrative Localization Depth and Cultural Representation Strategy",
+          "consequences": "A fully localized narrative would adapt not just language but mission dialogue, faction backstories, law-enforcement characterization, and criminal-economy flavor to regional context (Detroit corruption differs from Miami drug-trafficking differs from Los Angeles gang geography). Minimal localization relies on universal crime tropes and reduces voice-acting and writing overhead; hybrid approaches risk cultural tone-deafness or superficial representation that alienates players in those regions.",
+          "options": [
+            "Develop full narrative localization for three regional markets (North American, European Union, and Asia-Pacific) where each region's metropolitan setting uses culturally specific faction hierarchies, law-enforcement corruption models, heist opportunities, and dialogue-driven relationship dynamics that reflect actual regional crime patterns and social structures",
+            "Maintain a single canonical narrative spine (Los Angeles-dominant hybrid setting with generic crime-economy mechanics) with cosmetic localization (translated dialogue, region-specific radio stations, cultural radio hosts) that preserves narrative unity without requiring rewritten faction backstories or mission restructuring",
+            "Create a hybrid model where the core campaign and heist missions use a culture-agnostic crime narrative, while post-launch seasonal content and optional faction-alliance paths introduce region-specific criminal operations (Detroit manufacturing theft, Miami smuggling, LA gang territory wars) that expand the world without requiring campaign-level rewrites"
+          ],
+          "review_lever": "Full localization maximizes cultural authenticity but triples dialogue recording, mission scripting, and cultural-sensitivity review overhead; minimal localization reduces cost but risks stereotyping or erasure. The three options do not address how in-game historical references to real organized crime should be calibrated to avoid glorification."
+        },
+        {
+          "lever_index": 7,
+          "name": "Post-Launch Content Calendar and Live-Service Economics",
+          "consequences": "A structured seasonal update roadmap (quarterly major faction storylines, monthly cosmetic additions, weekly limited-time heists) sustains player engagement and creates predictable revenue streams through battle passes and cosmetics, but commits the studio to indefinite live-service overhead. A lighter 'content drops as ready' approach reduces forced crunch but risks player churn during content droughts and makes publisher revenue forecasting difficult.",
+          "options": [
+            "Execute a four-year live-service roadmap with quarterly major faction-storyline updates (new criminal empire expansion, law-enforcement corruption arcs, inter-faction power struggles), monthly cosmetic and vehicle drops, and weekly limited-time heist variants, backed by seasonal battle passes with story-linked cosmetics that monetize engagement but require sustained content production teams",
+            "Deploy post-launch content on an extended cadence (biannual major storyline expansions tied to single-player progression universe, annual cosmetic refresh cycles, quarterly rotating limited-time heist modes) with minimal battle-pass infrastructure, prioritizing single-player narrative continuation over live-service engagement optimization, reducing annual content velocity but allowing larger development gaps for quality",
+            "Structure a hybrid live-service model where the core four-player heist-cooperative multiplayer receives regular seasonal content (new heists, faction mechanics, cosmetics on 3-month cycles), while single-player narrative updates ship annually and scale in scope based on player engagement data, allowing modular team scaling and revenue forecasting tied to multiplayer engagement rather than content velocity commitments"
+          ],
+          "review_lever": "Aggressive quarterly live-service locks teams into unsustainable crunch; extended cadence risks content-drought churn and publisher impatience with cash-flow timing. None of the options define how to manage revenue cannibalization if cosmetics undermine the single-player economy fantasy."
+        }
+      ]
+    }
+  ],
+  "levers": [
+    {
+      "lever_id": "93b7a622-feeb-4b1a-8a41-c5e65093d74b",
+      "name": "Narrative Scope and Branching Complexity",
+      "consequences": "Expanding the three-city interconnected story threads increases emotional depth and replayability but multiplies dialogue recording, motion-capture sessions, and NPC behavior scripting. Each additional narrative branch exponentially increases QA testing cycles and creates risk that players exhaust content before endgame systems stabilize.",
+      "options": [
+        "Anchor the campaign to two core cities with the third as an explorable but narrative-light expansion zone, reserving full branching dialogue trees for main-story NPCs while applying procedural variation to side-character interactions.",
+        "Develop a central crime-family story thread with full voice acting and cinematics, then populate secondary narratives using AI-assisted dialogue generation and motion-capture retargeting to reduce recording overhead while maintaining believable NPC interactions.",
+        "Implement a modular narrative system where each city operates on its own story cycle independent of the others, allowing asynchronous development and post-launch content drops without requiring synchronized voice-acting campaigns."
+      ],
+      "review": "Expanded narrative branches lock creative resources into VO, motion capture, and scripting, but none of the three options address how to avoid narrative bloat creep if player engagement data post-launch demands story additions."
+    },
+    {
+      "lever_id": "1d6e14a0-9b23-4162-9ed9-8551c012837f",
+      "name": "Procedural Generation Fidelity versus Hand-Crafted Districts",
+      "consequences": "Heavy reliance on procedural generation for buildings, street layouts, and NPC routines accelerates map production and reduces file size, but procedurally generated districts often feel repetitive and lack the architectural character that players expect from a premium title. Hand-crafted iconic neighborhoods anchor player memory and social sharing but consume months of environment artist time.",
+      "options": [
+        "Designate 40% of each city as hand-crafted signature districts (financial centers, harbor fronts, gang territories) with full detail and unique architecture, then use advanced procedural tools to generate the remaining 60% of residential and industrial zones with constrained stylistic parameters.",
+        "Build the entire city using procedural systems trained on real architectural data from Los Angeles, Detroit, and Miami, then deploy a post-generation human curation phase where senior environment artists flag and manually refine high-traffic areas and landmark zones.",
+        "Develop a hybrid streaming system where core multiplayer zones and heist locations are hand-crafted and fully optimized, while single-player exploration zones load procedurally on demand, allowing players to discover new neighborhoods without loading the entire city into memory."
+      ],
+      "review": "Hand-crafted districts guarantee visual polish but strain production capacity; procedural approaches scale faster but risk homogeneity. None of the options addresses how to maintain narrative coherence across procedurally generated neighborhoods where crime-family territories should reflect emergent social geography."
+    },
+    {
+      "lever_id": "4f5dbf83-9a6f-4f2d-85f4-edd7b1821e75",
+      "name": "Multiplayer Launch Parity versus Single-Player Content Depth",
+      "consequences": "Shipping with feature-rich multiplayer (heists, cooperative crime rings, territory control) alongside a complete single-player campaign splits engineering effort and extends QA scope. Delaying multiplayer to post-launch frees single-player development but risks hemorrhaging launch-week player retention and long-term engagement forecasts that publisher forecasts depend upon.",
+      "options": [
+        "Launch with a fully-featured single-player campaign and asynchronous multiplayer modes (leaderboards, crime-scene replay challenges, territory ownership persistence), deferring cooperative heist multiplayer and player-versus-player competitive modes to month-three and beyond.",
+        "Develop a unified mission framework where single-player heist sequences can be played cooperatively in multiplayer with AI-controlled crew members in solo mode, allowing code and asset reuse while letting players choose their preferred engagement style from the start.",
+        "Ship multiplayer as a separate client with its own progression system and economy isolated from single-player, allowing each mode to be balanced independently and post-launch patched without destabilizing the other, accepting the overhead of dual testing and infrastructure."
+      ],
+      "review": "Delaying multiplayer reduces launch risk but concedes Day One engagement advantage to competitors; unified frameworks reduce testing overhead but couple single-player stability to multiplayer server health. No option addresses how to prevent single-player narrative spoilers from leaking into multiplayer cosmetics and story cosmetics."
+    },
+    {
+      "lever_id": "16df7a0f-641c-4e90-9b2c-ac57a0c1dadd",
+      "name": "Government Innovation Grant Compliance versus Creative Autonomy",
+      "consequences": "Government innovation grants (if secured) typically carry IP tracking, domestic-hiring mandates, and progress-reporting requirements that can slow decision velocity and impose transparency obligations conflicting with commercial competition. Avoiding government funding preserves creative freedom but raises capital requirements and limits access to subsidized R&D infrastructure.",
+      "options": [
+        "Pursue government innovation grants explicitly for R&D infrastructure (procedural generation tooling, AI-assisted animation, server architecture) while ring-fencing core game design and narrative from grant oversight by positioning them as publisher-funded IP, creating a clean separation between public and commercial development.",
+        "Decline government innovation grants and rely entirely on publisher capital and industry partnerships, accepting higher cost of capital but retaining full decision authority and allowing the team to pivot creative direction without reporting quarterly compliance milestones.",
+        "Structure grant participation through a subsidiary or research partnership with a local university, where government funding supports academic research outcomes (procedural algorithms, NPC behavior models) while the commercial game studio operates independently under publisher oversight."
+      ],
+      "review": "Government grants reduce capital risk but introduce reporting overhead and hiring constraints; declining them preserves autonomy but increases burn rate. None of the options addresses how to maintain export-control compliance if procedural generation or NPC AI models attract international regulatory scrutiny."
+    },
+    {
+      "lever_id": "d11258df-b72c-4dd7-8c7e-12c5b3a76833",
+      "name": "Vehicle Customization Depth versus Physics and Gameplay Balance",
+      "consequences": "Extensive vehicle customization (engine tuning, aerodynamics, drivetrain swaps) creates emergent metagames and player expression but exponentially increases physics simulation branches and balance tuning. Over-tuned customization can render stock vehicles obsolete, fracturing the multiplayer economy and making competitive racing dependent on cosmetic pay-walls rather than skill.",
+      "options": [
+        "Implement cosmetic-only customization (paint, decals, interior trim) paired with performance tiers (speed class, handling class) that players unlock through gameplay, preventing pay-to-win imbalance while allowing visual expression and keeping physics simulation tractable within console performance budgets.",
+        "Offer deep mechanical customization (turbochargers, suspension geometry, weight distribution) but tier it behind specific vehicle platforms and cap the performance delta at 15% variance from stock, ensuring a heavily tuned vehicle cannot outperform a stock hypercar, maintaining competitive fairness while preserving build diversity.",
+        "Create a separate cosmetic customization economy from a performance-tuning economy, where cosmetic mods are purchased and swapped freely in a garage, while performance upgrades consume vehicle-bound resources (fuel, wear, maintenance) that reset in multiplayer sessions, decoupling cosmetic investment from competitive advantage."
+      ],
+      "review": "Deep customization drives engagement and metagame complexity but risks balance fragmentation; cosmetic-only approaches ensure fairness but reduce player agency. None addresses whether vehicle physics simulation can scale to server-side validation if customization parameters are client-side configurable."
+    },
+    {
+      "lever_id": "d38c3c49-6e24-460a-841e-cc0759b607d0",
+      "name": "Studio Location and Physical Collaboration Model",
+      "consequences": "Establishing a primary development hub in a single city (Los Angeles, Austin, or Montreal) concentrates talent, shortens approval cycles, and simplifies hardware asset management, but creates geographic dependency and limits access to specialized skill pools. Distributed multi-city studios increase talent diversity and reduce relocation barriers but fragment communication, extend approval cycles, and multiply office infrastructure overhead.",
+      "options": [
+        "Establish a single primary studio in a major game-development hub (Los Angeles or Montreal) with a 150+ core team handling engine, graphics, and mission design, while contracting motion-capture, localization, and QA to specialized vendors in secondary cities, minimizing coordination complexity.",
+        "Operate a primary creative studio co-located with the publisher headquarters for daily creative oversight, paired with a secondary technical studio in a lower-cost region (Austin, Toronto) handling graphics optimization and server infrastructure, with weekly video syncs and monthly in-person milestone reviews.",
+        "Distribute development across three regional studios (one per represented city) with each handling its geographic sector's design, narrative, and assets, while centralizing engine, multiplayer infrastructure, and cross-city systems in a lean virtual-first coordination layer supported by shared cloud development environments."
+      ],
+      "review": "Single-site studios reduce communication friction but create geographic talent constraints; distributed models access wider talent pools but multiply coordination overhead and complicate real-time asset iteration. No option addresses how to maintain consistent visual or gameplay identity across geographically separated art and design teams."
+    },
+    {
+      "lever_id": "5dc48a7a-5e1d-4eef-9c46-5b9615a88cb1",
+      "name": "Graphical Fidelity Target and Hardware Platform Strategy",
+      "consequences": "Targeting cutting-edge next-gen console graphics (ray-traced lighting, 4K, 60fps) requires extended optimization phases and reduces cross-platform portability, extending development by 6\u201312 months. Accepting lower fidelity standards (1440p, 30fps, baked lighting) accelerates ship date and enables faster platform ports but risks perceived quality disadvantage against competitor releases.",
+      "options": [
+        "Launch on current-generation consoles at 1440p/30fps with ray-traced reflections in high-traffic areas, then post-launch deploy a next-gen upgrade patch offering 4K/60fps with enhanced global illumination, allowing launch within 18 months while planning optimization work in parallel.",
+        "Develop the entire game using PC-first asset pipelines and target a 4K/60fps baseline on high-end gaming PCs and next-gen consoles, deferring current-gen console versions to a 12-month post-launch update with auto-scaled resolution and simplified lighting, accepting a longer development timeline but guaranteeing premium visuals at launch.",
+        "Implement a dynamic resolution and frame-rate system that targets 60fps during gameplay while dropping to 30fps during cinematics, using variable graphical settings per-scene to maintain visual consistency without over-engineering per-platform optimization, shipping simultaneously across all platforms by month 24."
+      ],
+      "review": "Aggressive graphical targets extend development and create multi-platform testing burden; lower targets ship faster but risk perceived quality gap at launch. None of the options addresses how to prevent visual pop-in or streaming bottlenecks if procedural generation systems interact with ray-traced reflections."
+    },
+    {
+      "lever_id": "647f745a-d9dc-43c6-9433-2e6401725d18",
+      "name": "Morality System Integration and Narrative Consequence Design",
+      "consequences": "A nuanced morality system where player choices affect NPC behavior, faction relationships, and available missions creates deep emergent narratives but multiplies dialogue branches, NPC state tracking, and QA edge cases exponentially. Linear moral choices (good/evil) simplify implementation but diminish replayability and player perception of agency.",
+      "options": [
+        "Implement a three-axis reputation system (street credibility, corruption index, community trust) where player actions incrementally shift relationships with competing crime families and law enforcement, opening or closing mission paths dynamically without branching dialogue or cutscene variations.",
+        "Develop choice-based narrative where major plot decisions lock out specific heist opportunities and faction storylines, creating hard narrative branches that reward replays but require full campaign duplication for each major choice path, accepting higher content development cost.",
+        "Build a soft-consequence system where player moral actions trigger emergent NPC responses (patrols increase, territories become hostile, safe houses relocate) without explicitly blocking missions, allowing story progression regardless of choice but changing encounter difficulty and available resources dynamically."
+      ],
+      "review": "Hard narrative branching maximizes player agency but multiplies QA and VO costs; soft-consequence systems scale better but can feel illusory if all paths lead to the same destination. None addresses how to prevent sequence breaks where players exploit moral consequences to bypass intended heist prerequisites."
+    },
+    {
+      "lever_id": "140feabd-cb39-4e99-a82f-5d914cdb87a0",
+      "name": "Industry Partnership Structure and Revenue Sharing",
+      "consequences": "Strategic partnerships with vehicle manufacturers, music labels, and technology platforms accelerate content licensing and provide marketing co-investment but introduce third-party approval cycles and brand-safety constraints. Self-sourced licensing and original music reduce partnership dependencies but increases licensing budget and extends soundtrack production timelines.",
+      "options": [
+        "Negotiate exclusive in-game partnerships with vehicle manufacturers and music streaming platforms, securing co-marketing commitments and in-game branded content (dealerships, concert venues) in exchange for realistic product representation and brand-safe gameplay contexts, offsetting 15\u201320% of licensing costs.",
+        "License music exclusively from independent and emerging artists through flat-rate arrangements, building a curator-driven soundtrack that avoids major-label approval delays while generating artist goodwill and word-of-mouth discovery, accepting lower streaming revenue share but controlling release timing completely.",
+        "Structure partnerships as limited-term, category-exclusive agreements where one vehicle platform, one music platform, and one technology partner secure premium in-game placements, preventing brand oversaturation while maintaining negotiating leverage for future extensions and managing approval complexity."
+      ],
+      "review": "Partnerships accelerate licensing and reduce costs but introduce external approval gates that can delay launches; independent licensing costs more but avoids brand constraints. None addresses how partnerships handle live-service cosmetics and seasonal content updates that may require retroactive approval."
+    },
+    {
+      "lever_id": "cde4536c-0555-4d1e-999c-f831b98761dd",
+      "name": "City District Density and Progression Unlock Strategy",
+      "consequences": "Designing whether the player-accessible world map opens fully at launch or unlocks progressively through campaign milestones directly shapes both the perceived scope at release and the development workload for a feature-complete launch build. A fully open map at day one demands complete NPC routines, criminal economy simulation, and heist location setup across all districts; progressive unlocking stretches content discovery across the 60\u201380 hour campaign but risks feeling artificially gated if transitions feel arbitrary.",
+      "options": [
+        "Release the entire metropolitan area as explorable from hour one, with all criminal economy systems and NPC faction activity live simultaneously across Los Angeles, Detroit, and Miami hybrid districts, forcing comprehensive world-building and testing before launch",
+        "Unlock major districts sequentially through three main campaign acts, where each act's completion opens a new city zone with its own criminal underworld, alliance structure, and heist opportunities, allowing phased feature development and staggered QA cycles",
+        "Deploy a core downtown district fully playable at launch with dynamic economy and heist infrastructure, while secondary neighborhoods and industrial zones remain explorable but with randomized NPC patrols and economy simulation, deferring detailed hand-crafted criminal faction storylines to post-launch seasonal updates"
+      ],
+      "review": "A fully open map demands front-loaded world-building resources; progressive unlocking extends campaign flow but creates a two-tier development debt where post-campaign content must feel as polished as the main path. None of the options address how NPC memory and inter-factional conflict persist across district boundaries if players revisit earlier zones."
+    },
+    {
+      "lever_id": "ce44eefb-122e-465f-9331-040f2d3a8a45",
+      "name": "Heist Mechanic Branching Depth versus Mission Modularity",
+      "consequences": "Every heist can support either deep, fixed narrative branches (setup phase determines available approaches, player choices lock subsequent steps, failure resets the entire heist) or modular mission chains (repeatable task variations, randomized obstacles within a fixed skeleton, minimal narrative consequence). Deep branching creates memorable, cinematic moments but multiplies QA and voiceover costs; modularity allows replayability and faster scaling but flattens emotional stakes.",
+      "options": [
+        "Construct five to eight flagship heists with full narrative branching\u2014each heist route (stealth, aggressive, social engineering) unlocks distinct dialogue, NPC reactions, and consequence chains that reshape subsequent story missions and criminal faction relationships, requiring multiple full cinematics and performance-capture sessions per heist",
+        "Design heists as modular frameworks where the core objective remains fixed but approach variables (entry point, distraction method, escape route) randomize within a curated set, allowing 12\u201315 heist variations with minimal additional voiceover and narrative scripting beyond the primary objective",
+        "Develop a hybrid structure with two or three flagship narrative-driven heists featuring full branching and cinematic consequence, supplemented by eight to ten repeatable heist-like missions (bank runs, cargo raids, faction hits) using modular obstacle sets and randomized NPC patrol patterns that provide replayability without requiring new dialogue or story integration"
+      ],
+      "review": "Deep branching maximizes narrative impact but creates exponential QA and voice-acting debt; modularity scales faster but risks feeling mechanical and repetitive. None of the options account for how player choice in one heist affects NPC faction trust meters dynamically in subsequent free-world encounters."
+    },
+    {
+      "lever_id": "c48d6214-79f3-4045-989e-56fe3beff933",
+      "name": "Criminal Economy Realism versus Gameplay Accessibility",
+      "consequences": "A hyper-realistic criminal economy would simulate drug-supply chains, arms-trafficking routes, money-laundering mechanics with tax evasion consequences, and faction profit-loss cycles that players must navigate. A simplified economy reduces learning curve friction but undermines the immersive power of actually running a criminal enterprise; hybrid approaches risk confusing players with inconsistent simulation depth across different illegal activities.",
+      "options": [
+        "Implement a full-fidelity criminal economy where players accumulate territory, manage supply-chain operations, pay faction-members from operational revenue, face IRS/law-enforcement audits, and experience faction collapse if profitability drops below payroll, requiring tutorial sequences and in-game economic advisors to teach systems",
+        "Abstract the criminal economy into a simplicity model where completing missions and capturing territory directly awards player-controlled faction treasury funds without simulation of underlying supply chains, allowing players to feel the power fantasy of running an empire without learning economic mechanics",
+        "Develop layered economy mechanics where core activities (robbery, hijacking, protection rackets) use simple risk-reward math (complete task, earn fixed cash, advance faction standing), while optional deep systems (drug-cultivation timers, money-laundering networks, cross-border smuggling routes) unlock for players who seek additional complexity and reward them with passive income streams"
+      ],
+      "review": "Hyper-realism overwhelms casual players and demands tutorial depth that delays story gameplay; abstraction flattens the criminal-enterprise fantasy. The three options do not address how law-enforcement pursuit and heat mechanics interact with economy transparency\u2014whether wanted levels should block legitimate-business operations."
+    },
+    {
+      "lever_id": "585c7af2-3eed-4ba0-b253-87ce5eb2aa10",
+      "name": "Launch Multiplayer Feature Scope and Concurrent World Stability",
+      "consequences": "Multiplayer modes ranging from 4\u20138 player heist-focused cooperative teams to 64+ player persistent-world PvP sandbox each require different networking architecture, server stability assumptions, and anti-cheat infrastructure. Launching with limited cooperative heists minimizes server load and allows stable experience but constrains the 'live multiplayer empire' narrative; a persistent sandbox at launch risks matchmaking delays, economy-balancing nightmares, and griefing-control overhead that destabilizes single-player progression.",
+      "options": [
+        "Launch with cooperative-only multiplayer limited to 8-player team-based heist replay missions that connect to the single-player economy (completed heists trigger faction influence changes visible in single-player world), deferring competitive PvP and larger-scale multiplayer zones to post-launch seasonal rollouts with their own server infrastructure",
+        "Implement a hybrid approach where single-player and multiplayer use the same game client but separate server instances: cooperative heists support up to 16 players, while a separate competitive multiplayer 'criminal underworld' mode uses instanced 32-player matches with minimal connection to single-player faction standing, allowing independent balancing and anti-cheat strategies",
+        "Deploy a unified persistent multiplayer world at launch where all players inhabit the same server cluster, shared criminal territories dynamically shift based on player faction warfare and heist operations, economy fluctuates based on collective player supply-and-demand decisions, and single-player and multiplayer progression interweave, forcing aggressive server redundancy and real-time economy rollback systems"
+      ],
+      "review": "Cooperative-only launch de-risks server stability but abandons the PvP sandbox fantasy; persistent unified world maximizes ambition but creates economy-balancing and griefing-prevention debt that bleeds into single-player stability. None of the options detail how the single-player economy resets if players corrupt the multiplayer economy through coordinated farming."
+    },
+    {
+      "lever_id": "47963a4f-1a7f-48a3-8cef-64a9bd29fafa",
+      "name": "NPC Routine Complexity and Simulation Density",
+      "consequences": "NPCs can follow simple daily schedules (faction members appear at fixed safehouses during set windows, random civilians spawn and despawn on street corners) or rich individual routines (each faction member has home, workplace, sleep cycle, family connections, financial debts, and behavioral responses to player actions that persist across sessions). Complexity deepens immersion and world believability but requires actor-behavior trees, persistent state tracking, and memory systems that compound save-file size and encounter-loading times.",
+      "options": [
+        "Construct emergent NPC routines where each significant faction character maintains a persistent daily schedule tied to their role (lieutenant enforces territories between 8am\u20136pm, sleeps at specified safehouse, attends faction meetings on specific weekdays), with memory systems tracking player reputation, past heist outcomes, and owed favors that influence dialogue and mission availability",
+        "Deploy simplified NPC scheduling where faction members and allied gang leaders appear reliably at designated faction hubs (safehouses, warehouses, nightclubs) during broad windows (morning, afternoon, evening), eliminating persistent home/workplace state while using context-sensitive dialogue that references recent player missions without requiring session-spanning memory",
+        "Implement a tiered NPC model where tier-one faction leaders use full routine persistence (home, workplace, sleep cycles, financial tracking), while tier-two crew members use simplified fixed-location patrol patterns, and background civilians are purely ambient spawning-pool NPCs with no persistence, concentrating development resources on high-player-interaction characters"
+      ],
+      "review": "Emergent routines create believable worlds but multiply save-file corruption risk and loading-time complexity during heavy player interaction; simplification reduces technical debt but flattens NPC believability and emotional investment. None of the options specify how the simulation handles scenario gaps where players kill or permanently disable a routine-dependent NPC mid-game."
+    },
+    {
+      "lever_id": "58a3e887-e593-4eb2-9cd7-62686d469ff9",
+      "name": "Narrative Localization Depth and Cultural Representation Strategy",
+      "consequences": "A fully localized narrative would adapt not just language but mission dialogue, faction backstories, law-enforcement characterization, and criminal-economy flavor to regional context (Detroit corruption differs from Miami drug-trafficking differs from Los Angeles gang geography). Minimal localization relies on universal crime tropes and reduces voice-acting and writing overhead; hybrid approaches risk cultural tone-deafness or superficial representation that alienates players in those regions.",
+      "options": [
+        "Develop full narrative localization for three regional markets (North American, European Union, and Asia-Pacific) where each region's metropolitan setting uses culturally specific faction hierarchies, law-enforcement corruption models, heist opportunities, and dialogue-driven relationship dynamics that reflect actual regional crime patterns and social structures",
+        "Maintain a single canonical narrative spine (Los Angeles-dominant hybrid setting with generic crime-economy mechanics) with cosmetic localization (translated dialogue, region-specific radio stations, cultural radio hosts) that preserves narrative unity without requiring rewritten faction backstories or mission restructuring",
+        "Create a hybrid model where the core campaign and heist missions use a culture-agnostic crime narrative, while post-launch seasonal content and optional faction-alliance paths introduce region-specific criminal operations (Detroit manufacturing theft, Miami smuggling, LA gang territory wars) that expand the world without requiring campaign-level rewrites"
+      ],
+      "review": "Full localization maximizes cultural authenticity but triples dialogue recording, mission scripting, and cultural-sensitivity review overhead; minimal localization reduces cost but risks stereotyping or erasure. The three options do not address how in-game historical references to real organized crime should be calibrated to avoid glorification."
+    },
+    {
+      "lever_id": "c2ebe2a5-4619-4215-9ca1-c90d5a91bb7c",
+      "name": "Post-Launch Content Calendar and Live-Service Economics",
+      "consequences": "A structured seasonal update roadmap (quarterly major faction storylines, monthly cosmetic additions, weekly limited-time heists) sustains player engagement and creates predictable revenue streams through battle passes and cosmetics, but commits the studio to indefinite live-service overhead. A lighter 'content drops as ready' approach reduces forced crunch but risks player churn during content droughts and makes publisher revenue forecasting difficult.",
+      "options": [
+        "Execute a four-year live-service roadmap with quarterly major faction-storyline updates (new criminal empire expansion, law-enforcement corruption arcs, inter-faction power struggles), monthly cosmetic and vehicle drops, and weekly limited-time heist variants, backed by seasonal battle passes with story-linked cosmetics that monetize engagement but require sustained content production teams",
+        "Deploy post-launch content on an extended cadence (biannual major storyline expansions tied to single-player progression universe, annual cosmetic refresh cycles, quarterly rotating limited-time heist modes) with minimal battle-pass infrastructure, prioritizing single-player narrative continuation over live-service engagement optimization, reducing annual content velocity but allowing larger development gaps for quality",
+        "Structure a hybrid live-service model where the core four-player heist-cooperative multiplayer receives regular seasonal content (new heists, faction mechanics, cosmetics on 3-month cycles), while single-player narrative updates ship annually and scale in scope based on player engagement data, allowing modular team scaling and revenue forecasting tied to multiplayer engagement rather than content velocity commitments"
+      ],
+      "review": "Aggressive quarterly live-service locks teams into unsustainable crunch; extended cadence risks content-drought churn and publisher impatience with cash-flow timing. None of the options define how to manage revenue cannibalization if cosmetics undermine the single-player economy fantasy."
+    }
+  ],
+  "metadata": {
+    "metadata_1": {
+      "context_window": 200000,
+      "num_output": 8192,
+      "is_chat_model": true,
+      "is_function_calling_model": true,
+      "model_name": "claude-haiku-4-5-20251001",
+      "system_role": "system",
+      "llm_classname": "Anthropic_LLM"
+    },
+    "metadata_2": {
+      "context_window": 200000,
+      "num_output": 8192,
+      "is_chat_model": true,
+      "is_function_calling_model": true,
+      "model_name": "claude-haiku-4-5-20251001",
+      "system_role": "system",
+      "llm_classname": "Anthropic_LLM"
+    }
+  },
+  "system_prompt": "You are an expert strategic analyst. Generate solution space parameters following these directives:\n\n1. **Output Requirements**\n   - You must generate 5 to 7 levers per response.\n   - Each lever's `options` field must contain exactly 3 qualitative strategic choices as plain strings.\n\n2. **Lever Quality Standards**\n   - Consequences: describe the direct effect of pulling this lever, then at least one downstream implication or trade-off. Be concise and grounded \u2014 only cite specific numbers if the project context provides evidence for them. Do not fabricate percentages or cost estimates. Target length: 2\u20134 sentences.\n   - Options MUST:\n     \u2022 Represent genuinely distinct strategic pathways (not just labels)\n     \u2022 Include at least one unconventional or non-obvious approach\n     \u2022 NO prefixes (e.g., \"Option A:\", \"Choice 1:\")\n\n3. **Strategic Framing**\n   - Name each lever using language drawn directly from the project's own domain \u2014 avoid formulaic patterns or repeated prefixes\n   - Frame options as complete strategic approaches\n   - Ensure levers challenge core project assumptions\n\n4. **Validation Protocols**\n   - For `review_lever`:\n     A short critical review \u2014 identify the primary trade-off this lever introduces, then state the specific gap the three options leave unaddressed.\n     Examples:\n     - \"Switching from seasonal contract labor to year-round employees stabilizes harvest quality, but the idle-wage burden during the 5-month off-season adds a fixed cost that erases the per-unit savings unless utilization reaches year-round levels.\"\n     - \"Each additional clinical site requires its own IRB approval, site-initiation visit, and staff credentialing \u2014 a sequential overhead that compounds rather than parallelizes, so doubling site count does not halve enrollment time.\"\n     - \"Pooling catastrophe risk across three coastal regions reduces expected annual loss on paper, but a single regional hurricane season can correlate all three simultaneously, turning the diversification assumption into a concentration risk at the worst possible moment.\"\n     Do not use square brackets or placeholder text.\n\n5. **Prohibitions**\n   - NO prefixes/labels in options (e.g., \"Option A:\", \"Choice 1:\")\n   - NO generic option labels (e.g., \"Optimize X\", \"Tolerate Y\")\n   - NO placeholder consequences or bracket-wrapped templates\n   - NO fabricated statistics or percentages without evidence from the project context\n   - NO marketing language (e.g., \"game-changing\", \"cutting-edge\", \"revolutionary\")\n\n6. **Length Limits**\n   - Keep each `review_lever` to one sentence (20\u201340 words). State the trade-off and the gap concisely.\n   - Each option should be a concrete, actionable approach (at least 15 words with an action verb) \u2014 not a short label or vague aspiration\n   - Maintain parallel grammatical structure across options\n   - Ensure options are self-contained descriptions",
+  "user_prompt": "File 'plan.txt':\nPlan:\nDevelop the next Grand Theft Auto (GTA), featuring a sprawling, immersive open-world metropolis blending elements of Los Angeles, Detroit, and Miami, filled with intricate narratives of crime, corruption, and power struggles, realistic criminal economies, dynamic NPC interactions, complex heist mechanics, extensive vehicle customization, nuanced morality systems, advanced procedural generation, next-gen graphical fidelity, multiplayer modes, and innovative gameplay funded by strategic industry partnerships, publisher investments, and government innovation grants. Don't go for the most aggressive scenario. Banned words: blockchain, DAO, crowdfunding.\n\nToday's date:\n2026-Mar-13\n\nProject start ASAP\n\nFile 'purpose.md':\n**Purpose:** business\n\n**Purpose Detailed:** Developing a new Grand Theft Auto game with advanced features, complex narratives, and strategic funding.\n\n**Topic:** Grand Theft Auto (GTA) Game Development\n\nFile 'plan_type.md':\nThis plan requires one or more physical locations. It cannot be executed digitally.\n\n**Explanation:** Developing a Grand Theft Auto game, even with advanced procedural generation and cloud-based tools, *inherently requires* a physical development environment, including offices, hardware, and in-person collaboration among developers, artists, and designers. Testing the game also requires physical devices and real-world testing scenarios. Securing funding through partnerships and grants involves physical meetings and presentations. Therefore, this plan is classified as physical."
+}
