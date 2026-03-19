@@ -1,0 +1,514 @@
+{
+  "responses": [
+    {
+      "strategic_rationale": "GTA game development faces a fundamental tension between ambition and execution: a sprawling metropolis with dynamic NPCs, complex heist mechanics, and realistic economies demands deep systemic integration, yet funding constraints\u2014relying on partnerships and grants rather than internal studio resources\u2014limit concurrent development capacity. The core trade-off is whether to pursue architectural depth (systemic realism, procedural generation) or breadth (three-city design, multiplayer). The chosen levers focus on managing scope creep, sequencing funding and team scale, and de-risking the most complex simulation systems (criminal economies, heist AI) before full-scale production commits.",
+      "levers": [
+        {
+          "lever_index": 1,
+          "name": "Criminal Economy Simulation Depth",
+          "consequences": "Building a fully-simulated criminal economy with supply chains, turf wars, and price-fixing mechanics creates emergent narrative and player agency, but requires months of economic modeling and AI development that cannot run in parallel with graphical production. Deferring this system to post-launch risks a core feature absence, yet front-loading it early delays visible progress and can consume engineering resources before visual milestones attract publisher confidence.",
+          "options": [
+            "Prototype the criminal economy in isolation using a simplified 2D test environment with synthetic NPCs, validate feedback loops and edge cases, then port the validated logic into the full game world in year two.",
+            "Integrate criminal economy mechanics incrementally into the first playable city only, launch with a fully-realized economy there while the other two cities operate on simplified trade systems, then upgrade remaining cities in free post-launch updates.",
+            "Outsource economic system design and balancing to a specialized consulting firm that has shipped similar systems, allowing internal team to focus on narrative integration and UI, accepting reduced uniqueness to preserve schedule."
+          ],
+          "review_lever": "Simulation depth directly opposes time-to-playable-content; prototyping buys validation but defers revenue and marketing momentum, while outsourcing speed trades away design control and the creative challenge that attracts top engineering talent. All three options assume the economy can be 'completed' in isolation, but in practice, player feedback on criminal turf mechanics will require iteration once heist missions go live\u2014none address this feedback loop adequately."
+        },
+        {
+          "lever_index": 2,
+          "name": "Multi-City Geographic Sequencing",
+          "consequences": "Developing Los Angeles, Detroit, and Miami in parallel maximizes world richness and marketing appeal, but fractures art, design, and QA resources across three distinct urban environments with distinct architecture, climate, and cultural details. Sequential development (one city complete, then the next) reduces concurrent overhead and allows reusable systems to mature, but delays the full-world reveal and stretches production visibility for 12\u201318 months before external milestones land.",
+          "options": [
+            "Develop all three cities in parallel with dedicated art teams per city (Los Angeles, Detroit, Miami), rotating shared design leads across cities on a 6-month cycle to enforce consistency, accepting higher onboarding costs and communication overhead.",
+            "Fully complete Los Angeles in the first 18 months including all narrative, heist content, and criminal economy tuning, then fast-follow Detroit and Miami using proven tools and pipelines, allowing early sales revenue or early access to fund subsequent cities.",
+            "Lock a minimal viable version of all three cities (each 40% landmass, placeholder interiors, core landmark districts only) into a shared engine in months 1\u201312, then deepen each city's content in specialized passes, guaranteeing three-city presence in early marketing."
+          ],
+          "review_lever": "Parallel development spreads risk across three environments but compounds schedule risk if any single city encounters art production bottlenecks (e.g., detailed interior building assets), while sequential development creates a single point of failure if the first city's launch underperforms financially and funding dries up. The minimal viable multi-city approach avoids this by delivering partial presence early, but risks player perception of incompleteness and increases technical debt from placeholder-to-final asset swaps."
+        },
+        {
+          "lever_index": 3,
+          "name": "Funding Sequence and Publisher Commitment",
+          "consequences": "Pursuing government innovation grants and strategic partnerships early (12\u201318 months pre-production) secures foundation funding but requires lengthy application cycles, detailed technical proposals, and public accountability that may lock design decisions prematurely. Publisher investment typically arrives after demonstrable progress (playable vertical slice or alpha), providing larger capital but imposing commercial milestones and publisher creative control that can override artistic vision.",
+          "options": [
+            "Secure seed funding exclusively from government grants and industry partnerships in months 1\u20136, build a complete vertical slice (one district, one heist, one faction narrative) with that capital, then approach publishers with finished proof-of-concept to negotiate from a position of creative control.",
+            "Negotiate a three-tranche publishing deal: initial development funding (month 1), milestone payments at 50% completion and beta launch, structured to preserve creative autonomy through shared governance boards, accepting reduced upfront capital in exchange for predictable capital flow.",
+            "Pursue parallel government grants (applied month 2, expected funding month 6\u201310) while pitching to publishers (month 3\u20135), accepting whichever materialize first and opportunistically blend both funding sources, risking misaligned expectations but maximizing capital availability."
+          ],
+          "review_lever": "Government funding preserves creative control but is slow and unpredictable\u2014a grant application submitted in March 2026 may not disburse until Q4 2026 or later, creating a 6\u20139-month cash-flow gap that forces cost-cutting or headcount delays. Publisher money arrives faster but typically demands quarterly milestones and attendance at annual showcases, converting development into a delivery schedule that penalizes experimentation. All three options assume you can defer hiring until funding arrives, but market competition for senior engineering talent may mean losing key hires to faster-moving studios."
+        },
+        {
+          "lever_index": 4,
+          "name": "Procedural Generation vs. Hand-Crafted Density",
+          "consequences": "Heavy reliance on procedural generation for NPCs, building interiors, and street-level detail reduces manual content creation load and scales asset production, but procedural systems often produce visual repetition, nonsensical interior layouts, and emergent bugs (NPCs walking through walls, duplicate building facades) that damage immersion. Hand-crafting every interior and NPC routine guarantees quality but absorbs art and design bandwidth that could accelerate the world's growth.",
+          "options": [
+            "Develop procedural systems for secondary elements (building interiors, street vendor layouts, minor NPC daily routines) while hand-crafting all primary landmarks, narrative-critical buildings (crime kingpin compounds, heist target locations), and main-character NPC pathfinding, ensuring procedural output serves as scenery rather than player-facing content.",
+            "Commit to a hybrid engine: procedural generation creates the base city grid, architecture silhouettes, and ambient NPC populations, then designers hand-author only quest-relevant locations and NPC backstories, treating procedural content as authentic 'background' (e.g., unnamed pedestrians, non-narrative shops) rather than polishing every building.",
+            "Implement a 'procedural feedback loop' where early player playtests flag visually repetitive or immersion-breaking procedural results; prioritize hand-crafting the top 5% of most-visited locations (intersections, parks, commercial hubs), leaving periphery procedurally generated and updated dynamically as player data indicates new high-traffic zones."
+          ],
+          "review_lever": "Procedural systems promise scalability but shift risk from art production to engineering quality assurance; a broken procedural routine can affect thousands of NPCs or buildings simultaneously, whereas a single hand-crafted error affects one location. The hybrid approach sounds balanced but in practice teams drift toward either pure hand-crafting (if QA costs of fixing procedural bugs exceed creation time) or pure procedural (if art hiring lags). None of these options directly address the discoverability problem: procedurally generated secrets and hidden interiors feel random rather than rewarding, undercutting the exploratory fantasy that defines open-world appeal."
+        },
+        {
+          "lever_index": 5,
+          "name": "Heist Mission Complexity Ramp",
+          "consequences": "Designing complex, physics-dependent heist missions (multi-stage robberies with emergent NPC reactions, dynamic building destruction, and player-choice branching) from day one creates marketing differentiation and extends replayability, but incomplete systems (NPC pathfinding, destructible object networks, save-state branching) can cascade into months of debugging. Launching heists in a simpler form (scripted, linear stages) reduces risk and ships faster, but diminishes the game's core mechanical hook and is difficult to expand retroactively.",
+          "options": [
+            "Prototype heists using simplified scripted sequences and fixed stage layouts in months 1\u20138, validate mission pacing and narrative flow with external playtesters, then incrementally unlock dynamic features (destructible environments, NPC reactions) as underlying systems mature, ensuring complexity is added iteratively post-launch.",
+            "Build heist architecture to support branching decision trees and emergent outcomes from the outset, staffing a dedicated simulation systems team (8\u201310 engineers) to develop robust physics, pathfinding, and state management in parallel with mission design, accepting higher upfront cost for greater long-term flexibility.",
+            "Release the game with 3\u20134 hand-authored, heavily-polished signature heist missions that demonstrate systemic depth, then post-launch introduce a procedural heist generator for secondary content, allowing players to create custom robbery scenarios using validated building blocks."
+          ],
+          "review_lever": "Iterative simplicity minimizes schedule risk but commits players and critics to a scaled-down version at launch, which is difficult to retroactively upgrade without feeling incomplete; complex heists promised pre-launch but delivered post-launch breed negative perception. Parallel high-complexity development requires more engineering but creates a 'double team' problem: if the simulation systems slip, mission designers are blocked waiting for pathfinding or physics fixes. The procedural heist generator promises infinite content but risks player confusion\u2014custom-generated heists may lack narrative coherence, and players will naturally compare them unfavorably to hand-authored ones."
+        },
+        {
+          "lever_index": 6,
+          "name": "Multiplayer Integration Timeline",
+          "consequences": "Shipping multiplayer from day one (cooperative heists, shared open-world servers, faction competition) amplifies social engagement and live-service revenue, but requires robust anti-cheat systems, server infrastructure, and synchronization logic that introduces development complexity and QA burden during a critical single-player launch window. Deferring multiplayer to a post-launch update (6\u201312 months later) stabilizes single-player development and reduces launch-day crashes, but loses first-mover multiplayer momentum to competing games and forces retroactive architectural changes to enable server play.",
+          "options": [
+            "Develop a feature-complete multiplayer backend and anti-cheat layer in parallel with single-player during months 1\u201320, with separate QA streams, then beta-test multiplayer in a limited early-access period (months 20\u201322) before full launch, adding 6\u20138 months of pre-launch multiplayer validation.",
+            "Release single-player as the core launch product (month 24), then deploy asynchronous multiplayer modes first (shared world passive presence, leaderboards, ghost replays of player heists) in month 28, followed by synchronous cooperative heists in month 36, avoiding synchronization complexity at launch.",
+            "Architect a flexible backend that allows both offline single-player and optional multiplayer connection, launching single-player first, then offering 'multiplayer-lite' (shared world snapshot updated daily, not real-time synchronization) at month 26, upgrading to full real-time multiplayer only if player demand exceeds 50% adoption of multiplayer features."
+          ],
+          "review_lever": "Parallel multiplayer and single-player development is the 'correct' approach if you have the engineering depth, but this project is funding-constrained\u2014adding a full server infrastructure team (8\u201312 engineers) and QA stream in month 1 consumes budget better spent on single-player systems that drive day-one reviews and word-of-mouth. Post-launch multiplayer is safe and realistic, but multiplayer-first games (Fortnite, Warzone) have trained players to expect social features immediately; absent multiplayer at launch, some players may not return for the post-launch 'expansion.' None of these options account for regulatory risk: real-money trading in multiplayer heist scenarios may trigger gambling regulations in certain jurisdictions, requiring legal review that can slip multiplayer timelines unpredictably."
+        },
+        {
+          "lever_index": 7,
+          "name": "Graphical Fidelity vs. Performance Optimization",
+          "consequences": "Pursuing 'next-gen graphical fidelity' (ray-traced lighting, photogrammetry assets, detailed NPC animation, high-resolution textures) attracts critics and marketing attention, but drives up asset production costs, requires target hardware with high computational budgets (e.g., high-end PC specs, next-generation consoles), and risks frame-rate degradation in complex scenes (crowded city intersections, large heists) that undermine player experience. Prioritizing stable 60 FPS performance on current hardware broadens player accessibility and ensures smooth gameplay, but risks perception of visual mediocrity compared to competitors.",
+          "options": [
+            "Establish a hard performance floor (60 FPS on current-generation consoles at 1440p) as non-negotiable, then allocate all remaining GPU budget to visual fidelity, using dynamic resolution scaling and LOD systems to maintain target frame rate, shipping on current hardware without requiring next-gen hardware.",
+            "Target 4K 30 FPS on high-end hardware (next-gen consoles, flagship PCs) as the showcase experience, with adaptive visual settings that auto-degrade to 1440p 60 FPS on mid-tier hardware, letting players choose between visual fidelity and responsiveness.",
+            "Separate visual modes by gameplay context: 'Crime Mode' (cinematic, ray-traced, heavy effects) for narrative missions at 30 FPS, 'Street Mode' (optimized, 60 FPS) for open-world driving and heists, allowing players to switch aesthetics on-the-fly and de-coupling fidelity from performance expectations."
+          ],
+          "review_lever": "The performance-first approach (60 FPS locked) dates a game visually within 18 months of launch, as players compare it to titles released with more aggressive visual budgets; it's a 'safe' choice that sacrifices marketing edge. The 4K/1440p adaptive approach is standard industry practice but obscures a hard decision: if next-gen hardware adoption lags expectations, your 'showcase' experience plays on 5% of target hardware, and marketing material shot in 4K may disappoint the 95% who play at 1440p. The dual-mode approach (cinematic vs. optimized) is non-standard and risks player frustration if heist performance tanks after switching from Crime Mode, creating support burden and negative reviews. All three assume ray-tracing is non-negotiable, but ray-tracing quality on real-time NPCs (reflections in windows showing crowd motion) is imperceptible to most players and absorbs significant engineering time for diminishing returns."
+        }
+      ]
+    },
+    {
+      "strategic_rationale": "GTA6 faces fundamental tensions between technical ambition (next-gen graphics, dynamic systems) and schedule realism, between narrative depth and procedural scalability, and between multiplayer integration timing and single-player campaign stability. The most critical levers are those that force early commitment on scope boundaries, technical architecture decisions, and dependency chains \u2014 particularly where delayed choices cascade into budget overruns or launch delays. The selected levers below isolate decision points where deferring commitment creates compounding risk, rather than preserving flexibility.",
+      "levers": [
+        {
+          "lever_index": 1,
+          "name": "NPC Behavior Authenticity vs. Computational Load",
+          "consequences": "Realistic NPC routines (work schedules, social networks, economic participation) create emergent gameplay and world believability but consume significant CPU/GPU resources and testing cycles. A high-complexity simulation requires months of tuning and stress-testing across target hardware; scaling down NPC depth frees development cycles but reduces the sense of a living city and may undermine the criminal-economy narrative premise.",
+          "options": [
+            "Implement full persistent NPC employment, family, and criminal affiliation systems with daily routines, store purchases, and rivalry mechanics, accepting 18\u201324 months of iteration and profiling to hit target frame rates.",
+            "Deploy a tiered NPC system: core antagonists and mission givers receive full routines, while background pedestrians follow simplified looped behaviors with occasional emergent moments triggered by player proximity.",
+            "Limit NPC simulation to event-driven interactions; pedestrians and minor NPCs exist primarily as environmental detail and mission targets, with full behavioral depth reserved for story-critical characters and faction leaders."
+          ],
+          "review_lever": "Authenticity drives marketing and critical reception, but the computational cost of persistent systems scales with world size and concurrent NPC count. The options assume that frame-rate targets are fixed; if the team discovers 12 months in that a full simulation runs at 40fps instead of 60fps on target consoles, all three options require rework, yet none of them include a pre-production prototype budget to validate feasibility before full integration."
+        },
+        {
+          "lever_index": 2,
+          "name": "Heist Mission Authorship and Replayability",
+          "consequences": "Hand-authored heist missions deliver narrative coherence, Hollywood-grade set pieces, and carefully balanced challenge progression, but each mission requires 3\u20136 months of design, cinematic scripting, and balance iteration. Procedurally-generated heists scale replayability and hours-of-play metrics but sacrifice narrative quality and risk feeling repetitive. The choice affects both campaign length perception and post-launch content velocity.",
+          "options": [
+            "Produce 12\u201315 marquee hand-crafted heist missions with full voice acting, branching outcomes, and cinematic sequences, supplemented by a procedural 'gig economy' system for secondary jobs and side raids.",
+            "Create 8 core hand-authored heists with robust scaffolding that permits procedural variation (randomized targets, guard patterns, entry routes) within each mission template to extend replayability without multiplying design workload.",
+            "Develop a procedurally-driven heist framework where the mission structure (reconnaissance, infiltration, extraction) is algorithmic, with hand-authored set pieces and faction-specific dialogue woven into randomly-selected scenarios."
+          ],
+          "review_lever": "Hand-crafted heists anchor player memory and drive word-of-mouth, but the per-mission cost explodes if post-launch DLC is expected. Procedural replayability extends engagement metrics, but players rapidly identify algorithmic patterns, and user reviews comparing GTA6 heists to GTA5 will penalize any perception of 'less cinema.' None of the options budget for a heist-mission playtest panel or community feedback loop before code-lock, risking launch criticism that 'heists feel thin.'"
+        },
+        {
+          "lever_index": 3,
+          "name": "Vehicle Customization Ecosystem Scope",
+          "consequences": "Deep customization (performance tuning, cosmetics, engine swaps, handling profiles) rewards invested players and extends engagement, but requires integration with economy systems, save-file architecture, and multiplayer synchronization. Each vehicle class (sports cars, trucks, lowriders, aircraft) multiplies customization permutations and QA scope. Narrowing scope reduces complexity but may feel shallow compared to prior GTA titles.",
+          "options": [
+            "Offer granular customization across all vehicle types (100+ car classes): engine upgrades, suspension, wheels, paint, interior trim, handling profiles, and class-specific mods, with persistent garage storage and online trading.",
+            "Provide deep customization for player-owned vehicles and core vehicle classes (sedans, sports cars, SUVs, motorcycles) while limiting NPC and transient vehicle customization to cosmetic paint and wheel swaps.",
+            "Restrict customization to cosmetic modifications (paint, decals, wheels, basic liveries) and performance tiers (low/medium/high engine settings), streamlining save-file overhead and multiplayer synchronization at the cost of granular control."
+          ],
+          "review_lever": "Vehicle customization is a retention lever \u2014 players spend hours and in-game currency optimizing their rides. However, the cost of custom-handling physics validation scales non-linearly; a poorly-tuned lowrider or aircraft mod creates exploits and crashes. The options assume QA can catch balance issues before launch; if post-launch patches reveal that a specific mod combination breaks online races, player trust erodes and the customization system becomes liability, not asset."
+        },
+        {
+          "lever_index": 4,
+          "name": "Moral Choice Abstraction and Narrative Branching",
+          "consequences": "A branching morality system (lawful enforcer vs. criminal boss vs. amoral opportunist) delivers player agency and replayability but requires parallel questlines, divergent NPC relationships, and reputation tracking across hundreds of decisions. Simpler abstraction (good/evil slider or stat-based consequences) reduces content duplication but may feel like cosmetic choice rather than genuine consequence. The choice affects campaign replayability and spoiler avoidance during marketing.",
+          "options": [
+            "Implement a dynamic alignment system tracking player choices (crime, brutality, mercy, loyalty) across 50+ story missions and side quests, with NPC faction perception, character dialogue, and mission availability shifting based on accumulated alignment; players can toggle difficulty and alignment consequences independently.",
+            "Create three discrete story paths (law enforcement, criminal syndicate, independent operator) that branch at key narrative junctures, with dialogue and mission objectives tailored to path, but converging at the finale; players commit to a path by mid-game, enabling focused development.",
+            "Provide a single canonical campaign with moral flavor text and cosmetic consequences (NPCs acknowledge player choices in dialogue) but no material impact on mission availability, faction standing, or ending, reducing branching complexity while preserving player perception of agency."
+          ],
+          "review_lever": "Narrative branching scales content costs exponentially; three parallel story paths means three versions of every mission, dialogue tree, and NPC arc. The team's stated aim to 'blend narratives of crime, corruption, and power struggles' implies nuance, yet none of the options include a budget for player choice tracking and consequence resolution during post-launch patches \u2014 a shortfall that commonly results in players discovering 'choice doesn't matter' and feeling cheated by late-game convergence."
+        },
+        {
+          "lever_index": 5,
+          "name": "Online Economy Integration and Real-Currency Monetization",
+          "consequences": "A robust online economy (player-to-player trading, property investment, criminal enterprise ownership) drives engagement and monetization opportunities but introduces inflation risk, exploits, and player-complaint management overhead. Currency-conversion systems (in-game dollars to premium currency) require careful balancing to avoid pay-to-win perception. Early economy design mistakes compound over years and are nearly impossible to fix without player backlash.",
+          "options": [
+            "Develop a fully player-driven economy with property ownership, criminal enterprise shares, vehicle trading, and in-game stock markets, gated behind activity gates and cooldowns; premium currency is tradeable for in-game currency on a fixed exchange, allowing earning through gameplay.",
+            "Implement a soft economy: players can customize and sell vehicles, earn passive income from owned properties, and trade cosmetics, but all tradeable items have cash caps and time-gating to prevent exploitation; premium currency is cosmetic-only (battle pass, unique skins, animations).",
+            "Restrict online transactions to cosmetic items and battle-pass progression; eliminate player-to-player trading and property markets to reduce economy-tuning risk; all in-game wealth is earned through gameplay and cannot be transferred between players."
+          ],
+          "review_lever": "Online economies are revenue engines but also community landmines \u2014 players obsess over fairness and exploit detection. The tension is between monetization upside (player spending) and operational cost (anti-cheat, economy monitoring, player support). None of the options include a pre-launch economy simulation or player-behavior modeling; teams often discover 6 months after launch that a single exploit (duplication, high-yield raid farming) has flooded the currency supply, requiring emergency rebalance and player compensation that erodes trust."
+        },
+        {
+          "lever_index": 6,
+          "name": "Rendering Pipeline and Platform Target Parity",
+          "consequences": "Developing a unified rendering engine across PS5, Xbox Series X, and PC simplifies asset creation and testing but constrains fidelity to the weakest target or requires platform-specific optimization passes. A platform-specific pipeline maximizes each hardware's capabilities (ray-tracing on high-end PC, bespoke console paths) but multiplies engine tuning work and risks visual inconsistency in marketing materials. Early commitment locks resource allocation for 24+ months.",
+          "options": [
+            "Build a single rendering pipeline targeting high-end PC specs (4K, 120fps, full ray-tracing) with progressive downsampling for consoles (1440p, 60fps, selective ray-tracing), accepting that PS5/Xbox gameplay visuals will lag marketing videos and requiring robust downgrade testing.",
+            "Create a unified base engine with console-optimized paths: all platforms share geometry and physics, but console versions use baked lighting, simplified shadows, and pre-calculated reflections, while PC unlocks dynamic shadows, ambient occlusion, and ray-traced global illumination on high settings.",
+            "Develop separate rendering codebases for console (fixed 60fps, tailored to Silicon speed) and PC (scalable 1080p\u20134K, frame-rate slider), accepting doubled engine maintenance and synchronizing asset pipelines through a shared content library to manage divergence."
+          ],
+          "review_lever": "Rendering parity vs. capability is a false binary dressed as technical choice \u2014 the real tension is between marketing expectations and production schedule. GTA5 was marketed as 'next-gen' on PS3/Xbox360 and delivered lavish ports; players expect similar fidelity across platforms. None of the options include a pre-production rendering proof-of-concept or performance regression budget; if the team discovers 18 months in that ray-tracing on console runs at 30fps, the revert cost cascades through art asset validation and risks launch-window quality."
+        },
+        {
+          "lever_index": 7,
+          "name": "Post-Launch Content Commitment and DLC Roadmap Visibility",
+          "consequences": "A public, multi-year DLC roadmap (new story chapters, heists, vehicles, properties) signals confidence and manages player expectations but locks the studio into delivery commitments and creates organizational debt if priorities shift. Keeping DLC under wraps preserves flexibility but risks player churn if the game feels 'complete at launch' and post-launch patches feel reactive rather than planned. The choice affects pre-order messaging, player retention metrics, and team hiring pipeline.",
+          "options": [
+            "Announce and publish a 24-month post-launch roadmap including 3 major story expansions, 8 heist DLC packs, seasonal vehicles, and property updates, with monthly content cadence; structure the live-ops team separately from core engine maintenance to enforce predictability.",
+            "Commit to quarterly content drops (one new story mission, one heist variant, cosmetic refreshes) without pre-announcing specific titles or dates; build a live-ops sandbox and a content production pipeline that can absorb 2\u20133 person-month feature requests from the community during each quarterly cycle.",
+            "Release the base game with the promise of 'ongoing support' and determine post-launch content scope based on player metrics and revenue performance; allocate a fixed live-ops headcount and allow feature mix to fluctuate based on engagement data and dev capacity."
+          ],
+          "review_lever": "Public roadmaps build hype and pre-order justification, but they are contracts with players \u2014 miss a deadline and the credibility cost compounds. The unstated tension is between resource predictability (a locked roadmap allows hiring and budget certainty) and creative agility (a flexible roadmap permits pivoting away from unpopular features). None of the options include a contingency for unexpected technical debt (e.g., a console OS update breaks ray-tracing, requiring 6 weeks of regression) or unforeseen live-ops crises (e.g., an exploit in the seasonal economy requires emergency rebalance); teams that commit to public timelines often end up deferring other work to patch broken promises."
+        }
+      ]
+    },
+    {
+      "strategic_rationale": "This AAA open-world crime game faces three converging constraints: delivering photorealistic scale within 36\u201348 months, managing studio burnout across art, code, and narrative departments, and justifying $150M+ investment to multiple funding sources with divergent risk tolerance. The most critical levers pivot on how deeply the team commits to simulation fidelity versus systemic breadth, whether streaming/cloud architecture enables cross-platform parity or fragments the player base, and whether the post-launch economic model sustains recurring revenue without alienating the single-player core. The levers below isolate trade-offs between scope completion, team velocity, and revenue durability\u2014the actual bottlenecks that determine shipping date and long-term player retention.",
+      "levers": [
+        {
+          "lever_index": 1,
+          "name": "Dialogue and Narrative Branching Depth",
+          "consequences": "Expanding dialogue trees and narrative branches increases emotional immersion and replay value but exponentially multiplies voice acting, localization, and QA workload. A densely branched campaign with 200+ hours of unique dialogue can consume 18\u201324 months of production time and double localization costs, potentially pushing ship date past the 2028 window unless dialogue is batched early and re-recorded late.",
+          "options": [
+            "Author a linear narrative spine with optional side-dialogue modifiers that let NPC reactions shift without forking mission outcomes, reducing voice asset duplication while preserving player agency perception.",
+            "Implement a dialogue token system where player choices influence a hidden reputation vector rather than spawning new scenes, allowing a single scene to feel contextually responsive without creating full branching cutscenes.",
+            "Embrace parallel dialogue trees only for faction-critical moments and suppress branching elsewhere, funneling voice-acting budget to three to five high-stakes decision points that carry visual and mechanical consequences."
+          ],
+          "review_lever": "The core tension is whether narrative depth returns more player engagement than systemic breadth; the options all assume that fewer unique scenes can still feel 'chosen' if the right variables shift reactively. What they miss is that AAA players increasingly expect seamless re-playability without re-watching cutscenes\u2014none of the options include a skip-with-summary or narrative recap system that frees later completionists from re-doing exposition."
+        },
+        {
+          "lever_index": 2,
+          "name": "Police and Gang Escalation Mechanics",
+          "consequences": "Defining how law enforcement and rival gang factions respond to player actions shapes moment-to-moment gameplay tension and open-world unpredictability. A rule-heavy escalation system (six-star wanted levels, NPC gang wars, territory control) creates emergent chaos but demands extensive state-tracking, AI exception handling, and emergency animation rigging if the system breaks under edge cases.",
+          "options": [
+            "Implement a persistent notoriety decay system where police attention fades based on location, time elapsed, and witness count, allowing players to strategically hide rather than fight, and reducing the need for unlimited high-threat NPC spawning.",
+            "Deploy a faction reputation matrix where killing cops or gang members shifts allegiances dynamically, flipping NPC behavior from hostile to neutral to allied depending on recent player actions, creating situational alliances instead of hardcoded enemy vs. enemy scenarios.",
+            "Constrain wanted-level escalation to specific trigger zones (downtown, industrial, harbor) where law enforcement presence is plausible, and leave vast suburban and rural regions with minimal police response, reducing the need to balance AI behavior across all terrain."
+          ],
+          "review_lever": "The core tension is whether realism (visible cops everywhere, immediate response) or gameplay freedom (low-friction escape routes, predictable escalation) takes priority. All options assume the player benefits from *predictability* in how the system reacts; what they miss is that the most memorable crime games rely on *surprise*\u2014a sudden gang ambush or SWAT deployment that the system didn't telegraph but the world somehow 'earned.' None of the options include a director-layer AI that occasionally violates the stated rules to create cinematic moments."
+        },
+        {
+          "lever_index": 3,
+          "name": "Mission Failure and Checkpoint Tolerance",
+          "consequences": "Deciding whether failed heist attempts consume narrative time, cost in-game currency, or simply reset the mission state determines pacing rhythm and player frustration tolerance. Permadeath or high-penalty failure modes (losing equipment, triggering gang retaliation) raise tension but also force save-scumming and can stall casual players for hours on a single mission.",
+          "options": [
+            "Adopt a checkpoint-within-mission model where failed heists restart at a defined phase (e.g., getaway starts over but the robbery doesn't), and post-mission consequences trigger only on final success, collapsing narrative branching but preserving momentum and accessibility.",
+            "Implement a 'crew reputation' mechanic where failed heists diminish NPC crew morale, unlock fewer side-missions, or trigger rival gang moves, making failure costly in *future* gameplay rather than immediately, and allowing immediate retry without time pressure.",
+            "Enforce a single-save architecture where failure rolls back the entire session and costs the player in-game time and money, but only for optional hard-difficulty heists; main-story missions always checkpoint, creating a difficulty curve that lets players choose their own failure cost."
+          ],
+          "review_lever": "The core tension is whether failure teaches or frustrates; all options assume that some form of checkpoint mitigates hard-failure wall, but that narrative *consequences* for setbacks create weight. What they miss is that permitting instant retry without cost trains players to brute-force rather than plan\u2014a heist game lives or dies on whether players feel clever when they succeed, not lucky. None of the options include a 'planning phase' where failure in prep costs time/resources but success in execution is nearly guaranteed, shifting the skill challenge to foresight rather than reflexes."
+        },
+        {
+          "lever_index": 4,
+          "name": "Interior Location Interactivity and Density",
+          "consequences": "Expanding the number of interactable interiors (apartments, offices, shops, hideouts) with unique physics, destructible elements, and NPC routines deepens world immersion but creates a content authoring bottleneck\u2014each detailed interior can consume 3\u20136 weeks of artist and designer time. A full-fidelity interior system risks pushing the memory footprint beyond console constraints or requiring aggressive streaming that creates loading-stutter complaints.",
+          "options": [
+            "Develop a modular interior-assembly system where a library of pre-built room modules (bedrooms, bathrooms, kitchens, office cubbicles) auto-generate interiors procedurally, with hand-authored 'signature' interiors only for mission-critical locations, allowing fast iteration and vastly more explorable buildings.",
+            "Commit to hand-authored interiors only for 40\u201350 landmark locations (safe houses, nightclubs, gang headquarters, government offices) and populate remaining buildings with locked doors or simple generic rooms, focusing quality over quantity and freeing artist time for open-world environmental detail.",
+            "Implement a 'furniture and decor streaming' system where interiors load exterior walls and basic shell instantly but details stream in as the player spends time inside, allowing dense rooms without blocking exploration and reducing the per-interior memory requirement."
+          ],
+          "review_lever": "The core tension is between world scale (hundreds of explorable interiors) and environmental storytelling (each space feeling intentional and authored). All options assume that *some* interiors must be hand-crafted to avoid repetitive procedural sameness; what they miss is that players spend 80% of their time in *mandatory mission interiors*, meaning quality-per-interior matters more than total-interior-count. None of the options include a dynamic-layout system where interior decor and layout shift based on story state (e.g., a gang hideout gets ransacked mid-campaign, changing visual narrative), which would reward replaying and refresh stale spaces."
+        },
+        {
+          "lever_index": 5,
+          "name": "Radio Station Soundtrack and Live-Service Music Licensing",
+          "consequences": "A living radio system with dozens of licensed tracks, talk-radio stations, and DLC music packs creates deep immersion and viral marketing potential but locks the studio into ongoing licensing costs and royalty payments that persist long after ship. A song licensed for five years across three territories can cost $50K\u2013$200K depending on popularity and exclusivity, accumulating rapidly across 500+ tracks, and regional licensing fragmentation may require different soundtrack versions per territory.",
+          "options": [
+            "Curate a fixed 300-track soundtrack (licensed music, original orchestral, and in-house compositions) at ship and commit to no post-launch music licensing, bundling all royalty costs into the development budget and eliminating long-term licensing liability while accepting that players will exhaust novelty within 100 hours of radio-listening.",
+            "Partner with a streaming service (Spotify, Apple Music) to license their catalog dynamically, paying a per-user per-month fee instead of per-song upfront fees, and rotate featured artists monthly through in-game radio promotions, converting music into a recurring player engagement hook.",
+            "Develop a 'player-curated radio' system where streamers and content creators can upload their own mixes, or broadcast directly from their own music libraries, shifting licensing burden to the end-user and allowing infinite content refresh without publisher liability, though creating brand-safety and moderation challenges."
+          ],
+          "review_lever": "The core tension is between immersion (recognizing licensed hits, cultural relevance) and financial predictability (licensing costs scaling with player base). All options assume that music is primarily a *discovery* medium that players engage passively while driving; what they miss is that radio in GTA is a *comedy and world-building tool*\u2014the dialogue and parody advertisements matter more than the tracks themselves. None of the options emphasize investing in original comedy-radio content and talk-show scripting, which could age better than licensed music and cost less than clearing 500 existing songs."
+        },
+        {
+          "lever_index": 6,
+          "name": "Cheat Code Availability and Sandbox Progression Gating",
+          "consequences": "Deciding whether cheats unlock automatically, require completion milestones, or remain unavailable shapes whether the game is a strict narrative experience or a flexible sandbox. Early cheat availability (god mode, infinite ammo, spawn vehicles) can trivialize difficulty and collapse engagement for narrative-first players, but gating cheats behind 60+ hours of completion can frustrate sandbox-first players who want immediate creative freedom.",
+          "options": [
+            "Disable all cheats in the primary save and restrict them to a separate 'creative mode' that parallels the campaign, allowing players to explore sandbox builds without derailing progression, and tracking achievement completion exclusively on the campaign save.",
+            "Unlock cheats progressively after each story chapter, releasing god-mode at chapter two, unlimited ammo at chapter four, and vehicle-spawning at chapter six, allowing players who engage with narrative to earn sandbox tools as rewards for pacing adherence rather than locking them away.",
+            "Hide cheat codes behind environmental discovery (easter-egg phone numbers, hidden computer terminals, graffiti triggers) that require exploration and community knowledge-sharing, making cheats feel earned through curiosity rather than time, and creating emergent content marketing when players share cheat-unlock guides."
+          ],
+          "review_lever": "The core tension is whether progression should enforce narrative pacing or empower player autonomy; all options assume some form of cheat availability, accepting that modern players expect sandbox freedom eventually. What they miss is the *metagame* of speedrunners and challenge-runners who want a frictionless way to disable specific features (e.g., 'invulnerable but no cheats' or 'timeshift only') without accessing the full god-mode suite. None of the options include a granular difficulty/sandbox settings system where players can tune individual mechanical parameters before starting, which would convert cheat codes from a secret reward into a visible player expression."
+        },
+        {
+          "lever_index": 7,
+          "name": "Criminal Enterprise Ownership and Recurring Revenue Gameplay",
+          "consequences": "Allowing players to own and operate businesses (drug fronts, protection rackets, underground gambling, fencing operations) creates a long-tail engagement loop and justifies login incentives for multiplayer modes, but business management adds UI complexity, requires backend server load to track persistent state, and must be balanced carefully to prevent grinding-fatigue from overshadowing narrative missions. A poorly-balanced business loop can encourage AFK idling or real-money shortcuts, damaging single-player immersion.",
+          "options": [
+            "Implement passive business income that accumulates over real-world time (players log back in to collect daily protection money or nightclub revenue), integrated into the single-player save and capped at a soft paywall that rewards *returning* rather than continuous play, and avoiding any multiplayer economy coupling.",
+            "Create active business-management minigames where owning a business requires periodic player involvement (restocking supplies, dealing with rival threats, managing employee morale) that unlocks story sequences and special missions, making business progression tied to narrative rather than time-gating and collapsing the multiplayer/single-player economy separation.",
+            "Restrict business ownership exclusively to multiplayer mode and explicitly decouple it from the single-player campaign, allowing multiplayer GTA Online to develop its own tycoon progression while preserving single-player as a pure narrative experience, accepting that this limits cross-mode engagement but eliminates monetization temptation in single-player."
+          ],
+          "review_lever": "The core tension is whether recurring revenue mechanics (passive income, login incentives) belong in a story-driven single-player game or exclusively in multiplayer; all options assume that *some* players want long-tail progression beyond the main narrative. What they miss is that the most successful long-tail engagement comes from *cosmetic inventory*, not economic simulation\u2014players who log in daily for business collection are often grinding out of obligation, not enjoyment. None of the options include a prestige-reset system where completing a business empire unlocks a cosmetic reward (new outfits, vehicle paint, apartment decoration) tied to *multiplayer visibility*, which would reward engagement without creating economic inequality between new and veteran players."
+        }
+      ]
+    }
+  ],
+  "levers": [
+    {
+      "lever_id": "765fd08c-12e3-4f8f-8cfa-6a876a529453",
+      "name": "Criminal Economy Simulation Depth",
+      "consequences": "Building a fully-simulated criminal economy with supply chains, turf wars, and price-fixing mechanics creates emergent narrative and player agency, but requires months of economic modeling and AI development that cannot run in parallel with graphical production. Deferring this system to post-launch risks a core feature absence, yet front-loading it early delays visible progress and can consume engineering resources before visual milestones attract publisher confidence.",
+      "options": [
+        "Prototype the criminal economy in isolation using a simplified 2D test environment with synthetic NPCs, validate feedback loops and edge cases, then port the validated logic into the full game world in year two.",
+        "Integrate criminal economy mechanics incrementally into the first playable city only, launch with a fully-realized economy there while the other two cities operate on simplified trade systems, then upgrade remaining cities in free post-launch updates.",
+        "Outsource economic system design and balancing to a specialized consulting firm that has shipped similar systems, allowing internal team to focus on narrative integration and UI, accepting reduced uniqueness to preserve schedule."
+      ],
+      "review": "Simulation depth directly opposes time-to-playable-content; prototyping buys validation but defers revenue and marketing momentum, while outsourcing speed trades away design control and the creative challenge that attracts top engineering talent. All three options assume the economy can be 'completed' in isolation, but in practice, player feedback on criminal turf mechanics will require iteration once heist missions go live\u2014none address this feedback loop adequately."
+    },
+    {
+      "lever_id": "ce53c656-820c-4b3d-99fe-350da904325b",
+      "name": "Multi-City Geographic Sequencing",
+      "consequences": "Developing Los Angeles, Detroit, and Miami in parallel maximizes world richness and marketing appeal, but fractures art, design, and QA resources across three distinct urban environments with distinct architecture, climate, and cultural details. Sequential development (one city complete, then the next) reduces concurrent overhead and allows reusable systems to mature, but delays the full-world reveal and stretches production visibility for 12\u201318 months before external milestones land.",
+      "options": [
+        "Develop all three cities in parallel with dedicated art teams per city (Los Angeles, Detroit, Miami), rotating shared design leads across cities on a 6-month cycle to enforce consistency, accepting higher onboarding costs and communication overhead.",
+        "Fully complete Los Angeles in the first 18 months including all narrative, heist content, and criminal economy tuning, then fast-follow Detroit and Miami using proven tools and pipelines, allowing early sales revenue or early access to fund subsequent cities.",
+        "Lock a minimal viable version of all three cities (each 40% landmass, placeholder interiors, core landmark districts only) into a shared engine in months 1\u201312, then deepen each city's content in specialized passes, guaranteeing three-city presence in early marketing."
+      ],
+      "review": "Parallel development spreads risk across three environments but compounds schedule risk if any single city encounters art production bottlenecks (e.g., detailed interior building assets), while sequential development creates a single point of failure if the first city's launch underperforms financially and funding dries up. The minimal viable multi-city approach avoids this by delivering partial presence early, but risks player perception of incompleteness and increases technical debt from placeholder-to-final asset swaps."
+    },
+    {
+      "lever_id": "959e6e74-2d5d-4228-8ead-78cbe6741cfc",
+      "name": "Funding Sequence and Publisher Commitment",
+      "consequences": "Pursuing government innovation grants and strategic partnerships early (12\u201318 months pre-production) secures foundation funding but requires lengthy application cycles, detailed technical proposals, and public accountability that may lock design decisions prematurely. Publisher investment typically arrives after demonstrable progress (playable vertical slice or alpha), providing larger capital but imposing commercial milestones and publisher creative control that can override artistic vision.",
+      "options": [
+        "Secure seed funding exclusively from government grants and industry partnerships in months 1\u20136, build a complete vertical slice (one district, one heist, one faction narrative) with that capital, then approach publishers with finished proof-of-concept to negotiate from a position of creative control.",
+        "Negotiate a three-tranche publishing deal: initial development funding (month 1), milestone payments at 50% completion and beta launch, structured to preserve creative autonomy through shared governance boards, accepting reduced upfront capital in exchange for predictable capital flow.",
+        "Pursue parallel government grants (applied month 2, expected funding month 6\u201310) while pitching to publishers (month 3\u20135), accepting whichever materialize first and opportunistically blend both funding sources, risking misaligned expectations but maximizing capital availability."
+      ],
+      "review": "Government funding preserves creative control but is slow and unpredictable\u2014a grant application submitted in March 2026 may not disburse until Q4 2026 or later, creating a 6\u20139-month cash-flow gap that forces cost-cutting or headcount delays. Publisher money arrives faster but typically demands quarterly milestones and attendance at annual showcases, converting development into a delivery schedule that penalizes experimentation. All three options assume you can defer hiring until funding arrives, but market competition for senior engineering talent may mean losing key hires to faster-moving studios."
+    },
+    {
+      "lever_id": "15ae86cb-31aa-4937-9b17-be4ef0c2b46b",
+      "name": "Procedural Generation vs. Hand-Crafted Density",
+      "consequences": "Heavy reliance on procedural generation for NPCs, building interiors, and street-level detail reduces manual content creation load and scales asset production, but procedural systems often produce visual repetition, nonsensical interior layouts, and emergent bugs (NPCs walking through walls, duplicate building facades) that damage immersion. Hand-crafting every interior and NPC routine guarantees quality but absorbs art and design bandwidth that could accelerate the world's growth.",
+      "options": [
+        "Develop procedural systems for secondary elements (building interiors, street vendor layouts, minor NPC daily routines) while hand-crafting all primary landmarks, narrative-critical buildings (crime kingpin compounds, heist target locations), and main-character NPC pathfinding, ensuring procedural output serves as scenery rather than player-facing content.",
+        "Commit to a hybrid engine: procedural generation creates the base city grid, architecture silhouettes, and ambient NPC populations, then designers hand-author only quest-relevant locations and NPC backstories, treating procedural content as authentic 'background' (e.g., unnamed pedestrians, non-narrative shops) rather than polishing every building.",
+        "Implement a 'procedural feedback loop' where early player playtests flag visually repetitive or immersion-breaking procedural results; prioritize hand-crafting the top 5% of most-visited locations (intersections, parks, commercial hubs), leaving periphery procedurally generated and updated dynamically as player data indicates new high-traffic zones."
+      ],
+      "review": "Procedural systems promise scalability but shift risk from art production to engineering quality assurance; a broken procedural routine can affect thousands of NPCs or buildings simultaneously, whereas a single hand-crafted error affects one location. The hybrid approach sounds balanced but in practice teams drift toward either pure hand-crafting (if QA costs of fixing procedural bugs exceed creation time) or pure procedural (if art hiring lags). None of these options directly address the discoverability problem: procedurally generated secrets and hidden interiors feel random rather than rewarding, undercutting the exploratory fantasy that defines open-world appeal."
+    },
+    {
+      "lever_id": "2ef82665-48c3-4ce0-88d7-6a772e14132a",
+      "name": "Heist Mission Complexity Ramp",
+      "consequences": "Designing complex, physics-dependent heist missions (multi-stage robberies with emergent NPC reactions, dynamic building destruction, and player-choice branching) from day one creates marketing differentiation and extends replayability, but incomplete systems (NPC pathfinding, destructible object networks, save-state branching) can cascade into months of debugging. Launching heists in a simpler form (scripted, linear stages) reduces risk and ships faster, but diminishes the game's core mechanical hook and is difficult to expand retroactively.",
+      "options": [
+        "Prototype heists using simplified scripted sequences and fixed stage layouts in months 1\u20138, validate mission pacing and narrative flow with external playtesters, then incrementally unlock dynamic features (destructible environments, NPC reactions) as underlying systems mature, ensuring complexity is added iteratively post-launch.",
+        "Build heist architecture to support branching decision trees and emergent outcomes from the outset, staffing a dedicated simulation systems team (8\u201310 engineers) to develop robust physics, pathfinding, and state management in parallel with mission design, accepting higher upfront cost for greater long-term flexibility.",
+        "Release the game with 3\u20134 hand-authored, heavily-polished signature heist missions that demonstrate systemic depth, then post-launch introduce a procedural heist generator for secondary content, allowing players to create custom robbery scenarios using validated building blocks."
+      ],
+      "review": "Iterative simplicity minimizes schedule risk but commits players and critics to a scaled-down version at launch, which is difficult to retroactively upgrade without feeling incomplete; complex heists promised pre-launch but delivered post-launch breed negative perception. Parallel high-complexity development requires more engineering but creates a 'double team' problem: if the simulation systems slip, mission designers are blocked waiting for pathfinding or physics fixes. The procedural heist generator promises infinite content but risks player confusion\u2014custom-generated heists may lack narrative coherence, and players will naturally compare them unfavorably to hand-authored ones."
+    },
+    {
+      "lever_id": "f08348a0-a68d-4110-b0ea-e15894c9e07e",
+      "name": "Multiplayer Integration Timeline",
+      "consequences": "Shipping multiplayer from day one (cooperative heists, shared open-world servers, faction competition) amplifies social engagement and live-service revenue, but requires robust anti-cheat systems, server infrastructure, and synchronization logic that introduces development complexity and QA burden during a critical single-player launch window. Deferring multiplayer to a post-launch update (6\u201312 months later) stabilizes single-player development and reduces launch-day crashes, but loses first-mover multiplayer momentum to competing games and forces retroactive architectural changes to enable server play.",
+      "options": [
+        "Develop a feature-complete multiplayer backend and anti-cheat layer in parallel with single-player during months 1\u201320, with separate QA streams, then beta-test multiplayer in a limited early-access period (months 20\u201322) before full launch, adding 6\u20138 months of pre-launch multiplayer validation.",
+        "Release single-player as the core launch product (month 24), then deploy asynchronous multiplayer modes first (shared world passive presence, leaderboards, ghost replays of player heists) in month 28, followed by synchronous cooperative heists in month 36, avoiding synchronization complexity at launch.",
+        "Architect a flexible backend that allows both offline single-player and optional multiplayer connection, launching single-player first, then offering 'multiplayer-lite' (shared world snapshot updated daily, not real-time synchronization) at month 26, upgrading to full real-time multiplayer only if player demand exceeds 50% adoption of multiplayer features."
+      ],
+      "review": "Parallel multiplayer and single-player development is the 'correct' approach if you have the engineering depth, but this project is funding-constrained\u2014adding a full server infrastructure team (8\u201312 engineers) and QA stream in month 1 consumes budget better spent on single-player systems that drive day-one reviews and word-of-mouth. Post-launch multiplayer is safe and realistic, but multiplayer-first games (Fortnite, Warzone) have trained players to expect social features immediately; absent multiplayer at launch, some players may not return for the post-launch 'expansion.' None of these options account for regulatory risk: real-money trading in multiplayer heist scenarios may trigger gambling regulations in certain jurisdictions, requiring legal review that can slip multiplayer timelines unpredictably."
+    },
+    {
+      "lever_id": "942ce13a-0937-4416-a32c-e8f465acf7ca",
+      "name": "Graphical Fidelity vs. Performance Optimization",
+      "consequences": "Pursuing 'next-gen graphical fidelity' (ray-traced lighting, photogrammetry assets, detailed NPC animation, high-resolution textures) attracts critics and marketing attention, but drives up asset production costs, requires target hardware with high computational budgets (e.g., high-end PC specs, next-generation consoles), and risks frame-rate degradation in complex scenes (crowded city intersections, large heists) that undermine player experience. Prioritizing stable 60 FPS performance on current hardware broadens player accessibility and ensures smooth gameplay, but risks perception of visual mediocrity compared to competitors.",
+      "options": [
+        "Establish a hard performance floor (60 FPS on current-generation consoles at 1440p) as non-negotiable, then allocate all remaining GPU budget to visual fidelity, using dynamic resolution scaling and LOD systems to maintain target frame rate, shipping on current hardware without requiring next-gen hardware.",
+        "Target 4K 30 FPS on high-end hardware (next-gen consoles, flagship PCs) as the showcase experience, with adaptive visual settings that auto-degrade to 1440p 60 FPS on mid-tier hardware, letting players choose between visual fidelity and responsiveness.",
+        "Separate visual modes by gameplay context: 'Crime Mode' (cinematic, ray-traced, heavy effects) for narrative missions at 30 FPS, 'Street Mode' (optimized, 60 FPS) for open-world driving and heists, allowing players to switch aesthetics on-the-fly and de-coupling fidelity from performance expectations."
+      ],
+      "review": "The performance-first approach (60 FPS locked) dates a game visually within 18 months of launch, as players compare it to titles released with more aggressive visual budgets; it's a 'safe' choice that sacrifices marketing edge. The 4K/1440p adaptive approach is standard industry practice but obscures a hard decision: if next-gen hardware adoption lags expectations, your 'showcase' experience plays on 5% of target hardware, and marketing material shot in 4K may disappoint the 95% who play at 1440p. The dual-mode approach (cinematic vs. optimized) is non-standard and risks player frustration if heist performance tanks after switching from Crime Mode, creating support burden and negative reviews. All three assume ray-tracing is non-negotiable, but ray-tracing quality on real-time NPCs (reflections in windows showing crowd motion) is imperceptible to most players and absorbs significant engineering time for diminishing returns."
+    },
+    {
+      "lever_id": "fa12fd98-a755-40c2-b3b9-0d6e7b87bcef",
+      "name": "NPC Behavior Authenticity vs. Computational Load",
+      "consequences": "Realistic NPC routines (work schedules, social networks, economic participation) create emergent gameplay and world believability but consume significant CPU/GPU resources and testing cycles. A high-complexity simulation requires months of tuning and stress-testing across target hardware; scaling down NPC depth frees development cycles but reduces the sense of a living city and may undermine the criminal-economy narrative premise.",
+      "options": [
+        "Implement full persistent NPC employment, family, and criminal affiliation systems with daily routines, store purchases, and rivalry mechanics, accepting 18\u201324 months of iteration and profiling to hit target frame rates.",
+        "Deploy a tiered NPC system: core antagonists and mission givers receive full routines, while background pedestrians follow simplified looped behaviors with occasional emergent moments triggered by player proximity.",
+        "Limit NPC simulation to event-driven interactions; pedestrians and minor NPCs exist primarily as environmental detail and mission targets, with full behavioral depth reserved for story-critical characters and faction leaders."
+      ],
+      "review": "Authenticity drives marketing and critical reception, but the computational cost of persistent systems scales with world size and concurrent NPC count. The options assume that frame-rate targets are fixed; if the team discovers 12 months in that a full simulation runs at 40fps instead of 60fps on target consoles, all three options require rework, yet none of them include a pre-production prototype budget to validate feasibility before full integration."
+    },
+    {
+      "lever_id": "94e3c87e-86d7-4a14-a32e-0c01e935f679",
+      "name": "Heist Mission Authorship and Replayability",
+      "consequences": "Hand-authored heist missions deliver narrative coherence, Hollywood-grade set pieces, and carefully balanced challenge progression, but each mission requires 3\u20136 months of design, cinematic scripting, and balance iteration. Procedurally-generated heists scale replayability and hours-of-play metrics but sacrifice narrative quality and risk feeling repetitive. The choice affects both campaign length perception and post-launch content velocity.",
+      "options": [
+        "Produce 12\u201315 marquee hand-crafted heist missions with full voice acting, branching outcomes, and cinematic sequences, supplemented by a procedural 'gig economy' system for secondary jobs and side raids.",
+        "Create 8 core hand-authored heists with robust scaffolding that permits procedural variation (randomized targets, guard patterns, entry routes) within each mission template to extend replayability without multiplying design workload.",
+        "Develop a procedurally-driven heist framework where the mission structure (reconnaissance, infiltration, extraction) is algorithmic, with hand-authored set pieces and faction-specific dialogue woven into randomly-selected scenarios."
+      ],
+      "review": "Hand-crafted heists anchor player memory and drive word-of-mouth, but the per-mission cost explodes if post-launch DLC is expected. Procedural replayability extends engagement metrics, but players rapidly identify algorithmic patterns, and user reviews comparing GTA6 heists to GTA5 will penalize any perception of 'less cinema.' None of the options budget for a heist-mission playtest panel or community feedback loop before code-lock, risking launch criticism that 'heists feel thin.'"
+    },
+    {
+      "lever_id": "2c0818b5-1a4e-45da-8fb5-dae92e304175",
+      "name": "Vehicle Customization Ecosystem Scope",
+      "consequences": "Deep customization (performance tuning, cosmetics, engine swaps, handling profiles) rewards invested players and extends engagement, but requires integration with economy systems, save-file architecture, and multiplayer synchronization. Each vehicle class (sports cars, trucks, lowriders, aircraft) multiplies customization permutations and QA scope. Narrowing scope reduces complexity but may feel shallow compared to prior GTA titles.",
+      "options": [
+        "Offer granular customization across all vehicle types (100+ car classes): engine upgrades, suspension, wheels, paint, interior trim, handling profiles, and class-specific mods, with persistent garage storage and online trading.",
+        "Provide deep customization for player-owned vehicles and core vehicle classes (sedans, sports cars, SUVs, motorcycles) while limiting NPC and transient vehicle customization to cosmetic paint and wheel swaps.",
+        "Restrict customization to cosmetic modifications (paint, decals, wheels, basic liveries) and performance tiers (low/medium/high engine settings), streamlining save-file overhead and multiplayer synchronization at the cost of granular control."
+      ],
+      "review": "Vehicle customization is a retention lever \u2014 players spend hours and in-game currency optimizing their rides. However, the cost of custom-handling physics validation scales non-linearly; a poorly-tuned lowrider or aircraft mod creates exploits and crashes. The options assume QA can catch balance issues before launch; if post-launch patches reveal that a specific mod combination breaks online races, player trust erodes and the customization system becomes liability, not asset."
+    },
+    {
+      "lever_id": "b062e9db-4fa4-4f8e-86b5-b4501c495f46",
+      "name": "Moral Choice Abstraction and Narrative Branching",
+      "consequences": "A branching morality system (lawful enforcer vs. criminal boss vs. amoral opportunist) delivers player agency and replayability but requires parallel questlines, divergent NPC relationships, and reputation tracking across hundreds of decisions. Simpler abstraction (good/evil slider or stat-based consequences) reduces content duplication but may feel like cosmetic choice rather than genuine consequence. The choice affects campaign replayability and spoiler avoidance during marketing.",
+      "options": [
+        "Implement a dynamic alignment system tracking player choices (crime, brutality, mercy, loyalty) across 50+ story missions and side quests, with NPC faction perception, character dialogue, and mission availability shifting based on accumulated alignment; players can toggle difficulty and alignment consequences independently.",
+        "Create three discrete story paths (law enforcement, criminal syndicate, independent operator) that branch at key narrative junctures, with dialogue and mission objectives tailored to path, but converging at the finale; players commit to a path by mid-game, enabling focused development.",
+        "Provide a single canonical campaign with moral flavor text and cosmetic consequences (NPCs acknowledge player choices in dialogue) but no material impact on mission availability, faction standing, or ending, reducing branching complexity while preserving player perception of agency."
+      ],
+      "review": "Narrative branching scales content costs exponentially; three parallel story paths means three versions of every mission, dialogue tree, and NPC arc. The team's stated aim to 'blend narratives of crime, corruption, and power struggles' implies nuance, yet none of the options include a budget for player choice tracking and consequence resolution during post-launch patches \u2014 a shortfall that commonly results in players discovering 'choice doesn't matter' and feeling cheated by late-game convergence."
+    },
+    {
+      "lever_id": "adc8a345-21ef-4bb5-84b5-d8697ac4f839",
+      "name": "Online Economy Integration and Real-Currency Monetization",
+      "consequences": "A robust online economy (player-to-player trading, property investment, criminal enterprise ownership) drives engagement and monetization opportunities but introduces inflation risk, exploits, and player-complaint management overhead. Currency-conversion systems (in-game dollars to premium currency) require careful balancing to avoid pay-to-win perception. Early economy design mistakes compound over years and are nearly impossible to fix without player backlash.",
+      "options": [
+        "Develop a fully player-driven economy with property ownership, criminal enterprise shares, vehicle trading, and in-game stock markets, gated behind activity gates and cooldowns; premium currency is tradeable for in-game currency on a fixed exchange, allowing earning through gameplay.",
+        "Implement a soft economy: players can customize and sell vehicles, earn passive income from owned properties, and trade cosmetics, but all tradeable items have cash caps and time-gating to prevent exploitation; premium currency is cosmetic-only (battle pass, unique skins, animations).",
+        "Restrict online transactions to cosmetic items and battle-pass progression; eliminate player-to-player trading and property markets to reduce economy-tuning risk; all in-game wealth is earned through gameplay and cannot be transferred between players."
+      ],
+      "review": "Online economies are revenue engines but also community landmines \u2014 players obsess over fairness and exploit detection. The tension is between monetization upside (player spending) and operational cost (anti-cheat, economy monitoring, player support). None of the options include a pre-launch economy simulation or player-behavior modeling; teams often discover 6 months after launch that a single exploit (duplication, high-yield raid farming) has flooded the currency supply, requiring emergency rebalance and player compensation that erodes trust."
+    },
+    {
+      "lever_id": "64fbf9a4-2c44-4ba1-bd44-da2af1e638aa",
+      "name": "Rendering Pipeline and Platform Target Parity",
+      "consequences": "Developing a unified rendering engine across PS5, Xbox Series X, and PC simplifies asset creation and testing but constrains fidelity to the weakest target or requires platform-specific optimization passes. A platform-specific pipeline maximizes each hardware's capabilities (ray-tracing on high-end PC, bespoke console paths) but multiplies engine tuning work and risks visual inconsistency in marketing materials. Early commitment locks resource allocation for 24+ months.",
+      "options": [
+        "Build a single rendering pipeline targeting high-end PC specs (4K, 120fps, full ray-tracing) with progressive downsampling for consoles (1440p, 60fps, selective ray-tracing), accepting that PS5/Xbox gameplay visuals will lag marketing videos and requiring robust downgrade testing.",
+        "Create a unified base engine with console-optimized paths: all platforms share geometry and physics, but console versions use baked lighting, simplified shadows, and pre-calculated reflections, while PC unlocks dynamic shadows, ambient occlusion, and ray-traced global illumination on high settings.",
+        "Develop separate rendering codebases for console (fixed 60fps, tailored to Silicon speed) and PC (scalable 1080p\u20134K, frame-rate slider), accepting doubled engine maintenance and synchronizing asset pipelines through a shared content library to manage divergence."
+      ],
+      "review": "Rendering parity vs. capability is a false binary dressed as technical choice \u2014 the real tension is between marketing expectations and production schedule. GTA5 was marketed as 'next-gen' on PS3/Xbox360 and delivered lavish ports; players expect similar fidelity across platforms. None of the options include a pre-production rendering proof-of-concept or performance regression budget; if the team discovers 18 months in that ray-tracing on console runs at 30fps, the revert cost cascades through art asset validation and risks launch-window quality."
+    },
+    {
+      "lever_id": "512d5268-a12a-4d8b-aba7-3179e9543a61",
+      "name": "Post-Launch Content Commitment and DLC Roadmap Visibility",
+      "consequences": "A public, multi-year DLC roadmap (new story chapters, heists, vehicles, properties) signals confidence and manages player expectations but locks the studio into delivery commitments and creates organizational debt if priorities shift. Keeping DLC under wraps preserves flexibility but risks player churn if the game feels 'complete at launch' and post-launch patches feel reactive rather than planned. The choice affects pre-order messaging, player retention metrics, and team hiring pipeline.",
+      "options": [
+        "Announce and publish a 24-month post-launch roadmap including 3 major story expansions, 8 heist DLC packs, seasonal vehicles, and property updates, with monthly content cadence; structure the live-ops team separately from core engine maintenance to enforce predictability.",
+        "Commit to quarterly content drops (one new story mission, one heist variant, cosmetic refreshes) without pre-announcing specific titles or dates; build a live-ops sandbox and a content production pipeline that can absorb 2\u20133 person-month feature requests from the community during each quarterly cycle.",
+        "Release the base game with the promise of 'ongoing support' and determine post-launch content scope based on player metrics and revenue performance; allocate a fixed live-ops headcount and allow feature mix to fluctuate based on engagement data and dev capacity."
+      ],
+      "review": "Public roadmaps build hype and pre-order justification, but they are contracts with players \u2014 miss a deadline and the credibility cost compounds. The unstated tension is between resource predictability (a locked roadmap allows hiring and budget certainty) and creative agility (a flexible roadmap permits pivoting away from unpopular features). None of the options include a contingency for unexpected technical debt (e.g., a console OS update breaks ray-tracing, requiring 6 weeks of regression) or unforeseen live-ops crises (e.g., an exploit in the seasonal economy requires emergency rebalance); teams that commit to public timelines often end up deferring other work to patch broken promises."
+    },
+    {
+      "lever_id": "2a62e9e0-44ad-4667-bb8f-ec5655673f61",
+      "name": "Dialogue and Narrative Branching Depth",
+      "consequences": "Expanding dialogue trees and narrative branches increases emotional immersion and replay value but exponentially multiplies voice acting, localization, and QA workload. A densely branched campaign with 200+ hours of unique dialogue can consume 18\u201324 months of production time and double localization costs, potentially pushing ship date past the 2028 window unless dialogue is batched early and re-recorded late.",
+      "options": [
+        "Author a linear narrative spine with optional side-dialogue modifiers that let NPC reactions shift without forking mission outcomes, reducing voice asset duplication while preserving player agency perception.",
+        "Implement a dialogue token system where player choices influence a hidden reputation vector rather than spawning new scenes, allowing a single scene to feel contextually responsive without creating full branching cutscenes.",
+        "Embrace parallel dialogue trees only for faction-critical moments and suppress branching elsewhere, funneling voice-acting budget to three to five high-stakes decision points that carry visual and mechanical consequences."
+      ],
+      "review": "The core tension is whether narrative depth returns more player engagement than systemic breadth; the options all assume that fewer unique scenes can still feel 'chosen' if the right variables shift reactively. What they miss is that AAA players increasingly expect seamless re-playability without re-watching cutscenes\u2014none of the options include a skip-with-summary or narrative recap system that frees later completionists from re-doing exposition."
+    },
+    {
+      "lever_id": "50e0bff8-131c-4e5c-9e8d-89e8bc399eff",
+      "name": "Police and Gang Escalation Mechanics",
+      "consequences": "Defining how law enforcement and rival gang factions respond to player actions shapes moment-to-moment gameplay tension and open-world unpredictability. A rule-heavy escalation system (six-star wanted levels, NPC gang wars, territory control) creates emergent chaos but demands extensive state-tracking, AI exception handling, and emergency animation rigging if the system breaks under edge cases.",
+      "options": [
+        "Implement a persistent notoriety decay system where police attention fades based on location, time elapsed, and witness count, allowing players to strategically hide rather than fight, and reducing the need for unlimited high-threat NPC spawning.",
+        "Deploy a faction reputation matrix where killing cops or gang members shifts allegiances dynamically, flipping NPC behavior from hostile to neutral to allied depending on recent player actions, creating situational alliances instead of hardcoded enemy vs. enemy scenarios.",
+        "Constrain wanted-level escalation to specific trigger zones (downtown, industrial, harbor) where law enforcement presence is plausible, and leave vast suburban and rural regions with minimal police response, reducing the need to balance AI behavior across all terrain."
+      ],
+      "review": "The core tension is whether realism (visible cops everywhere, immediate response) or gameplay freedom (low-friction escape routes, predictable escalation) takes priority. All options assume the player benefits from *predictability* in how the system reacts; what they miss is that the most memorable crime games rely on *surprise*\u2014a sudden gang ambush or SWAT deployment that the system didn't telegraph but the world somehow 'earned.' None of the options include a director-layer AI that occasionally violates the stated rules to create cinematic moments."
+    },
+    {
+      "lever_id": "3be2b503-0551-4ff8-9e10-2721622cf9d2",
+      "name": "Mission Failure and Checkpoint Tolerance",
+      "consequences": "Deciding whether failed heist attempts consume narrative time, cost in-game currency, or simply reset the mission state determines pacing rhythm and player frustration tolerance. Permadeath or high-penalty failure modes (losing equipment, triggering gang retaliation) raise tension but also force save-scumming and can stall casual players for hours on a single mission.",
+      "options": [
+        "Adopt a checkpoint-within-mission model where failed heists restart at a defined phase (e.g., getaway starts over but the robbery doesn't), and post-mission consequences trigger only on final success, collapsing narrative branching but preserving momentum and accessibility.",
+        "Implement a 'crew reputation' mechanic where failed heists diminish NPC crew morale, unlock fewer side-missions, or trigger rival gang moves, making failure costly in *future* gameplay rather than immediately, and allowing immediate retry without time pressure.",
+        "Enforce a single-save architecture where failure rolls back the entire session and costs the player in-game time and money, but only for optional hard-difficulty heists; main-story missions always checkpoint, creating a difficulty curve that lets players choose their own failure cost."
+      ],
+      "review": "The core tension is whether failure teaches or frustrates; all options assume that some form of checkpoint mitigates hard-failure wall, but that narrative *consequences* for setbacks create weight. What they miss is that permitting instant retry without cost trains players to brute-force rather than plan\u2014a heist game lives or dies on whether players feel clever when they succeed, not lucky. None of the options include a 'planning phase' where failure in prep costs time/resources but success in execution is nearly guaranteed, shifting the skill challenge to foresight rather than reflexes."
+    },
+    {
+      "lever_id": "a890e8f8-8a54-41eb-8b02-cbfa1dd14fae",
+      "name": "Interior Location Interactivity and Density",
+      "consequences": "Expanding the number of interactable interiors (apartments, offices, shops, hideouts) with unique physics, destructible elements, and NPC routines deepens world immersion but creates a content authoring bottleneck\u2014each detailed interior can consume 3\u20136 weeks of artist and designer time. A full-fidelity interior system risks pushing the memory footprint beyond console constraints or requiring aggressive streaming that creates loading-stutter complaints.",
+      "options": [
+        "Develop a modular interior-assembly system where a library of pre-built room modules (bedrooms, bathrooms, kitchens, office cubbicles) auto-generate interiors procedurally, with hand-authored 'signature' interiors only for mission-critical locations, allowing fast iteration and vastly more explorable buildings.",
+        "Commit to hand-authored interiors only for 40\u201350 landmark locations (safe houses, nightclubs, gang headquarters, government offices) and populate remaining buildings with locked doors or simple generic rooms, focusing quality over quantity and freeing artist time for open-world environmental detail.",
+        "Implement a 'furniture and decor streaming' system where interiors load exterior walls and basic shell instantly but details stream in as the player spends time inside, allowing dense rooms without blocking exploration and reducing the per-interior memory requirement."
+      ],
+      "review": "The core tension is between world scale (hundreds of explorable interiors) and environmental storytelling (each space feeling intentional and authored). All options assume that *some* interiors must be hand-crafted to avoid repetitive procedural sameness; what they miss is that players spend 80% of their time in *mandatory mission interiors*, meaning quality-per-interior matters more than total-interior-count. None of the options include a dynamic-layout system where interior decor and layout shift based on story state (e.g., a gang hideout gets ransacked mid-campaign, changing visual narrative), which would reward replaying and refresh stale spaces."
+    },
+    {
+      "lever_id": "6520c86f-200c-4358-8e68-9f280c66445d",
+      "name": "Radio Station Soundtrack and Live-Service Music Licensing",
+      "consequences": "A living radio system with dozens of licensed tracks, talk-radio stations, and DLC music packs creates deep immersion and viral marketing potential but locks the studio into ongoing licensing costs and royalty payments that persist long after ship. A song licensed for five years across three territories can cost $50K\u2013$200K depending on popularity and exclusivity, accumulating rapidly across 500+ tracks, and regional licensing fragmentation may require different soundtrack versions per territory.",
+      "options": [
+        "Curate a fixed 300-track soundtrack (licensed music, original orchestral, and in-house compositions) at ship and commit to no post-launch music licensing, bundling all royalty costs into the development budget and eliminating long-term licensing liability while accepting that players will exhaust novelty within 100 hours of radio-listening.",
+        "Partner with a streaming service (Spotify, Apple Music) to license their catalog dynamically, paying a per-user per-month fee instead of per-song upfront fees, and rotate featured artists monthly through in-game radio promotions, converting music into a recurring player engagement hook.",
+        "Develop a 'player-curated radio' system where streamers and content creators can upload their own mixes, or broadcast directly from their own music libraries, shifting licensing burden to the end-user and allowing infinite content refresh without publisher liability, though creating brand-safety and moderation challenges."
+      ],
+      "review": "The core tension is between immersion (recognizing licensed hits, cultural relevance) and financial predictability (licensing costs scaling with player base). All options assume that music is primarily a *discovery* medium that players engage passively while driving; what they miss is that radio in GTA is a *comedy and world-building tool*\u2014the dialogue and parody advertisements matter more than the tracks themselves. None of the options emphasize investing in original comedy-radio content and talk-show scripting, which could age better than licensed music and cost less than clearing 500 existing songs."
+    },
+    {
+      "lever_id": "711a1e7d-2045-4a1c-bab3-af4ccb524966",
+      "name": "Cheat Code Availability and Sandbox Progression Gating",
+      "consequences": "Deciding whether cheats unlock automatically, require completion milestones, or remain unavailable shapes whether the game is a strict narrative experience or a flexible sandbox. Early cheat availability (god mode, infinite ammo, spawn vehicles) can trivialize difficulty and collapse engagement for narrative-first players, but gating cheats behind 60+ hours of completion can frustrate sandbox-first players who want immediate creative freedom.",
+      "options": [
+        "Disable all cheats in the primary save and restrict them to a separate 'creative mode' that parallels the campaign, allowing players to explore sandbox builds without derailing progression, and tracking achievement completion exclusively on the campaign save.",
+        "Unlock cheats progressively after each story chapter, releasing god-mode at chapter two, unlimited ammo at chapter four, and vehicle-spawning at chapter six, allowing players who engage with narrative to earn sandbox tools as rewards for pacing adherence rather than locking them away.",
+        "Hide cheat codes behind environmental discovery (easter-egg phone numbers, hidden computer terminals, graffiti triggers) that require exploration and community knowledge-sharing, making cheats feel earned through curiosity rather than time, and creating emergent content marketing when players share cheat-unlock guides."
+      ],
+      "review": "The core tension is whether progression should enforce narrative pacing or empower player autonomy; all options assume some form of cheat availability, accepting that modern players expect sandbox freedom eventually. What they miss is the *metagame* of speedrunners and challenge-runners who want a frictionless way to disable specific features (e.g., 'invulnerable but no cheats' or 'timeshift only') without accessing the full god-mode suite. None of the options include a granular difficulty/sandbox settings system where players can tune individual mechanical parameters before starting, which would convert cheat codes from a secret reward into a visible player expression."
+    },
+    {
+      "lever_id": "2fc0914c-0c4f-414a-9dcf-957d47c6ac14",
+      "name": "Criminal Enterprise Ownership and Recurring Revenue Gameplay",
+      "consequences": "Allowing players to own and operate businesses (drug fronts, protection rackets, underground gambling, fencing operations) creates a long-tail engagement loop and justifies login incentives for multiplayer modes, but business management adds UI complexity, requires backend server load to track persistent state, and must be balanced carefully to prevent grinding-fatigue from overshadowing narrative missions. A poorly-balanced business loop can encourage AFK idling or real-money shortcuts, damaging single-player immersion.",
+      "options": [
+        "Implement passive business income that accumulates over real-world time (players log back in to collect daily protection money or nightclub revenue), integrated into the single-player save and capped at a soft paywall that rewards *returning* rather than continuous play, and avoiding any multiplayer economy coupling.",
+        "Create active business-management minigames where owning a business requires periodic player involvement (restocking supplies, dealing with rival threats, managing employee morale) that unlocks story sequences and special missions, making business progression tied to narrative rather than time-gating and collapsing the multiplayer/single-player economy separation.",
+        "Restrict business ownership exclusively to multiplayer mode and explicitly decouple it from the single-player campaign, allowing multiplayer GTA Online to develop its own tycoon progression while preserving single-player as a pure narrative experience, accepting that this limits cross-mode engagement but eliminates monetization temptation in single-player."
+      ],
+      "review": "The core tension is whether recurring revenue mechanics (passive income, login incentives) belong in a story-driven single-player game or exclusively in multiplayer; all options assume that *some* players want long-tail progression beyond the main narrative. What they miss is that the most successful long-tail engagement comes from *cosmetic inventory*, not economic simulation\u2014players who log in daily for business collection are often grinding out of obligation, not enjoyment. None of the options include a prestige-reset system where completing a business empire unlocks a cosmetic reward (new outfits, vehicle paint, apartment decoration) tied to *multiplayer visibility*, which would reward engagement without creating economic inequality between new and veteran players."
+    }
+  ],
+  "metadata": {
+    "metadata_1": {
+      "context_window": 200000,
+      "num_output": 8192,
+      "is_chat_model": true,
+      "is_function_calling_model": true,
+      "model_name": "claude-haiku-4-5-20251001",
+      "system_role": "system",
+      "llm_classname": "Anthropic_LLM"
+    },
+    "metadata_2": {
+      "context_window": 200000,
+      "num_output": 8192,
+      "is_chat_model": true,
+      "is_function_calling_model": true,
+      "model_name": "claude-haiku-4-5-20251001",
+      "system_role": "system",
+      "llm_classname": "Anthropic_LLM"
+    },
+    "metadata_3": {
+      "context_window": 200000,
+      "num_output": 8192,
+      "is_chat_model": true,
+      "is_function_calling_model": true,
+      "model_name": "claude-haiku-4-5-20251001",
+      "system_role": "system",
+      "llm_classname": "Anthropic_LLM"
+    }
+  },
+  "system_prompt": "You are an expert strategic analyst. Generate solution space parameters following these directives:\n\n1. **Output Requirements**\n   - You must generate 5 to 7 levers per response.\n   - Each lever's `options` field must contain exactly 3 qualitative strategic choices as plain strings.\n\n2. **Lever Quality Standards**\n   - Consequences: describe the direct effect of pulling this lever, then at least one downstream implication or trade-off. Be concise and grounded \u2014 only cite specific numbers if the project context provides evidence for them. Do not fabricate percentages or cost estimates. Target length: 2\u20134 sentences.\n   - Options MUST:\n     \u2022 Represent genuinely distinct strategic pathways (not just labels)\n     \u2022 Include at least one unconventional or non-obvious approach\n     \u2022 NO prefixes (e.g., \"Option A:\", \"Choice 1:\")\n\n3. **Strategic Framing**\n   - Name each lever using language drawn directly from the project's own domain \u2014 avoid formulaic patterns or repeated prefixes\n   - Frame options as complete strategic approaches\n   - Ensure levers challenge core project assumptions\n\n4. **Validation Protocols**\n   - For `review_lever`:\n     A short critical review \u2014 name the core tension, then identify a weakness the options miss.\n     Examples:\n     - \"Switching from seasonal contract labor to year-round employees stabilizes harvest quality, but the idle-wage burden during the 5-month off-season adds a fixed cost that erases the per-unit savings unless utilization reaches year-round levels.\"\n     - \"Section 106 heritage review for the historic-district alignment triggers a mandatory 45\u2013180-day public comment period that falls entirely outside the project schedule \u2014 any opening date committed before permits clear is betting on the minimum review timeline, not the median.\"\n     - \"Pooling catastrophe risk across three coastal regions reduces expected annual loss on paper, but a single regional hurricane season can correlate all three simultaneously, turning the diversification assumption into a concentration risk at the worst possible moment.\"\n     Do not use square brackets or placeholder text.\n\n5. **Prohibitions**\n   - NO prefixes/labels in options (e.g., \"Option A:\", \"Choice 1:\")\n   - NO generic option labels (e.g., \"Optimize X\", \"Tolerate Y\")\n   - NO placeholder consequences or bracket-wrapped templates\n   - NO fabricated statistics or percentages without evidence from the project context\n   - NO marketing language (e.g., \"game-changing\", \"cutting-edge\", \"revolutionary\")\n\n6. **Option Structure**\n   - Maintain parallel grammatical structure across options\n   - Ensure options are self-contained descriptions\n   - Each option should be a concrete, actionable approach (at least 15 words with an action verb) \u2014 not a short label or vague aspiration",
+  "user_prompt": "File 'plan.txt':\nPlan:\nDevelop the next Grand Theft Auto (GTA), featuring a sprawling, immersive open-world metropolis blending elements of Los Angeles, Detroit, and Miami, filled with intricate narratives of crime, corruption, and power struggles, realistic criminal economies, dynamic NPC interactions, complex heist mechanics, extensive vehicle customization, nuanced morality systems, advanced procedural generation, next-gen graphical fidelity, multiplayer modes, and innovative gameplay funded by strategic industry partnerships, publisher investments, and government innovation grants. Don't go for the most aggressive scenario. Banned words: blockchain, DAO, crowdfunding.\n\nToday's date:\n2026-Mar-13\n\nProject start ASAP\n\nFile 'purpose.md':\n**Purpose:** business\n\n**Purpose Detailed:** Developing a new Grand Theft Auto game with advanced features, complex narratives, and strategic funding.\n\n**Topic:** Grand Theft Auto (GTA) Game Development\n\nFile 'plan_type.md':\nThis plan requires one or more physical locations. It cannot be executed digitally.\n\n**Explanation:** Developing a Grand Theft Auto game, even with advanced procedural generation and cloud-based tools, *inherently requires* a physical development environment, including offices, hardware, and in-person collaboration among developers, artists, and designers. Testing the game also requires physical devices and real-world testing scenarios. Securing funding through partnerships and grants involves physical meetings and presentations. Therefore, this plan is classified as physical."
+}
