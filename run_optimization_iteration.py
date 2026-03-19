@@ -436,7 +436,7 @@ def main():
         "--step",
         type=str,
         default=DEFAULT_STEP_NAME,
-        choices=["identify_potential_levers", "identify_documents"],
+        choices=["identify_potential_levers", "deduplicate_levers", "identify_documents"],
         help=f"Pipeline step to optimize (default: {DEFAULT_STEP_NAME}).",
     )
     parser.add_argument(
