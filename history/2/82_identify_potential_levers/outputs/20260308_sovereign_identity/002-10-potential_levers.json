@@ -1,0 +1,200 @@
+[
+  {
+    "lever_id": "d473cfb9-e425-43ec-bd65-29727590c4dd",
+    "name": "AltID platform-neutral procurement integration",
+    "consequences": "Embedding platform-neutral fallback requirements into AltID procurement creates a formal resilience channel, reducing dependence on Apple/Google signals and encouraging multi-provider interoperability. Downstream, it drives architectural accommodations among bidders and may extend procurement timelines as evaluation criteria are refined and tested.",
+    "options": [
+      "Require AltID procurement to mandate platform-neutral fallback authentication paths using open standards such as FIDO2/WebAuthn and OpenID Connect, with testing in controlled pilot environments.",
+      "Offer a phased procurement approach that splits core fallback development from integration, enabling parallel work while reducing single-vendor lock-in.",
+      "Create an evaluation framework that prioritizes resilience metrics and incident response readiness alongside user convenience in tender scoring."
+    ],
+    "review": "Core tension centers on procurement speed versus resilience guarantees. A weakness is that even with platform-neutral criteria, reliance on external signals may persist unless an independent fallback anchor is established."
+  },
+  {
+    "lever_id": "07e203ac-8649-4d88-8ad7-1a3a45881369",
+    "name": "Non-production demonstrators for standards-first fallback",
+    "consequences": "Phase-two demonstrators test a standards-based fallback against a simulated identity-provider environment, using FIDO2/WebAuthn and OpenID Connect, and run on GrapheneOS or privacy-focused Android variants. This builds credibility for platform-neutral approaches but does not address live production risk or formal procurement constraints.",
+    "options": [
+      "Launch two non-production demonstrators that authenticate against a simulated identity-provider environment using FIDO2/WebAuthn and OpenID Connect on privacy-focused Android variants.",
+      "Develop a browser-based or hardware-token fallback path to reduce reliance on mobile OS integrity signals and document performance under varied network conditions.",
+      "Publish a detailed methodology and test results in a public risk report to enable external validation and reduce vendor skepticism."
+    ],
+    "review": "Core tension centers on feasibility versus policy acceptance and certification risk. A weakness is that demonstrators may not translate into procurement-readiness or regulatory endorsement."
+  },
+  {
+    "lever_id": "055bab90-581d-4ba9-97d2-43463ef8f789",
+    "name": "EU-aligned standards and AltID integration lobbying",
+    "consequences": "Engaging EU wallets and NSIS/eIDAS alignment can unlock interoperability funding and cross-border use, creating favorable procurement pathways. However, it requires navigating complex EU timelines and may slow national decision cycles.",
+    "options": [
+      "Lead a formal dialogue with Digitaliseringsstyrelsen and EU bodies to align AltID requirements with European Digital Identity Wallet standards.",
+      "Publish a cross-border interoperability roadmap mapping Danish fallback paths to NSIS, eIDAS, and Wallet milestones.",
+      "Lobby for procurement clauses that require platform-neutral fallback solutions to be considered in all future national identity-related tenders."
+    ],
+    "review": "Core tension: EU alignment often competes with national sovereignty and procurement cycles. A weakness is that EU processes can be slow and risk diluting national objectives."
+  },
+  {
+    "lever_id": "0d75a3ab-717f-4985-a994-780245b36949",
+    "name": "Formal coalition and procurement neutrality governance",
+    "consequences": "A broad coalition reduces political risk and creates pressure to adopt platform neutrality, but aligning diverse actors can slow decision-making and risk mission drift.",
+    "options": [
+      "Establish a formal governance council including civil-society, privacy advocates, academic researchers, and parliament members to oversee platform-neutral procurement milestones.",
+      "Create a shared risk register and decision gates with clear blockers and lead times to accelerate consensus and prevent scope creep.",
+      "Organize quarterly policy briefings and public comments to sustain accountability and keep procurement language aligned with resilience objectives."
+    ],
+    "review": "Core tension: stakeholder alignment versus expediency. A weakness is that divergent incentives can impede timely decisions and risk drift from core objectives."
+  },
+  {
+    "lever_id": "a573087c-f0f3-4348-994c-414e2f3a0dde",
+    "name": "Independent trust anchors and cryptographic attestations",
+    "consequences": "Develop or endorse an independent attestations hub to decouple from device OS trust signals; reduces single-vendor dependence but introduces governance, security, and maintenance challenges.",
+    "options": [
+      "Pilot a cryptographic attestations hub that issues platform-neutral identity attestations under governance designed to support multiple providers.",
+      "Support third-party hardware tokens and privacy-preserving attestation methods to decouple authentication from device OS ecosystems.",
+      "Commission an external security review of fallback architectures and publish results to build confidence in platform-neutral approaches."
+    ],
+    "review": "Core tension: centralized trust anchors introduce potential single points of failure; a weakness is ensuring ongoing funding and governance that prevent stagnation or capture."
+  },
+  {
+    "lever_id": "9878f8f1-13b0-4871-b868-6f0955536c15",
+    "name": "Procurement-ready language and evaluation criteria",
+    "consequences": "Providing explicit procurement language and evaluation rubrics reduces drafting errors and accelerates bids; however, it requires upfront investment to align stakeholders and maintain language with evolving standards.",
+    "options": [
+      "Draft model procurement language with explicit acceptance criteria for platform-neutral fallback, testing requirements, and governance oversight.",
+      "Develop template evaluation rubrics that quantify resilience, interoperability, and continuity-of-service metrics for potential bids effectively.",
+      "Coordinate with major government buyers to pre-validate RFP language and run joint vendor briefings to preempt misunderstandings."
+    ],
+    "review": "Core tension: standardization vs flexibility; a weakness is that rigid rubrics may become outdated as standards evolve or be exploited by savvy vendors."
+  },
+  {
+    "lever_id": "5b5ac1b0-9ce2-454d-a9bf-904cd772ff6f",
+    "name": "Open-Standards Interoperability Registry",
+    "consequences": "Establishes a central registry of interoperable identity standards and conformance criteria to guide procurement and implementation. This reduces platform lock-in and creates a verifiable fallback path, but it introduces governance overhead and runs the risk that registry coverage lags real-world deployments.",
+    "options": [
+      "Establish and maintain an Open-Standards Interoperability Registry, defining versioned conformance criteria and requiring procurement to reference the registry in contracts.",
+      "Create a cross-agency interoperability testbed to validate fallback authentication flows using open standards in a controlled, simulated public-sector environment.",
+      "Engage an independent conformance lab to certify vendor implementations against the registry and publish objective test results for procurement evaluation."
+    ],
+    "review": "Core tension: open-standards governance can slow procurement cycles if conformance criteria are not tightly coupled to contracts; weakness: the options miss explicit enforcement measures tying registry results to binding procurement decisions."
+  },
+  {
+    "lever_id": "47c07b08-2992-426e-bf28-c269d9a98f39",
+    "name": "Public-sector procurement playbook for resilience",
+    "consequences": "Updates procurement criteria to require platform-neutral fallback readiness and continuity commitments across critical services. This shifts project incentives toward resilience, but may slow procurement cycles and increase upfront costs.",
+    "options": [
+      "Institutionalize procurement criteria that require fallback authentication readiness, including platform-neutral paths, continuity commitments, and measurable service-level milestones.",
+      "Pilot procurement clauses that explicitly fund experimental implementations of platform-neutral fallbacks within non-critical pilot programs to test realism and cost trajectories.",
+      "Establish a conditional funding mechanism where projects achieving demonstrable platform-neutral resilience gain prioritized review and faster decision cycles."
+    ],
+    "review": "Core tension: resilience incentives may clash with budget discipline and incumbent leverage; weakness: the options do not specify how to manage cost overruns or ensure timely procurement adaptation."
+  },
+  {
+    "lever_id": "1afd15bc-9b7a-414b-9708-c8444c958f7c",
+    "name": "Independent third-party security and privacy audits",
+    "consequences": "Heightens assurance for the public sector by validating signal flows against baseline criteria; downstream: remediation timelines and audit costs may affect project pace and bid competitiveness.",
+    "options": [
+      "Commission regular independent audits of identity signal flows, with clear privacy impact assessments and remediation timelines published for stakeholder review.",
+      "Create an annual assurance program that subjects all procurement bidders to independent security and privacy testing against baseline platform-neutral criteria.",
+      "Establish a rotating panel of independent auditors to review vendor implementations and publish comparative findings to inform procurement language."
+    ],
+    "review": "Core tension: audits build trust but can reveal sensitive findings; weakness: the options lack concrete remediation workflows and escalation timelines."
+  },
+  {
+    "lever_id": "cd28c025-4cf7-4717-a60f-5c8058413265",
+    "name": "EU-anchored policy alignment and funding leverage",
+    "consequences": "Aligns Danish efforts with EU Digital Identity Wallet expectations and potential funding, increasing legitimacy and scale; trade-offs include potential slower national agenda due to EU processes.",
+    "options": [
+      "Submit a coordinated EU funding proposal to support platform-neutral fallback pilots across member states and exchange best practices.",
+      "Establish a formal policy alignment process with EU bodies to embed platform-neutral requirements into forthcoming Digital Identity Wallet guidelines.",
+      "Create a cross-border advocacy group to push EU-level procurement criteria that reward platform neutrality and fallback readiness."
+    ],
+    "review": "Core tension: EU alignment can dilute national discretion; weakness: the options do not specify funding allocation or responsible national authorities."
+  },
+  {
+    "lever_id": "bd19db8c-e9d2-40ca-99e7-393a09c82b1f",
+    "name": "Stakeholder-co-creation labs for identity fallback scenarios",
+    "consequences": "Builds legitimacy and user-centric evidence by mapping identity fallback scenarios with civil society and government partners; drawback: coordination overhead and potential scope creep.",
+    "options": [
+      "Organize multi-stakeholder labs to map identity fallback scenarios, translate findings into procurement language, and secure commitments from major operators.",
+      "Run monthly tabletop exercises simulating outages in platform integrity signals and app-store access to test resilience and response coordination.",
+      "Publish an incident-response playbook co-authored with civil society and government partners to guide crisis communications and decision-making."
+    ],
+    "review": "Core tension: collaboration can blur accountability lines and slow decision-making; weakness: the options do not specify enforcement steps to turn lab outputs into contracts."
+  },
+  {
+    "lever_id": "a1716690-6c52-4418-8acb-11fcf2f9d9b1",
+    "name": "Resilience-focused technology roadmap alignment with AltID and NSIS",
+    "consequences": "Creates a clear plan linking AltID and NSIS requirements to platform-neutral fallback paths; risk: long planning horizon may delay tangible pilots if governance lacks enforcement.",
+    "options": [
+      "Develop a technology roadmap aligning AltID with platform-neutral fallback paths, specifying milestones for interoperability, certification, and procurement readiness.",
+      "Create a governance-driven migration plan with clear ownership, risk controls, and exit criteria for platform-neutral components.",
+      "Commission a regulatory-impact assessment on fallback authentication to inform procurement language and risk mitigation strategies."
+    ],
+    "review": "Core tension: long-range roadmaps risk becoming symbolic without governance teeth; weakness: the options lack explicit monitoring and enforcement mechanisms."
+  },
+  {
+    "lever_id": "d966fef3-e59e-44e8-93b3-aefc8ea3a497",
+    "name": "Platform-neutral fallback authentication architecture for AltID and public-sector access",
+    "consequences": "Adopting a platform-neutral fallback authentication architecture reduces reliance on Apple/Google signals by enabling cross-platform verification via FIDO2/WebAuthn and OpenID Connect. This increases resilience during platform outages and supports continuity of public services, but it also requires formal certification, broader ecosystem integration, and ongoing governance to prevent diverging implementations across devices and browsers.",
+    "options": [
+      "Establish a platform-neutral fallback authentication architecture built on FIDO2/WebAuthn and OpenID Connect, with formal certification criteria and continuity-signal requirements across major device ecosystems.",
+      "Pilot a dual-authentication pathway that can be invoked when platform signals are unavailable, including hardware-token integration and browser-based fallbacks to preserve access during platform outages.",
+      "Institute a sunset plan that deprecates reliance on platform integrity APIs within AltID flows, with milestone-based migration to independent attestations and cross-certification by EU bodies."
+    ],
+    "review": "Core tension: building a platform-neutral fallback without fragmenting user experience; weakness: the options ignore the complexity of coordinating cross-vendor, cross-browser standards and EU certification timelines."
+  },
+  {
+    "lever_id": "d9b9ceba-2ca3-40ba-aa99-f44651e62476",
+    "name": "Procurement-embedding resilience clauses in AltID-related design documents",
+    "consequences": "Embedding resilience clauses in procurement documents enforces platform-neutrality and fallback authentication as formal requirements, driving suppliers to demonstrate cross-platform compatibility and continuity assurances. This strengthens continuity but increases procurement complexity and length, and may require additional governance resources.",
+    "options": [
+      "Embed resilience clauses in all AltID related procurement documents that mandate platform neutrality, fallback authentication options, and performance-based continuity commitments with independent audits.",
+      "Require supplier diversification with a defined minimum set of trusted anchors and mandatory joint testing across vendors to reduce single-point failure risk in identity signaling.",
+      "Institute a phased procurement approach that links budget disbursement to evidence of interoperable fallback readiness and regulatory alignment across NSIS and eIDAS2."
+    ],
+    "review": "Core tension: embedding resilience in procurement while keeping deadlines and cost within budget; weakness: options do not fully address the risk of slowed procurement cycles or potential supplier pushback."
+  },
+  {
+    "lever_id": "6032d0d4-e95a-42dc-842f-7d6496ccd361",
+    "name": "NSIS/eIDAS2 interoperability push through EU technical working groups",
+    "consequences": "Engaging EU groups ensures Danish fallback paths align with NSIS/eIDAS2 expectations, reducing national fragmentation and enabling cross-border use. It may slow national timeline but increases legitimacy and scalability.",
+    "options": [
+      "Co-design input with EU technical groups to align Danish platform-neutral requirements with NSIS and eIDAS2 interoperability targets, producing a common spec for fallback pathways.",
+      "Publish a formal EU-facing position paper outlining concrete fallback criteria and cross-border trust signals to accelerate harmonization and avoid national fragmentation.",
+      "Sponsor technical workshops with cross-border stakeholders to test OpenID Connect and FIDO2 integration against eIDAS2 wallet architecture in sandbox environments."
+    ],
+    "review": "Core tension: national speed vs EU-wide alignment; weakness: the options may overestimate their capacity to influence EU deadlines and deliverables."
+  },
+  {
+    "lever_id": "e2ea57f0-164d-46a7-a8a3-938754242df1",
+    "name": "Supplier-concentration risk reduction through diversified trust-anchor policy",
+    "consequences": "Implementing a policy to diversify trust anchors reduces dependence on any single ecosystem and enhances resilience. It increases governance overhead and could complicate standardization, requiring more cross-vendor coordination.",
+    "options": [
+      "Define policy requiring a minimum set of independent trust anchors across AltID deployments, with transparent attestations and regular cross-anchor audits.",
+      "Develop a multi-vendor trust-anchor roadmap that distributes critical identity signals across at least two non-overlapping ecosystem participants.",
+      "Implement a governance framework that rotates trust anchors over time to prevent stagnation and reduce long-term dependence on a single provider."
+    ],
+    "review": "Core tension: reducing concentration vs maintaining consistent trust signals; weakness: options do not address cost or integration timeline."
+  },
+  {
+    "lever_id": "6260fe81-9bb3-4692-83c0-2ce7f5bdf8c0",
+    "name": "Credible non-production demonstrator program to de-risk platform dependency",
+    "consequences": "Running non-production demonstrators produces credible evidence on fallback viability without risking production systems. Downstream, policymakers may require more rigorous validation and external credibility; risk: demonstrations may not fully reflect production conditions.",
+    "options": [
+      "Coordinate non-production demonstrators that simulate live public-sector identity flows using open standards, ensuring reproducibility and rigorous external review.",
+      "Incorporate third-party validation from academic or privacy groups to assess resistance to platform outages and cross-device compatibility.",
+      "Publish open demonstrator results with neutral metrics, independent evaluation, and clear disclosure of limitations to maximize credibility with policymakers."
+    ],
+    "review": "Core tension: credibility of non-production evidence vs actual deployment readiness; weakness: options do not specify how to translate demonstrator outcomes into binding policy or procurement language."
+  },
+  {
+    "lever_id": "1ec50ba1-92d4-4dbc-a65f-d3b26e85166a",
+    "name": "Open-standard wallet governance and verifiable attestations",
+    "consequences": "Establish a governance framework for an open-standard wallet with verifiable attestations, improving transparency and interoperability; risk: governance can slow decisions and create scope creep.",
+    "options": [
+      "Establish governance for a transparent, open-standard wallet framework with verifiable attestations and published assessment criteria aligned to NSIS and eIDAS2.",
+      "Develop a cross-domain attestation registry that records credential validity, revocation, and platform-neutral proof signals accessible to public sector services.",
+      "Create a standing technical advisory board including civil-society, privacy advocates, and technical experts to review changes and accelerate consensus."
+    ],
+    "review": "Core tension: open-wallet governance while preserving security and accountability; weakness: options omit contingency for rapid decision-making during security incidents."
+  }
+]

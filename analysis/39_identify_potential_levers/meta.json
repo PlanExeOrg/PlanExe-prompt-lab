@@ -1,0 +1,14 @@
+{
+  "pr_url": "https://github.com/PlanExeOrg/PlanExe/pull/357",
+  "pr_title": "fix: B1 step-gate, medical example, review cap, first-call retry",
+  "pr_description": "Consolidates the confirmed-working changes from PRs #354-356 plus a first-call retry fix. B1 step-gate**: Scope `partial_recovery` events to `identify_potential_levers` only (confirmed working in iters 36-38) Medical example**: Replace urban-planning (Section 106) with IRB/clinical-site sequential overhead. Domains: agriculture, medical, insurance \u2014 no test-plan overlap (iter 36 showed game-dev example collides) Review length cap**: \"20-40 words\" in section 6 prevents haiku verbosity overflow (iter 37: EOF at 40KB from ~550 char reviews; iter 38: fixed at ~355 chars) First-call retry**: Don't raise immediately when first call fails validation. Let the adaptive loop retry \u2014 `max_calls=5` exhausts naturally. Fixes stochastic failures like llama3.1 gta_game producing 2 options on one attempt Temperature**: llama3.1 0.5\u21920.8 to break deterministic structured output OPTIMIZE_INSTRUCTIONS**: Document prohibition backfire and verbosity amplification Not included (confirmed harmful in iter 36): No explicit prohibition (\"The options\"/\"The lever\" \u2014 backfired for llama3.1) No game-dev example (domain collision with test plans)",
+  "history": [
+    "2/80_identify_potential_levers",
+    "2/81_identify_potential_levers",
+    "2/82_identify_potential_levers",
+    "2/83_identify_potential_levers",
+    "2/84_identify_potential_levers",
+    "2/85_identify_potential_levers",
+    "2/86_identify_potential_levers"
+  ]
+}
