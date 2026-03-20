@@ -263,12 +263,12 @@ def _load_model_configs() -> dict:
     return merged
 
 
-def _build_runner_cmd(model: str, history_dirs: dict[str, Path] | None, step_name: str = DEFAULT_STEP_NAME) -> list[str]:
+def _build_runner_cmd(model: str, history_dirs: dict[str, Path] | None, step_name: str = DEFAULT_STEP_NAME, baseline_dir: Path = BASELINE_DIR) -> list[str]:
     """Build the runner subprocess command for a model."""
     cmd = [
         PLANEXE_PYTHON, "-m", "self_improve.runner",
         "--step", step_name,
-        "--baseline-dir", str(BASELINE_DIR),
+        "--baseline-dir", str(baseline_dir),
         "--model", model,
     ]
     if history_dirs and model in history_dirs:
@@ -294,6 +294,7 @@ def step_runner(
     history_dirs: dict[str, Path] | None = None,
     events_path: Path | None = None,
     step_name: str = DEFAULT_STEP_NAME,
+    baseline_dir: Path = BASELINE_DIR,
 ) -> None:
     """Run runner.py for each model.
 
@@ -334,7 +335,7 @@ def step_runner(
         idx += 1
         print(f"\n--- [{idx}/{len(models)}] {model} (sequential) ---")
 
-        cmd = _build_runner_cmd(model, history_dirs, step_name)
+        cmd = _build_runner_cmd(model, history_dirs, step_name, baseline_dir)
         env = _build_runner_env(model)
         if CUSTOM_PROFILE_MODELS.get(model):
             print(f"  (using custom profile: {CUSTOM_PROFILE_MODELS[model]})")
@@ -360,7 +361,7 @@ def step_runner(
             idx += 1
             print(f"\n--- [{idx}/{len(models)}] {model} (parallel) ---")
 
-            cmd = _build_runner_cmd(model, history_dirs, step_name)
+            cmd = _build_runner_cmd(model, history_dirs, step_name, baseline_dir)
             env = _build_runner_env(model)
             if CUSTOM_PROFILE_MODELS.get(model):
                 print(f"  (using custom profile: {CUSTOM_PROFILE_MODELS[model]})")
@@ -440,6 +441,12 @@ def main():
         help=f"Pipeline step to optimize (default: {DEFAULT_STEP_NAME}).",
     )
     parser.add_argument(
+        "--baseline-dir",
+        type=Path,
+        default=None,
+        help=f"Override the baseline/train directory (default: {BASELINE_DIR}).",
+    )
+    parser.add_argument(
         "--models",
         type=str,
         default=None,
@@ -453,6 +460,9 @@ def main():
 
     step_name = args.step
     models = resolve_models(args.models)
+    baseline_dir = args.baseline_dir.resolve() if args.baseline_dir else BASELINE_DIR
+    if args.baseline_dir:
+        print(f"Using custom baseline dir: {baseline_dir}")
 
     # Read the latest synthesis (only required when implementing).
     latest_analysis_dir = get_latest_analysis_dir(step_name)
@@ -534,9 +544,9 @@ def main():
     if not args.skip_runner:
         if events_path:
             with EventTimer(events_path, "runner", model_count=len(models)):
-                step_runner(models, history_dirs, events_path, step_name)
+                step_runner(models, history_dirs, events_path, step_name, baseline_dir)
         else:
-            step_runner(models, history_dirs, step_name=step_name)
+            step_runner(models, history_dirs, step_name=step_name, baseline_dir=baseline_dir)
     else:
         print("\n[Skipping runner step]")
 
