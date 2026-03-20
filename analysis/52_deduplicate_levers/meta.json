@@ -1,0 +1,15 @@
+{
+  "input": "snapshot/0_identify_potential_levers",
+  "pr_url": "https://github.com/PlanExeOrg/PlanExe/pull/375",
+  "pr_title": "feat: broaden remove to include irrelevant levers, shorten justification",
+  "pr_description": "Incremental refinements on PR #374 (batch categorical dedup): Remove now covers irrelevant levers**: Upstream may generate levers that don't apply to the plan. `remove` now covers redundant, overlapping, subset, OR irrelevant Better overlap handling**: \"keep the one that better captures the strategic decision\" instead of always preferring the more general one Shorter justifications**: ~20-30 words (down from ~40-80). Less output = llama3.1 more likely to finish within timeout Fallback to secondary**: Unclassified levers default to secondary, not primary \u2014 kept safe without inflating primary count Triaging framing**: System prompt says \"triaging\" instead of \"deduplicating\" \u2014 better describes the full scope (classify + remove irrelevant + deduplicate) Renamed**: `BatchDeduplicationResult` \u2192 `DeduplicationResult` Supersedes PR #374.",
+  "history": [
+    "3/71_deduplicate_levers",
+    "3/72_deduplicate_levers",
+    "3/73_deduplicate_levers",
+    "3/74_deduplicate_levers",
+    "3/75_deduplicate_levers",
+    "3/76_deduplicate_levers",
+    "3/77_deduplicate_levers"
+  ]
+}
