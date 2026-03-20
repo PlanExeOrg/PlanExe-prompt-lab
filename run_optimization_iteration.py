@@ -590,6 +590,7 @@ def main():
                 pr_arg=pr_arg,
                 commit_ref=commit_ref,
                 models=models,
+                baseline_dir=baseline_dir,
             )
         else:
             # Skipping runner: create analysis dir from existing unanalyzed runs.
@@ -597,6 +598,7 @@ def main():
                 step_name=step_name,
                 pr_arg=pr_arg,
                 commit_ref=commit_ref,
+                baseline_dir=baseline_dir,
             )
 
         if result:

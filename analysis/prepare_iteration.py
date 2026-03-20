@@ -254,6 +254,16 @@ def resolve_models(models_arg: str | None) -> list[str]:
 # Core: prepare full iteration (pre-creates history dirs)
 # ---------------------------------------------------------------------------
 
+def _baseline_dir_label(baseline_dir: Path | None) -> str:
+    """Convert a baseline_dir path to a short label for meta.json."""
+    if baseline_dir is None:
+        return "baseline/train"
+    try:
+        return str(baseline_dir.relative_to(REPO_ROOT))
+    except ValueError:
+        return str(baseline_dir)
+
+
 def prepare(
     step_name: str,
     pr_arg: str | None,
@@ -261,6 +271,7 @@ def prepare(
     repo: str = DEFAULT_REPO,
     dry_run: bool = False,
     commit_ref: dict | None = None,
+    baseline_dir: Path | None = None,
 ) -> dict | None:
     """Prepare an optimization iteration.
 
@@ -274,6 +285,8 @@ def prepare(
     Args:
         commit_ref: Optional dict with "commit" and "branch" keys.
             Used for baseline runs instead of pr_arg.
+        baseline_dir: The input directory used for this run.
+            Recorded in meta.json as "input" for reproducibility.
 
     Returns dict with 'analysis_dir' and 'history_dirs' on success,
     None on dry-run.
@@ -341,6 +354,7 @@ def prepare(
 
         # 4. Write analysis meta.json.
         analysis_meta: dict = {}
+        analysis_meta["input"] = _baseline_dir_label(baseline_dir)
         if pr_url:
             analysis_meta["pr_url"] = pr_url
             analysis_meta["pr_title"] = pr_title
@@ -384,6 +398,7 @@ def prepare_analysis_from_existing(
     repo: str = DEFAULT_REPO,
     dry_run: bool = False,
     commit_ref: dict | None = None,
+    baseline_dir: Path | None = None,
 ) -> dict | None:
     """Create analysis dir from existing unanalyzed history runs.
 
@@ -392,6 +407,8 @@ def prepare_analysis_from_existing(
     Args:
         commit_ref: Optional dict with "commit" and "branch" keys.
             Used for baseline runs instead of pr_arg.
+        baseline_dir: The input directory used for this run.
+            Recorded in meta.json as "input" for reproducibility.
     """
     # 1. Verify PR (optional) or record commit info.
     pr_url = pr_title = pr_description = None
@@ -426,6 +443,7 @@ def prepare_analysis_from_existing(
 
     # 4. Build meta.
     meta: dict = {}
+    meta["input"] = _baseline_dir_label(baseline_dir)
     if pr_url:
         meta["pr_url"] = pr_url
         meta["pr_title"] = pr_title
