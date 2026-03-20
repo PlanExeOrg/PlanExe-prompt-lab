@@ -34,6 +34,9 @@ STEP_OUTPUT_FILES = {
     "identify_potential_levers": [
         ("002-10-potential_levers.json", "cleaned levers"),
     ],
+    "deduplicate_levers": [
+        ("002-11-deduplicated_levers_raw.json", "deduplicated levers"),
+    ],
     "identify_documents": [
         ("017-5-identified_documents_to_find.json", "documents to find"),
         ("017-6-identified_documents_to_create.json", "documents to create"),
