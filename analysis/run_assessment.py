@@ -303,12 +303,12 @@ def main():
     before_meta = (before_path / "meta.json").read_text()
     after_meta = (after_path / "meta.json").read_text()
 
-    # Check that after has PR info.
+    # Check that after has PR or commit info.
     after_meta_obj = json.loads(after_meta)
-    if "pr_url" not in after_meta_obj:
-        print("WARNING: after meta.json has no pr_url — assessment may lack PR context.")
+    if "pr_url" not in after_meta_obj and "commit" not in after_meta_obj:
+        print("WARNING: after meta.json has no pr_url or commit — assessment may lack context.")
         step_name = after_path.name.split("_", 1)[1] if "_" in after_path.name else "STEP"
-        print("  Run: python analysis/prepare_iteration.py " + step_name + " <PR_NUMBER>")
+        print("  Run with --pr <NUMBER> or --commit <HASH>")
         print()
 
     output_file = f"{after_dir}/assessment.md"
@@ -335,6 +335,8 @@ def main():
     print(f"  After:  {after_dir}")
     if "pr_title" in after_meta_obj:
         print(f"  PR:     {after_meta_obj['pr_title']}")
+    elif "commit" in after_meta_obj:
+        print(f"  Commit: {after_meta_obj['commit']} ({after_meta_obj.get('branch', '?')})")
     print(f"  Output: {output_file}")
     print()
 

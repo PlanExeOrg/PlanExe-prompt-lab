@@ -260,15 +260,20 @@ def prepare(
     models: list[str],
     repo: str = DEFAULT_REPO,
     dry_run: bool = False,
+    commit_ref: dict | None = None,
 ) -> dict | None:
     """Prepare an optimization iteration.
 
     1. Create analysis dir (so events.jsonl has a home)
-    2. Verify PR (state == OPEN)
+    2. Verify PR (state == OPEN) — or record commit/branch for baseline runs
     3. Resolve prompt
     4. Pre-create history dirs (one per model)
-    5. Write analysis meta.json with PR info + history list
+    5. Write analysis meta.json with PR info or commit info + history list
     6. Print summary
+
+    Args:
+        commit_ref: Optional dict with "commit" and "branch" keys.
+            Used for baseline runs instead of pr_arg.
 
     Returns dict with 'analysis_dir' and 'history_dirs' on success,
     None on dry-run.
@@ -284,7 +289,7 @@ def prepare(
         events_path = analysis_dir / "events.jsonl"
 
     def _inner():
-        # 2. Verify PR (optional).
+        # 2. Verify PR (optional) or record commit info.
         pr_url = pr_title = pr_description = None
         if pr_arg:
             pr_repo, pr_number = parse_pr_arg(pr_arg, repo)
@@ -298,6 +303,8 @@ def prepare(
             pr_description = summarize_body(pr.get("body", ""))
             print(f"PR #{pr_number}: {pr_title}")
             print(f"  {pr_url}")
+        elif commit_ref:
+            print(f"Commit: {commit_ref['commit']} on branch '{commit_ref['branch']}'")
 
         # 3. Pre-create history dirs.
         history_dir = REPO_ROOT / "history"
@@ -338,6 +345,9 @@ def prepare(
             analysis_meta["pr_url"] = pr_url
             analysis_meta["pr_title"] = pr_title
             analysis_meta["pr_description"] = pr_description
+        elif commit_ref:
+            analysis_meta["commit"] = commit_ref["commit"]
+            analysis_meta["branch"] = commit_ref["branch"]
         analysis_meta["history"] = history_entries
 
         print(f"\nAnalysis dir: analysis/{index}_{step_name}")
@@ -373,12 +383,17 @@ def prepare_analysis_from_existing(
     pr_arg: str | None = None,
     repo: str = DEFAULT_REPO,
     dry_run: bool = False,
+    commit_ref: dict | None = None,
 ) -> dict | None:
     """Create analysis dir from existing unanalyzed history runs.
 
     For use when experiments have already been run (e.g. --skip-runner).
+
+    Args:
+        commit_ref: Optional dict with "commit" and "branch" keys.
+            Used for baseline runs instead of pr_arg.
     """
-    # 1. Verify PR (optional).
+    # 1. Verify PR (optional) or record commit info.
     pr_url = pr_title = pr_description = None
     if pr_arg:
         pr_repo, pr_number = parse_pr_arg(pr_arg, repo)
@@ -388,6 +403,8 @@ def prepare_analysis_from_existing(
         pr_description = summarize_body(pr.get("body", ""))
         print(f"PR #{pr_number}: {pr_title}")
         print(f"  {pr_url}")
+    elif commit_ref:
+        print(f"Commit: {commit_ref['commit']} on branch '{commit_ref['branch']}'")
 
     # 2. Find unanalyzed runs.
     all_runs = find_all_history_runs(step_name)
@@ -413,6 +430,9 @@ def prepare_analysis_from_existing(
         meta["pr_url"] = pr_url
         meta["pr_title"] = pr_title
         meta["pr_description"] = pr_description
+    elif commit_ref:
+        meta["commit"] = commit_ref["commit"]
+        meta["branch"] = commit_ref["branch"]
     meta["history"] = new_runs
 
     print(f"Step: {step_name}")

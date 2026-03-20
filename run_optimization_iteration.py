@@ -11,6 +11,10 @@ Usage:
     python run_optimization_iteration.py --skip-implement --pr 316
     python run_optimization_iteration.py --skip-implement --skip-runner --pr 316
     python run_optimization_iteration.py --pr 316 --models nemotron,stepfun
+
+    # Baseline run: track a commit on main instead of a PR
+    python run_optimization_iteration.py --skip-implement --commit 1689b37c
+    python run_optimization_iteration.py --skip-implement --skip-runner --commit 1689b37c
 """
 import argparse
 import json
@@ -172,6 +176,50 @@ def verify_planexe_branch(pr_arg: str) -> None:
         )
 
     print(f"Branch check OK: {PLANEXE_DIR} is on '{current_branch}' (matches PR {pr_arg})")
+
+
+def verify_planexe_commit(commit: str) -> str:
+    """Verify that PLANEXE_DIR HEAD matches the given commit prefix.
+
+    Returns the current branch name.
+    """
+    # Get HEAD commit.
+    git_result = subprocess.run(
+        ["git", "rev-parse", "HEAD"],
+        cwd=PLANEXE_DIR,
+        capture_output=True,
+        text=True,
+    )
+    if git_result.returncode != 0:
+        sys.exit(
+            f"ERROR: Could not determine HEAD at {PLANEXE_DIR}. "
+            f"git rev-parse HEAD failed: {git_result.stderr.strip()}"
+        )
+    head_commit = git_result.stdout.strip()
+
+    if not head_commit.startswith(commit):
+        sys.exit(
+            f"ERROR: Commit mismatch!\n"
+            f"  Expected commit: {commit}\n"
+            f"  {PLANEXE_DIR} HEAD: {head_commit}\n"
+            f"\n"
+            f"The runner imports code from {PLANEXE_DIR}, so HEAD must match\n"
+            f"the specified commit. Run:\n"
+            f"  cd {PLANEXE_DIR} && git checkout {commit}"
+        )
+
+    # Get the current branch name.
+    branch_result = subprocess.run(
+        ["git", "branch", "--show-current"],
+        cwd=PLANEXE_DIR,
+        capture_output=True,
+        text=True,
+    )
+    branch = branch_result.stdout.strip() if branch_result.returncode == 0 else "(detached)"
+
+    print(f"Commit check OK: {PLANEXE_DIR} HEAD is {head_commit[:12]} on '{branch}'"
+          f" (matches --commit {commit})")
+    return branch
 
 
 # ---------------------------------------------------------------------------
@@ -419,6 +467,13 @@ def main():
         help="PR number or URL. Required when --skip-implement is used.",
     )
     parser.add_argument(
+        "--commit",
+        type=str,
+        default=None,
+        help="Track a specific commit (hash or prefix) instead of a PR. "
+        "For baseline runs on main. Requires --skip-implement.",
+    )
+    parser.add_argument(
         "--skip-implement",
         action="store_true",
         help="Skip the Claude Code implementation step (use when fix is already applied).",
@@ -464,6 +519,12 @@ def main():
     if args.baseline_dir:
         print(f"Using custom baseline dir: {baseline_dir}")
 
+    # Validate --commit usage.
+    if args.commit and args.pr:
+        sys.exit("ERROR: --commit and --pr are mutually exclusive.")
+    if args.commit and not args.skip_implement:
+        sys.exit("ERROR: --commit requires --skip-implement (no PR to implement).")
+
     # Read the latest synthesis (only required when implementing).
     latest_analysis_dir = get_latest_analysis_dir(step_name)
 
@@ -500,10 +561,15 @@ def main():
     else:
         print("\n[Skipping implementation step]")
 
-    # Prerequisite: verify PLANEXE_DIR is on the PR's branch.
-    # Without this check, the runner would import code from whatever branch
-    # PLANEXE_DIR happens to be on (often main), producing invalid results.
-    if pr_arg and not args.skip_runner:
+    # Resolve commit tracking info.
+    commit_ref = None  # dict with "commit" and "branch" keys
+    if args.commit:
+        branch = verify_planexe_commit(args.commit)
+        commit_ref = {"commit": args.commit, "branch": branch}
+    elif pr_arg and not args.skip_runner:
+        # Prerequisite: verify PLANEXE_DIR is on the PR's branch.
+        # Without this check, the runner would import code from whatever branch
+        # PLANEXE_DIR happens to be on (often main), producing invalid results.
         verify_planexe_branch(pr_arg)
 
     # Prepare iteration: create analysis dir + pre-create history dirs.
@@ -522,6 +588,7 @@ def main():
             result = prepare(
                 step_name=step_name,
                 pr_arg=pr_arg,
+                commit_ref=commit_ref,
                 models=models,
             )
         else:
@@ -529,6 +596,7 @@ def main():
             result = prepare_analysis_from_existing(
                 step_name=step_name,
                 pr_arg=pr_arg,
+                commit_ref=commit_ref,
             )
 
         if result:

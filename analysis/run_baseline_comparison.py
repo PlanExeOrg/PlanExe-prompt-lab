@@ -279,7 +279,10 @@ def main():
     print(f"  Analysis: {analysis_dir}")
     print(f"  Step:     {step_name}")
     print(f"  Baseline: baseline/train/")
-    print(f"  PR:       {pr_title}")
+    if "commit" in meta:
+        print(f"  Commit:   {meta['commit']} ({meta.get('branch', '?')})")
+    else:
+        print(f"  PR:       {pr_title}")
     print(f"  Runs:     {len(meta.get('history', []))} history runs")
     print(f"  Output:   {output_file}")
     print()
