@@ -325,6 +325,9 @@ should compare the insight files and decide what is most promising.
 
 Include factual fields such as:
 
+- `input`: the baseline directory used for experiments (e.g., `"baseline/train"` or
+  `"snapshot/0_identify_potential_levers"`). Required for valid cross-experiment
+  comparisons — see "Cross-Experiment Comparison Prerequisites" below.
 - `history`: array of relative run-history paths that were analyzed
 
 Recommended neutral fields:
@@ -339,6 +342,8 @@ Recommended neutral fields:
 - `pr_url`: GitHub PR URL for the change being evaluated
 - `pr_title`: PR title
 - `pr_description`: short summary of what the PR changes
+- `commit`: commit hash (for baseline runs on a branch, mutually exclusive with `pr_url`)
+- `branch`: branch name (accompanies `commit`)
 
 Do not include:
 
@@ -505,6 +510,26 @@ When comparing runs, separate:
 
 If one run is richer but much longer, say so explicitly.
 Do not collapse "more verbose" and "better" into the same judgment without comment.
+
+### Cross-Experiment Comparison Prerequisites
+
+Before comparing two analysis experiments (e.g., assessment, manual comparison),
+verify that both directories satisfy these requirements:
+
+1. **Same step name.** The `<step_name>` extracted from the directory name
+   `analysis/<index>_<step_name>/` must match. Comparing `45_deduplicate_levers`
+   against `30_identify_documents` is meaningless — the output schemas, metrics,
+   and evaluation criteria are entirely different.
+
+2. **Same input data.** The `"input"` field in each directory's `meta.json` must
+   match. If one experiment used `"baseline/train"` (15 triplicated levers) and
+   another used `"snapshot/0_identify_potential_levers"` (18 diverse levers), any
+   quality difference is confounded by input differences — you cannot isolate the
+   effect of the code or prompt change.
+
+If either field is missing or the values differ, **stop and ask the user for
+clarification** before proceeding with the comparison. Do not silently produce a
+comparison on mismatched data — the results will be misleading.
 
 **Critical**: Longer output is NOT inherently better. Compare field lengths against
 the baseline training data. If consequences are 3-4× longer than baseline but don't
