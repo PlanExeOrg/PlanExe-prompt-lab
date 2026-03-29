@@ -136,6 +136,63 @@ def analyze_documents(docs: list[dict]) -> dict:
 
 
 # ---------------------------------------------------------------------------
+# Per-file enriched lever analysis
+# ---------------------------------------------------------------------------
+
+def analyze_enriched_levers(data: dict | list) -> dict:
+    """Compute metrics for an enriched levers file.
+
+    The runner writes the raw wrapper dict
+    ``{"metadata": [...], "characterized_levers": [...]}``.
+    Accept both the wrapper dict and a bare list for robustness.
+    """
+    if isinstance(data, dict):
+        levers = data.get("characterized_levers", [])
+    else:
+        levers = data
+
+    count = len(levers)
+    if count == 0:
+        return {"lever_count": 0}
+
+    names = [lv.get("name", "") for lv in levers]
+    unique_names = len(set(n.lower() for n in names))
+
+    desc_chars = [len(lv.get("description", "")) for lv in levers]
+    synergy_chars = [len(lv.get("synergy_text", "")) for lv in levers]
+    conflict_chars = [len(lv.get("conflict_text", "")) for lv in levers]
+
+    # Self-referential check: lever mentions its own name in synergy/conflict
+    self_ref_count = 0
+    for lv in levers:
+        name_lower = lv.get("name", "").lower()
+        if not name_lower:
+            continue
+        syn = lv.get("synergy_text", "").lower()
+        con = lv.get("conflict_text", "").lower()
+        if name_lower in syn or name_lower in con:
+            self_ref_count += 1
+
+    # Empty conflict check: conflict_text under 20 chars
+    empty_conflict = sum(
+        1 for lv in levers if len(lv.get("conflict_text", "")) < 20
+    )
+
+    return {
+        "lever_count": count,
+        "name_uniqueness": round(unique_names / count, 2),
+        "unique_names": unique_names,
+        "description_chars": _agg(desc_chars),
+        "synergy_chars": _agg(synergy_chars),
+        "conflict_chars": _agg(conflict_chars),
+        "self_referential": self_ref_count,
+        "self_referential_pct": round(100 * self_ref_count / count, 1),
+        "empty_conflict": empty_conflict,
+        "empty_conflict_pct": round(100 * empty_conflict / count, 1),
+    }
+
+
+# ---------------------------------------------------------------------------
 # Success rates from outputs.jsonl
 # ---------------------------------------------------------------------------
 
@@ -179,6 +236,9 @@ def read_success_rates(outputs_jsonl: Path) -> dict:
 STEP_OUTPUT_FILES = {
     "identify_potential_levers": [
         ("002-10-potential_levers.json", "levers", analyze_levers),
+    ],
+    "enrich_potential_levers": [
+        ("002-12-enriched_levers_raw.json", "enriched_levers", analyze_enriched_levers),
     ],
     "identify_documents": [
         ("017-5-identified_documents_to_find.json", "documents_to_find", analyze_documents),
