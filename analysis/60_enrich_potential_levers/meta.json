@@ -1,0 +1,15 @@
+{
+  "input": "baseline/train",
+  "pr_url": "https://github.com/PlanExeOrg/PlanExe/pull/457",
+  "pr_title": "Strip UUIDs from full lever context string in enrich step",
+  "pr_description": "Remove `lever_id` UUIDs from the full-list context string provided to the LLM in each batch Models were copying UUIDs into `synergy_text` and `conflict_text` (llama3.1 89%, gemini 34%, gpt-5-nano 8-char truncated) The per-batch prompt still includes `lever_id` in `lever_details_for_prompt` so the LLM can return structured characterizations by ID One-line change: `f\"- {lever.lever_id}: {lever.name}\"` \u2192 `f\"- {lever.name}\"` Documented in OPTIMIZE_INSTRUCTIONS since analysis 54. Highest priority content quality fix from analysis 59 backlog.",
+  "history": [
+    "4/27_enrich_potential_levers",
+    "4/28_enrich_potential_levers",
+    "4/29_enrich_potential_levers",
+    "4/30_enrich_potential_levers",
+    "4/31_enrich_potential_levers",
+    "4/32_enrich_potential_levers",
+    "4/33_enrich_potential_levers"
+  ]
+}
