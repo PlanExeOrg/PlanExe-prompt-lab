@@ -1,0 +1,15 @@
+{
+  "input": "baseline/train",
+  "pr_url": "https://github.com/PlanExeOrg/PlanExe/pull/454",
+  "pr_title": "Adaptive batch size, guarded retry, and max_tokens bump for enrich step",
+  "pr_description": "max_tokens bump**: gpt-oss-20b from 8192 \u2192 128000 in baseline.json \u2014 the old limit truncated structured JSON output Adaptive batch size**: Probes model `context_window` metadata (not `num_output` which just reflects max_tokens config); uses `batch_size=2` when `context_window < 6000`. gpt-oss-20b has `context_window=3900` so it gets `batch_size=2` Guarded retry**: On batch failure, split once (depth limit=1) within a 300s time budget, then skip. Prevents unbounded retry cascades Accurate batch counting**: Report actual `batches_succeeded` instead of hardcoded `1` in runner.py OPTIMIZE_INSTRUCTIONS**: Document consequence-echoing and UUID format inconsistency as known problems Supersedes #453 which had a bug where `num_output` (inflated by the max_tokens bump) disabled the adaptive batch size for gpt-oss-20b.",
+  "history": [
+    "4/06_enrich_potential_levers",
+    "4/07_enrich_potential_levers",
+    "4/08_enrich_potential_levers",
+    "4/09_enrich_potential_levers",
+    "4/10_enrich_potential_levers",
+    "4/11_enrich_potential_levers",
+    "4/12_enrich_potential_levers"
+  ]
+}
