@@ -88,6 +88,13 @@ All 7 models run by default:
 
 ## After the run
 
+After the experiment completes:
+
+1. **Commit and push results**: Run `PlanExe-prompt-lab commit and push` to commit all new history and analysis files.
+2. **Comment on the PR with the verdict**: If this experiment is for a PR, read the assessment verdict from `analysis/{index}_{step}/assessment.md` and comment on the PR with the verdict and key findings.
+
+### Output locations
+
 - History outputs land in `history/{bucket}/{counter}_{step}/outputs/<plan_name>/`.
 - Use `copy_history_to_snapshot.py` to copy outputs into a new snapshot for downstream steps.
 - Analysis artifacts land in `analysis/{index}_{step}/`.
