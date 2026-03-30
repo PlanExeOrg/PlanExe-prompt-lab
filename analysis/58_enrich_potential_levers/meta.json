@@ -1,0 +1,15 @@
+{
+  "input": "baseline/train",
+  "pr_url": "https://github.com/PlanExeOrg/PlanExe/pull/455",
+  "pr_title": "Adaptive batch size, guarded retry, and gpt-oss-20b config fix for enrich step",
+  "pr_description": "gpt-oss-20b config fix**: `max_tokens` 8192\u219265536 (balanced: 65536 input headroom), add explicit `context_window=131072`. Previous attempts: 128000 left only 3072 input tokens causing BadRequestError Adaptive batch size**: `batch_size=2` when `context_window < 6000` (probes model metadata, no API call) Guarded retry**: On batch failure, split once (depth=1) within 300s budget, then skip Error tracking**: Persist errors in raw JSON output for offline diagnosis Accurate batch counting**: `batches_succeeded` instead of hardcoded `1` OPTIMIZE_INSTRUCTIONS**: Document consequence-echoing, UUID format inconsistency, and max_tokens overflow Supersedes #453 (num_output bug) and #454 (max_tokens=128000 too high).",
+  "history": [
+    "4/13_enrich_potential_levers",
+    "4/14_enrich_potential_levers",
+    "4/15_enrich_potential_levers",
+    "4/16_enrich_potential_levers",
+    "4/17_enrich_potential_levers",
+    "4/18_enrich_potential_levers",
+    "4/19_enrich_potential_levers"
+  ]
+}
