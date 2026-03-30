@@ -1,0 +1,15 @@
+{
+  "input": "baseline/train",
+  "pr_url": "https://github.com/PlanExeOrg/PlanExe/pull/456",
+  "pr_title": "Adaptive batch size, guarded retry, and OpenRouter config fixes for enrich step",
+  "pr_description": "OpenRouter config fixes**: Add explicit `context_window` for all 4 OpenRouter models (131072/1048576/128000/40960) \u2014 LlamaIndex defaults to 3900 for all OpenRouter models without this gpt-oss-20b max_tokens**: 8192\u219265536 (balanced: 65536 input + 65536 output within 131K context) Adaptive batch size**: `batch_size=2` when `context_window < 3000` (threshold below OpenRouter's 3900 fallback to avoid false positives) Guarded retry**: Split once (depth=1) within 300s budget, then skip Error tracking**: Persist errors in raw JSON output for offline diagnosis Accurate batch counting**: `batches_succeeded` instead of hardcoded `1` OPTIMIZE_INSTRUCTIONS**: Document 4 new known problems including OpenRouter metadata fallback Supersedes #453, #454, #455 which each had config or threshold bugs.",
+  "history": [
+    "4/20_enrich_potential_levers",
+    "4/21_enrich_potential_levers",
+    "4/22_enrich_potential_levers",
+    "4/23_enrich_potential_levers",
+    "4/24_enrich_potential_levers",
+    "4/25_enrich_potential_levers",
+    "4/26_enrich_potential_levers"
+  ]
+}

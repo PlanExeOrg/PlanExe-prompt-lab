@@ -1,0 +1,153 @@
+{
+  "metadata": [
+    {
+      "context_window": 131072,
+      "num_output": 256,
+      "is_chat_model": true,
+      "is_function_calling_model": false,
+      "model_name": "llama3.1:latest",
+      "system_role": "system",
+      "llm_classname": "Ollama_llm"
+    },
+    {
+      "context_window": 131072,
+      "num_output": 256,
+      "is_chat_model": true,
+      "is_function_calling_model": false,
+      "model_name": "llama3.1:latest",
+      "system_role": "system",
+      "llm_classname": "Ollama_llm"
+    }
+  ],
+  "errors": [],
+  "characterized_levers": [
+    {
+      "lever_id": "aab98b8b-a06e-434d-a8c9-ac353c08e684",
+      "name": "Recruitment Channel Strategy",
+      "consequences": "Altering recruitment affects enrollment rate and participant profile. Immediate: Change in application volume \u2192 Systemic: Skews participant demographics, impacting generalizability \u2192 Strategic: Alters statistical power and relevance to target population.",
+      "options": [
+        "Prioritize referrals from University Hospital Bonn sleep clinic to ensure a steady stream of pre-screened participants, accepting a potentially narrower demographic.",
+        "Expand recruitment to regional neurologist networks and the Deutsche Gesellschaft f\u00fcr Schlafforschung und Schlafmedizin, accepting increased screening burden and variable diagnostic rigor.",
+        "Implement targeted online advertising campaigns and partnerships with patient advocacy groups, accepting higher initial screening costs and potential for self-selection bias."
+      ],
+      "review": "Controls Enrollment Rate vs. Participant Representativeness. Weakness: The options don't address the potential impact of recruitment strategies on participant retention rates.",
+      "classification": null,
+      "deduplication_justification": "This lever focuses on the *source* of participants, which is distinct from the *criteria* for participant selection (addressed in other levers). The recruitment channel directly impacts the volume and type of applicants, influencing the study's demographics and generalizability. This is a unique strategic consideration.",
+      "description": "Recruitment Channel Strategy controls the channels used to attract participants, affecting enrollment rate and participant profile. Its objectives are to ensure a steady stream of pre-screened participants while balancing recruitment volume with participant representativeness. Key success metrics include enrollment rate, participant demographics, and statistical power.",
+      "synergy_text": "This lever has strong synergy with Data Sharing Scope (a7989aed-70db-44e7-ba0c-62068b91574c) as broader data sharing can accelerate scientific progress but also increases the need for robust recruitment strategies to maintain participant representativeness. Additionally, it synergizes with Staffing Coverage Model (4c598798-03d1-4e91-965e-21a4c43ea8bc) as adequate staffing is crucial to manage and annotate the data collected through various recruitment channels.",
+      "conflict_text": "This lever conflicts with Data Acquisition Intensity Strategy (0e866b59-5181-443c-9bb3-f73fc15f3e91) as more intensive data acquisition can increase participant burden, potentially affecting enrollment rates and participant comfort. Furthermore, it conflicts with Facility Expansion Strategy (9e8e5b69-6af7-4d8a-9d57-2138d2f822f0) as expansion plans may be impacted by the recruitment strategy chosen, affecting long-term scalability and resource allocation."
+    },
+    {
+      "lever_id": "9e8e5b69-6af7-4d8a-9d57-2138d2f822f0",
+      "name": "Facility Expansion Strategy",
+      "consequences": "Altering the expansion plan impacts long-term scalability and resource allocation. Immediate: Change in suite availability \u2192 Systemic: Alters enrollment capacity and data collection rate \u2192 Strategic: Affects the ability to meet enrollment targets and secure future funding.",
+      "options": [
+        "Defer expansion of the facility beyond the initial 8 suites until the pilot phase demonstrates acceptable data quality, manageable false alarm rates, safe staffing ratios, and usable annotation throughput.",
+        "Initiate expansion to 12 suites concurrently with the pilot phase, accepting increased upfront investment and operational complexity to accelerate data collection.",
+        "Explore establishing satellite monitoring locations in participants' homes using portable PSG systems and remote monitoring, accepting increased logistical complexity and potential data quality variability for broader reach."
+      ],
+      "review": "Controls Enrollment Capacity vs. Financial Risk. Weakness: The options don't address the potential impact of expansion on the facility's community integration and neighborhood relations.",
+      "classification": null,
+      "deduplication_justification": "This lever specifically addresses the *physical capacity* of the research facility and the timing of its expansion. This is a distinct strategic decision related to resource allocation and scalability, separate from recruitment strategies or data acquisition methods.",
+      "description": "Facility Expansion Strategy controls the expansion plan of the research unit, affecting long-term scalability and resource allocation. Its objectives are to ensure safe and sustainable operations while balancing enrollment capacity with financial risk. Key success metrics include suite availability, enrollment capacity, data collection rate, and ability to meet enrollment targets.",
+      "synergy_text": "This lever has strong synergy with Recruitment Channel Strategy (aab98b8b-a06e-434d-a8c9-ac353c08e684) as the recruitment strategy chosen can impact the facility's expansion plans, affecting long-term scalability and resource allocation. Additionally, it synergizes with Staffing Coverage Model (4c598798-03d1-4e91-965e-21a4c43ea8bc) as adequate staffing is crucial to manage and annotate the data collected through various recruitment channels.",
+      "conflict_text": "This lever conflicts with Recruitment Channel Strategy (aab98b8b-a06e-434d-a8c9-ac353c08e684) as expansion plans may be impacted by the recruitment strategy chosen, affecting long-term scalability and resource allocation. Furthermore, it conflicts with Data Sharing Scope (a7989aed-70db-44e7-ba0c-62068b91574c) as broader data sharing can increase the need for robust expansion strategies to maintain participant representativeness."
+    },
+    {
+      "lever_id": "a7989aed-70db-44e7-ba0c-62068b91574c",
+      "name": "Data Sharing Scope",
+      "consequences": "Broader data sharing accelerates scientific progress but increases privacy risks. Immediate: Increased data accessibility \u2192 Systemic: Enhanced collaboration and reproducibility \u2192 Strategic: Greater scientific impact but heightened risk of privacy breaches and reputational damage. Trade-off: Scientific Impact vs. Privacy.",
+      "options": [
+        "Restrict data sharing to de-identified physiological data only, minimizing privacy risks but limiting the scope of potential collaborations and secondary analyses.",
+        "Share de-identified physiological data and limited metadata (e.g., demographics, episode frequency) under strict data use agreements, balancing scientific impact with privacy protection.",
+        "Publicly release fully de-identified physiological data, metadata, and carefully curated video segments of parasomnia events (with explicit consent and facial blurring), maximizing scientific impact but requiring extensive ethical review and robust privacy safeguards."
+      ],
+      "review": "Controls Scientific Impact vs. Privacy. Weakness: The options do not address the potential for re-identification of participants through combined datasets or advanced analytical techniques.",
+      "classification": null,
+      "deduplication_justification": "This lever focuses specifically on the *extent* and *nature* of data sharing with the broader scientific community. This is a distinct strategic decision concerning scientific impact, collaboration, and privacy, separate from data acquisition or participant recruitment.",
+      "description": "Data Sharing Scope controls the scope of data sharing, affecting scientific impact and privacy risks. Its objectives are to ensure broad collaboration while protecting participant privacy. Key success metrics include data accessibility, collaboration, reproducibility, and privacy protection.",
+      "synergy_text": "This lever has strong synergy with Recruitment Channel Strategy (aab98b8b-a06e-434d-a8c9-ac353c08e684) as broader data sharing can accelerate scientific progress but also increases the need for robust recruitment strategies to maintain participant representativeness. Additionally, it synergizes with Staffing Coverage Model (4c598798-03d1-4e91-965e-21a4c43ea8bc) as adequate staffing is crucial to manage and annotate the data collected through various recruitment channels.",
+      "conflict_text": "This lever conflicts with Recruitment Channel Strategy (aab98b8b-a06e-434d-a8c9-ac353c08e684) as broader data sharing can increase the need for robust recruitment strategies to maintain participant representativeness. Furthermore, it conflicts with Facility Expansion Strategy (9e8e5b69-6af7-4d8a-9d57-2138d2f822f0) as expansion plans may be impacted by the data sharing strategy chosen, affecting long-term scalability and resource allocation."
+    },
+    {
+      "lever_id": "a140c2be-490c-499a-a964-3d0b8b11f4ea",
+      "name": "Recruitment Stringency Strategy",
+      "consequences": "Stricter criteria reduce unproductive admissions but limit sample size. Immediate: Fewer participants admitted \u2192 Systemic: Slower enrollment and reduced statistical power \u2192 Strategic: Impacts the generalizability and robustness of findings, potentially requiring longer study duration.",
+      "options": [
+        "Prioritize broad inclusion using minimal screening criteria, accepting a higher rate of unproductive admissions to maximize sample size.",
+        "Employ moderate screening, balancing inclusion and exclusion criteria to optimize event capture rate while maintaining a reasonable sample size.",
+        "Implement stringent pre-admission screening, including home video-EEG, to minimize unproductive admissions and maximize event capture efficiency, accepting a smaller, highly-selected sample."
+      ],
+      "review": "Controls Sample Size vs. Event Yield. Weakness: The options do not explicitly address the ethical considerations of home video-EEG screening.",
+      "classification": null,
+      "deduplication_justification": "This lever focuses on the *strictness* of the inclusion criteria for participants. This is a distinct strategic decision that directly impacts the trade-off between sample size and the likelihood of capturing parasomnia events, influencing statistical power and generalizability.",
+      "description": "Recruitment Stringency Strategy controls the stringency of recruitment criteria, affecting sample size and event yield. Its objectives are to ensure a representative sample while balancing inclusion and exclusion criteria. Key success metrics include enrollment rate, participant demographics, and statistical power.",
+      "synergy_text": "This lever has strong synergy with Data Sharing Scope (a7989aed-70db-44e7-ba0c-62068b91574c) as broader data sharing can accelerate scientific progress but also increases the need for robust recruitment strategies to maintain participant representativeness. Additionally, it synergizes with Staffing Coverage Model (4c598798-03d1-4e91-965e-21a4c43ea8bc) as adequate staffing is crucial to manage and annotate the data collected through various recruitment channels.",
+      "conflict_text": "This lever conflicts with Data Acquisition Intensity Strategy (0e866b59-5181-443c-9bb3-f73fc15f3e91) as more intensive data acquisition can increase participant burden, potentially affecting enrollment rates and participant comfort. Furthermore, it conflicts with Facility Expansion Strategy (9e8e5b69-6af7-4d8a-9d57-2138d2f822f0) as expansion plans may be impacted by the recruitment strategy chosen, affecting long-term scalability and resource allocation."
+    },
+    {
+      "lever_id": "0e866b59-5181-443c-9bb3-f73fc15f3e91",
+      "name": "Data Acquisition Intensity Strategy",
+      "consequences": "More intensive data acquisition improves signal fidelity but increases participant burden. Immediate: Increased participant discomfort \u2192 Systemic: Higher dropout rates and reduced adherence to protocol \u2192 Strategic: Affects data completeness and introduces bias, potentially compromising the study's validity.",
+      "options": [
+        "Rely primarily on low-burden sensors (dry-electrode EEG, mattress sensors) with minimal scheduled PSG, prioritizing participant comfort and long-term adherence.",
+        "Balance low-burden sensors with scheduled enhanced-night PSG on a subset of nights, aiming for a compromise between data richness and participant burden.",
+        "Maximize data richness through continuous full PSG monitoring for all participants, accepting potential participant discomfort and increased dropout rates."
+      ],
+      "review": "Controls Data Richness vs. Participant Burden. Weakness: The options don't consider adaptive PSG scheduling based on initial low-burden sensor data.",
+      "classification": null,
+      "deduplication_justification": "This lever focuses on the *intensity* of data acquisition, balancing data richness with participant burden. This is a distinct strategic decision that affects data quality, participant adherence, and the overall validity of the study. It is more general than the other data acquisition levers.",
+      "description": "Data Acquisition Intensity Strategy controls the intensity of data acquisition, affecting signal fidelity and participant burden. Its objectives are to ensure rich data while balancing participant comfort and long-term adherence. Key success metrics include participant comfort, dropout rates, and data completeness.",
+      "synergy_text": "This lever has strong synergy with Recruitment Channel Strategy (aab98b8b-a06e-434d-a8c9-ac353c08e684) as the recruitment strategy chosen can impact the data acquisition intensity, affecting participant burden and long-term adherence. Additionally, it synergizes with Staffing Coverage Model (4c598798-03d1-4e91-965e-21a4c43ea8bc) as adequate staffing is crucial to manage and annotate the data collected through various recruitment channels.",
+      "conflict_text": "This lever conflicts with Recruitment Stringency Strategy (a140c2be-490c-499a-a964-3d0b8b11f4ea) as more intensive data acquisition can increase participant burden, potentially affecting enrollment rates and participant comfort. Furthermore, it conflicts with Facility Expansion Strategy (9e8e5b69-6af7-4d8a-9d57-2138d2f822f0) as expansion plans may be impacted by the data acquisition intensity chosen, affecting long-term scalability and resource allocation."
+    },
+    {
+      "lever_id": "4c598798-03d1-4e91-965e-21a4c43ea8bc",
+      "name": "Staffing Coverage Model",
+      "consequences": "Higher staffing levels improve safety and annotation quality but increase operational costs. Immediate: Increased personnel expenses \u2192 Systemic: Reduced budget for other research activities \u2192 Strategic: Impacts the scope and depth of the scientific program, potentially limiting the number of research questions addressed.",
+      "options": [
+        "Minimize staffing costs by relying on a single night technician with remote backup, accepting potential delays in event response and annotation.",
+        "Maintain a standard staffing model with one on-site technician and a rotating backup, balancing cost-effectiveness with adequate event response and annotation capacity.",
+        "Maximize safety and annotation quality by employing two on-site technicians per shift, ensuring immediate event response and comprehensive annotation, despite higher personnel costs."
+      ],
+      "review": "Controls Safety/Annotation Quality vs. Operational Costs. Weakness: The options fail to consider task automation to reduce technician workload.",
+      "classification": null,
+      "deduplication_justification": "This lever focuses on the *model* of staffing coverage, specifically the number of technicians on-site and the use of backup support. This is a distinct strategic decision that directly impacts safety, data quality, and operational costs, influencing the overall scope of the research program.",
+      "description": "The staffing coverage model determines the optimal number of technicians on site to ensure immediate event response and comprehensive annotation, while balancing operational costs. This lever controls the trade-off between safety/annotation quality and operational expenses. Higher staffing levels improve safety and annotation quality but increase operational costs.",
+      "synergy_text": "This lever has strong synergy with 'Recruitment Channel Strategy' (aad98b8b-a06e-434d-a8c9-ac353c08e684) as a sufficient number of participants is necessary to justify higher staffing levels. It also has synergy with 'Data Acquisition Intensity Strategy' (0e866b59-5181-443c-9bb3-f73fc15f3e91) as the intensity of data acquisition affects the need for immediate event response and annotation.",
+      "conflict_text": "This lever conflicts with 'Facility Expansion Strategy' (9e8e5b69-6af7-4d8a-9d57-2138d2f822f0) as expanding the facility may require adjusting staffing levels. It also conflicts with 'Data Annotation Workflow' (023bbe44-7966-4180-a58c-150b024c69df) as higher staffing levels may compromise inter-rater reliability if not managed properly."
+    },
+    {
+      "lever_id": "7eb7bda8-66e5-4b3d-8bff-5675f416af90",
+      "name": "Risk Mitigation Protocol",
+      "consequences": "More stringent safety protocols reduce participant risk but increase operational complexity. Immediate: Increased monitoring overhead \u2192 Systemic: Slower response times to genuine events due to false alarms \u2192 Strategic: Impacts the feasibility of capturing rare events and the overall efficiency of the research unit.",
+      "options": [
+        "Implement basic safety measures (padded edges, door alarms) with minimal active monitoring, accepting a higher level of residual risk.",
+        "Employ standard safety protocols with active video monitoring and technician response to alarms, balancing risk mitigation with operational efficiency.",
+        "Adopt comprehensive safety measures including continuous video and physiological monitoring with automated anomaly detection, minimizing risk but increasing operational complexity and false alarm rates."
+      ],
+      "review": "Controls Participant Safety vs. Operational Complexity. Weakness: The options do not address the psychological impact of constant surveillance on participants.",
+      "classification": null,
+      "deduplication_justification": "This lever focuses on the *stringency* of the risk mitigation protocols. This is a distinct strategic decision that directly impacts participant safety, operational complexity, and the efficiency of the research unit. It is more general than the other risk mitigation levers.",
+      "description": "The risk mitigation protocol determines the level of safety measures to implement, balancing participant safety with operational complexity. This lever controls the trade-off between participant safety and operational efficiency. More stringent safety protocols reduce participant risk but increase operational complexity.",
+      "synergy_text": "This lever has strong synergy with 'Staffing Coverage Model' (4c598798-03d1-4e91-965e-21a4c43ea8bc) as staffing levels affect the feasibility of implementing more stringent safety measures. It also has synergy with 'Data Acquisition Intensity Strategy' (0e866b59-5181-443c-9bb3-f73fc15f3e91) as the intensity of data acquisition affects the need for more stringent safety protocols.",
+      "conflict_text": "This lever conflicts with 'Recruitment Channel Strategy' (aad98b8b-a06e-434d-a8c9-ac353c08e684) as more stringent safety measures may limit participant recruitment. It also conflicts with 'Data Annotation Workflow' (023bbe44-7966-4180-a58c-150b024c69df) as constant surveillance may compromise inter-rater reliability if not managed properly."
+    },
+    {
+      "lever_id": "023bbe44-7966-4180-a58c-150b024c69df",
+      "name": "Data Annotation Workflow",
+      "consequences": "Faster annotation workflows reduce costs but may compromise inter-rater reliability. Immediate: Reduced annotation time \u2192 Systemic: Increased potential for scoring errors and disagreements \u2192 Strategic: Impacts the validity and reproducibility of the research findings, potentially undermining the credibility of publications.",
+      "options": [
+        "Employ a single rater for initial annotation with spot-checking by a second rater, prioritizing speed and cost-effectiveness over inter-rater reliability.",
+        "Utilize dual independent raters with adjudication of disagreements, balancing annotation speed with acceptable inter-rater reliability.",
+        "Implement a multi-rater annotation workflow with expert review of all events, maximizing inter-rater reliability but significantly increasing annotation time and costs."
+      ],
+      "review": "Controls Annotation Speed vs. Inter-Rater Reliability. Weakness: The options don't consider incorporating machine learning pre-annotation to improve efficiency.",
+      "classification": null,
+      "deduplication_justification": "This lever focuses specifically on the *process* of data annotation, particularly the trade-off between speed/cost and inter-rater reliability. This is a distinct strategic decision that directly impacts the validity and reproducibility of the research findings.",
+      "description": "The data annotation workflow determines the optimal number of raters and review processes to ensure accurate event scoring, while balancing annotation speed with inter-rater reliability. This lever controls the trade-off between annotation speed and inter-rater reliability. Faster annotation workflows reduce costs but may compromise inter-rater reliability.",
+      "synergy_text": "This lever has strong synergy with 'Staffing Coverage Model' (4c598798-03d1-4e91-965e-21a4c43ea8bc) as higher staffing levels may affect the feasibility of implementing faster annotation workflows. It also has synergy with 'Risk Mitigation Protocol' (7eb7bda8-66e5-4b3d-8bff-5675f416af90) as constant surveillance may compromise inter-rater reliability if not managed properly.",
+      "conflict_text": "This lever conflicts with 'Recruitment Channel Strategy' (aad98b8b-a06e-434d-a8c9-ac353c08e684) as faster annotation workflows may limit participant recruitment. It also conflicts with 'Facility Expansion Strategy' (9e8e5b69-6af7-4d8a-9d57-2138d2f822f0) as expanding the facility may require adjusting annotation workflows."
+    }
+  ]
+}
