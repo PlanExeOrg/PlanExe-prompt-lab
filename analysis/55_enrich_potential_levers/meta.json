@@ -1,0 +1,15 @@
+{
+  "input": "snapshot/1_deduplicate_levers",
+  "pr_url": "https://github.com/PlanExeOrg/PlanExe/pull/452",
+  "pr_title": "Add per-batch retry for enrich step, update OPTIMIZE_INSTRUCTIONS",
+  "pr_description": "B1**: Enrich step now retries failed batches by splitting in half instead of aborting the entire plan. Single-lever failures are logged and skipped. Should recover gpt-oss-20b's 0/5 failure caused by output token limits on large batches. B4**: `runner.py` reports actual `batches_succeeded` count instead of hardcoding `1`. D5**: Added two new known problems to `OPTIMIZE_INSTRUCTIONS`: consequence echoing without elaboration (llama3.1 post-PR #451) and UUID cross-reference format inconsistency. Identified by `analysis/54_enrich_potential_levers` assessment backlog.",
+  "history": [
+    "3/92_enrich_potential_levers",
+    "3/93_enrich_potential_levers",
+    "3/94_enrich_potential_levers",
+    "3/95_enrich_potential_levers",
+    "3/96_enrich_potential_levers",
+    "3/97_enrich_potential_levers",
+    "3/98_enrich_potential_levers"
+  ]
+}

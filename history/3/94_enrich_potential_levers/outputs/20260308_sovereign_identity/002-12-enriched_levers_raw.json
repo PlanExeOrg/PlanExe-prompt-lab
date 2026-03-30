@@ -1,0 +1,257 @@
+{
+  "metadata": [
+    {
+      "context_window": 400000,
+      "num_output": 128000,
+      "is_chat_model": true,
+      "is_function_calling_model": true,
+      "model_name": "gpt-5-nano",
+      "system_role": "user",
+      "llm_classname": "openai_llm"
+    },
+    {
+      "context_window": 400000,
+      "num_output": 128000,
+      "is_chat_model": true,
+      "is_function_calling_model": true,
+      "model_name": "gpt-5-nano",
+      "system_role": "user",
+      "llm_classname": "openai_llm"
+    },
+    {
+      "context_window": 400000,
+      "num_output": 128000,
+      "is_chat_model": true,
+      "is_function_calling_model": true,
+      "model_name": "gpt-5-nano",
+      "system_role": "user",
+      "llm_classname": "openai_llm"
+    }
+  ],
+  "characterized_levers": [
+    {
+      "lever_id": "9b95a5d0-65ad-4caa-bf73-4f8e0844e963",
+      "name": "Procurement Language Specificity",
+      "consequences": "The level of detail in procurement requirements directly impacts the feasibility of platform-neutral solutions. Vague language allows incumbent platform-dependent solutions to maintain dominance, while specific requirements can drive innovation and competition. However, overly prescriptive language can stifle innovation and limit the pool of qualified suppliers.",
+      "options": [
+        "Specify functional requirements for fallback authentication without mandating specific technologies, allowing vendors to propose diverse solutions that meet the desired outcome.",
+        "Mandate adherence to open standards like FIDO2/WebAuthn and OpenID Connect in all digital identity solutions, ensuring interoperability and reducing vendor lock-in.",
+        "Require suppliers to demonstrate compatibility with at least three independent mobile operating systems or hardware token types, promoting platform diversity and reducing reliance on single vendors."
+      ],
+      "review": "Detailed procurement requirements can promote platform-neutrality but risk limiting innovation; the gap lies in incentivizing solutions exceeding minimum compliance without prescribing specific technologies.",
+      "classification": "primary",
+      "deduplication_justification": "Procurement language is critical for influencing AltID and future systems. Specificity directly impacts the feasibility of platform-neutral solutions, making it a key strategic decision.",
+      "description": "This lever governs the precision and scope of procurement requirements to advance platform-neutral identity solutions. It controls how tender language frames interoperability, standards adoption, and vendor diversity without prescribing a single technology. The objective is to deter vendor lock-in while preserving flexibility for innovative proposals that meet security, privacy, and continuity goals. Key success metrics include the share of procurement documents referencing open standards (FIDO2/WebAuthn, OpenID Connect), the number of qualified suppliers, demonstrated fallback capability in responses, and quantifiable reductions in platform risk. Risks include stifling innovation if requirements become overly prescriptive.",
+      "synergy_text": "Positive interactions include aligning EU Standards Engagement (0f5ea4bd) and Fallback Authentication Modality (08b0bb5d) by codifying open standards in procurement, and by ensuring Demonstrator Fidelity (548c0a83) reflects vendor-neutral, standards-compliant capabilities that procurement can validate and fund in practice.",
+      "conflict_text": "Over-prescriptive procurement language can stifle innovation, limiting exploratory work and vendor creativity (9b95a5d0). It may run ahead of EU standards timelines (0f5ea4bd) and increase integration risk for Demonstrator Fidelity (548c0a83) by forcing premature compatibility checks that reduce flexibility and pace."
+    },
+    {
+      "lever_id": "548c0a83-2ca6-45fc-8b12-36a116659ca5",
+      "name": "Demonstrator Fidelity",
+      "consequences": "The scope and realism of the technical demonstrators influence stakeholder perception and adoption potential. High-fidelity demonstrators can showcase immediate deployability but require significant resources and may face integration challenges with existing systems. Low-fidelity demonstrators are cheaper and faster to develop, but may be dismissed as unrealistic or impractical.",
+      "options": [
+        "Develop a fully functional demonstrator integrated with a simulated Danish public-sector identity-provider environment, showcasing end-to-end authentication flows and user experience.",
+        "Focus the demonstrator on core authentication protocols (FIDO2/WebAuthn) and platform-neutral fallback mechanisms, minimizing dependencies on specific UI frameworks or backend systems.",
+        "Create a modular demonstrator architecture that allows for incremental feature additions and integration with existing MitID components, enabling a phased transition to platform-neutral solutions."
+      ],
+      "review": "Demonstrator fidelity balances realism with resource constraints, but the options neglect the need for a clear path to production integration and certification within the MitID ecosystem.",
+      "classification": "secondary",
+      "deduplication_justification": "Demonstrator fidelity is important for showcasing feasibility, but it's secondary to the core policy and procurement interventions. It supports the primary goal but doesn't gate it.",
+      "description": "This lever defines the realism, scope, and integration of technical demonstrators used to communicate feasibility to stakeholders. It governs how closely the non-production demos mimic a real identity environment, the end-to-end authentication flows, and the ability to test platform-neutral or fallback paths without live MitID integration. Objectives include credible evidence for capability, risk reduction, and procurement confidence. Key success metrics: number and quality of demonstrators delivered (mobile-oriented and browser/hardware-based), demonstrated interoperability with open standards (FIDO2/WebAuthn, OIDC), and documented lessons learned for future procurement. Risk includes scope creep and misalignment with MitID operators.",
+      "synergy_text": "Positive interactions include leveraging Procurement Language Specificity (9b95a5d0) to ensure demonstrators reflect standards-based, platform-neutral flows, and aligning with Fallback Authentication Modality (08b0bb5d) to validate multiple fallback paths within realistic settings. It also supports EU Standards Engagement (0f5ea4bd) by providing tangible proof to European bodies.",
+      "conflict_text": "Conflict arises if high-fidelity demos require integration with specific systems beyond the open demo environment, creating tension with Demonstrator Fidelity (548c0a83) and Procurement Language Specificity (9b95a5d0) by forcing compatibility checks too early or narrowing accepted approaches. This can slow procurement and damp stakeholder confidence."
+    },
+    {
+      "lever_id": "1861e15b-babc-47c2-893b-bfe9dbb21792",
+      "name": "Coalition Breadth",
+      "consequences": "The composition of the advocacy coalition affects its influence and credibility. A broad coalition spanning diverse stakeholders can amplify the message and increase political pressure, but may also lead to internal conflicts and diluted messaging. A narrow coalition focused on specific interests may be more cohesive but less influential.",
+      "options": [
+        "Prioritize engagement with civil-society organizations, privacy advocates, and academic researchers to build a strong foundation of support for platform-neutral digital identity.",
+        "Actively recruit security experts, contingency-planning stakeholders, and sympathetic members of Folketinget's digital policy committee to broaden the coalition's political influence.",
+        "Form strategic alliances with industry associations and technology vendors committed to open standards and platform interoperability to gain technical expertise and market access."
+      ],
+      "review": "Coalition breadth trades focused messaging for wider influence, yet the options overlook the need to address concerns from incumbent platform providers and MitID operators.",
+      "classification": "secondary",
+      "deduplication_justification": "Coalition breadth is important for amplifying the message, but it's secondary to the core technical and policy work. A broad coalition is helpful but not essential.",
+      "description": "This lever describes the advocacy coalition\u2019s composition and influence in pushing platform-neutral identity. It aims to assemble civil-society groups, privacy advocates, academic researchers, security experts, contingency-planning stakeholders, and sympathetic Folketinget members to strengthen credibility, coordinate policy with technical work, and broaden political leverage for resilience-focused procurement and fallback access. Success metrics include multi-group engagement, formal commitments, and coherent messaging aligned with domestic and EU standards.",
+      "synergy_text": "Positive interactions include aligning with EU Standards Engagement (0f5ea4bd) to amplify Brussels-level influence and with Demonstrator Fidelity (548c0a83) by incorporating diverse expert feedback into demonstrations. It also supports Procurement Language Specificity (9b95a5d0) by ensuring coalition voices inform open procurement language.",
+      "conflict_text": "Risks include messaging fragmentation due to diverse viewpoints and potential pushback from incumbent operators wary of platform-neutral advocates. It may collide with Procurement Language Specificity (9b95a5d0) if coalition demands broad principles without concrete procurement language. Conflicts with EU agenda timing (0f5ea4bd) could slow Danish progress."
+    },
+    {
+      "lever_id": "0f5ea4bd-30a5-4b98-8804-335c27c5f5f9",
+      "name": "EU Standards Engagement",
+      "consequences": "Active participation in EU standards bodies can align Danish advocacy with broader European requirements and increase the likelihood of platform-neutrality being incorporated into future digital identity frameworks. However, EU standards processes are complex and time-consuming, and may not always align with Danish priorities. Furthermore, focusing on EU standards may divert resources from domestic advocacy efforts.",
+      "options": [
+        "Focus on influencing specific language in the European Digital Identity Wallet framework to support platform-neutral access and certified fallback mechanisms.",
+        "Actively participate in relevant EU technical working groups to contribute technical expertise and promote the adoption of open standards for digital identity.",
+        "Establish formal partnerships with other EU member states advocating for platform-neutrality to amplify Danish influence and coordinate advocacy efforts."
+      ],
+      "review": "EU standards engagement offers long-term influence but risks diverting resources from domestic goals; the options miss a strategy for managing potential conflicts between EU and Danish priorities.",
+      "classification": "secondary",
+      "deduplication_justification": "EU standards engagement is valuable for long-term alignment, but it's secondary to the immediate goal of influencing AltID and Danish procurement. It's a supporting effort.",
+      "description": "This lever engages actively in EU standards bodies to align Danish policy with European Digital Identity Wallet requirements, NSIS, and related interoperability programs. It aims to influence language and technical positions, facilitate cross-border adoption of platform-neutral fallbacks, and secure alignment with procurement and certification practices. Objectives: contribute to EU working groups, build alliances with other member states, and incorporate Danish resilience priorities into EU materials. Key success metrics: documented EU contributions, formal partnerships, and adoption of Danish language in EU delta standards.",
+      "synergy_text": "Positive interactions include coordinating with Coalition Breadth (1861e15b) to amplify influence in Brussels and with Procurement Language Specificity (9b95a5d0) to embed EU-consensus language in domestic procurement. It also complements Risk Framing (34419f29) by aligning resilience narratives with EU policy.",
+      "conflict_text": "Risks include resource drain and misalignment if EU timelines lag behind Danish procurement cycles. It may slow domestic progress when EU positions diverge from immediate priorities, creating friction with phase-based planning and domestic stakeholders, including AltID-related efforts."
+    },
+    {
+      "lever_id": "08b0bb5d-8444-4cbc-9462-00e38adb5551",
+      "name": "Fallback Authentication Modality",
+      "consequences": "The choice of fallback authentication modality impacts user experience, security, and deployment complexity. Browser-based or hardware-token-based fallbacks reduce dependence on mobile OS duopoly but may be less convenient for users and require additional infrastructure. SMS-based fallbacks are widely accessible but offer weaker security guarantees.",
+      "options": [
+        "Develop a browser-based fallback authentication path using WebAuthn and hardware security keys, providing a secure and platform-independent alternative to mobile apps.",
+        "Implement a one-time password (OTP) fallback mechanism delivered via SMS or email, offering a simple and widely accessible solution for users without compatible devices.",
+        "Explore a decentralized identity (DID) based fallback, allowing users to control their identity and authentication without relying on centralized authorities or platform providers."
+      ],
+      "review": "Fallback modality balances security with accessibility, but the options fail to address the challenge of user education and adoption of less familiar authentication methods.",
+      "classification": "secondary",
+      "deduplication_justification": "Fallback authentication modality is a design choice that matters for user experience and security, but it's secondary to the overall goal of establishing a fallback path.",
+      "description": "This lever selects the modalities used for fallback authentication when MitID's platform trust chain is unavailable or degraded. It covers browser/WebAuthn with hardware keys, OTP via SMS, and potentially decentralized identity fallbacks, balancing security, usability, and deployment complexity. Objectives: broaden platform diversity, reduce single-vendor dependence, and preserve secure access during disruptions. Key success metrics: number of modalities implemented and tested (minimum two), interoperability with open standards, user acceptance, regulatory alignment, and implementation readiness within the demonstrators.",
+      "synergy_text": "Positive interactions include working with Procurement Language Specificity (9b95a5d0) to codify compliant fallbacks and with Demonstrator Fidelity (548c0a83) to validate realistic paths. It also aligns with Contingency Protocol Definition (fcc8e84a) by documenting fallback procedures.",
+      "conflict_text": "Trade-offs include user education burden and potential security weaknesses in SMS fallbacks or DID approaches; these decisions can constrain platform-neutral ambition and complicate procurement language. Potential conflict with Fallback Certification Criteria (b08d8a77) if certification demands favor a single modality."
+    },
+    {
+      "lever_id": "34419f29-421d-4ce4-b4b0-317e02c0c06e",
+      "name": "Risk Framing",
+      "consequences": "How the project frames the platform-dependency issue influences stakeholder perception and support. Framing it solely as a privacy or ideological concern may alienate pragmatic stakeholders, while framing it as a concrete public-sector risk involving supplier concentration, reduced strategic autonomy, and continuity-of-service exposure may resonate more broadly. However, overemphasizing risk may create unnecessary fear and resistance to change.",
+      "options": [
+        "Emphasize the resilience and continuity-of-service benefits of platform-neutrality, highlighting the potential for fallback authentication to mitigate disruptions caused by platform outages or policy changes.",
+        "Frame the issue as a matter of digital sovereignty and strategic autonomy, arguing that Denmark should not be dependent on foreign technology suppliers for critical public services.",
+        "Focus on the economic benefits of promoting competition and innovation in the digital identity market, arguing that platform-neutrality can create opportunities for Danish companies and reduce costs for taxpayers."
+      ],
+      "review": "Risk framing shapes stakeholder perception but risks alienating some groups; the options lack a strategy for addressing concerns about increased complexity or cost associated with platform-neutral solutions.",
+      "classification": "primary",
+      "deduplication_justification": "Risk framing is a primary lever because it shapes stakeholder perception and support. How the issue is framed determines whether stakeholders see it as a priority.",
+      "description": "Risk Framing defines how the project communicates the vulnerabilities of platform dependency in public services, guiding messaging to policymakers, procurement teams, and civil society. It frames the issue as a concrete risk\u2014supplier concentration, continuity exposure, and reduced autonomy\u2014rather than a purely privacy concern. The lever shapes decision gates, stakeholder engagement, and budgetary support for platform-neutrality. Success is measured by cross-government alignment on resilience language, inclusion of platform-neutral concepts in policy or procurement documents, and prioritized attention to continuity risks in AltID-related planning.",
+      "synergy_text": "This lever amplifies others by anchoring resilience messaging in policy dialogue and EU-level standards work. It synergizes with Resilience Narrative Amplification (0a7d8031-78ba-4afc-a1ab-39938b95a12c) and EU Standards Engagement (0f5ea4bd-30a5-4b98-8804-335c27c5f5f9), helping procurement language and cross-border interoperability discussions gain traction.",
+      "conflict_text": "Overemphasizing risk can alienate pragmatic stakeholders and fragment coalition support. It may constrain procurement discussions and cross-border alignment, creating friction with EU Standards Engagement (0f5ea4bd-30a5-4b98-8804-335c27c5f5f9) and undermining Coalition Breadth (1861e15-babc-47c2-893b-bfe9dbb21792) by privileging national narratives."
+    },
+    {
+      "lever_id": "089c8ec8-4f9d-4147-b0ed-fb39bcbab47a",
+      "name": "Technical Standards Advocacy",
+      "consequences": "Active participation in EU standards bodies can shape the technical requirements for digital identity wallets, potentially mandating platform-neutral access or fallback mechanisms. This could increase the cost and complexity of implementation for all member states, but also ensures greater interoperability and reduces vendor lock-in. Success depends on aligning Danish advocacy with broader European priorities and overcoming resistance from incumbent vendors.",
+      "options": [
+        "Prioritize direct engagement with eIDAS2 technical working groups to advocate for specific platform-neutrality requirements in the wallet architecture",
+        "Focus on influencing the conformance testing and certification frameworks to ensure that platform-neutral solutions can meet the required security and interoperability levels",
+        "Collaborate with other EU member states to form a voting bloc that supports platform-neutrality and fallback mechanisms in the final eIDAS2 specifications"
+      ],
+      "review": "Advocating for specific technical standards introduces complexity and potential delays, and the options fail to address the risk of standards being watered down during negotiation.",
+      "classification": "secondary",
+      "deduplication_justification": "Technical standards advocacy is a supporting activity for influencing EU policy, but it's secondary to the core Danish procurement and policy goals.",
+      "description": "Technical Standards Advocacy acts as the project's engine for shaping wallet architecture, interoperability, and security baselines toward platform-neutrality. It identifies target standards, engages with EU and national technical groups (eIDAS2, NSIS), and coordinates conformance and certification strategies. The lever translates policy aims into concrete technical requirements, balancing security, privacy, usability, and procurement realities. Success is measured by alignment of national proposals with EU priority standards, inclusion of platform-neutral requirements in technical documents, and progress toward interoperable, vendor-neutral identity verification across domains.",
+      "synergy_text": "This lever complements EU Standards Engagement (0f5ea4bd-30a5-4b98-8804-335c27c5f5f9) and Authentication Protocol Diversification (1646e155-f6de-49df-af57-313290cefff8). Working with EU processes and diversified protocols strengthens platform-neutral goals and reduces vendor lock-in.",
+      "conflict_text": "It can raise cost and schedule risk and meet resistance from incumbents; standards processes may water down positions, and it can conflict with Procurement Conditionality (ed16c55c) and Procurement Language Specificity (9b95a5d0) due to divergent priorities."
+    },
+    {
+      "lever_id": "ed16c55c-fd66-41a1-b5e8-b22eccadbaaf",
+      "name": "Procurement Conditionality",
+      "consequences": "Adding conditions to AltID procurement that favor platform-neutral solutions can incentivize vendors to develop and offer such options. This may initially limit the pool of qualified bidders and potentially increase upfront costs, but it fosters innovation and reduces long-term dependence on specific platforms. The effectiveness depends on the strength and enforceability of the procurement language.",
+      "options": [
+        "Require bidders to demonstrate compatibility with multiple mobile operating systems and browser environments, including privacy-focused alternatives like GrapheneOS",
+        "Prioritize solutions that utilize open standards for authentication and identity management, such as FIDO2/WebAuthn and OpenID Connect, over proprietary technologies",
+        "Incorporate a scoring mechanism that rewards bidders who offer certified fallback authentication paths that do not rely on Apple or Google platform services"
+      ],
+      "review": "Imposing procurement conditions risks limiting vendor participation and increasing costs, and the options do not account for the potential for vendors to circumvent the requirements through superficial compliance.",
+      "classification": "primary",
+      "deduplication_justification": "Procurement conditionality is a primary lever because it directly incentivizes vendors to offer platform-neutral solutions. It's a key mechanism for driving change.",
+      "description": "Procurement Conditionality embeds requirements and evaluation criteria that push bidders toward platform-neutral and open-standards solutions. It aims to accelerate adoption of FIDO2/WebAuthn/OpenID Connect, multiple OS/browser support, and certified fallback paths. While it can incentivize innovation and reduce long-term dependence, it may initially restrict the bidder pool, elevate upfront costs, and extend procurement cycles. Success metrics include share of bids meeting platform-neutral criteria, number of contracts with certified fallback options, and demonstrated procurement agility in incorporating standards language.",
+      "synergy_text": "This lever creates positive momentum with Risk Framing (34419f29) by shaping policy commitments and with Technical Standards Advocacy (089c8ec8) by aligning procurement language with standards work.",
+      "conflict_text": "Procurement conditionality can shrink the bidder pool and raise upfront costs, risking delays and misalignment with suppliers. It may conflict with Supplier Concentration Mitigation (205736e7) and with Procurement Language Specificity (9b95a5d0) if rigid requirements deter participation."
+    },
+    {
+      "lever_id": "b08d8a77-c403-4403-8acd-603e9bc8c003",
+      "name": "Fallback Certification Criteria",
+      "consequences": "Establishing clear certification criteria for fallback authentication paths can provide a benchmark for security and usability, encouraging the development and adoption of such solutions. This requires significant investment in testing and evaluation infrastructure, and may create barriers to entry for smaller vendors. The impact depends on the credibility and acceptance of the certification process.",
+      "options": [
+        "Define specific security requirements for fallback authentication methods, including resistance to phishing, man-in-the-middle attacks, and other common threats",
+        "Establish usability guidelines for fallback authentication interfaces to ensure that they are accessible and easy to use for all citizens, regardless of technical proficiency",
+        "Create a formal certification program for fallback authentication solutions, with independent audits and ongoing monitoring to ensure compliance with the established criteria"
+      ],
+      "review": "Creating certification criteria can be costly and create barriers to entry, and the options overlook the challenge of maintaining the relevance and security of the criteria over time.",
+      "classification": "secondary",
+      "deduplication_justification": "Fallback certification criteria are important for ensuring security and usability, but they are secondary to the overall goal of establishing a fallback path.",
+      "description": "Fallback Certification Criteria establish objective benchmarks for fallback paths, covering security properties, phishing resistance, usability, and accessibility. It requires investment in testing infrastructure, independent audits, and ongoing monitoring. While it can drive confidence and market competition, it may create barriers for smaller vendors and risk stagnation if criteria become outdated. Success metrics include the number of certified solutions, audit-cycle compliance, test coverage for fallback modalities, and time-to-certify.",
+      "synergy_text": "This lever complements Procurement Conditionality (ed16c55c) by operationalizing standards into bid requirements and aligns with Fallback Authentication Modality (08b0bb5d) to ensure real-world fallback paths meet criteria.",
+      "conflict_text": "Certification barriers can deter smaller vendors and entrench incumbents, potentially clashing with Supplier Concentration Mitigation (205736e7) and with Procurement Language Specificity (9b95a5d0) if criteria become too rigid."
+    },
+    {
+      "lever_id": "0a7d8031-78ba-4afc-a1ab-39938b95a12c",
+      "name": "Resilience Narrative Amplification",
+      "consequences": "Framing platform dependence as a resilience and continuity-of-service risk can resonate with policymakers and the public, creating political pressure for change. This requires careful communication and public awareness campaigns, and may be countered by arguments about convenience and cost. The impact depends on the credibility of the messengers and the persuasiveness of the narrative.",
+      "options": [
+        "Conduct public opinion research to gauge citizen awareness of platform dependence risks and tailor messaging accordingly",
+        "Partner with civil-society organizations and media outlets to disseminate information about the potential consequences of relying on a small number of foreign technology suppliers",
+        "Organize public forums and workshops to educate policymakers and stakeholders about the technical and policy options for mitigating platform dependence risks"
+      ],
+      "review": "Amplifying the resilience narrative risks alienating stakeholders who benefit from the current system, and the options do not address the potential for the narrative to be co-opted or distorted by opposing interests.",
+      "classification": "secondary",
+      "deduplication_justification": "Resilience narrative amplification supports the risk framing, but it's secondary to the core policy and procurement interventions. It's a supporting effort.",
+      "description": "Resilience Narrative Amplification shapes how stakeholders perceive platform-dependency risk through public messaging, forums, coalitions, and policy discourse. It aims to generate political will for platform-neutral access, continuity planning, and procurement-neutral policy language. The lever coordinates with civil society partners and media to raise awareness while maintaining credibility through measured claims. Success means broader reach, strategic policymaker engagement, and inclusion of resilience language in official AltID-related documents and procurement discussions.",
+      "synergy_text": "It synergizes with Risk Framing (34419f29) to anchor messaging in analysis and with Coalition Breadth (1861e15) to expand support; EU Standards Engagement (0f5ea4bd) helps align national narratives with European policy.",
+      "conflict_text": "The narrative can alienate beneficiaries of the status quo and be exploited by opponents, risking polarization. It may clash with EU Standards Engagement (0f5ea4bd) if national resilience rhetoric appears protectionist and could challenge Coalition Breadth (1861e15) by complicating inclusive outreach."
+    },
+    {
+      "lever_id": "fcc8e84a-d00f-4aba-bd78-1a99613dbb08",
+      "name": "Contingency Protocol Definition",
+      "consequences": "Developing and documenting clear contingency protocols for service disruptions caused by platform policy changes or geopolitical events can minimize the impact on citizens and businesses. This requires careful planning and coordination across multiple government agencies and private-sector stakeholders, and may be costly to implement. The effectiveness depends on the clarity and comprehensiveness of the protocols.",
+      "options": [
+        "Establish a formal working group to develop and maintain contingency protocols for various platform disruption scenarios",
+        "Conduct regular simulations and exercises to test the effectiveness of the contingency protocols and identify areas for improvement",
+        "Create a public communication plan to inform citizens and businesses about the contingency protocols and how to access essential services during a disruption"
+      ],
+      "review": "Defining contingency protocols requires extensive coordination and resources, and the options do not address the potential for unforeseen circumstances to render the protocols ineffective.",
+      "classification": "secondary",
+      "deduplication_justification": "Contingency protocol definition is important for resilience, but it's secondary to the core goal of influencing AltID and establishing a fallback path.",
+      "description": "Contingency Protocol Definition establishes formal, cross\u2011agency protocols for responding to disruptions induced by platform policy shifts, geopolitical events, or network outages. It governs how public bodies, private partners, and critical service providers coordinate incident response, activate fallback access paths, communicate with citizens, and resume normal operations with minimal service gaps. The lever aims to minimize citizen impact, protect continuity of essential services, and enable timely decision gates and resource allocation. Key success metrics include documented protocol suites for disruption scenarios, regular simulated exercises, and a public communications plan activated during disruptions.",
+      "synergy_text": "This lever strengthens resilience by creating a predictable response framework that complements protocol-level decoupling and protocol diversification. It synergizes with Integrity API Decoupling and Authentication Protocol Diversification, enabling cross-cutting fallback pathways and staged responses while ensuring procurement and policy alignment for rapid recovery.",
+      "conflict_text": "Defining comprehensive contingency protocols requires sustained multi\u2011agency coordination and may compete with tight procurement timelines and budget cycles. It can slow phase\u2011oriented demonstrations and risk appetite for rapid procurement changes. Conflicts are most likely with Procurement Conditionality and Demonstrator Fidelity, which can constrain flexibility during enforcement and testing of protocols."
+    },
+    {
+      "lever_id": "84c24f03-bd06-45a5-aa93-e95e6c83c894",
+      "name": "Integrity API Decoupling",
+      "consequences": "Decoupling from platform-specific integrity APIs allows for broader device compatibility and reduces reliance on Apple and Google's trust models. However, this requires developing alternative methods for verifying device integrity, potentially increasing complexity and introducing new attack vectors. A successful decoupling strategy enhances digital sovereignty but demands robust security measures to maintain trust.",
+      "options": [
+        "Invest in developing a national attestation service that provides device integrity signals independent of platform vendors, allowing for a controlled and auditable trust framework",
+        "Adopt a risk-based authentication approach that relies on multiple independent factors beyond device integrity, such as behavioral biometrics and transaction monitoring, to mitigate fraud",
+        "Collaborate with privacy-focused mobile OS projects like GrapheneOS to establish a baseline of verified device integrity, leveraging their security model without directly depending on commercial platforms"
+      ],
+      "review": "Decoupling from integrity APIs introduces complexity and potential vulnerabilities; the options neglect the challenge of maintaining user convenience during authentication.",
+      "classification": "primary",
+      "deduplication_justification": "Decoupling from platform-specific integrity APIs is a primary lever because it directly addresses the dependency on Apple and Google's trust models. It's a core technical challenge.",
+      "description": "Integrity API Decoupling aims to remove exclusive dependence on platform-managed device integrity signals (e.g., Apple/Google attestation). It defines alternative verification signals and governance for a national attestation service, enabling a platform-neutral trust framework. The lever seeks to broaden device compatibility, improve resilience to platform policy shifts, and preserve user privacy while maintaining trust. Key success metrics include a functioning national attestation service prototype, interoperability tests, and evidence of maintained security guarantees independent of platform APIs.",
+      "synergy_text": "This lever enhances resilience and supports platform-neutral planning by enabling independent trust signals. It synergizes with Contingency Protocol Definition (fcc8e84a) and Authentication Protocol Diversification (1646e155) by providing alternative verification paths that do not rely on vendor APIs, while maintaining security and privacy.",
+      "conflict_text": "Decoupling introduces complexity and potential new attack vectors that must be mitigated, which can slow vendor onboarding and increase maintenance costs. It may conflict with Demonstrator Fidelity and Fallback Certification Criteria, as experiments and certifications hinge on stable, well\u2011understood signals and integration pathways."
+    },
+    {
+      "lever_id": "1646e155-f6de-49df-af57-313290cefff8",
+      "name": "Authentication Protocol Diversification",
+      "consequences": "Diversifying authentication protocols beyond mobile apps reduces the attack surface and provides fallback options if one protocol is compromised or becomes unavailable. This requires supporting multiple authentication methods, increasing development and maintenance costs. A diversified approach enhances resilience but demands careful management of complexity and user experience.",
+      "options": [
+        "Prioritize FIDO2/WebAuthn support across all public-sector services, enabling passwordless authentication via hardware security keys or platform authenticators as a primary access method",
+        "Develop a browser-based authentication portal that uses open standards and cryptographic protocols to provide a platform-neutral alternative to mobile apps for essential services",
+        "Explore decentralized identity solutions based on verifiable credentials, allowing users to control their identity data and authenticate without relying on centralized authorities or platform providers"
+      ],
+      "review": "Protocol diversification increases complexity and cost; the options overlook the need for user education and support for less tech-savvy citizens.",
+      "classification": "secondary",
+      "deduplication_justification": "Authentication protocol diversification is important for resilience, but it's secondary to the core goal of establishing a fallback path and influencing AltID.",
+      "description": "Authentication Protocol Diversification aims to broaden the set of viable authentication methods beyond mobile apps and a single platform ecosystem. It governs the adoption and integration of FIDO2/WebAuthn, browser-based portals, hardware tokens, and potentially decentralized identity approaches. Objectives include reducing single points of failure, enabling platform-neutral access to critical services, and preserving user privacy and usability. Key success metrics include coverage of major public-sector services with at least two distinct authenticators, measurable decline in reliance on a single vendor's trust anchors, and evidence of smooth user onboarding across devices.",
+      "synergy_text": "This lever strongly complements Integrity API Decoupling and Contingency Protocol Definition by widening usable trust channels, reducing platform dependence, and enabling fallback routes when a primary authenticator is compromised. It also aligns with EU Standards Engagement to promote interoperable, vendor-agnostic authentication across public services.",
+      "conflict_text": "Diversification carries cost and complexity, potentially confusing end users, and may slow integration with legacy systems. It risks conflicts with Fallback Certification Criteria and Demonstrator Fidelity, as proving multiple authenticators in alignment with certification demands can stretch timelines and inflate risk of misconfigurations."
+    },
+    {
+      "lever_id": "205736e7-fa61-4bd2-b957-17a7ba8a4976",
+      "name": "Supplier Concentration Mitigation",
+      "consequences": "Reducing supplier concentration in the digital identity ecosystem mitigates the risk of vendor lock-in and single points of failure. This requires diversifying suppliers and promoting interoperability, potentially increasing procurement complexity and integration costs. A diversified supplier base enhances resilience but demands careful management of interoperability and vendor relationships.",
+      "options": [
+        "Mandate open standards and interoperability requirements in all digital identity procurements, ensuring that systems can be easily integrated and replaced without vendor lock-in",
+        "Incentivize the development of open-source digital identity components and platforms, fostering a competitive market and reducing reliance on proprietary solutions",
+        "Establish a multi-vendor framework agreement for digital identity services, allowing public-sector agencies to choose from a pool of qualified suppliers and avoid dependence on a single vendor"
+      ],
+      "review": "Mitigating supplier concentration increases procurement complexity; the options neglect the potential for reduced economies of scale and increased management overhead.",
+      "classification": "secondary",
+      "deduplication_justification": "Supplier concentration mitigation is important for long-term resilience, but it's secondary to the immediate goal of influencing AltID and establishing a fallback path.",
+      "description": "Supplier Concentration Mitigation focuses on reducing dependency on a small set of providers by promoting interoperability, open standards, and multi\u2011vendor frameworks in procurements. It controls how identity services are specified, how open-source components are encouraged, and how contracts enable switching vendors without service disruption. Objectives include diminishing vendor lock-in, expanding resilience against policy changes or geopolitical shocks, and improving procurement flexibility. Key success metrics include adoption of open standards in RFPs, the establishment of a multi-vendor framework, and measurable reductions in single-supplier risk across critical identity services.",
+      "synergy_text": "This lever has strong synergy with Contingency Protocol Definition and Procurement Language Specificity, enabling cross-vendor resilience and clearer, interoperable procurement terms. By expanding supplier options, it reinforces Integrity API Decoupling strategies and Authentication Protocol Diversification through multiple trusted implementations globally.",
+      "conflict_text": "Mitigation efforts increase procurement complexity and oversight, potentially elevating costs and delaying deployment. It may clash with phase-specific demonstrations and policy debates if open\u2011standards adoption competes with existing vendor ecosystems; conflicts with Demonstrator Fidelity and EU Standards Engagement may arise when transitions require alignment across many vendors."
+    }
+  ]
+}

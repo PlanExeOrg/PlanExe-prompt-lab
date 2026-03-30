@@ -1,0 +1,330 @@
+{
+  "metadata": [
+    {
+      "context_window": 200000,
+      "num_output": 8192,
+      "is_chat_model": true,
+      "is_function_calling_model": true,
+      "model_name": "claude-haiku-4-5-20251001",
+      "system_role": "system",
+      "llm_classname": "Anthropic_LLM"
+    },
+    {
+      "context_window": 200000,
+      "num_output": 8192,
+      "is_chat_model": true,
+      "is_function_calling_model": true,
+      "model_name": "claude-haiku-4-5-20251001",
+      "system_role": "system",
+      "llm_classname": "Anthropic_LLM"
+    },
+    {
+      "context_window": 200000,
+      "num_output": 8192,
+      "is_chat_model": true,
+      "is_function_calling_model": true,
+      "model_name": "claude-haiku-4-5-20251001",
+      "system_role": "system",
+      "llm_classname": "Anthropic_LLM"
+    },
+    {
+      "context_window": 200000,
+      "num_output": 8192,
+      "is_chat_model": true,
+      "is_function_calling_model": true,
+      "model_name": "claude-haiku-4-5-20251001",
+      "system_role": "system",
+      "llm_classname": "Anthropic_LLM"
+    }
+  ],
+  "characterized_levers": [
+    {
+      "lever_id": "4f2a4321-d90e-454c-8ac1-f094a92cb44d",
+      "name": "Participant Recruitment Channels",
+      "consequences": "Expanding recruitment channels increases participant flow, potentially accelerating enrollment and event capture. However, broader recruitment may introduce heterogeneity in the participant pool, requiring more stringent screening and potentially affecting the generalizability of findings. Overly broad recruitment can also strain resources allocated for screening and onboarding.",
+      "options": [
+        "Actively recruit through national patient advocacy groups and online forums dedicated to sleep disorders, emphasizing the potential for personalized feedback and contributing to scientific advancement.",
+        "Establish a collaborative referral network with general practitioners and community health centers in the Bonn metropolitan area, offering educational seminars on parasomnia recognition and referral pathways.",
+        "Partner with local media outlets to run public service announcements and feature stories about the research unit, raising awareness and encouraging self-referral from individuals experiencing parasomnia symptoms."
+      ],
+      "review": "Expanding recruitment boosts enrollment speed, but introduces selection biases; the options neglect proactive engagement with underserved populations who may lack access to traditional channels.",
+      "classification": "secondary",
+      "deduplication_justification": "Participant recruitment is important for enrollment targets, but the specific channels are secondary to the overall recruitment strategy and inclusion/exclusion criteria.",
+      "description": "Participant Recruitment Channels define the sources and methods for identifying and enrolling NREM parasomnia participants and matched controls. Active channels include University Hospital Bonn sleep clinic referrals, regional neurologist networks, and the Deutsche Gesellschaft f\u00fcr Schlafforschung und Schlafmedizin. Channel choice and intensity directly impact recruitment speed, participant quality (diagnostic certainty, event frequency), geographic diversity, and the feasibility of meeting enrollment targets (50\u201370 NREM participants by month 36). Success metrics include enrollment rate, time-to-admission, pre-admission diagnostic confirmation rates, and event-yield conversion.",
+      "synergy_text": "Recruitment Channels strongly synergizes with Control Group Stratification and the structured pre-admission pathway. Diverse, robust channels (clinic referrals + neurologist networks + professional society) enable simultaneous recruitment of matched controls from comparable populations, improving stratification feasibility. Clinical gatekeeping through referral networks ensures higher diagnostic certainty and baseline event frequency, reducing unproductive admissions.",
+      "conflict_text": "Recruitment Channels conflicts with Overnight Staffing Model and Data Acquisition Triggering. Aggressive recruitment to meet 50\u201370 participant targets risks overwhelming the 3-technician night-shift rotation, creating unsafe staffing ratios and annotation backlogs. Rapid enrollment also compresses the timeline for technician training and protocol mastery, and accelerates facility resource constraints before operational efficiency is proven."
+    },
+    {
+      "lever_id": "eeed368e-66d9-4bd3-8226-7ff9b7a2ba62",
+      "name": "Overnight Staffing Model",
+      "consequences": "The overnight staffing model directly impacts participant safety, event capture rates, and technician workload. Increasing staff improves response time to events and annotation throughput, but raises personnel costs. Reducing staff may compromise safety and data quality, particularly if multiple events occur simultaneously.",
+      "options": [
+        "Implement a hybrid staffing model where a single technician remotely monitors multiple suites via video and sensor data, with a second technician on-call for immediate in-person response to flagged events.",
+        "Cross-train research staff from the Department of Epileptology to provide supplemental overnight coverage during peak periods, leveraging existing expertise and reducing the need for dedicated hires.",
+        "Introduce a tiered response protocol where automated alerts trigger graduated levels of intervention, from remote observation to in-person assessment, optimizing technician time allocation."
+      ],
+      "review": "Adjusting staffing balances cost and responsiveness, but the options overlook the potential for burnout and attrition associated with demanding overnight shifts.",
+      "classification": "primary",
+      "deduplication_justification": "The overnight staffing model directly impacts participant safety, data quality, and the ability to respond to events, making it a core strategic decision.",
+      "description": "Overnight Staffing Model defines the night technician schedule, rotation structure, and coverage ratio for the 8 active suites. The model determines safe supervision capacity, event-response readiness, real-time annotation throughput, and technician well-being and retention. Options span fixed single-technician coverage (low cost, high risk) to multi-technician rotation with overlap (high safety, higher cost). Success metrics include incident-free operations, annotation latency, inter-rater reliability calibration, technician turnover, and safe handling of captured episodes without false alarms overwhelming staff.",
+      "synergy_text": "Staffing Model synergizes closely with Nocturnal Safety Protocol and Annotation Review Depth. Adequate technician staffing enables rigorous event-response procedures, real-time dual-annotation, and timely incident documentation. Sufficient coverage allows technicians to focus on quality annotation and safety rather than rushing through multi-suite monitoring, directly supporting inter-rater reliability and Aim 1 operational validation.",
+      "conflict_text": "Staffing Model conflicts sharply with Budget constraints and Participant Recruitment Channels. German social insurance requirements and adequate overnight rotation demand substantial personnel costs (approximately \u20ac2M of \u20ac3.8M budget). High staffing ratios limit the number of participants that can be enrolled simultaneously before operational costs exceed budget or force suite reductions, creating a tension with enrollment targets and event-capture timelines in the 3-year window."
+    },
+    {
+      "lever_id": "60ec592e-708b-4941-9901-5242ebd7eab4",
+      "name": "Data Acquisition Pipeline",
+      "consequences": "The data acquisition pipeline determines the richness and fidelity of captured data, influencing the accuracy of event characterization and the performance of event-triage tools. Increasing sensor density and sampling rates improves data resolution, but also increases storage requirements, annotation burden, and computational complexity. Reducing data volume eases processing demands but may sacrifice critical information.",
+      "options": [
+        "Implement adaptive sampling rates that dynamically adjust data acquisition based on real-time event detection, increasing resolution during suspected parasomnia episodes and reducing it during periods of quiescence.",
+        "Prioritize specific sensor modalities based on their predictive power for parasomnia events, reducing the reliance on less informative channels and streamlining the data stream.",
+        "Integrate automated artifact detection and removal algorithms into the data pipeline, minimizing the need for manual cleaning and improving the efficiency of subsequent analysis."
+      ],
+      "review": "Modifying the data pipeline trades off data richness against processing efficiency, but the options do not address the potential for introducing systematic biases through automated pre-processing steps.",
+      "classification": "primary",
+      "deduplication_justification": "The data acquisition pipeline determines the quality and type of data collected, which is fundamental to achieving the research aims.",
+      "description": "Data Acquisition Pipeline specifies the tiered sensor model: low-burden nightly acquisition (dry EEG headband, mattress sensors, infrared cameras, ambient microphones, environmental sensors), enhanced-night scheduled PSG on first, mid-stay, and final nights, and escalation PSG post-technician-flagged events. The lever controls data fidelity, storage volume, annotation complexity, and event-triage model training material. Success metrics include EEG-BIDS compliance, <24-hour annotation lag, usable data yield per participant, and sufficient resolution for event morphology characterization and automated triage benchmarking.",
+      "synergy_text": "Data Acquisition Pipeline synergizes strongly with Event Detection Automation and Annotation Review Depth. Tiered acquisition (low-burden baseline plus enhanced PSG on target nights) provides both naturalistic behavioral context and clinical-grade physiological detail, enabling robust training of semi-automated triage tools. Multi-modal sensor streams\u2014scalp EEG, video, mattress motion, ambient audio\u2014provide complementary event signatures that improve algorithmic discrimination and reduce manual review scope.",
+      "conflict_text": "Data Acquisition Pipeline conflicts with data sharing scope and computational resources. Enhanced-night PSG montages and escalation recordings dramatically increase local storage and backup volume, competing for budget allocated to participant compensation and independent scoring. Stricter privacy constraints on video footage limit the dataset deposited publicly, reducing external validation of event-triage tools and requiring all benchmarking to rely on internally adjudicated events only."
+    },
+    {
+      "lever_id": "e1d05888-bad9-424a-bd41-be1ce0f21ab2",
+      "name": "Event Adjudication Protocol",
+      "consequences": "The event adjudication protocol directly affects the reliability and validity of the identified parasomnia events. More rigorous adjudication, such as requiring consensus from multiple expert raters, improves accuracy but increases scoring costs and turnaround time. Less stringent adjudication reduces costs but may compromise data quality.",
+      "options": [
+        "Employ a machine-learning model pre-trained on a large dataset of polysomnography recordings to pre-screen potential events, reducing the number of segments requiring manual review by expert raters.",
+        "Implement a 'disagreement resolution' pathway where a third, senior expert adjudicates only those events on which the initial two raters disagree, focusing resources on the most ambiguous cases.",
+        "Establish a standardized training program for raters, incorporating regular calibration exercises and feedback sessions to minimize inter-rater variability and improve overall agreement."
+      ],
+      "review": "Adjusting adjudication stringency balances accuracy and cost, but the options fail to consider the potential for rater fatigue and the impact of subjective biases on event classification.",
+      "classification": "primary",
+      "deduplication_justification": "The event adjudication protocol directly impacts the reliability and validity of the identified parasomnia events, a core element of the research.",
+      "description": "Event Adjudication Protocol specifies the rigor and pathways for confirming parasomnia episodes as true events versus sensor artifacts or confounds. The lever defines whether adjudication requires consensus from two independent raters, employs a third-rater disagreement-resolution pathway, incorporates pre-screening machine-learning triage, and establishes training standards to minimize inter-rater bias. Success metrics include inter-rater reliability (target >0.75), adjudication turnaround time, cost per scored event, and alignment with AASM criteria. Stringency directly impacts Aim 2 phenotyping accuracy and Aim 3 event-triage model benchmarking validity.",
+      "synergy_text": "Event Adjudication Protocol synergizes strongly with Event Detection Automation and Annotation Review Depth. A pre-screening triage model identifies high-confidence events requiring single-rater confirmation versus ambiguous segments needing dual or consensus review, concentrating expert effort on difficult cases. Systematic training and regular rater calibration improve agreement and reduce the proportion of events requiring disagreement resolution, lowering costs while maintaining reliability.",
+      "conflict_text": "Event Adjudication Protocol conflicts with budget constraints and publication timeline. Dual-rater consensus for all events is rigorous but consumes independent scoring budget, delaying turnaround and limiting the event sample size analyzed in Aim 2. Conversely, single-rater or pre-screened-only adjudication reduces costs and speeds publication but weakens claims of inter-rater reliability and may compromise the validity of the benchmarked event-triage model against 'true' parasomnia cases."
+    },
+    {
+      "lever_id": "16e56f9c-0a2c-4c0e-9f7d-4e5a8975cd3e",
+      "name": "Pharmaceutical Partnership Terms",
+      "consequences": "Securing a pharmaceutical industry partnership provides additional funding and potential access to proprietary compounds or technologies. However, it may also introduce conflicts of interest, restrict publication timelines, or influence the research agenda. Maintaining academic independence is crucial for preserving scientific integrity.",
+      "options": [
+        "Negotiate a 'blinded' collaboration where the pharmaceutical partner provides funding and access to compounds, but remains unaware of participant-level data or specific research hypotheses until after publication.",
+        "Establish a clear 'firewall' between the academic research team and the pharmaceutical partner's marketing or product development divisions, ensuring that research findings are not used for promotional purposes.",
+        "Structure the partnership as a 'research consortium' involving multiple pharmaceutical companies, diversifying funding sources and reducing the influence of any single partner on the research agenda."
+      ],
+      "review": "Pharma partnerships offer funding but risk compromising research independence; the options neglect the potential for intellectual property disputes or restrictions on data sharing.",
+      "classification": "secondary",
+      "deduplication_justification": "Pharmaceutical partnership terms are important for funding and collaboration, but the project's feasibility doesn't hinge on it, making it secondary.",
+      "description": "Pharmaceutical Partnership Terms define whether the project pursues optional industry funding and, if so, the governance safeguards protecting academic independence, publication rights, and data access. The lever specifies IP ownership, pre-publication review windows, data sharing restrictions, and mechanisms to prevent commercial influence on research design or reporting. Success metrics include full publication autonomy, timely dissemination of results, maintenance of scientific credibility, and, if pursued, secure funding without compromised recruitment or bias in participant selection or event interpretation.",
+      "synergy_text": "Pharmaceutical Partnership Terms synergizes with Publication Target Breadth if structured carefully. A transparent partnership with a 30-day pre-publication comment window (per plan) allows academic priority while accommodating partner input without editorial control. Industry funding for algorithm development or participant compensation accelerates enrollment and enables higher-fidelity data collection, supporting publication in high-impact journals without perceived conflicts.",
+      "conflict_text": "Pharmaceutical Partnership Terms conflicts strongly with academic independence and control group objectives. Undisclosed pharma involvement risks selection bias if partners subtly influence recruitment toward participants more likely to show treatment-responsive phenotypes. Restrictions on data sharing or pre-publication embargoes delay open-science contributions and may discourage external validation of event-triage tools, undermining Aim 3's reliance on benchmarking against independent scorer agreement rather than autonomous diagnosis claims."
+    },
+    {
+      "lever_id": "4fc559aa-ed62-4cc4-898f-0b83e2d5311e",
+      "name": "Residential Suite Configuration",
+      "consequences": "The configuration of the residential suites impacts participant comfort, safety, and data quality. More elaborate suites with advanced monitoring capabilities increase costs and complexity. Simpler suites reduce costs but may limit the range of observable behaviors and compromise participant comfort.",
+      "options": [
+        "Designate a subset of suites as 'high-fidelity' rooms equipped with advanced sensor arrays and environmental controls, reserving them for participants with complex or high-risk parasomnia profiles.",
+        "Incorporate modular design elements into the suites, allowing for flexible reconfiguration based on individual participant needs and research protocols.",
+        "Prioritize participant comfort and domesticity by incorporating personalized lighting, soundscapes, and bedding options into each suite, fostering a more relaxed and naturalistic sleep environment."
+      ],
+      "review": "Suite configuration balances data capture and participant comfort, but the options overlook the potential for the suites themselves to influence sleep patterns and introduce artificiality.",
+      "classification": "secondary",
+      "deduplication_justification": "Residential suite configuration impacts participant comfort and data quality, but is secondary to the overall safety and data acquisition strategies.",
+      "description": "Residential Suite Configuration determines the physical layout, sensor infrastructure, and comfort amenities within each of the 8 active sleep suites. It balances participant comfort and domesticity against data acquisition capability and operational complexity. Key success metrics include participant retention rates, physiological data quality from embedded sensors, and staff assessment of safety and event response logistics. Configuration choices affect both the naturalism of captured behavior and the facility's ability to safely manage episodes, directly influencing whether infrequent parasomnia events are successfully recorded during stays.",
+      "synergy_text": "Suite Configuration strongly synergizes with Suite Ambient Design and Nocturnal Safety Protocol. A thoughtfully configured suite\u2014incorporating modular flexibility and advanced sensor arrays\u2014enables the ambient design to prioritize domesticity without compromising safety awareness or data fidelity. Modular design also accommodates personalized safety features for higher-risk participants, allowing Safety Protocol adjustments without facility-wide redesign.",
+      "conflict_text": "Suite Configuration conflicts with cost containment and staff training scalability. Elaborate modular suites with advanced sensor arrays increase renovation costs and require technicians to master complex equipment setup and troubleshooting. Simpler standardized suites reduce training burden and capital expense, but limit adaptation to individual participant risk profiles and reduce the richness of concurrent behavioral and physiological data streams."
+    },
+    {
+      "lever_id": "f510bed3-b300-494b-a2d7-40f8047c7e25",
+      "name": "Suite Ambient Design",
+      "consequences": "The aesthetic and functional design of the residential suites directly impacts participant comfort and naturalistic behavior. A more clinical environment may increase participant anxiety and suppress parasomnia events, while an overly permissive environment could compromise safety. Balancing these factors is crucial for data quality and participant retention.",
+      "options": [
+        "Prioritize a highly domestic aesthetic with soft lighting, familiar furniture, and personalized decor to encourage relaxation and natural sleep patterns",
+        "Implement a minimalist design with standardized layouts, neutral colors, and easily cleanable surfaces to facilitate efficient monitoring and minimize potential hazards",
+        "Offer participants a choice between several pre-designed suite themes, balancing domestic comfort with research requirements and allowing for some personalization"
+      ],
+      "review": "A homelike suite design risks compromising data quality and safety, while a clinical design may inhibit natural behavior; the gap is a design that adapts to individual participant needs.",
+      "classification": "secondary",
+      "deduplication_justification": "Suite ambient design is important for participant comfort and naturalistic behavior, but is secondary to the core safety and data acquisition strategies.",
+      "description": "Suite Ambient Design shapes the aesthetic, lighting, temperature, and sensory environment within each residential suite to influence participant comfort, anxiety, and sleep quality. It bridges the methodological tension between clinical rigor and naturalistic behavior capture. Success metrics include self-reported comfort ratings, actigraphy-derived sleep onset latency and continuity compared to participants' home baseline, and qualitative feedback on whether the environment felt natural or institutional. Design choices directly affect whether participants relax sufficiently to manifest typical parasomnia episodes, while maintaining sufficient visibility and control for safety.",
+      "synergy_text": "Suite Ambient Design synergizes strongly with Participant Recruitment Channels and Environmental Cue Management. A warm, domestic aesthetic enhances recruitment messaging and retention, particularly for participants wary of medical institutions. Coordinated cue management\u2014such as familiar bedtimes and muted ambient stimuli\u2014amplifies the domesticity effect, making the environment feel more home-like and reducing the suppression of naturalistic parasomnia expression due to unfamiliar surroundings.",
+      "conflict_text": "Suite Ambient Design conflicts with Nocturnal Safety Protocol and data acquisition standardization. Deep personalization and low-lighting domestic aesthetics may obscure hazards, complicate real-time video monitoring, and make equipment conspicuous (undermining comfort). Conversely, a clinical, standardized design with bright lighting and visible safety features enhances monitoring and consistency but risks elevating participant anxiety and inhibiting the parasomnia episodes researchers seek to capture."
+    },
+    {
+      "lever_id": "ada781d1-b3fc-47f8-bce9-42c605ef01dc",
+      "name": "Nocturnal Safety Protocol",
+      "consequences": "Safety protocols dictate the level of intervention during parasomnia events. Overly restrictive protocols may prevent the capture of complete events or introduce artificial awakenings, while insufficient protocols could expose participants to injury. The balance between safety and data integrity is paramount.",
+      "options": [
+        "Implement a 'hands-off' approach, intervening only in cases of imminent danger as determined by pre-defined escalation criteria and real-time video monitoring",
+        "Establish a tiered intervention system, starting with verbal redirection and escalating to physical intervention only if necessary to prevent injury",
+        "Employ a proactive safety model with frequent room checks and sensor-triggered alerts to preemptively address potential hazards before escalation"
+      ],
+      "review": "Strict safety protocols can disrupt natural sleep and parasomnia events, while lax protocols increase injury risk; the gap is a protocol that dynamically adjusts to individual risk profiles.",
+      "classification": "primary",
+      "deduplication_justification": "Nocturnal safety protocol is a primary concern, as it directly impacts participant well-being and the ethical conduct of the research.",
+      "description": "Nocturnal Safety Protocol establishes the decision rules and intervention thresholds that night staff apply during monitored sleep. It defines escalation criteria (e.g., when verbal redirection suffices versus when physical intervention becomes necessary) and real-time response procedures. Success metrics include zero serious injuries during the 3-year pilot, incident reports aligned with protocol, staff confidence in safety decision-making, and participant-reported comfort with intervention timing. The protocol must prevent harm while preserving the naturalistic unfolding of parasomnia episodes\u2014premature or excessive intervention artificially terminates events, undermining capture of full morphology.",
+      "synergy_text": "Nocturnal Safety Protocol synergizes with Technician Training Focus and Suite Configuration. Comprehensive training enables staff to apply nuanced, situation-specific judgment within protocol bounds, distinguishing genuine danger from benign automatisms. Well-designed, hazard-minimized suites (padded edges, restricted windows, alarms) reduce the threshold for safe non-intervention, allowing more complete event capture while staff confidence remains high that participant injury risk is managed by environmental design.",
+      "conflict_text": "Nocturnal Safety Protocol conflicts sharply with complete event capture and data quality objectives. Strict, proactive safety models with frequent room checks and sensor-triggered alerts introduce frequent awakenings, interrupt parasomnia continuity, and bias the sample toward shorter, interrupted episodes. Conversely, a pure 'hands-off' approach maximizes event naturalness but increases injury liability and may violate ethics approval, creating governance and insurance constraints that limit protocol flexibility."
+    },
+    {
+      "lever_id": "b4719e95-b0db-4a83-8c9b-79a5def4f131",
+      "name": "Data Acquisition Triggering",
+      "consequences": "The method for triggering enhanced data acquisition (full PSG) influences the richness and relevance of the captured data. Relying solely on scheduled nights may miss critical events, while continuous full PSG is resource-intensive and uncomfortable for participants. A hybrid approach is needed to optimize data yield.",
+      "options": [
+        "Trigger enhanced PSG based on real-time technician observation of unusual behavior via video and audio monitoring, capturing events as they unfold",
+        "Schedule enhanced PSG nights based on participant-reported event frequency and timing, maximizing the likelihood of capturing typical episodes",
+        "Utilize machine-learning algorithms to detect potential parasomnia events from low-burden sensor data, triggering enhanced PSG automatically based on probability scores"
+      ],
+      "review": "Technician-triggered PSG is subjective, participant-scheduled PSG relies on recall, and algorithm-triggered PSG depends on model accuracy; the gap is a multi-modal triggering system.",
+      "classification": "primary",
+      "deduplication_justification": "Data acquisition triggering determines when enhanced data is collected, directly impacting the ability to capture and characterize parasomnia events.",
+      "description": "Data Acquisition Triggering determines when enhanced physiological monitoring (full PSG montage with scalp EEG, EOG, EMG) transitions from scheduled baseline nights to event-responsive escalation. It operationalizes the tension between pre-planned standardization and opportunistic event capture. Success metrics include the proportion of detected parasomnia events with concurrent full PSG data, false-alarm rates in triggering, technician workload and confidence, and the quality of physiological morphology in captured episodes. Effective triggering maximizes clinical-grade data collection for rare events without overwhelming staff or needlessly burdening participants.",
+      "synergy_text": "Data Acquisition Triggering synergizes strongly with Event Detection Automation and Annotation Review Depth. Automated pre-screening of low-burden sensor streams identifies probable events in real time, allowing technicians to selectively upgrade to full PSG with high precision. Paired with structured annotation review, this hybrid triggering system generates a curated, high-confidence dataset of morphologically complete episodes, improving the signal-to-noise ratio for both Aim 2 phenotyping and Aim 3 algorithm benchmarking.",
+      "conflict_text": "Data Acquisition Triggering conflicts with operational simplicity and technician burden. Technician-observation triggering relies on subjective real-time judgment, introducing variability and fatigue-dependent miss rates on night shifts. Fully automated algorithm-based triggering requires validated predictive models (which may not exist at pilot start) and risks either missing subtle events or flooding technicians with false alarms. Participant-schedule triggering is cheap but relies on imperfect recall, potentially biasing toward more frequent or memorable episodes."
+    },
+    {
+      "lever_id": "cb9880c2-1ad7-42e7-ba88-e8d3196401f3",
+      "name": "Event Detection Automation",
+      "consequences": "The level of automation in event detection impacts the efficiency of data processing and the accuracy of event identification. Fully automated systems may generate false positives or miss subtle events, while manual review is time-consuming and prone to human error. A balanced approach is essential.",
+      "options": [
+        "Develop a rule-based system using pre-defined physiological and behavioral criteria to automatically flag potential parasomnia events for further review",
+        "Train a deep-learning model on a large dataset of annotated parasomnia events to automatically detect and classify episodes with high accuracy",
+        "Employ a hybrid approach combining rule-based flagging with machine-learning classification to leverage the strengths of both methods"
+      ],
+      "review": "Rule-based systems lack nuance, deep-learning models require extensive training data, and hybrid approaches inherit the limitations of both; the gap is a system that adapts to data heterogeneity.",
+      "classification": "secondary",
+      "deduplication_justification": "Event detection automation is important for data processing efficiency, but is secondary to the core data acquisition and adjudication strategies.",
+      "description": "Event Detection Automation defines the computational methods used to sift through multi-stream sensor and physiological data to flag probable parasomnia episodes for human review and adjudication. Success metrics include sensitivity and specificity of flagged events against independent dual human scoring, reduction in manual review hours, inter-rater agreement on automatically flagged segments, and computational efficiency (processing speed, false-alarm burden). Aim 3 explicitly targets benchmarking of semi-automated triage tools; automation must enhance throughput without sacrificing adjudication rigor or reproducibility.",
+      "synergy_text": "Event Detection Automation synergizes with Data Acquisition Triggering and Annotation Review Depth. Rule-based or hybrid automated systems flag candidate events from continuous low-burden sensor streams, enabling selective full-PSG escalation with minimal technician latency. Paired with standardized annotation protocols and dual independent scoring, automation creates a transparent, reproducible event-triage pipeline that quantifiably benchmarks sensitivity/specificity, directly addressing Aim 3 deliverables and supporting publication of methods.",
+      "conflict_text": "Event Detection Automation conflicts with methodological rigor and heterogeneity in parasomnia expression. Rule-based systems risk missing subtle morphologic variants or atypical parasomnia presentations; deep-learning models demand large, representative training datasets and may overfit to pilot cohort data, failing to generalize. Hybrid systems inherit both constraints. Conversely, full manual review (rejecting automation entirely) preserves clinical flexibility but violates Aim 3's goal of reducing review burden and cannot scale to multi-site expansion."
+    },
+    {
+      "lever_id": "de311093-9109-45c2-b81a-c5e34d9efa1f",
+      "name": "Annotation Review Depth",
+      "consequences": "The intensity of manual review affects the reliability and validity of event scoring. Single-rater scoring is efficient but susceptible to bias, while multi-rater scoring is more robust but resource-intensive. The optimal balance depends on the study's specific aims and resources.",
+      "options": [
+        "Implement a single-rater scoring system with periodic inter-rater reliability checks to ensure consistency and minimize bias",
+        "Employ a dual-rater scoring system with adjudication of disagreements by a senior sleep medicine physician to maximize accuracy",
+        "Utilize a tiered review process, with automated pre-screening followed by targeted manual review of ambiguous or high-priority events"
+      ],
+      "review": "Single-rater scoring risks bias, dual-rater scoring is costly, and tiered review depends on pre-screening accuracy; the gap is a review process that adapts to event complexity.",
+      "classification": "primary",
+      "deduplication_justification": "Annotation review depth directly impacts the reliability and validity of event scoring, a core element of the research.",
+      "description": "Annotation Review Depth determines the rigor and resource allocation for scoring polysomnographic and sensor data against AASM criteria. The dual-rater system with senior adjudication ensures high-quality event characterization essential for Aim 2 phenotyping and Aim 3 algorithm benchmarking, reducing bias while consuming significant personnel time. Success is measured by inter-rater reliability coefficients and the proportion of events requiring adjudication, balancing accuracy against the 70\u201380% event-yield target and throughput constraints within the \u20ac2M personnel budget.",
+      "synergy_text": "Dual-rater annotation directly amplifies Event Adjudication Protocol, which uses AASM-adjudicated events as its gold standard. Strong synergy also exists with Event Detection Automation, where human-scored ground truth trains and evaluates the semi-automated triage tool. The reliability coefficients produced here are critical for validating downstream computational algorithms and publication credibility.",
+      "conflict_text": "High annotation depth creates tension with Data Acquisition Triggering and Annotation Review Depth's own throughput. More intensive review requires more technician and senior physician time, competing for the fixed \u20ac2M personnel budget. Extensive multi-rater review can delay feedback loops needed to refine the Data Acquisition Pipeline's sensor sensitivity, creating scheduling bottlenecks especially if event frequency exceeds the 70\u201380% capture estimate."
+    },
+    {
+      "lever_id": "b0380297-f483-4787-b32f-e08b97a1b51e",
+      "name": "Data Sharing Scope",
+      "consequences": "The extent of data sharing influences the impact and reproducibility of the research. Openly sharing all data maximizes transparency but raises privacy concerns, while restricting data sharing limits the potential for collaboration and validation. A carefully considered data-sharing policy is crucial.",
+      "options": [
+        "Share only de-identified physiological data and summary statistics through a secure data repository with restricted access and data use agreements",
+        "Establish a collaborative data-sharing platform with select research partners, providing access to more detailed data under strict confidentiality agreements",
+        "Publish fully anonymized datasets with synthetic data augmentation to protect participant privacy while maximizing data utility"
+      ],
+      "review": "Restricted data sharing limits collaboration, open sharing risks privacy breaches, and synthetic data may distort findings; the gap is a data-sharing model that balances access and privacy.",
+      "classification": "secondary",
+      "deduplication_justification": "Data sharing scope is important for reproducibility and collaboration, but is secondary to the core research aims and participant privacy.",
+      "description": "Data Sharing Scope governs which physiological and sensor streams are deposited publicly versus restricted, balancing scientific transparency with participant privacy and ethical compliance. The planned restricted-access de-identified model preserves confidentiality (video never shared), enables repository deposition for reproducibility, and supports the Aim 2 phenotyping dataset essential for publications. Success is measured by repository acceptance, data use agreement uptake, and absence of re-identification incidents across the 50\u201370 participant cohort.",
+      "synergy_text": "Data Sharing Scope strongly synergizes with Publication Target Breadth, as a curated public dataset amplifies citation impact and validates methodological claims across the sleep research community. Restricted access also protects the intellectual property underpinning Event Detection Automation, allowing staged algorithm release while maintaining participant privacy and supporting future industry partnerships.",
+      "conflict_text": "Restricted data sharing limits collaboration with Pharmaceutical Partnership Terms, which may expect broader early-stage data access for biomarker discovery. Likewise, Privacy-constrained sharing (no video) conflicts with Environmental Cue Management verification studies that require visual confirmation of responses to light or sound stimuli, forcing researchers to rely on physiological surrogates instead of multimodal validation."
+    },
+    {
+      "lever_id": "5252a48c-97c9-4d06-8a6e-52fe7c6e3307",
+      "name": "Environmental Cue Management",
+      "consequences": "Carefully managing environmental cues can either promote or disrupt natural sleep patterns. Introducing specific light or sound stimuli could trigger or suppress parasomnia events, but may also alter sleep architecture and reduce the ecological validity of the data. A balance must be struck to maximize event capture without fundamentally changing the sleep environment.",
+      "options": [
+        "Implement a fixed schedule of light and temperature changes to standardize the sleep environment and minimize external influences on sleep patterns",
+        "Introduce personalized pre-sleep routines based on participant habits to promote relaxation and natural sleep onset, while carefully documenting any deviations",
+        "Randomize exposure to subtle auditory or olfactory stimuli during sleep to probe for potential triggers of parasomnia events, while monitoring for habituation effects"
+      ],
+      "review": "Standardizing environmental cues may reduce variability but also suppress naturalistic behaviors, and the options neglect the potential for participant-driven environmental adjustments.",
+      "classification": "secondary",
+      "deduplication_justification": "Environmental cue management can influence sleep patterns, but is secondary to the core safety and data acquisition strategies.",
+      "description": "Environmental Cue Management controls whether the residential suites maintain fixed naturalistic conditions or employ participant-driven customization (lighting, temperature, sound masking). Passive naturalistic cues preserve ecological validity and spontaneous parasomnia capture critical for Aim 2, while active stimulation risks suppressing naturalistic sleep and violating the design principle that a clinical-feeling environment inhibits behavior. Success is balancing event frequency against sleep-architecture changes and participant comfort, tracked via actigraphy and subjective sleep quality scales.",
+      "synergy_text": "Environmental Cue Management enhances Suite Ambient Design by operationalizing the principle of preserving a domestic feel. When cues remain participant-driven (lighting preferences, temperature control), they synergize with Nocturnal Safety Protocol by reducing participant stress and improving willingness to stay extended 2\u20138 week durations, thereby increasing the event-yield target probability.",
+      "conflict_text": "Introducing standardized or stimulation-based cues directly conflicts with Suite Ambient Design and the core aim of capturing naturalistic parasomnia behavior. Active light or auditory probing also creates safety risks under Nocturnal Safety Protocol, potentially triggering episodes in unprepared settings. Additionally, randomized sensory exposure contradicts the residential feel and may confound Participant Recruitment Channels messaging, deterring enrollees."
+    },
+    {
+      "lever_id": "7fe52305-1161-47ee-af55-c5a68e187eab",
+      "name": "Technician Training Focus",
+      "consequences": "The training focus for overnight technicians directly impacts both participant safety and data quality. Prioritizing safety protocols minimizes risk but may reduce time spent on detailed annotation. Conversely, emphasizing annotation accuracy could compromise vigilance in responding to participant events.",
+      "options": [
+        "Prioritize comprehensive safety training, including de-escalation techniques and emergency response protocols, to ensure participant well-being above all else",
+        "Emphasize real-time annotation skills and AASM scoring criteria to maximize the accuracy and completeness of event logging during overnight shifts",
+        "Implement a blended training approach that balances safety protocols with basic annotation skills, supplemented by remote expert support for complex events"
+      ],
+      "review": "Balancing safety and annotation skills requires a trade-off, and the options overlook the potential for specialized roles focusing on either safety or annotation.",
+      "classification": "primary",
+      "deduplication_justification": "Technician training focus directly impacts both participant safety and data quality, making it a core strategic decision.",
+      "description": "Technician Training Focus allocates curriculum emphasis between safety protocols (de-escalation, emergency response, physical restraint refusal) and annotation precision (real-time AASM scoring, sensor artifact recognition). Balancing both is essential: poor safety training risks participant injury and liability, while weak annotation skills corrupt Aim 2 phenotyping data. Success is measured by incident rates, annotation inter-rater agreement, and technician competency assessments over the 3-year operation with 3 rotating night technicians covering 8 suites safely.",
+      "synergy_text": "Technician Training Focus strongly synergizes with Overnight Staffing Model, where competent technicians enable safe 3:8 staffing ratios and rapid event response. Strong annotation training also amplifies Annotation Review Depth by reducing senior adjudication burden\u2014well-trained technicians produce cleaner real-time annotations that require less downstream correction, accelerating the dual-rater process.",
+      "conflict_text": "Deepening annotation training diverts time and budget from safety protocol mastery, creating risk during high-frequency parasomnia nights. Conversely, prioritizing safety leaves technicians less equipped to recognize subtle event markers, increasing false negatives in real-time flagging and cascading errors in Data Acquisition Triggering. The fixed \u20ac2M personnel budget cannot proportionally expand both domains without compromising other roles."
+    },
+    {
+      "lever_id": "3f4e633c-eacd-4cbc-bdf3-0b209b0fbf09",
+      "name": "Event-Triage Confidence Threshold",
+      "consequences": "The confidence threshold for the semi-automated event-triage tool affects the balance between sensitivity and specificity. A low threshold increases sensitivity, capturing more true events but also generating more false positives that require manual review. A high threshold increases specificity, reducing false positives but potentially missing genuine parasomnia episodes.",
+      "options": [
+        "Set a low confidence threshold to maximize sensitivity and capture all potential parasomnia events, accepting a higher rate of false positives requiring manual review",
+        "Establish a high confidence threshold to minimize false positives and reduce manual review burden, even if it means potentially missing some genuine parasomnia events",
+        "Implement an adaptive threshold that adjusts based on individual participant data and overall event frequency, optimizing the balance between sensitivity and specificity"
+      ],
+      "review": "Adjusting the confidence threshold involves a sensitivity/specificity trade-off, and the options don't address the use of multiple thresholds for different event types.",
+      "classification": "secondary",
+      "deduplication_justification": "The event-triage confidence threshold affects the balance between sensitivity and specificity, but is secondary to the overall event detection and adjudication strategies.",
+      "description": "Event-Triage Confidence Threshold sets the boundary where the semi-automated event-detection algorithm decides whether to escalate a candidate event for enhanced-night PSG re-capture (Aim 3). Low thresholds (high sensitivity) require more manual review but capture rare events; high thresholds (high specificity) reduce false-positive overhead but risk missing genuine episodes. Success is optimizing the trade-off using dual-human agreement as gold standard, targeting <20% unproductive admission rates and acceptable technician annotation workload within the \u20ac2M personnel budget.",
+      "synergy_text": "Event-Triage Confidence Threshold directly enhances Event Detection Automation by operationalizing its output into actionable escalation triggers. It also synergizes with Data Acquisition Triggering, which decides when to deploy full PSG montage\u2014a well-calibrated threshold reduces unnecessary full-montage nights, conserving equipment and reducing participant burden while preserving sensitivity for phenotyping Aim 2.",
+      "conflict_text": "A low threshold to maximize sensitivity increases annotation workload for Annotation Review Depth, straining the dual-rater pipeline and potentially exceeding the \u20ac2M budget allocation for independent scorers. Conversely, a high threshold to reduce false positives risks missing genuine events critical for the 70\u201380% event-yield target and Aim 2 longitudinal characterization, potentially triggering the month-18 failure review if event capture falls below 40 adjudicated events."
+    },
+    {
+      "lever_id": "adf591fc-6ee7-4eb2-8968-99e53c70c5ad",
+      "name": "Control Group Stratification",
+      "consequences": "How the control group is stratified impacts the validity of comparisons and the generalizability of findings. Matching controls solely on age and sex may overlook other relevant factors influencing sleep patterns. More granular stratification improves the accuracy of benchmarking but increases recruitment complexity.",
+      "options": [
+        "Recruit a control group matched only on age and sex to minimize recruitment burden and provide a basic comparison for nocturnal movement patterns",
+        "Stratify the control group based on age, sex, and sleep quality (e.g., PSQI score) to account for common sleep disturbances and improve benchmarking accuracy",
+        "Match controls individually to parasomnia participants based on a comprehensive set of demographic, lifestyle, and sleep-related variables to maximize comparability"
+      ],
+      "review": "Control group stratification balances recruitment effort with benchmarking accuracy, and the options ignore the potential for using existing normative sleep data as a control.",
+      "classification": "secondary",
+      "deduplication_justification": "Control group stratification impacts the validity of comparisons, but is secondary to the overall recruitment strategy and inclusion/exclusion criteria.",
+      "description": "Control group stratification defines how matched controls are selected to benchmark sensor false-positive rates, baseline nocturnal movement patterns, and arousal characteristics against parasomnia participants. Stratification granularity\u2014from minimal (age/sex only) to comprehensive (demographics, lifestyle, sleep quality)\u2014directly impacts the validity of event-triage algorithm training and the generalizability of parasomnia phenotypes. Success metrics include control recruitment timelines, representativeness of normal nocturnal behavior, and reduction in algorithm false-positive rates when trained against stratified controls.",
+      "synergy_text": "Control stratification strongly synergizes with Event Detection Automation and Data Acquisition Pipeline. Comprehensive stratification ensures the control cohort's sensor data and physiological patterns are representative, enabling more robust training and benchmarking of semi-automated event-triage tools. Stratified controls provide clearer baseline separation, improving algorithm sensitivity and specificity against parasomnia episodes.",
+      "conflict_text": "Control stratification conflicts with Participant Recruitment Channels and Overnight Staffing Model. Granular stratification (lifestyle, PSQI, sleep quality) significantly increases recruitment complexity and extends timelines, straining resource-limited recruitment pathways. More controls also demand proportional night technician coverage and annotation burden, competing for finite staffing capacity in the 8-suite facility."
+    },
+    {
+      "lever_id": "68308116-1294-49a1-8242-a2122d57c098",
+      "name": "Publication Target Breadth",
+      "consequences": "The breadth of publication targets influences the dissemination of research findings and the project's overall impact. Focusing solely on high-impact sleep medicine journals may limit the reach to other relevant fields. Expanding the scope to include journals in related disciplines increases dissemination but may dilute the core message.",
+      "options": [
+        "Target only high-impact sleep medicine journals to maximize visibility within the core field and establish credibility within the sleep research community",
+        "Expand publication targets to include journals in neurology, psychology, and engineering to reach a broader audience and foster interdisciplinary collaboration",
+        "Prioritize open-access journals and pre-print servers to ensure wider dissemination of findings, even if it means sacrificing some prestige associated with traditional journals"
+      ],
+      "review": "Publication breadth trades focused impact for wider dissemination, and the options don't consider the strategic use of conference presentations to build momentum.",
+      "classification": "secondary",
+      "deduplication_justification": "Publication target breadth influences dissemination, but is secondary to the core research aims and the quality of the findings.",
+      "description": "Publication target breadth determines the scientific journals and venues through which findings are disseminated, influencing reach, credibility, and interdisciplinary impact. The lever controls scope: narrow focus on high-impact sleep journals maximizes prestige within the core field; expanding to neurology, psychology, and engineering reaches broader audiences and fosters collaboration. Success metrics include publication count, citation impact, audience reach beyond sleep medicine, and contributions to interdisciplinary understanding of parasomnia mechanisms and detection methods.",
+      "synergy_text": "Publication breadth synergizes strongly with Pharmaceutical Partnership Terms and Event-Triage Confidence Threshold. Broader publication targets increase the commercial and academic visibility of validated benchmarked tools, enhancing pharma partner interest and funding leverage for phase-two proposals. Interdisciplinary journals amplify reach for methodological contributions in semi-automated detection, supporting future partnerships.",
+      "conflict_text": "Publication breadth conflicts with Data Sharing Scope and the core project timeline. Expanding targets to lower-impact or open-access journals may delay publications and dilute the prestige-driven narrative needed for DFG grant momentum and the 2-3 peer-reviewed publications required by month 36. Broader dissemination may also require more extensive de-identification and supplementary data curation, straining limited data-management resources."
+    },
+    {
+      "lever_id": "a7e0597f-7fa5-461a-9307-21d9858b649d",
+      "name": "PSG Montage Density",
+      "consequences": "The density of the PSG montage during enhanced nights affects the richness of the physiological data and the burden on participants. A full high-density montage provides detailed information but can be uncomfortable and disruptive. A reduced montage is less burdensome but may miss subtle physiological markers.",
+      "options": [
+        "Employ a full high-density PSG montage with numerous EEG channels, EOG, EMG, and ECG to capture the most detailed physiological data possible during enhanced nights",
+        "Utilize a reduced PSG montage with fewer EEG channels and only essential EOG and EMG leads to minimize participant discomfort and improve sleep quality",
+        "Implement an adaptive montage that adjusts based on individual participant characteristics and event frequency, optimizing the balance between data richness and participant comfort"
+      ],
+      "review": "PSG montage density balances data richness with participant comfort, and the options overlook the potential for using wireless or dry-electrode sensors to improve comfort.",
+      "classification": "primary",
+      "deduplication_justification": "PSG montage density directly affects the richness of the physiological data and the burden on participants, impacting data quality and participant comfort.",
+      "description": "PSG montage density defines the electrode configuration deployed during enhanced nights (first, mid-stay, and post-event nights), controlling the richness of physiological data captured versus participant comfort and electrode-application burden. Options range from full high-density (maximal EEG channels, EOG, chin EMG, leg EMG, ECG) to reduced montage (essential leads only) to adaptive (participant-specific optimization). Success metrics include data quality per AASM standards, participant comfort and sleep preservation, technician application efficiency, and physiological marker detection sensitivity for parasomnia phenotyping.",
+      "synergy_text": "PSG montage density strongly synergizes with Data Acquisition Pipeline and Event Adjudication Protocol. A richer montage provides higher-resolution physiological signals\u2014particularly leg EMG for motor pattern discrimination and EEG for arousal microstructure\u2014improving the quality of independent adjudication and enabling more nuanced parasomnia characterization. Enhanced montage data directly supports Aim 2 phenotyping objectives.",
+      "conflict_text": "PSG montage density conflicts directly with Suite Ambient Design and participant retention. Full high-density montages are uncomfortable, disruptive to naturalistic sleep, and increase application time; this contradicts the stated goal of preserving a domestic feel and capturing authentic behavior. Reduced comfort risks participant dropout, reducing productive admissions and event capture, and constrains the technician training and attention required for proper electrode placement and maintenance."
+    }
+  ]
+}
