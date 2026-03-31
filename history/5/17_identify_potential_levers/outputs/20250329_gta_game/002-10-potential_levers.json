@@ -1,0 +1,244 @@
+[
+  {
+    "lever_id": "d7754e74-9d30-4cda-92be-e8ca4d7c09c8",
+    "name": "Open-World Map Composition and Procedural Generation Depth",
+    "consequences": "Choosing procedural generation versus hand-crafted content determines both development timeline and world authenticity. Heavy reliance on procedural systems compresses asset creation but risks repetitive, synthetic environments that undermine narrative immersion; hand-crafting ensures place-based storytelling but locks in long iteration cycles and requires larger art teams.",
+    "options": [
+      "Blend hybrid zoning where core narrative districts (crime lord territories, district power hubs) are hand-crafted while peripheral neighborhoods, industrial zones, and wilderness areas leverage procedural generation templates.",
+      "Commit fully to procedural generation powered by machine learning models trained on LA, Detroit, and Miami architectural datasets, with targeted hand-crafted landmark insertion only at major heist locations and story nodes.",
+      "Develop a modular content-first approach where artists create reusable architectural kits and street-level detail sets that assemble procedurally, prioritizing semantic variation (building function, social character) over geometric uniqueness."
+    ],
+    "review": "Procedural systems reduce art overhead but require upfront ML infrastructure investment and risk uncanny valley effects that undermine believability; none of the options address how to validate procedural outputs maintain narrative coherence across player agency paths."
+  },
+  {
+    "lever_id": "059259c4-d34b-42f9-bdbc-54ec1f686ab9",
+    "name": "Narrative Branching and Character Agency Mechanics",
+    "consequences": "The scope of branching dialogue, mission outcomes, and NPC consequence systems directly impacts both writing staff requirements and runtime complexity. Permissive player choice creates emergent storytelling but demands exponential narrative permutation testing; constrained choice tightens story control but risks player perception of linearity.",
+    "options": [
+      "Implement a hub-and-spoke narrative architecture where major heist decisions create three canonical story branches that converge at predetermined climactic events, with NPC reaction systems responding dynamically to player faction allegiance rather than individual choice history.",
+      "Develop a state-machine driven consequence system where NPC beliefs, territory control, and economy states evolve based on aggregate player actions across the world, creating meaningful emergent outcomes without explicit branching dialogue trees.",
+      "Construct a limited-scope choice system focused on heist execution tactics and mission approach (stealth vs. assault vs. infiltration) while maintaining a single canonical narrative spine, reducing permutation complexity while preserving tactical agency."
+    ],
+    "review": "Narrative scaling inversely correlates with branching depth\u2014more choice variants compound writing and QA burden exponentially; none of these options directly address how to prevent narrative spaghetti code or manage NPC consistency across thousands of encounter variations."
+  },
+  {
+    "lever_id": "029110b9-1336-4674-894d-713ebf63e0cd",
+    "name": "Criminal Economy Simulation Sophistication and Market Responsiveness",
+    "consequences": "A dynamic criminal economy where prices, supply routes, and faction power respond to player actions creates emergent gameplay depth but introduces feedback-loop instability and balance risk. A static economy template with cosmetic variation preserves design control but weakens player impact on the world.",
+    "options": [
+      "Engineer a supply-and-demand economy system where drug traffic, weapon smuggling, and stolen vehicle markets fluctuate based on player actions, faction territorial control, and random event generation, using economic simulation agents rather than pre-scripted price tables.",
+      "Implement a simplified faction power-ledger system where player heists directly transfer currency and territory ownership between gangs, creating visible economic consequences through ownership markers and NPC faction composition without systemic market simulation.",
+      "Design a hybrid approach where core criminal markets (drug, weapons, vehicles) operate on fixed price distributions that players discover, while secondary economies (information sales, protection rackets, black market services) respond dynamically to player reputation and network size."
+    ],
+    "review": "Dynamic economies generate realism but risk trivial exploit paths where players break market balance through repetitive actions; none of the options address feedback-loop stability monitoring or how to prevent player-induced economic collapse scenarios."
+  },
+  {
+    "lever_id": "dd69b7a7-3d1b-42a6-80fb-4c6fa1283a62",
+    "name": "Multiplayer Mode Scope and Server Architecture",
+    "consequences": "Integrated multiplayer (shared persistent world, cross-player heists) demands significant server infrastructure, latency management, and anti-cheat systems but enables emergent social gameplay; siloed multiplayer modes reduce backend complexity but fragment the player experience into disconnected game loops.",
+    "options": [
+      "Deploy a persistent-world multiplayer layer where players operate in sharded instance clusters of a shared crime economy, with limited cross-instance player interaction through reputation systems and rival gang warfare triggered by algorithmic matchmaking rather than open-world collision.",
+      "Develop standalone multiplayer heist modes using client-server architecture with strict role-based matchmaking and session isolation, keeping multiplayer mechanically separate from single-player progression but enabling high-fidelity cooperative gameplay without world-scale synchronization overhead.",
+      "Create a hybrid presence system where the open world is single-player but multiplayer manifests through asynchronous mechanics\u2014player-created rival gang territories, passive income from investments in other players' heist loot, and crew reputation pools that unlock cooperative endgame missions."
+    ],
+    "review": "Persistent multiplayer requires real-time synchronization and sophisticated anti-cheat investment; none of the options resolve how to manage player density imbalance across regions or prevent server costs from scaling linearly with concurrent players."
+  },
+  {
+    "lever_id": "df54be66-6fba-47bc-ab4d-50420fe00d1f",
+    "name": "Funding Source Diversification and Creative Control Retention",
+    "consequences": "Publisher-led funding accelerates resource acquisition but introduces editorial oversight and release-date pressure; diversifying across industry partnerships and innovation grants spreads risk but fragments decision authority and extends funding cycles through grant approval delays.",
+    "options": [
+      "Secure primary funding from a lead publisher (targeting companies with franchise experience) while negotiating contract terms that preserve design autonomy over core mechanics and narrative through a creative oversight board, using partnership funding for platform-specific features (ray-tracing, AI enhancements) rather than story direction.",
+      "Construct a mixed-funding portfolio where a traditional publisher covers baseline production costs while technology innovation grants support advanced procedural generation R&D and AI-driven NPC behavior research, creating separate funding streams for experimental versus proven systems.",
+      "Pursue a publisher-independent approach funded through industry partnerships with hardware manufacturers (GPU makers, console platforms) who sponsor technical showpiece features, reducing cash-flow dependency on a single funder but requiring stricter alignment with hardware marketing timelines."
+    ],
+    "review": "Multiple funding sources introduce organizational complexity and timeline misalignment; none of the options address how to mediate conflicting stakeholder interests when creative vision diverges from funder marketing priorities."
+  },
+  {
+    "lever_id": "cef20635-e6e1-403c-9e3f-94b9b3a512a7",
+    "name": "Team Structure and Distributed Development Coordination",
+    "consequences": "Centralized studio-based development maximizes in-person collaboration and narrative coherence but concentrates infrastructure costs and limits talent recruitment to local labor; distributed development teams enable geographic talent access and cost optimization but introduce timezone coordination overhead and version-control friction.",
+    "options": [
+      "Establish a core narrative and systems design team in a single location (60-80 people) managing architecture and story continuity, while outsourcing asset creation and content production to satellite studios in lower-cost regions under strict modular specifications and weekly synchronization checkpoints.",
+      "Organize the entire development team across three regional hubs (North America, Europe, Asia-Pacific) aligned with key technology partnerships, using asynchronous documentation-driven workflows and automated integration testing to reduce live-meeting dependencies while enabling 24-hour development velocity.",
+      "Build a hybrid hub-and-spoke model where the central studio maintains the core 40-50 person creative and technical leadership, while contract-based artists, programmers, and designers scale in and out based on production phase (pre-production needs designers heavily, production needs artists and engineers, polish needs QA and optimization specialists)."
+    ],
+    "review": "Distributed teams reduce per-head costs but compound communication latency and version-control complexity; none of the options address how to preserve narrative tone consistency or prevent middleware tool fragmentation across geographically separated studios."
+  },
+  {
+    "lever_id": "75c6d531-22e9-43ee-918c-982d2fb22ba1",
+    "name": "Vehicle Customization Depth and Player Expression Mechanics",
+    "consequences": "Extensive vehicle customization with performance physics impacts creates player identity investment and replayability but increases memory footprint and requires robust vehicle-destruction simulation; cosmetic-only customization reduces backend load but diminishes mechanical player agency in driving dynamics.",
+    "options": [
+      "Implement performance-impactful customization where suspension tuning, engine swaps, weight distribution, and aerodynamic modifications alter handling, acceleration, and crash dynamics, with a visual-inventory system that tracks 50+ parts per vehicle and procedurally generates exterior appearances from base models.",
+      "Design a cosmetics-focused customization layer with fixed performance profiles (handling presets: street, off-road, drift, tank-like) selectable via cosmetic packages, reducing simulation complexity while offering visual identity expression through paint, decals, wheels, and body kits without mechanical depth.",
+      "Create a hybrid tiered system where basic cosmetics are unlimited, but performance modifications (engine, suspension, transmission) are limited to three configurable preset slots per vehicle, balancing mechanical agency with memory and physics simulation constraints."
+    ],
+    "review": "Extensive customization increases asset variation and physics simulation costs; none of the options address how to prevent player min-maxing of performance builds or manage memory footprint scaling with large custom vehicle fleets across open-world instances."
+  },
+  {
+    "lever_id": "3ef3e5b9-ad8d-4faf-b129-5e5735ab6d5b",
+    "name": "NPC Behavioral Complexity and Daily Routine Simulation",
+    "consequences": "Increasing NPC behavioral depth\u2014routines, relationships, memory of player actions, and procedurally varied daily cycles\u2014creates emergent narrative moments and environmental richness that reward exploration and replayability. However, each additional layer of simulation (work schedules, family dependencies, faction allegiances) multiplies the computational overhead during runtime, demanding either more powerful baseline hardware requirements or aggressive CPU optimization that delays other systems.",
+    "options": [
+      "Design NPCs with limited randomized routines (work, home, leisure) and shallow memory of player interactions, reducing runtime load and enabling larger NPC populations across the map.",
+      "Implement detailed NPC schedules, relationship tracking, and dynamic quest triggers that respond to player faction standing and previous choices, prioritizing narrative coherence over population density.",
+      "Create a hybrid system where scripted character arcs unfold in major city districts with full behavioral fidelity, while NPCs in peripheral zones follow simpler patrol and activity loops."
+    ],
+    "review": "Richer NPC behavior drives player engagement but inflates memory and CPU costs, constraining either world size or hardware accessibility; none of the three options addresses the challenge of balancing procedural variation with maintainable script coherence across hundreds of characters."
+  },
+  {
+    "lever_id": "f78d7642-12a2-4888-b19d-0b0798a79d77",
+    "name": "Heist Mission Authoring and Procedural vs. Scripted Balance",
+    "consequences": "Heists are a franchise signature requiring high agency and replayability. Scripting each heist manually ensures cinematic quality and narrative tension but creates a linear bottleneck: each new heist demands months of mission design, dialogue recording, and playtesting. Procedural generation of heist objectives (targets, approaches, consequences) accelerates content production but risks generic, repetitive scenarios that undermine the spectacle and emotional payoff of the core experience.",
+    "options": [
+      "Author 12 to 15 signature heists as fully scripted set-piece campaigns with branching approach paths and permanent world consequences, reserving procedural generation for smaller side missions and random world events.",
+      "Develop a heist framework that procedurally generates objectives, locations, and approach modifiers from a finite set of mechanical building blocks, enabling rapid heist creation at the cost of reduced narrative distinctiveness.",
+      "Produce 4 to 6 canonical heists with full scripting and cinematics, then create a player-facing heist designer tool that allows community creation of procedural heist variants, deferring content scaling to post-launch engagement."
+    ],
+    "review": "Fully scripted heists guarantee narrative impact but create a serialization bottleneck in mission design; procedural heists scale faster but risk homogenization and reduced emotional investment; none of the options reconciles the tension between launch volume and post-launch creativity momentum."
+  },
+  {
+    "lever_id": "19b9ac2b-0f42-45a2-9d86-ed6d8bc418e1",
+    "name": "Cross-Platform Development and Hardware Target Tier Selection",
+    "consequences": "Supporting current-generation consoles, next-generation hardware, and high-end PC simultaneously distributes the addressable market but forces the team to maintain three parallel rendering pipelines, asset compression strategies, and performance validation suites. Narrowing to one or two hardware targets accelerates development and allows aggressive use of platform-specific features, but cedes market share to competitors supporting a broader audience.",
+    "options": [
+      "Target current-generation consoles and mid-range PC hardware, ensuring broad accessibility and install-base penetration while accepting visual compromises and longer loading times than next-gen exclusive builds.",
+      "Develop exclusively for next-generation consoles and high-end PC, enabling aggressive use of ray-tracing, procedural generation at runtime, and large in-memory world states, but excluding legacy hardware users and raising the barrier to entry.",
+      "Release a scalable build that auto-detects hardware and dynamically adjusts asset fidelity, NPC draw distances, and simulation granularity, maintaining a consistent experience across tiers at the cost of longer QA cycles and optimization complexity."
+    ],
+    "review": "Broader platform support increases market reach but multiplies validation overhead; exclusive targeting simplifies optimization but forfeits legacy revenue; no option directly addresses the cost of maintaining asset pipelines that feed multiple fidelity tiers simultaneously."
+  },
+  {
+    "lever_id": "97e83411-edb6-4537-b595-933152f05781",
+    "name": "Crime Faction Rivalry Persistence and World State Volatility",
+    "consequences": "A dynamic faction economy where criminal organizations compete for territory, influence, and resources creates emergent gameplay and incentivizes multiple playthroughs as rival power bases shift. However, persistent faction dominance and volatile territory control introduce world states that are difficult to predict and balance: a player's early choices can mathematically lock them out of entire faction questlines, and balancing the map so no single faction becomes mathematically dominant requires continuous runtime monitoring and intervention.",
+    "options": [
+      "Implement faction reputation as a soft influence on available missions and NPC behavior, but ensure faction control of territory resets periodically (monthly in-game cycles), preventing permanent player lock-out and maintaining stable economic baselines.",
+      "Design factions with competing but parallel questlines that remain accessible regardless of rival dominance; allow players to flip control of territory but ensure each faction retains internal consistency and narrative voice across all game states.",
+      "Create a faction system where early player choices irreversibly shift power balances, forcing subsequent playthroughs into radically different economic conditions and mission availability, maximizing emergent variation at the cost of player frustration and replayability balance issues."
+    ],
+    "review": "Persistent faction volatility drives emergent storytelling but risks player lock-out and unbalanced economic states; resetting territories cheapens player impact; parallel questlines preserve choice but reduce narrative consequence perception across the options."
+  },
+  {
+    "lever_id": "c12f8cec-e787-46e3-b365-1ce05bcf1dd6",
+    "name": "Voice Acting Scope and Dialogue Recording Scale",
+    "consequences": "Expansive dialogue\u2014unique NPC barks, contextual responses to player actions, faction-specific mission briefings, and radio station personality\u2014enriches immersion and the sense of a living world. Recording thousands of lines across multiple accents, character types, and situational variations demands a large voice talent pool, casting sessions, studio time, and localization for major markets, inflating budget and extending production schedules significantly.",
+    "options": [
+      "Hire a core ensemble of 20 to 30 distinctive voice actors covering major character archetypes and faction leaders, supplementing with procedurally generated or synthesized dialogue for ambient NPC barks and minor characters.",
+      "Commission extensive voice acting for all major and supporting characters, allocating 15 percent of the total development budget to recording, directing, and localizing dialogue across English, Spanish, French, and Mandarin markets.",
+      "Record dialogue selectively: full voice coverage for story missions, faction leaders, and radio personalities, but use text-only or minimal voice for secondary NPCs and environmental flavor, prioritizing production quality over breadth of voice performance."
+    ],
+    "review": "Expansive voice acting deepens immersion but consumes significant budget and timeline; synthetic or minimal dialogue saves costs but risks immersion rupture and inconsistent characterization; none of the options resolves the localization cost multiplier for non-English markets."
+  },
+  {
+    "lever_id": "1fe6de44-09ee-4403-9bcb-19c467cd169a",
+    "name": "Post-Launch Content Roadmap Structure and Free vs. Paid Model",
+    "consequences": "A robust post-launch roadmap sustains player engagement, justifies the live-service infrastructure investment, and generates long-term revenue through battle passes, cosmetics, or premium story expansions. However, committing to a specific cadence (monthly heists, seasonal events, cosmetic drops) locks the team into a fixed delivery schedule that can demoralize staff if unexpected bugs, server issues, or creative revisions force delays, and aggressive monetization of cosmetics or story content risks player backlash and erosion of goodwill.",
+    "options": [
+      "Publish a transparent two-year roadmap with monthly story missions, quarterly heist releases, and seasonal cosmetics, funding development through a cosmetic-only shop and battle pass, preserving all story and gameplay content as free updates.",
+      "Adopt a flexible post-launch model releasing content in quarterly clusters without strict monthly cadence, offering premium story expansions (separate campaigns) and cosmetics while keeping base-game activities and seasonal events free.",
+      "Focus post-launch support on server stability, bug fixes, and community-driven cosmetics voted by players; defer major story content and heist releases beyond the first six months, treating the launch build as a complete standalone experience."
+    ],
+    "review": "Aggressive post-launch cadences sustain engagement but lock developers into unsustainable schedules; cosmetic-only monetization preserves player trust but may underfund long-term development; none of the options addresses the tension between player expectations for continuous novelty and the team's capacity to deliver without crunch."
+  },
+  {
+    "lever_id": "288ef6b8-b1c2-48c2-85f2-f24625967a4c",
+    "name": "Morality System Depth and Consequence Visibility",
+    "consequences": "A nuanced morality system tracking player actions\u2014collateral damage, mission approach choices, faction betrayals\u2014and visibly altering NPC reactions, available missions, and ending variations drives narrative investment and replayability. However, implementing a system where consequences are persistent, unpredictable, and interconnected demands extensive branching logic, state management, and playtesting to ensure no outcome combinations create game-breaking scenarios or lock players into unintended story dead-ends.",
+    "options": [
+      "Implement a lightweight morality tracking system where player choices affect faction reputation and mission availability, but keep the story core and ending relatively fixed, allowing consequences to feel meaningful without exponential branching complexity.",
+      "Design a deep choice-consequence system with multiple faction endings, hidden branching paths unlocked by specific action combinations, and lasting world changes, allocating substantial QA resources to validate all state combinations and edge cases.",
+      "Create a transparent morality meter that responds to player actions in real-time, with cosmetic and dialogue variations that reflect alignment, but ensure all major missions remain accessible regardless of standing, preventing hard locks while preserving the illusion of meaningful choice."
+    ],
+    "review": "Deep morality systems enhance narrative replayability but demand exponential QA effort to prevent lock-outs; lightweight systems reduce complexity but diminish consequence perception; none of the options efficiently balances the authorial intent to create meaningful branching without multiplying playtesting overhead and hidden failure states."
+  },
+  {
+    "lever_id": "7494e81e-6495-46e9-b50c-76a83ad4272e",
+    "name": "Dialogue System Fidelity and Branching Complexity",
+    "consequences": "Deeper dialogue trees with contextual responses based on player history and faction standing increase narrative immersion and replayability, but require extensive branching data, lip-sync synchronization across multiple accents and languages, and continuous voice-recording sessions that delay other production milestones. High fidelity also creates maintenance overhead when world-state changes demand retroactive dialogue revisions.",
+    "options": [
+      "Record all dialogue for a single protagonist with limited faction-specific branches, reducing recording overhead while maintaining narrative coherence and voice consistency throughout the campaign.",
+      "Implement a hybrid system where primary story missions receive full voice acting and branching, but secondary NPCs rely on procedurally-generated barks and contextual text responses derived from a curated dialogue database.",
+      "Develop a modular voice-synthesis pipeline trained on limited actor recordings, allowing the system to generate contextually appropriate NPC responses without requiring full studio sessions for every dialogue permutation."
+    ],
+    "review": "Full voice-acting fidelity for all branches creates scheduling bottlenecks and rework risk when narrative design evolves; procedural synthesis trades emotional authenticity for production speed, but none of these options addresses how to prioritize actor scheduling when recording windows conflict with animation and programming deadlines."
+  },
+  {
+    "lever_id": "931638a4-8cb5-4ead-93cc-05b58b02c64e",
+    "name": "Urban Density and Destruction Physics Integration",
+    "consequences": "Enabling destructible buildings, collapsing structures during heists, and dynamic urban decay adds tactile environmental feedback and emergent gameplay opportunities, but every destructible object requires physics modeling, collision data, and memory overhead that scales exponentially with urban complexity. This couples the destruction system to frame-rate performance and forces difficult optimization choices between detail and stability.",
+    "options": [
+      "Restrict destruction to mission-critical structures and temporary scaffolding marked by the level designer, allowing players to trigger choreographed collapses only in scripted contexts without taxing general physics simulation.",
+      "Build a tiered destruction model where smaller objects (windows, doors, fences) fracture procedurally while structural destruction (walls, floors) occurs only through cumulative damage over extended gameplay, reducing runtime physics calculations.",
+      "Implement a snapshot-based damage system where the engine pre-computes destruction states at authoring time rather than simulating physics in real-time, trading dynamic novelty for consistent performance and reduced memory footprint."
+    ],
+    "review": "Fully dynamic destruction creates frame-rate jeopardy in dense urban areas with unpredictable player behavior; the three options preserve stability but sacrifice either environmental responsiveness, player agency over destruction timing, or the sense that damage accumulates organically rather than triggering predetermined states."
+  },
+  {
+    "lever_id": "ebaa158d-4a4b-4d4c-9adf-929e3558b837",
+    "name": "Faction Territory Control and Gameplay Stakes",
+    "consequences": "Persistent territory ownership by rival factions that shifts based on player missions and NPC turf wars creates high-stakes world volatility and incentivizes repeated playthroughs to see alternative power structures. However, tracking faction strength across dozens of districts requires continuous simulation, and player actions ripple unpredictably through the economy and mission availability, potentially locking players out of content if they inadvertently eliminate a faction.",
+    "options": [
+      "Assign each major faction permanent strongholds in specific districts where they always maintain presence, while allowing secondary turf to shift dynamically based on mission outcomes, creating stable anchors that preserve content accessibility while enabling territorial change in peripheral areas.",
+      "Implement a slow-decay system where faction control erodes gradually over real-time days unless reinforced by player missions or NPC patrols, allowing the world to feel dynamic while giving players agency to stabilize or destabilize territories through deliberate action rather than accidental locking.",
+      "Create a cyclical territory reset between major story chapters, where faction power structures consolidate based on aggregate player actions during the chapter, then reset to author-defined positions at chapter transitions to ensure narrative coherence without blocking content."
+    ],
+    "review": "Dynamic territory shifts heighten world immersion but risk locking players out of missions if dominant factions collapse; the three options protect content access but compromise either continuous volatility, world autonomy, or the sense that player actions have permanent consequences across the entire playthrough."
+  },
+  {
+    "lever_id": "61c37178-178f-4d3c-898a-254edd30d9a9",
+    "name": "Heist Failure Consequences and Save-State Burden",
+    "consequences": "Making failed heists carry permanent consequences (lost crew members, reduced intel, financial setbacks that affect later missions) increases narrative weight and deters careless replaying, but forces the engine to track complex branching save-states for each outcome, multiplying testing overhead and creating narrative dead-ends where players cannot recover from critical early mistakes. Balancing forgiveness against realism becomes a design bottleneck.",
+    "options": [
+      "Implement crew-member permadeath only for optional side-heist crew and full forgiveness for main-story heist failures, creating narrative stakes in optional content while protecting the critical path so players cannot lock themselves into unrecoverable story branches.",
+      "Use a limited-continues system where players earn one free mulligan per major heist that can be spent to rewind the job to the pre-mission point, creating genuine consequence pressure while preserving a safety valve against catastrophic failures that would derail progression.",
+      "Allow crew losses to trigger alternative mission paths where surviving crew members must improvise solutions or recruit temporary contractors to replace fallen specialists, converting failure into narrative detours rather than game-overs, reducing save-state complexity while preserving character permanence."
+    ],
+    "review": "Permanent heist consequences deepen stakes but explode branching complexity and testing burden; these three options mitigate narrative Dead-ends by either limiting permadeath scope, adding a structured reset mechanism, or converting loss into divergent paths\u2014but none simultaneously achieves zero-compromise consequence visibility, robust forgiveness, and minimal save-state overhead."
+  },
+  {
+    "lever_id": "a8264418-e42c-4257-b726-be31bc0dd04f",
+    "name": "Police AI Adaptation and Dynamic Difficulty Scaling",
+    "consequences": "Allowing police and rival gangs to learn from repeated player tactics, improve roadblock patterns, and anticipate heist routes creates a sense of escalating opposition that rewards strategic variety but requires police behavior to be dynamically retuned as the player evolves, risking difficulty spikes that frustrate rather than challenge. Adaptation systems also demand extensive tuning iteration because player skill variance is unpredictable.",
+    "options": [
+      "Build a static police difficulty curve that increases predictably through story progression independent of player behavior, removing dynamic learning from the system but allowing predictable balancing and ensuring all players encounter consistent challenge pacing at each story milestone.",
+      "Implement difficulty scaling triggered by player success thresholds (e.g., successful escapes, mission completion time) that bump up police AI parameters in discrete tiers, creating a stepping-stone difficulty curve that responds to player performance without requiring sophisticated behavior-learning algorithms.",
+      "Develop a faction-specific police response system where different police precincts adopt distinct tactical doctrines (one favors blockades, another uses pursuit helis, a third deploys undercover units) that players can learn and exploit, converting a learning opponent into recognizable tactical patterns that reward pattern recognition rather than endless retuning."
+    ],
+    "review": "Fully adaptive police create emergent difficulty but demand continuous rebalancing as player tactics evolve; the options provide scaling mechanisms that trade dynamic learning for predictability, but none achieves both persistent adaptation and guaranteed fairness without extensive post-launch tuning and player feedback integration."
+  },
+  {
+    "lever_id": "6ff7cdac-3388-41bb-8202-46fc30dadb26",
+    "name": "Interior Location Density and Seamless Loading",
+    "consequences": "Rendering detailed interiors for hundreds of accessible buildings (clubs, apartments, shops, parking garages) without loading screens creates environmental richness and unbroken immersion, but requires aggressive geometry streaming, memory partitioning, and lighting pre-computation that becomes untenable on older hardware and forces either graphics downgrade or targeted building access restrictions. The trade-off between visual fidelity and seamless access becomes unavoidable.",
+    "options": [
+      "Limit fully-accessible interiors to mission-critical and player-owned spaces, while non-interactive buildings use simplified facade models and distant alpha-planes, reducing streaming burden and allowing seamless traversal while reserving detailed assets for spaces that drive narrative and gameplay moments.",
+      "Implement a partial-loading system where entering a building streams interior geometry while maintaining a low-poly exterior shell visible through windows, allowing seamless entry without full scene unloading but requiring sophisticated LOD transitions and window-portal culling to manage frame-rate stability.",
+      "Create a fast-travel shortcut system where entering crowded public buildings (clubs, malls) uses a brief animated transition to a streamlined interior layout, reducing streaming load while preserving the sense of persistent spaces and allowing rapid access to high-traffic zones without taxing continuous geometry streaming."
+    ],
+    "review": "Fully seamless interiors with high fidelity deliver immersion but demand excessive streaming overhead; these three options manage load through either selective detail, partial streaming, or fast-travel shortcuts\u2014but sacrifice either completeness of accessible spaces, continuous unbroken navigation, or the spontaneity of discovering interiors without authored transition sequences."
+  },
+  {
+    "lever_id": "090d4180-462c-479d-ab2e-d19199f0c33b",
+    "name": "Multiplayer Mode Economy and Cross-Progression Synchronization",
+    "consequences": "Enabling player-to-player trading, shared faction participation, and unified progression systems across single-player and multiplayer creates emergent player-driven economy but exposes the game to real-money inflation exploits, account-boosting services, and economic imbalances where early adopters accumulate unfair advantages. Maintaining server-side validation and anti-cheat monitoring becomes a continuous operational burden that grows with player count.",
+    "options": [
+      "Segregate multiplayer currency and progression into a separate track independent of single-player advances, allowing multiplayer to be an alternate game mode with its own economy and balancing rules without exposing the single-player campaign to multiplayer exploitation and simplifying fraud detection by isolating account systems.",
+      "Implement a one-way progression system where single-player achievements unlock cosmetics and cosmetic rewards in multiplayer, but multiplayer currency and power items cannot be converted back into single-player wealth, preserving narrative progression integrity while allowing multiplayer to benefit from single-player milestones without economic collusion.",
+      "Create a leaderboard-based achievement system where multiplayer success grants cosmetic rank badges and exclusive appearance items rather than tradeable currency, decoupling social status from economic power and reducing the incentive for exploit-farming while maintaining progression visibility across modes without cross-account advantage transfer."
+    ],
+    "review": "Unified multiplayer-single-player economies create organic player interaction but invite exploitation through account-boosting and real-money fraud; the three options preserve progression integrity by either isolating economies, restricting conversion direction, or decoupling status from tradeable assets\u2014but none sustains a genuinely shared persistent world economy without robust server-side validation and continuous monitoring overhead."
+  },
+  {
+    "lever_id": "8ec4f8de-d47f-4733-9efc-74991d2470d3",
+    "name": "Government Research Grant Eligibility and IP Ownership Boundaries",
+    "consequences": "Accepting government innovation funding for AI development, procedural systems, or urban simulation research accelerates technical capability and reduces cash burn, but grant agreements often impose IP co-ownership, publication requirements, and academic accountability that restrict commercial monetization and future licensing of core technology. Balancing public funding with proprietary protection becomes a legal bottleneck.",
+    "options": [
+      "Pursue government grants exclusively for non-core infrastructure (art pipeline tools, QA automation, studio operations optimization) while funding core gameplay technology privately, allowing government partnership to accelerate supporting systems without ceding competitive IP or narrative-critical algorithms.",
+      "Structure funding partnerships to explicitly carve out non-overlapping IP zones where government funds research non-proprietary AI behavior frameworks suitable for academic publication, while the studio privately funds proprietary imitations and refinements that remain studio-owned, creating published research that enhances studio reputation without exposing commercial advantage.",
+      "Decline government funding and rely entirely on publisher investment supplemented by industry partnership arrangements (hardware manufacturer co-development, middleware licensing revenue-sharing) that preserve IP autonomy while securing capital, accepting slower research cycles in exchange for full ownership and unrestricted commercial leverage of all developed technology."
+    ],
+    "review": "Government grants reduce cash burn and accelerate research but introduce IP co-ownership and publication constraints that erode long-term licensing value; the three options preserve control through either non-core funding allocation, IP partitioning, or private-only funding\u2014but none simultaneously achieves accelerated research velocity, full commercial autonomy, and government partnership prestige without legal compromise or foregone acceleration."
+  }
+]
