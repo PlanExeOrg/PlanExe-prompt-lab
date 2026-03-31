@@ -1,0 +1,15 @@
+{
+  "input": "baseline/train",
+  "pr_url": "https://github.com/PlanExeOrg/PlanExe/pull/460",
+  "pr_title": "Use 6-char lever ID prefix, positive framing, and exact-count instruction",
+  "pr_description": "6-char prefix**: Replace full UUIDs with 6-char prefixes in `lever_details_for_prompt` (`Lever ID: {uuid}` \u2192 `Lever {uuid[:6]}`). Map prefixes back to full UUIDs when processing the response. Eliminates the source of UUID contamination without losing lever matching. Positive framing**: \"refer to levers by their name \u2014 for example, write 'Policy Advocacy Strategy', not an identifier\". Replaces the negative prohibition from #458 which backfired on llama3.1. Exact-count instruction**: \"Return exactly N characterizations \u2014 one per lever, no more, no fewer\". Reduced haiku's fabricated entries 71% in #458. OPTIMIZE_INSTRUCTIONS**: Document negative-priming lesson and current fix state. Supersedes #458 (negative prohibition backfired).",
+  "history": [
+    "4/41_enrich_potential_levers",
+    "4/42_enrich_potential_levers",
+    "4/43_enrich_potential_levers",
+    "4/44_enrich_potential_levers",
+    "4/45_enrich_potential_levers",
+    "4/46_enrich_potential_levers",
+    "4/47_enrich_potential_levers"
+  ]
+}
