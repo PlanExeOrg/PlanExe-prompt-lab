@@ -1,0 +1,200 @@
+[
+  {
+    "lever_id": "e3b36bac-bb68-4884-8d21-a65210168581",
+    "name": "Stakeholder Coalition Amplification",
+    "consequences": "Building a broad coalition increases political leverage but requires significant outreach time and may dilute focus. The coalition\u2019s diverse membership can broaden support but also introduces coordination overhead that may delay policy drafting.",
+    "options": [
+      "Organize a national roundtable with civil society, academia, and privacy groups to co-author a resilience brief.",
+      "Launch a targeted lobbying campaign through a coalition of NGOs to secure a parliamentary hearing on platform neutrality.",
+      "Deploy a digital advocacy platform that aggregates stakeholder testimonies and publishes a public petition to pressure Digitaliseringsstyrelsen."
+    ],
+    "review": "Coalition building expands influence but risks spreading resources thin and may delay focused policy drafting, leaving the project without a clear, actionable policy brief."
+  },
+  {
+    "lever_id": "f15e9128-db31-45e3-8f3c-7787c7ee1a88",
+    "name": "Regulatory Framing of Resilience",
+    "consequences": "Reframing the dependency issue as a resilience risk shifts procurement criteria but may trigger additional compliance reviews and extend decision timelines. This approach can elevate the issue to a national security concern, yet it may also invite scrutiny from regulatory bodies.",
+    "options": [
+      "Draft a resilience risk assessment report that quantifies supplier concentration exposure and submits it to Digitaliseringsstyrelsen.",
+      "Propose a new procurement clause mandating platform-neutral fallback paths in all future eIDAS2 wallet contracts.",
+      "Create a policy white paper linking platform dependency to national security and request a formal review by the Ministry of Digital Affairs."
+    ],
+    "review": "Reframing as resilience may satisfy procurement but could trigger extended compliance checks, delaying procurement cycles and leaving the project without immediate policy traction."
+  },
+  {
+    "lever_id": "680ac82f-8cf1-478a-95ed-54d5306da34a",
+    "name": "Technical Demonstrator Portfolio",
+    "consequences": "Developing two non-production demonstrators provides tangible proof of concept but consumes significant engineering effort and may divert resources from policy advocacy. The demonstrators must remain lean to avoid feature creep that could stall the project timeline.",
+    "options": [
+      "Build a GrapheneOS-based mobile demonstrator that authenticates via FIDO2/WebAuthn against a simulated public-sector identity provider.",
+      "Construct a browser-based fallback demonstrator that uses OpenID Connect and a hardware token to bypass mobile OS integrity checks.",
+      "Integrate a lightweight hardware token prototype with a custom firmware to showcase platform-neutral authentication in a controlled lab environment."
+    ],
+    "review": "Building demonstrators demonstrates feasibility but may consume 4.0 million DKK of phase two budget, risking insufficient funds for policy engagement if technical milestones are delayed."
+  },
+  {
+    "lever_id": "e08dfdb5-6864-45da-86a2-bb9b2c7ae0e4",
+    "name": "Procurement Language Injection",
+    "consequences": "Injecting platform-neutral clauses into procurement documents can harden supplier requirements but may face legal review delays and pushback from incumbent vendors. The process may also extend the procurement cycle, impacting the project\u2019s delivery schedule.",
+    "options": [
+      "Draft a procurement specification template that mandates platform-neutral fallback paths and submit it to the AltID steering committee.",
+      "Propose a clause requiring all eIDAS2 wallet vendors to provide a certified fallback authentication method independent of Apple or Google.",
+      "Engage a legal advisory team to review and refine procurement language to withstand regulatory scrutiny while preserving platform neutrality."
+    ],
+    "review": "Injecting procurement clauses may delay contract finalization and invite vendor legal challenges, leaving the project without immediate procurement traction."
+  },
+  {
+    "lever_id": "852111d0-661c-4b02-b34e-56b780563d8d",
+    "name": "EU Standards Alignment",
+    "consequences": "Aligning Danish advocacy with EU Digital Identity Wallet standards can amplify influence but may require additional coordination with EU bodies and risk misalignment with national timelines. The alignment effort may also divert resources from domestic procurement activities.",
+    "options": [
+      "Submit a technical contribution to the European Digital Identity Wallet working group outlining platform-neutral fallback requirements.",
+      "Organize a joint workshop with EU digital identity experts to co-develop interoperability guidelines that include fallback mechanisms.",
+      "Publish a comparative analysis of Danish and EU eIDAS2 wallet specifications to highlight gaps and propose harmonized standards."
+    ],
+    "review": "EU alignment may broaden impact but could delay national procurement actions and expose the project to shifting EU policy priorities."
+  },
+  {
+    "lever_id": "4a885c7e-bea2-4688-8a6c-74290d6419aa",
+    "name": "Contingency Funding Buffer",
+    "consequences": "Allocating a contingency reserve within the 10.5 million DKK budget safeguards against unforeseen delays but reduces available funds for core activities, potentially limiting scope. The reserve must be carefully managed to avoid compromising deliverables.",
+    "options": [
+      "Reserve 1.0 million DKK of phase two budget as a contingency fund for regulatory or technical overruns.",
+      "Allocate 0.5 million DKK of phase three budget to cover unexpected procurement delays or legal review costs.",
+      "Create a joint funding agreement with a Danish university to share contingency resources and reduce project risk exposure."
+    ],
+    "review": "Setting a contingency reserve protects against overruns but may constrain core activity funding, leaving the project unable to meet all deliverables if costs rise."
+  },
+  {
+    "lever_id": "09fcc2cd-78ad-464e-bfde-e708d6fb2cb8",
+    "name": "Platform Integrity Signal Decoupling",
+    "consequences": "Pulling this lever reduces reliance on Apple/Google platform integrity APIs, enabling alternative trust anchors. However, it requires re\u2011engineering of MitID\u2019s anti\u2011fraud logic and may increase verification latency by up to 200\u202fms per authentication event, potentially impacting user experience during peak banking hours.",
+    "options": [
+      "Replace platform integrity checks with a locally hosted attestation service that validates device integrity through open\u2011source firmware signatures.",
+      "Introduce a cross\u2011platform attestation protocol that aggregates integrity signals from multiple independent hardware vendors, bypassing Apple/Google APIs.",
+      "Deploy a lightweight sandboxed verifier on GrapheneOS that emulates platform integrity responses, allowing MitID to accept fallback signals during platform outages."
+    ],
+    "review": "Decoupling platform signals cuts vendor lock\u2011in but adds complexity to MitID\u2019s fraud detection logic, leaving the gap of increased latency and the need for rigorous testing under real\u2011world load."
+  },
+  {
+    "lever_id": "98dd0302-ac26-48d8-adfd-2807e6eec613",
+    "name": "Fallback Authentication Path Validation",
+    "consequences": "Establishing a certified fallback path ensures continuity if Apple/Google services become unavailable. Yet, integrating a fallback mechanism into AltID\u2019s procurement cycle may delay the 24\u2011month delivery window by an additional 3 months, pushing the final milestone to month 27.",
+    "options": [
+      "Build a hardware\u2011token based fallback that uses FIDO2 USB keys, providing a zero\u2011touch authentication flow for critical services.",
+      "Develop a browser\u2011based WebAuthn fallback that leverages existing public key infrastructure, enabling users to authenticate via any modern browser.",
+      "Create a mobile\u2011app fallback that operates on GrapheneOS, using a custom certificate authority to sign authentication requests independent of app stores."
+    ],
+    "review": "Adding a fallback path secures service continuity but extends procurement timelines, leaving the gap of potential budget overruns and the need for stakeholder buy\u2011in on new hardware costs."
+  },
+  {
+    "lever_id": "f3508cf0-7092-457c-b992-fa910646b0f8",
+    "name": "AltID Procurement Language Enforcement",
+    "consequences": "Embedding platform\u2011neutral clauses into AltID procurement documents forces suppliers to design for multiple OS ecosystems. However, this may reduce the pool of eligible vendors, potentially increasing procurement costs by up to 15\u202f% and extending vendor selection time by 2 months.",
+    "options": [
+      "Draft a procurement specification that mandates support for FIDO2/WebAuthn across iOS, Android, and Linux, with penalties for non\u2011compliance.",
+      "Require all suppliers to provide a platform\u2011agnostic API layer that abstracts OS\u2011specific authentication calls, verified through third\u2011party audits.",
+      "Introduce a mandatory open\u2011source contribution clause, compelling vendors to release core authentication modules under a permissive license."
+    ],
+    "review": "Enforcing neutral procurement language promotes resilience but may shrink vendor options and raise costs, leaving the gap of slower market entry and potential quality trade\u2011offs."
+  },
+  {
+    "lever_id": "d609e8ba-d4fa-4eba-85d1-464ec81b8f80",
+    "name": "eIDAS2 Wallet Compatibility Assurance",
+    "consequences": "Aligning fallback mechanisms with eIDAS2 wallet standards ensures cross\u2011border interoperability. Yet, achieving full compliance may necessitate redesigning the authentication flow, adding an extra 6 weeks of development and testing before phase two can commence.",
+    "options": [
+      "Map the fallback authentication flow to the eIDAS2 wallet\u2019s \u201cTrusted Service Provider\u201d model, ensuring seamless token exchange.",
+      "Implement a modular adapter that translates AltID credentials into eIDAS2 wallet\u2011compatible assertions, allowing reuse of existing infrastructure.",
+      "Conduct a joint testbed with EU partners to validate fallback credentials against the eIDAS2 wallet\u2019s security requirements, accelerating certification."
+    ],
+    "review": "Compatibility with eIDAS2 widens interoperability but delays phase two, leaving the gap of extended development time and the risk of misalignment with evolving EU standards."
+  },
+  {
+    "lever_id": "62191f5d-4b11-4521-91cc-010576d9302d",
+    "name": "Supplier Concentration Risk Mitigation",
+    "consequences": "Diversifying supplier base reduces concentration risk but requires establishing new contractual relationships, potentially increasing administrative overhead by 25\u202f% and extending the procurement cycle by 4 weeks.",
+    "options": [
+      "Identify and onboard at least two alternative hardware security module vendors that support FIDO2, expanding the supply chain.",
+      "Negotiate a shared\u2011risk agreement with a mid\u2011tier OS vendor to provide platform\u2011neutral integrity services, reducing reliance on Apple/Google.",
+      "Create a consortium of Danish tech firms to jointly develop an open\u2011source platform\u2011neutral authentication stack, sharing development costs."
+    ],
+    "review": "Mitigating supplier concentration spreads risk but adds administrative burden, leaving the gap of higher overhead and the need for sustained collaboration among new partners."
+  },
+  {
+    "lever_id": "acb56c9f-ac0e-4b3a-bfda-f36e8b0c5d65",
+    "name": "Stakeholder Engagement Amplification",
+    "consequences": "Intensifying stakeholder engagement accelerates policy adoption but consumes 10\u202f% of the phase one budget, potentially reducing funds available for technical research. Additionally, increased public scrutiny may expose the project to political pushback during the 24\u2011month timeline.",
+    "options": [
+      "Host quarterly roundtable sessions with civil\u2011society groups, privacy advocates, and industry experts to refine the policy proposal.",
+      "Launch a targeted media campaign highlighting the sovereignty risks of platform dependence, mobilizing public support for the fallback initiative.",
+      "Establish a formal advisory board comprising representatives from Digitaliseringsstyrelsen, the MitID operator, and EU digital identity bodies to guide technical and policy decisions."
+    ],
+    "review": "Amplifying engagement speeds policy traction but diverts budget and invites political scrutiny, leaving the gap of potential funding shortfall and stakeholder fatigue."
+  },
+  {
+    "lever_id": "97511c27-4288-49ca-a90a-fa96fdbbb842",
+    "name": "Platform\u2011Neutral Access Mandate",
+    "consequences": "Pulling this lever would push procurement documents to require platform\u2011neutral access, potentially delaying procurement cycles by 3\u20114 months due to additional review. It could also reduce reliance on Apple/Google but may increase initial integration costs for vendors.",
+    "options": [
+      "Draft a procurement clause that explicitly excludes mandatory use of Apple or Google app store distribution for all future digital identity applications.",
+      "Require vendors to provide a platform\u2011neutral installation channel, such as a secure web portal, alongside any mobile app distribution.",
+      "Mandate that any new digital identity service must include a fallback authentication method that does not rely on platform integrity signals."
+    ],
+    "review": "The trade\u2011off is slower procurement timelines, and the options leave the gap of how to enforce compliance across all vendors without a central enforcement mechanism."
+  },
+  {
+    "lever_id": "c1ed6134-22e3-442a-8d8f-598d8ad3378b",
+    "name": "Fallback Authentication Pilot Deployment",
+    "consequences": "Deploying a pilot fallback authentication path will demonstrate feasibility but may divert resources from core technical work, potentially extending phase two by 2 months. It also introduces a new security review cycle for the fallback mechanism.",
+    "options": [
+      "Build a browser\u2011based fallback using WebAuthn that operates independently of mobile OS integrity APIs for critical services.",
+      "Deploy a hardware token fallback that leverages USB\u2011C or NFC authentication for critical public services.",
+      "Create a GrapheneOS\u2011based fallback app that bypasses app store distribution and uses open\u2011source integrity checks."
+    ],
+    "review": "The trade\u2011off is resource reallocation from main demonstrators, and the options leave the gap of ensuring user adoption and operational readiness for fallback paths."
+  },
+  {
+    "lever_id": "eb1c0bd5-9db9-4b96-9640-ac1a8cee31f7",
+    "name": "Supplier Concentration Risk Disclosure",
+    "consequences": "Publishing a supplier concentration risk report will raise awareness among stakeholders but may trigger pushback from incumbent vendors, potentially delaying procurement decisions by 1\u20112 months. It also requires ongoing data collection and analysis, adding to phase one overhead.",
+    "options": [
+      "Compile a public risk matrix that ranks current suppliers by market share and dependency impact on digital identity services.",
+      "Release a quarterly briefing to the Digitaliseringsstyrelsen highlighting emerging concentration risks and mitigation options.",
+      "Conduct a stakeholder survey to quantify perceived risks of platform vendor concentration across public sector agencies."
+    ],
+    "review": "The trade\u2011off is potential vendor resistance, and the options leave the gap of translating risk data into actionable procurement policy changes."
+  },
+  {
+    "lever_id": "1984b368-164a-4b5d-afef-72bb6c47b4ee",
+    "name": "Digital Sovereignty Advocacy Campaign",
+    "consequences": "Launching an advocacy campaign will increase public pressure on policymakers but may consume significant communication resources, potentially diverting focus from technical deliverables. It also risks politicization of the project, which could affect stakeholder neutrality.",
+    "options": [
+      "Organize a series of round\u2011table workshops with civil\u2011society groups to build consensus on platform neutrality goals.",
+      "Publish a white paper that frames digital sovereignty as a national security imperative tied to identity resilience.",
+      "Run a targeted media outreach that highlights case studies where platform lock\u2011in caused service disruptions."
+    ],
+    "review": "The trade\u2011off is resource diversion to outreach, and the options leave the gap of ensuring sustained political engagement beyond initial media coverage."
+  },
+  {
+    "lever_id": "a4342164-5148-4985-ba09-3eaaf76c9a58",
+    "name": "EU Digital Wallet Interoperability Push",
+    "consequences": "Engaging EU working groups will align Danish policy with broader standards but may delay national procurement timelines by 6 months due to coordination cycles. It also requires sustained diplomatic effort, potentially stretching the project\u2019s staffing capacity.",
+    "options": [
+      "Submit a formal position paper to the European Digital Identity Wallet WG advocating for platform\u2011neutral fallback requirements.",
+      "Participate in joint technical workshops to map Danish fallback designs onto EU interoperability frameworks.",
+      "Coordinate with EU member states to co\u2011draft a cross\u2011border fallback authentication standard."
+    ],
+    "review": "The trade\u2011off is extended coordination time, and the options leave the gap of translating EU consensus into enforceable national procurement clauses."
+  },
+  {
+    "lever_id": "7905669b-dc0f-44bd-a02c-01777932fe30",
+    "name": "Contingency Funding Allocation Strategy",
+    "consequences": "Allocating a dedicated contingency reserve will provide financial flexibility for unforeseen delays but reduces available funds for core technical work, potentially limiting demonstrator scope. It also introduces additional financial oversight requirements.",
+    "options": [
+      "Reserve 1.5 million DKK in a separate account earmarked for procurement delays or regulatory changes.",
+      "Allocate 0.5 million DKK to an external audit fund that monitors spending on fallback development milestones.",
+      "Set aside 0.7 million DKK for rapid\u2011response procurement of alternative hardware tokens if primary vendors withdraw."
+    ],
+    "review": "The trade\u2011off is reduced core budget, and the options leave the gap of ensuring contingency funds are accessible without bureaucratic delays."
+  }
+]
