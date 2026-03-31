@@ -1,0 +1,233 @@
+[
+  {
+    "lever_id": "569995b4-cbf0-4135-aeca-e75953625cb7",
+    "name": "Narrative Density vs. Geographic Scope",
+    "consequences": "Expanding the playable city to match the ambition of blending three urban archetypes (Los Angeles, Detroit, Miami) increases world size but dilutes narrative density unless development resources scale proportionally. A massive geography requires exponentially more handcrafted story beats, NPC routes, and environmental detail to avoid feeling sparse\u2014a bottleneck that typically extends development timelines by 18\u201336 months and strains narrative staff capacity.",
+    "options": [
+      "Develop a single primary metropolis with three distinct district identities, each narrated through distinct crime factions and heist storylines anchored to neighborhood-specific economies",
+      "Implement a clustered approach where three smaller city zones operate as semi-isolated narrative theaters, with fast-travel between them to reduce the handcrafting burden per square kilometer",
+      "Build the full tri-city geography but populate 60% of it through procedural generation for ambient missions, storefronts, and NPC routines, reserving hand-authored narrative for 15\u201320 signature locations per district"
+    ],
+    "review": "Larger worlds compress per-location narrative detail unless authoring budgets expand commensurately, but all three options sidestep the core constraint: whether procedural generation can sustain player immersion in crime-economy detail without handwritten economic rules for each district's black markets, fence networks, and rival gang infrastructure."
+  },
+  {
+    "lever_id": "2a2a7ef2-ad01-465e-9770-661d126b945a",
+    "name": "Graphical Fidelity Target and Hardware Constraints",
+    "consequences": "Committing to \"next-gen graphical fidelity\" sets a performance ceiling that locks the minimum hardware spec and multiplayer peer requirements. Pushing ray-traced reflections, photogrammetric textures, and 60+ FPS on console hardware at 4K consumes 40\u201350% of total GPU memory; reducing any of these metrics opens hardware reach but risks perception of graphical compromise relative to marketing promises.",
+    "options": [
+      "Target native 4K at 60 FPS on next-generation consoles with ray-traced ambient occlusion and reflections in urban interiors, accepting a 6\u201312 month performance optimization phase and potential dynamic resolution fallback during intensive city sequences",
+      "Commit to 1440p native at 120 FPS on high-end PC and current-generation consoles, marketing visual clarity and motion smoothness rather than raw resolution, and defer ray-tracing to optional ultra-settings that require high-end GPUs",
+      "Implement a tiered rendering engine where console versions run at 1080p/30 FPS in intensive areas and 1440p/60 FPS in controlled environments, while PC scales freely, reducing the graphical bottleneck across hardware generations but complicating QA and crossplay parity testing"
+    ],
+    "review": "Each graphical target locks the optimization scope and determines whether multiplayer can run peer-to-peer or requires server infrastructure, but none of the options directly address the trade-off between real-time reflection quality (which impacts perceived realism) and CPU headroom needed for dynamic NPC routines and procedural generation."
+  },
+  {
+    "lever_id": "9e010639-b818-4155-a9fc-85e7904ac975",
+    "name": "Heist Mechanic Authoring: Scripted vs. Emergent",
+    "consequences": "Complex heist mechanics can be authored as tightly scripted linear sequences with branching outcomes (guaranteeing narrative payoff but limiting player agency), or as emergent systems where player stealth, disguise, explosives, and vehicle choices dynamically reshape mission objectives (maximizing replayability but risking narrative coherence and unpredictable difficulty spikes). The choice affects both content creation velocity and post-launch service design.",
+    "options": [
+      "Design 12\u201315 signature heists as hand-authored narrative sequences with 3\u20135 critical decision nodes each, where player choices alter NPC routes and alarm thresholds but follow predetermined story arcs, enabling tight cinematics and guaranteed narrative resolution",
+      "Establish a heist-generation engine where players construct crews, select equipment, and plan approaches within a modular framework\u2014guard patrols, building layouts, and guard AI responses are dynamic based on chosen tools, creating emergent complexity but requiring robust failure states and multiple viable solutions per scenario",
+      "Develop a hybrid system of 5\u20136 signature heists as narrative set pieces paired with a procedurally-assembled heist workshop where players combine modular objectives (steal target, blackmail witness, sabotage vehicle) drawn from a library of 20+ atomic mission types, balancing scripted story beats with emergent replayability"
+    ],
+    "review": "Scripted heists guarantee narrative impact but cap replayability; emergent systems maximize agency but risk narrative incoherence; however, all three options avoid the scaling problem: whether tutorial and difficulty ramp can accommodate both new players (who need scripted scaffolding) and veteran players (who demand emergent complexity) in the same economy."
+  },
+  {
+    "lever_id": "5ff52003-ebf7-444c-a86d-e146c16c579e",
+    "name": "Multiplayer Architecture and Server Infrastructure",
+    "consequences": "Multiplayer integration (promised in the plan) determines whether the game requires persistent online servers for state synchronization, peer-to-peer networking with client authority, or a hybrid model. Server-based architecture ensures cheat prevention and consistency across heist outcomes but locks the game to live-service costs indefinitely; peer-to-peer reduces infrastructure burden but increases vulnerability to cheating and synchronization desync in high-stakes heist missions.",
+    "options": [
+      "Deploy a dedicated server infrastructure for all multiplayer heist missions, PvP zones, and shared economy transactions, funding ongoing operational costs through battle pass revenue and cosmetic monetization, accepting $2\u20135M annual server and anti-cheat licensing costs",
+      "Implement peer-to-peer networking for cooperative heists using server-authoritative validation only for trade and crime-economy transactions, reducing infrastructure overhead to sub-$500K annually but requiring robust client-side cheat detection and accepting occasional desync in real-time co-op moments",
+      "Separate single-player and multiplayer entirely: deliver a complete single-player campaign with full narrative scope and 80+ hours of heist content offline, then operate a separate optional multiplayer layer as a free-to-play competitive world, ring-fenced from narrative campaign progression and funded through cosmetics-only monetization"
+    ],
+    "review": "Persistent servers guarantee heist outcome integrity but create perpetual operational dependency; peer-to-peer reduces cost but multiplies cheat-detection burden; hybrid models fragment the player base between casual and hardcore. None of the options address whether cooperative heists require real-time synchronization tight enough to support split-second grenade throws and vehicle handoffs, or whether turn-based async execution could reduce bandwidth and cheat surface."
+  },
+  {
+    "lever_id": "8fa5af3d-c914-46a3-8faf-ef00727ccddc",
+    "name": "Development Studio Structure and Geographic Distribution",
+    "consequences": "A project of this scope requires 300\u2013600 developers across art, engineering, narrative, audio, and QA. Centralizing all teams in one primary studio maximizes creative cohesion but limits hiring talent pools and increases real-estate costs in major tech hubs; distributing teams across multiple offices in Los Angeles, Detroit, and Miami enables local talent acquisition and reduces per-seat costs but multiplies coordination overhead, timezone latency, and risk of narrative inconsistency across regional teams.",
+    "options": [
+      "Consolidate development in a single tier-1 studio location (Los Angeles), hiring aggressively for all disciplines in one complex, enabling daily in-person collaboration on heists and open-world design but accepting premium salaries and real-estate costs of $80\u2013120M over a 5-year development cycle",
+      "Establish a primary creative hub in Los Angeles with 150 core narrative, design, and direction staff, then distribute technical implementation and art production across satellite studios in Austin, Montreal, and Eastern Europe, using daily async documentation and weekly synchronous design reviews to maintain creative consistency while reducing overall headcount costs by 25\u201330%",
+      "Operate three co-equal regional studios in Los Angeles, Detroit, and Miami, each owning one of the three city districts (narratively and artistically), with shared engineering pipelines and a central publishing team in New York, accepting higher coordination overhead in exchange for local hiring advantage and narrative authenticity rooted in regional expertise"
+    ],
+    "review": "Single-studio consolidation optimizes creative cohesion but concentrates hiring risk and cost; distributed teams reduce per-seat expense but multiply coordination and timezone overhead. All three options assume sufficient mid-level lead capacity to enforce design consistency across codebases and narrative arcs, yet none directly solve the problem of onboarding 200+ junior developers into a living open-world engine architecture mid-project."
+  },
+  {
+    "lever_id": "5048f402-b4a9-4e8a-95ba-3bc25c3f69d6",
+    "name": "Funding Model and Creative Control Trade-off",
+    "consequences": "The plan cites \"strategic industry partnerships, publisher investments, and government innovation grants.\" Publisher funding (e.g., from a major platform holder like Sony or Microsoft) accelerates capital availability and guarantees distribution but typically exerts editorial control over content and gameplay systems; industry partnerships (e.g., with hardware vendors) offer technology licensing and credibility but may impose hardware-optimization requirements; government grants reduce dilution but often require domestic team composition and IP restrictions. Each funding vector shifts who controls final creative decisions.",
+    "options": [
+      "Secure primary funding from a traditional AAA publisher (Take-Two or equivalent) providing $150\u2013200M upfront with scaled milestone payments, accepting standard platform-holder editorial oversight on content and 18\u201324 month exclusivity windows in exchange for guaranteed shelf space and $30\u201350M marketing support",
+      "Structure funding as a consortium: 40% traditional publisher investment, 40% strategic technology partnerships (hardware vendors, cloud-infrastructure providers), and 20% targeted government innovation grants focused on procedural AI and advanced graphics, requiring governance board approval for major design decisions but reducing single-entity creative veto power",
+      "Bootstrap the project with a lean $30M fund from an independent holding company, supplemented by government innovation grants ($10\u201315M) and equipment partnerships with hardware vendors, retaining full creative control and flexibility but accepting 6\u201312 month longer development timeline and constrained marketing reach at launch"
+    ],
+    "review": "Publisher funding accelerates capital and marketing but concentrates creative veto; consortium funding distributes control but multiplies approval timelines; independent funding maximizes creative autonomy but risks insufficient launch marketing. None of the options directly specify how to handle milestone-based payment clawback if the game underperforms commercially, or how government grant restrictions on domestic hiring interact with global team distribution."
+  },
+  {
+    "lever_id": "0dce403b-48de-417c-80c9-096f9929f719",
+    "name": "Procedural Generation Scope and Manual Quality Assurance",
+    "consequences": "Advanced procedural generation for ambient missions, NPC routines, and storefronts can generate hundreds of hours of content with minimal manual authoring, dramatically compressing production time. However, procedurally-generated content requires exhaustive automated testing and spot-check human QA to prevent incoherent NPC behavior, economically nonsensical prices, or mission logic breaks; excessive procedural content can also create a perceived \"sameness\" that conflicts with the immersion and narrative depth promised in the plan.",
+    "options": [
+      "Limit procedural generation to ambient street traffic, idle NPC animations, and vendor inventory restocking; hand-author all heists, story missions, and named character interactions, requiring 150+ narrative designers but ensuring thematic coherence and narrative payoff across the game's core 80+ hour campaign",
+      "Implement procedural generation for 60% of side missions, storefronts, and NPC routines (resulting in roughly 150+ generated hours of auxiliary content), supported by a dedicated AI validation team (20\u201330 QA engineers) running rule-based checks on economic consistency, dialogue plausibility, and mission logic, accepting occasional minor incoherence as trade-off for scope",
+      "Deploy a hybrid system where procedural generation handles cosmetic variation (store layouts, vehicle spawns, patrol patterns) but every mission objective, dialogue tree, and NPC motivation is template-driven from a hand-authored library of 200+ mission atoms and character archetypes, requiring a smaller narrative team (80\u2013100 designers) to focus on template quality rather than instance-by-instance authoring"
+    ],
+    "review": "Heavy procedural generation expands content volume but introduces quality variance and QA scaling headaches; pure handcraft guarantees quality but locks narrative scope to team size. All three options ignore the tension between procedural nondeterminism (which supports replayability) and player expectation of consistent NPC economies\u2014whether the game's price of stolen cars or fence payout percentages should vary procedurally or remain fixed reference points for player strategy."
+  },
+  {
+    "lever_id": "0cfb0e0a-dc63-4e3d-a832-2517f38ed2df",
+    "name": "NPC Behavior Autonomy and Scripted Accountability",
+    "consequences": "Granting NPCs wider behavioral freedom (routines, relationships, economic decisions independent of player action) creates emergent story moments that feel organic but risks uncontrolled narrative tangents that undermine scripted heist set pieces. High autonomy increases replay value and player discovery, but QA burden explodes exponentially as behavior trees compound across thousands of NPCs.",
+    "options": [
+      "Implement a hierarchical NPC system where critical story characters (targets, allies, antagonists) operate on tight behavioral scripts, while civilian NPCs in non-mission zones run fully autonomous routines unconstrained by designer checkpoints",
+      "Establish a hybrid model where all NPCs follow base autonomous routines but enter a guided-behavior mode when within proximity of mission objectives, reverting to autonomy once the player leaves the zone",
+      "Restrict NPC autonomy to scheduled, predictable state changes (daily routes, weekly faction meetings, monthly relationship decays) executed deterministically at fixed intervals rather than continuous real-time simulation"
+    ],
+    "review": "Autonomy reduces QA surface if confined to non-critical NPCs, but all three options leave unresolved how player-induced chaos (vehicle crashes, fire, police chases) should propagate through autonomous behavior without breaking immersion or mission logic."
+  },
+  {
+    "lever_id": "9632576c-b5ea-4a62-a2bf-8207f33f2dc1",
+    "name": "Mission Replay and Save-State Checkpointing Strategy",
+    "consequences": "Permitting mid-heist saves accelerates player progression and reduces frustration from late-stage failures, but undermines the high-stakes tension and commitment that defines GTA's heist identity. Conversely, no mid-heist saves preserves dramatic tension but increases abandonment rates for hardcore difficulty scenarios and alienates players with limited session time.",
+    "options": [
+      "Implement full checkpoint saves at designer-marked heist phases, allowing players to retry any phase independently without restarting the entire heist sequence",
+      "Restrict saves to pre-mission only, forcing full heist restarts on failure, but reduce individual heist length to 15\u201320 minutes and provide optional difficulty modifiers that scale NPC accuracy and alert response time",
+      "Create an asymmetric system where campaign missions allow mid-mission saves, but heists designated 'legendary' or 'rival faction' disable saves and unlock cosmetic or mechanical rewards (unique weapons, skill multipliers) only on no-save completions"
+    ],
+    "review": "Permitting saves trivializes tension; denying saves frustrates time-poor players\u2014but none of these options addresses how to preserve narrative consequence (character death, faction reputation loss) across restart scenarios without feeling cheap."
+  },
+  {
+    "lever_id": "77eab251-27fc-406d-95bd-280521ef94e3",
+    "name": "Dynamic Law Enforcement Behavior and Player Wanted-Level Design",
+    "consequences": "Implementing adaptive police behavior (different tactics for wanted-level 3 vs. wanted-level 5, regional precinct variation, individual officer personalities) heightens realism and engagement but requires extensive behavior-tree authoring and pathfinding optimization. Static wanted-level mechanics are simpler to QA but feel predictable and disconnect from GTA's world immersion.",
+    "options": [
+      "Design adaptive police responses where lower wanted levels trigger patrol interception with negotiation attempts, mid levels dispatch tactical teams with aggressive positioning, and high levels activate military assets\u2014each tier requiring distinct AI threat-modeling and escape strategies",
+      "Anchor police behavior to regional reputation: precincts where the player has performed heroic acts deploy cautiously, while territories controlled by hostile factions send overwhelming force regardless of wanted level, making player choices about ally cultivation strategically meaningful",
+      "Implement a wanted-decay system coupled with police forgetting, where officers only recognize the player if they had direct line-of-sight contact during the crime; wanted level persists but affects radio dispatch urgency rather than automatic engagement, rewarding stealth and misdirection"
+    ],
+    "review": "Adaptive police create memorable encounters but risk overwhelming the player with information and too many viable escape routes, diluting consequence\u2014and none of these options resolve whether police should predict player movement patterns or remain purely reactive."
+  },
+  {
+    "lever_id": "43e2f07c-9eb0-4dab-8989-5daeda3ff931",
+    "name": "Customization Depth and Content Authorization Governance",
+    "consequences": "Deep vehicle and weapon customization (engine tuning, paint mixing, ballistics calibration, part degradation) creates emergent loadout metagames and long-term progression but requires parametric validation across thousands of combinations. Shallow customization (cosmetic skins, attachment presets) ships faster but feels superficial compared to player expectations for franchise identity.",
+    "options": [
+      "Adopt a modular customization system where players combine pre-validated cosmetic layers and mechanical presets (engine types, suspension profiles, weapon scopes) without access to underlying parameters, allowing rapid content addition via designer-approved component libraries",
+      "Enable granular parameter tuning for hardcore players through an unlocked 'tuning workshop' mode that allows engine displacement, gear ratios, and ballistic properties adjustment, requiring each modification to pass automated balance-check scripts before application in multiplayer or competitive modes",
+      "Create a bifurcated system: single-player campaign allows unrestricted customization with no validation, while online modes (multiplayer, heists with matchmade crews) whitelist only pre-approved builds, preventing exploits but accepting that single-player balance integrity is secondary"
+    ],
+    "review": "Deep customization delays launch and multiplayer balance; shallow customization loses player investment\u2014the options do not address how to prevent dominant exploitative builds from emerging in online spaces without frustrating legitimate experimentation."
+  },
+  {
+    "lever_id": "40776f63-ec7f-40b5-b3b2-ed862fea6dce",
+    "name": "Faction Reputation Systems and Rival-Path Exclusivity",
+    "consequences": "Allowing players to build reputation across opposing factions (Mafia, Cartel, Street gangs, Corporate syndicates) expands replayability but forces branching content, duplicate heists, and faction-specific world states that multiply QA and art asset costs. Conversely, locking players into a single faction path streamlines content but reduces emergent alliance options and player agency.",
+    "options": [
+      "Implement a mutual-exclusivity system where joining one faction (via a scripted point-of-no-return mission) locks the player out of rival factions' mission lines, discounts, and safe houses, forcing distinct playthroughs but containing content sprawl to three manageable faction paths",
+      "Create a reputation-decay model where maintaining standing with multiple factions simultaneously costs increasing amounts of in-game currency and time (attending faction events, performing minor missions), making genuine multi-faction play viable but increasingly resource-intensive as more factions are courted",
+      "Design faction relationships as a spectrum rather than binary: players accrue faction-specific reputation through deeds, and each faction offers rewards and missions proportional to current standing, but defecting or betraying a faction does not erase reputation history\u2014it creates vendetta missions and permanent discounts revoked, encoding long-term consequences"
+    ],
+    "review": "Exclusivity simplifies content but eliminates player agency; open standing complicates QA\u2014yet none of these options address how to make rival-faction conflict feel organic when both factions operate in the same city without constant player intervention orchestrating their clashes."
+  },
+  {
+    "lever_id": "c773558a-accc-48bd-ae69-ec360824d7e2",
+    "name": "Dialogue Branching Depth and Narrative Coherence Maintenance",
+    "consequences": "Extensive branching dialogue trees (morality choices, flirtation options, street-level slang variations) deepen player immersion and character relationships but exponentially expand voice acting, animation, and storyline tracking costs. Minimalist branching preserves narrative linearity and simplifies production but reduces player expression and feels constraining.",
+    "options": [
+      "Implement lightweight branching confined to player demeanor (aggressive, charismatic, cautious tones during mandatory plot conversations) without forking the actual story outcome; all paths converge to identical heist setups and character arcs, preserving narrative control while allowing vocal personality expression",
+      "Adopt full branching for early-game and faction-recruitment missions where outcomes genuinely diverge (different heist prerequisites, crew compositions, enemy dispositions), but lock major story beats (final confrontation, ending cinematics) into a linear sequence reachable by all playthroughs, balancing replayability with coherent authorial vision",
+      "Create a dialogue-consequence system where player conversational choices affect NPC trust and favor (opening or closing future opportunities) without branching the primary narrative spine; choices echo in subtle ways (NPC dialogue callbacks, shifted mission difficulty, optional side-paths unlocked) rather than generating entirely separate story chapters"
+    ],
+    "review": "Full branching maximizes player agency but risks narrative incoherence and voice-acting overruns; linearity preserves story but feels rigid\u2014the options do not resolve tension between honoring all player dialogue choices as mechanically meaningful versus accepting that some choices are purely flavor."
+  },
+  {
+    "lever_id": "a9e517eb-d65c-4e4b-b236-251d49b2087e",
+    "name": "Post-Launch Content Velocity and Live-Service Commitment Cadence",
+    "consequences": "Committing to aggressive post-launch content (heist drops every 8 weeks, seasonal battle-pass rotations, limited-time events) sustains player engagement and recurring revenue but demands sustained staffing post-launch and risks team burnout or quality degradation. Lighter post-launch support (annual expansions, occasional cosmetics) reduces long-term overhead but risks player attrition and competitive disadvantage against live-service competitors.",
+    "options": [
+      "Establish a seasonal model with major heist content releases every 12 weeks coupled with monthly cosmetic drops and weekly limited-time events, backed by a dedicated live-ops team of 15\u201320 staff hired specifically for post-launch support, with explicit staffing sunsetting 3 years after launch",
+      "Deploy a hybrid cadence where the first year post-launch receives intensive content (8-week heist cycles, weekly challenges), the second year transitions to every-3-months heist releases and bi-weekly cosmetics, and year 3 onwards shifts to annual expansions and community-driven event voting, gradually reducing core team dependency",
+      "Frontload all major heists and content into a deluxe expansion release 18 months post-launch (priced as a stand-alone purchase), freeing the core team to scale down, while seasonal cosmetics and battle-pass revenue provide ongoing support with a minimal skeleton crew, accepting that content velocity drops after expansion but maintaining financial sustainability"
+    ],
+    "review": "Aggressive cadences retain players but require permanent infrastructure; light support minimizes overhead but risks obsolescence\u2014none of these options address how to prevent live-service obligations from creeping scope back into the development pipeline and destabilizing the original launch schedule."
+  },
+  {
+    "lever_id": "73572d90-56f3-4d9f-8a8f-e3eea6f3c9f2",
+    "name": "City Personality Fusion versus Thematic Segregation",
+    "consequences": "Blending Los Angeles, Detroit, and Miami into a single metropolis creates visual and cultural richness but risks narrative confusion if players cannot distinguish district identity or if competing crime ecosystems (LA gang turf, Detroit industrial decay, Miami cocaine networks) demand incompatible NPC faction structures. The cost lies in additional world-building overhead and complexity in mission logic that must account for locale-specific consequences.",
+    "options": [
+      "Design each city's skyline, architecture, and economic base as distinct visual zones with shared underlying game systems, allowing players to recognize locale instantly while using a unified NPC faction engine across all three regions",
+      "Physically partition the map into three isolated city-states with independent faction trees, law-enforcement behaviors, and mission chains, requiring players to travel between them as separate narrative acts rather than a continuous metropolis",
+      "Create a single unified city that superficially blends all three influences into a fictional fourth metropolis, abandoning explicit Los Angeles-Detroit-Miami references and instead building a cohesive alternative-reality geography that avoids comparison pressure"
+    ],
+    "review": "Unified systems reduce authoring overhead but force faction narratives to work everywhere, whereas isolated city-states allow thematic purity but fragment player navigation and reduce emergent cross-district stories the three-option set does not address."
+  },
+  {
+    "lever_id": "0a2f42d0-c782-4a8e-a566-f5b3f17eb3db",
+    "name": "Vehicle Customization Depth and Physics Simulation Parity",
+    "consequences": "Deep customization (engine tuning, suspension geometry, weight distribution, aerodynamic mods) raises player agency and replayability but requires physics simulation to respond proportionally to each modification. A shallow customization system (cosmetics only) reduces physics burden but disappoints players expecting mechanical authenticity. Misalignment between customization claims and physics behavior erodes immersion in high-stakes driving sequences.",
+    "options": [
+      "Implement full mechanical customization with physics simulation that recalculates vehicle handling for each engine, suspension, and weight modification, requiring extensive physics testing per combination but delivering authentic emergent driving feel",
+      "Offer cosmetic-only customization (paint, wheels, body kits) paired with discrete performance tiers (economy, street, sport, race) that simplify physics authoring while preserving visual personalization and hidden performance progression",
+      "Decouple customization UI from physics entirely by offering visual mod options that players believe affect performance but whose true impact is gated behind preset tuning profiles, allowing cosmetic freedom without simulation complexity"
+    ],
+    "review": "Deep customization demands physics validation across hundreds of configurations, cosmetics alone feel hollow to players, and decoupling creates long-term credibility risk\u2014none of the three options simultaneously deliver mechanical authenticity and scalable authoring."
+  },
+  {
+    "lever_id": "d0c68dfe-9429-49cf-88ae-fba086478a79",
+    "name": "Procedural Crime-Economy Volatility and Mission Coherence",
+    "consequences": "Procedurally generated crime markets (drug prices, fence rates, gang territory ownership) create emergent economic gameplay but risk making story-critical missions feel disconnected from world economics (a narrative heist may reference a cartel's dominance, but procedural shifts could flip that overnight). Locking the economy to story beats removes volatility. The trade-off is between dynamic world-building and narrative predictability.",
+    "options": [
+      "Run procedural economic generation only in faction-controlled territories outside the main story arc, freezing prices and territorial control during story missions so narrative beats remain stable while free-roam crime economy remains dynamic",
+      "Seed the procedural economy with story-checkpoint locks that reset certain variables (cartel pricing, warehouse ownership) at major mission completions, allowing gradual economic drift between story acts while preventing contradictions within narrative chapters",
+      "Divorce crime economy from mission outcomes entirely by making story missions purely reputation-based (completing a heist raises your standing with a faction) and keeping procedural economy as an optional money-farming system with no narrative consequence"
+    ],
+    "review": "Procedural economy enriches sandbox play but complicates cutscene coherence, checkpoints reduce emergence, and divorce risks economy feeling like busywork\u2014the options do not address how to communicate economy state to the player so they understand why a mission prerequisite changes between sessions."
+  },
+  {
+    "lever_id": "c72e6fbc-99f9-419f-9d02-a8b7282ef0ca",
+    "name": "Heist Authoring Bottleneck and Replayability Scaling",
+    "consequences": "Complex heist mechanics (multiple entry routes, dynamic guard responses, state-dependent objectives) deliver emergent replays but require 3\u20136 months of scripting and testing per heist sequence. A scripted-only approach (linear paths, AI on tracks) reduces authoring time to 4\u20138 weeks per heist but limits replayability and player agency. The bottleneck directly constrains total heist count and live-service content velocity.",
+    "options": [
+      "Establish a modular heist framework with parametric guard spawning, interchangeable objective sets, and pre-built spatial variations (rooftop vs. ground-level approaches) that allow designers to assemble new heists in 6\u20138 weeks instead of building from scratch, trading some emergent surprise for authoring predictability",
+      "Design 8\u201310 premium hand-crafted heists with deep branching (scripted and systemic elements) as narrative anchors, then populate free-roam with simplified randomized heist variants (quick bank jobs, armored-car robberies) that reuse core mechanics but do not attempt full authoring parity",
+      "Commission external studios in lower-cost regions (Eastern Europe, Southeast Asia) to author heist variants and free-roam crime content in parallel with main-studio narrative work, compressing overall timeline but introducing cross-studio quality review and communication overhead"
+    ],
+    "review": "Modularity accelerates volume but commodifies heists into recognizable patterns, hand-crafted quality scales poorly, and outsourcing distributes control\u2014none simultaneously deliver fast authoring, perceived uniqueness per heist, and unified artistic vision."
+  },
+  {
+    "lever_id": "6f7c1a89-32ab-4681-8d0f-59c6c0343849",
+    "name": "First-Person and Third-Person Camera Perspectives Integration",
+    "consequences": "Supporting both first-person (FP) and third-person (TP) cameras doubles animation authoring (every combat, driving, and interaction animation must work in both view modes), complicates UI layout, and creates balance asymmetries (FP aiming is harder, TP offers spatial awareness). Choosing one view locks design philosophy. Hybrid approaches (FP for specific actions only) reduce animation duplication but create transition friction.",
+    "options": [
+      "Commit to third-person as the primary camera with optional first-person toggle only for vehicle interiors and mounted weapons, accepting that most cutscenes and fine-motor interactions remain TP-only, reducing animation overhead while preserving player-camera familiarity from previous GTA titles",
+      "Engineer full parity by increasing animation production capacity (hire mocap specialists, outsource upper-body and facial animations) so both FP and TP animations exist for every interaction, accepting the 40\u201350% increase in animation timeline and monthly outsourcing costs",
+      "Implement first-person as the canonical view with third-person available only in menus and cinematic moments, aligning with recent industry trends toward immersion and requiring rebalancing of player feedback (minimap importance, spatial awareness cues) that TP players take for granted"
+    ],
+    "review": "FP parity demands significant animation overhead, TP-only limits immersion perception, and hybrid modes create jarring camera transitions\u2014the options do not address whether player preference varies by playstyle, leaving potential mid-project pivots unresolved."
+  },
+  {
+    "lever_id": "994f7a1d-009a-45bb-9deb-74569ffce101",
+    "name": "Law-Enforcement Perception and Wanted-Level Granularity",
+    "consequences": "A granular wanted system (heat level 0\u20135, with faction-specific recognitions, heat decay rates, and cooperative jurisdiction shifts) creates immersive police gameplay but requires continuous state tracking across multiple NPC behavior trees and mission scripts, increasing bugs and save-state complexity. A binary system (wanted or not) simplifies logic but strips tactical depth. Partial systems (zones-based heat) reduce state explosion but create counterintuitive jurisdiction edges.",
+    "options": [
+      "Design a five-tier wanted system with separate heat tracks per law-enforcement faction (police, SWAT, National Guard equivalent) that independently rise, decay, and trigger escalation, implemented as modular state machines that decouple faction behaviors so one faction's bugged pathing does not corrupt another's awareness logic",
+      "Implement a single unified heat meter (0\u2013100) that drives increasingly aggressive police spawning and behavior templates without faction differentiation, simplifying state management and debugging while allowing cosmetic visual diversity in uniform types and vehicle models",
+      "Create a zone-based wanted system where each district tracks independent heat that only affects law enforcement within that zone, with heat decay when the player leaves the zone, eliminating open-world state tracking and allowing players to exploit zone boundaries tactically"
+    ],
+    "review": "Faction-specific tracking adds roleplay depth but multiplies state complexity, unified meter simplifies code but feels generic, and zone-based systems reduce cross-district coherence\u2014none explain how a player evades wanted pursuit across zone boundaries without exploiting mechanics."
+  },
+  {
+    "lever_id": "ddc6f0ea-42f4-4f1a-af0e-abc8a6600d5c",
+    "name": "Post-Launch Content Roadmap and Studio Sustainability",
+    "consequences": "A aggressive content roadmap (new heists, vehicles, story DLC every 6\u20138 weeks) demands permanent post-launch staffing of 40\u201360 people, sustaining high monthly burn even if live-service revenue plateaus. A minimal roadmap (bug fixes, balance patches, cosmetics quarterly) allows staff reduction post-launch but risks player engagement drop and competitor encroachment. Roadmap scope directly binds financial planning and studio headcount retention.",
+    "options": [
+      "Commit to a 24-month premium content roadmap with guaranteed monthly releases, hiring full-time live-service staff and securing three years of funding via publisher backend deal (revenue share on live-service monetization), accepting financial risk if player retention underperforms",
+      "Plan content in quarterly bundles with 8\u201312 week development and release cycles, keeping a smaller sustainable team (20\u201330 people) and funding live service through cosmetic battle pass sales only, allowing post-launch staffing cuts if engagement drops below thresholds",
+      "Structure the roadmap as optional paid expansions ($15\u201330 each) released every 6 months rather than free live content, reducing ongoing obligation to players and allowing original team to scale down post-launch while external contractors author DLC on variable-cost basis"
+    ],
+    "review": "Monthly commitment ensures engagement but locks high fixed costs; quarterly bundles improve sustainability but risk perception of slower support; paid DLC model protects budget but fragments player community\u2014the options do not address how to retain core audience excitement across a funding pause or pivot without live-service revenue."
+  }
+]
