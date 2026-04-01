@@ -1,0 +1,3 @@
+This plan requires one or more physical locations. It cannot be executed digitally.
+
+**Explanation:** This plan *unequivocally requires* physical locations for filming in Hong Kong, physical actors, physical equipment, and a physical film crew. The entire premise revolves around a physical production and distribution process. The plan explicitly mentions location scouting, set design, and on-location shooting. Therefore, it is classified as physical.

@@ -1,0 +1,3 @@
+This plan requires one or more physical locations. It cannot be executed digitally.
+
+**Explanation:** Constructing a massive underground complex *unequivocally requires* extensive physical labor, heavy machinery, material sourcing, and on-site construction. The plan *inherently involves* a physical location and physical resources. The scale of the project, including residential areas, agricultural zones, and industrial facilities, further reinforces its physical nature.
