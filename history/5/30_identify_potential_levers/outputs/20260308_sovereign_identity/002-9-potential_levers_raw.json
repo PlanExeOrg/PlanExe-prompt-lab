@@ -1,0 +1,302 @@
+{
+  "responses": [
+    {
+      "strategic_rationale": "This project aims to reduce Denmark's reliance on foreign tech suppliers for its digital identity infrastructure. The core tension lies in balancing convenience and security with digital sovereignty and resilience. The chosen levers address this by focusing on procurement intervention, standards pressure, and technical demonstration to influence AltID and related policies. These levers navigate the conflict between maintaining the status quo (convenience) and ensuring a robust, platform-neutral fallback authentication path (security, sovereignty, resilience).",
+      "levers": [
+        {
+          "lever_index": 1,
+          "name": "Procurement Language Specificity",
+          "consequences": "Specifying detailed requirements in procurement documents can steer vendor selection and system design. However, overly prescriptive language may stifle innovation or exclude potentially viable solutions, while vague language may be ignored. The level of detail must balance guidance with flexibility.",
+          "options": [
+            "Embed specific technical standards and fallback mechanisms directly into AltID procurement requirements, mandating compliance with platform-neutral protocols like FIDO2 and OpenID Connect.",
+            "Define functional requirements for platform neutrality and fallback authentication without specifying particular technologies, allowing vendors to propose diverse solutions that meet the desired outcomes.",
+            "Prioritize supplier diversity and resilience in the evaluation criteria for AltID bids, awarding points for proposals that demonstrate reduced dependence on single platform vendors and robust fallback capabilities."
+          ],
+          "review_lever": "These options do not address the risk that even well-crafted procurement language can be circumvented or re-interpreted during the implementation phase, especially if incumbent vendors resist change."
+        },
+        {
+          "lever_index": 2,
+          "name": "Technical Demonstrator Scope",
+          "consequences": "The scope of the technical demonstrators determines their credibility and impact. A narrow scope allows for deeper technical validation but may be perceived as lacking real-world relevance. A broader scope increases perceived relevance but risks diluting technical rigor and exceeding available resources.",
+          "options": [
+            "Focus the demonstrators on a minimal viable authentication flow using open standards on GrapheneOS, prioritizing security and platform neutrality over feature completeness.",
+            "Extend the demonstrators to include integration with a simulated Danish public-sector service, showcasing the feasibility of platform-neutral authentication in a realistic use case.",
+            "Develop a hardware-token-based fallback demonstrator that supports multiple authentication protocols and device types, providing a versatile alternative to mobile-centric approaches."
+          ],
+          "review_lever": "These options do not fully address the challenge of translating demonstrator success into real-world adoption, given the inertia of existing systems and the potential for vendor lock-in."
+        },
+        {
+          "lever_index": 3,
+          "name": "EU Standards Engagement",
+          "consequences": "Engaging with EU standards bodies can amplify the project's influence and align Danish policy with broader European initiatives. However, EU-level engagement requires significant time and resources, and the impact on Danish policy may be indirect or delayed. The project must balance national advocacy with European collaboration.",
+          "options": [
+            "Prioritize direct engagement with relevant EU technical working groups to advocate for platform-neutrality and fallback mechanisms in the European Digital Identity Wallet framework.",
+            "Focus on building relationships with key EU policymakers and regulators to raise awareness of the risks associated with platform dependence in digital identity systems.",
+            "Collaborate with other European research institutions and civil-society organizations to develop a unified advocacy strategy for platform-neutral digital identity."
+          ],
+          "review_lever": "These options do not guarantee that EU-level recommendations will be effectively translated into binding regulations or that member states will prioritize platform neutrality in their national implementations."
+        },
+        {
+          "lever_index": 4,
+          "name": "Coalition Breadth",
+          "consequences": "A broad coalition can increase the project's political influence and legitimacy. However, a diverse coalition may be difficult to manage and may dilute the project's message. The project must balance inclusivity with strategic focus.",
+          "options": [
+            "Build a core coalition of civil-society organizations, privacy advocates, and security experts with a shared commitment to platform-neutral digital identity.",
+            "Expand the coalition to include contingency-planning stakeholders, academic researchers, and sympathetic members of Folketinget's digital policy committee, broadening the project's reach and influence.",
+            "Engage with industry representatives and technology vendors to foster dialogue and explore potential solutions for platform-neutral authentication."
+          ],
+          "review_lever": "These options do not address the risk that a broad coalition may fracture or become ineffective if its members have conflicting priorities or competing agendas."
+        },
+        {
+          "lever_index": 5,
+          "name": "Fallback Authentication Modality",
+          "consequences": "The choice of fallback authentication modality impacts user experience, security, and cost. A browser-based fallback may be more accessible but less secure than a hardware-token-based fallback. The project must balance usability with security and cost-effectiveness.",
+          "options": [
+            "Develop a browser-based fallback authentication path using WebAuthn and standard web browsers, minimizing the need for specialized hardware or software.",
+            "Implement a hardware-token-based fallback authentication path that provides strong security and portability, but may require users to purchase and manage physical tokens.",
+            "Explore a hybrid approach that combines browser-based authentication with a one-time password (OTP) delivered via SMS or email as a secondary fallback mechanism."
+          ],
+          "review_lever": "These options do not fully address the challenge of ensuring that the fallback authentication path is as secure and user-friendly as the primary authentication method, preventing user frustration and security vulnerabilities."
+        },
+        {
+          "lever_index": 6,
+          "name": "Institutional Engagement Depth",
+          "consequences": "The depth of engagement with Digitaliseringsstyrelsen and other relevant authorities determines the project's influence on policy and procurement decisions. Deep engagement requires significant time and resources but increases the likelihood of securing formal commitments. Superficial engagement is less resource-intensive but may have limited impact.",
+          "options": [
+            "Establish a formal advisory relationship with Digitaliseringsstyrelsen, providing regular updates on the project's progress and seeking feedback on policy proposals.",
+            "Conduct workshops and presentations for Digitaliseringsstyrelsen and other relevant authorities, showcasing the project's findings and demonstrators.",
+            "Engage in informal consultations with key decision-makers within Digitaliseringsstyrelsen to build relationships and influence policy discussions."
+          ],
+          "review_lever": "These options do not guarantee that Digitaliseringsstyrelsen will adopt the project's recommendations, especially if they conflict with existing policies or vendor relationships."
+        }
+      ]
+    },
+    {
+      "strategic_rationale": "This project aims to reduce Denmark's digital identity dependency on foreign platforms by influencing AltID procurement and standards. The core tension lies between the convenience and established trust of existing platform-dependent solutions (MitID) and the need for resilience, supplier diversity, and platform neutrality. The chosen levers address this by focusing on technical feasibility, policy advocacy, and standards engagement, creating pressure for change without directly disrupting the existing system. Success hinges on translating technical demonstrators and policy proposals into concrete procurement requirements and standards, ensuring a platform-neutral fallback path.",
+      "levers": [
+        {
+          "lever_index": 1,
+          "name": "Trust Framework Diversification",
+          "consequences": "Expanding the trust framework beyond Apple and Google requires integrating alternative identity verification methods. This could increase complexity and initial costs, but it also enhances resilience against platform-specific vulnerabilities and policy changes, while promoting a more competitive market for identity solutions.",
+          "options": [
+            "Prioritize integration of hardware security modules (HSMs) and smart cards as certified authentication factors within the AltID framework, ensuring a tangible, platform-independent root of trust.",
+            "Establish a national certification authority for open-source attestation providers, enabling community-vetted device integrity assessments that bypass proprietary platform APIs.",
+            "Pilot a distributed ledger technology (DLT)-based identity layer that allows users to control their identity data and selectively disclose attributes to service providers, reducing reliance on centralized platform authorities."
+          ],
+          "review_lever": "These options do not address the challenge of user familiarity and acceptance of new authentication methods compared to the convenience of existing platform-mediated solutions."
+        },
+        {
+          "lever_index": 2,
+          "name": "Procurement Evaluation Criteria",
+          "consequences": "Altering procurement criteria to favor platform-neutral solutions can incentivize vendors to develop more diverse offerings. This may initially limit the pool of qualified bidders, but it fosters innovation and reduces long-term dependence on a few dominant suppliers, aligning with Denmark's digital sovereignty goals.",
+          "options": [
+            "Mandate that all digital identity solutions procured by the Danish government must demonstrate interoperability with at least three distinct operating systems and device types, ensuring broad accessibility.",
+            "Assign a significant weighting in the procurement scoring process to solutions that minimize reliance on proprietary platform APIs and offer open-source or royalty-free alternatives.",
+            "Require vendors to provide detailed documentation and training materials that enable Danish developers and integrators to customize and extend the solution without vendor lock-in."
+          ],
+          "review_lever": "These options do not fully account for the potential for increased upfront costs and complexity in evaluating and managing a more diverse set of solutions."
+        },
+        {
+          "lever_index": 3,
+          "name": "Standards Body Influence",
+          "consequences": "Actively shaping relevant standards can ensure that platform-neutrality and fallback mechanisms are considered essential features. This requires dedicated resources and expertise, but it can create a level playing field for diverse solutions and prevent de facto standardization around proprietary platform technologies.",
+          "options": [
+            "Propose specific extensions to the eIDAS framework that mandate support for platform-neutral authentication methods and certified fallback mechanisms in all qualified digital identity wallets.",
+            "Contribute actively to the development of open standards for secure authentication and identity management within relevant working groups at the IETF, W3C, and ISO.",
+            "Organize a series of workshops and conferences in Copenhagen to promote awareness and adoption of platform-neutral digital identity standards among European policymakers and industry stakeholders."
+          ],
+          "review_lever": "These options do not guarantee that the project's proposals will be adopted or that the resulting standards will be effectively implemented across the EU."
+        },
+        {
+          "lever_index": 4,
+          "name": "Fallback Mechanism Certification",
+          "consequences": "Establishing a certification process for fallback authentication paths ensures a baseline level of security and reliability. This requires defining clear technical and operational requirements, but it provides assurance that alternative access methods are trustworthy and can be relied upon in critical situations.",
+          "options": [
+            "Develop a national certification scheme for hardware-token-based authentication solutions that meet stringent security and usability requirements, ensuring a reliable fallback option.",
+            "Create a sandbox environment for testing and validating browser-based authentication flows that minimize reliance on platform-specific APIs and comply with privacy regulations.",
+            "Establish a formal process for accrediting organizations that provide fallback authentication services, ensuring they adhere to defined security protocols and operational best practices."
+          ],
+          "review_lever": "These options do not address the potential for higher costs and complexity associated with maintaining and auditing a separate certification process."
+        },
+        {
+          "lever_index": 5,
+          "name": "Public Awareness Campaign",
+          "consequences": "Educating the public about the risks of platform dependence and the benefits of platform-neutral alternatives can increase demand for more diverse solutions. This requires clear and accessible communication, but it can create a more informed and engaged citizenry that supports policies promoting digital sovereignty.",
+          "options": [
+            "Launch a national public awareness campaign highlighting the importance of digital sovereignty and the risks of relying on a small number of foreign technology suppliers for essential services.",
+            "Develop educational materials and training programs for citizens on how to use platform-neutral authentication methods and protect their digital identities.",
+            "Partner with civil-society organizations and media outlets to promote informed discussions about digital identity and the need for greater resilience and supplier diversity."
+          ],
+          "review_lever": "These options do not guarantee that the public will prioritize digital sovereignty and resilience over convenience and familiarity with existing platform-dependent solutions."
+        },
+        {
+          "lever_index": 6,
+          "name": "Legislative Mandate Scope",
+          "consequences": "Enacting legislation that mandates platform-neutrality and fallback access for critical public services can create a strong legal foundation for change. This requires political will and careful drafting, but it can ensure that these principles are embedded in the long-term digital identity strategy.",
+          "options": [
+            "Introduce legislation requiring all Danish public-sector digital identity systems to support platform-neutral authentication methods and certified fallback mechanisms.",
+            "Amend existing procurement laws to prioritize solutions that minimize reliance on proprietary platform APIs and promote supplier diversity.",
+            "Establish a parliamentary committee to oversee the implementation of platform-neutral digital identity policies and ensure accountability."
+          ],
+          "review_lever": "These options do not account for the potential for legislative delays, political opposition, or unintended consequences of overly prescriptive regulations."
+        }
+      ]
+    }
+  ],
+  "levers": [
+    {
+      "lever_id": "6f6f0281-fc89-4210-8dec-620f0a2d268a",
+      "name": "Procurement Language Specificity",
+      "consequences": "Specifying detailed requirements in procurement documents can steer vendor selection and system design. However, overly prescriptive language may stifle innovation or exclude potentially viable solutions, while vague language may be ignored. The level of detail must balance guidance with flexibility.",
+      "options": [
+        "Embed specific technical standards and fallback mechanisms directly into AltID procurement requirements, mandating compliance with platform-neutral protocols like FIDO2 and OpenID Connect.",
+        "Define functional requirements for platform neutrality and fallback authentication without specifying particular technologies, allowing vendors to propose diverse solutions that meet the desired outcomes.",
+        "Prioritize supplier diversity and resilience in the evaluation criteria for AltID bids, awarding points for proposals that demonstrate reduced dependence on single platform vendors and robust fallback capabilities."
+      ],
+      "review": "These options do not address the risk that even well-crafted procurement language can be circumvented or re-interpreted during the implementation phase, especially if incumbent vendors resist change."
+    },
+    {
+      "lever_id": "a7edfbc6-734f-40f7-8541-be7fbf5481e4",
+      "name": "Technical Demonstrator Scope",
+      "consequences": "The scope of the technical demonstrators determines their credibility and impact. A narrow scope allows for deeper technical validation but may be perceived as lacking real-world relevance. A broader scope increases perceived relevance but risks diluting technical rigor and exceeding available resources.",
+      "options": [
+        "Focus the demonstrators on a minimal viable authentication flow using open standards on GrapheneOS, prioritizing security and platform neutrality over feature completeness.",
+        "Extend the demonstrators to include integration with a simulated Danish public-sector service, showcasing the feasibility of platform-neutral authentication in a realistic use case.",
+        "Develop a hardware-token-based fallback demonstrator that supports multiple authentication protocols and device types, providing a versatile alternative to mobile-centric approaches."
+      ],
+      "review": "These options do not fully address the challenge of translating demonstrator success into real-world adoption, given the inertia of existing systems and the potential for vendor lock-in."
+    },
+    {
+      "lever_id": "fa763b17-928e-4eaf-a1de-4ae1ce38caa5",
+      "name": "EU Standards Engagement",
+      "consequences": "Engaging with EU standards bodies can amplify the project's influence and align Danish policy with broader European initiatives. However, EU-level engagement requires significant time and resources, and the impact on Danish policy may be indirect or delayed. The project must balance national advocacy with European collaboration.",
+      "options": [
+        "Prioritize direct engagement with relevant EU technical working groups to advocate for platform-neutrality and fallback mechanisms in the European Digital Identity Wallet framework.",
+        "Focus on building relationships with key EU policymakers and regulators to raise awareness of the risks associated with platform dependence in digital identity systems.",
+        "Collaborate with other European research institutions and civil-society organizations to develop a unified advocacy strategy for platform-neutral digital identity."
+      ],
+      "review": "These options do not guarantee that EU-level recommendations will be effectively translated into binding regulations or that member states will prioritize platform neutrality in their national implementations."
+    },
+    {
+      "lever_id": "64e7fd3f-ae6f-416a-ae34-5562f2f83884",
+      "name": "Coalition Breadth",
+      "consequences": "A broad coalition can increase the project's political influence and legitimacy. However, a diverse coalition may be difficult to manage and may dilute the project's message. The project must balance inclusivity with strategic focus.",
+      "options": [
+        "Build a core coalition of civil-society organizations, privacy advocates, and security experts with a shared commitment to platform-neutral digital identity.",
+        "Expand the coalition to include contingency-planning stakeholders, academic researchers, and sympathetic members of Folketinget's digital policy committee, broadening the project's reach and influence.",
+        "Engage with industry representatives and technology vendors to foster dialogue and explore potential solutions for platform-neutral authentication."
+      ],
+      "review": "These options do not address the risk that a broad coalition may fracture or become ineffective if its members have conflicting priorities or competing agendas."
+    },
+    {
+      "lever_id": "b76cefa3-a90c-4b68-ac91-51090145c8a8",
+      "name": "Fallback Authentication Modality",
+      "consequences": "The choice of fallback authentication modality impacts user experience, security, and cost. A browser-based fallback may be more accessible but less secure than a hardware-token-based fallback. The project must balance usability with security and cost-effectiveness.",
+      "options": [
+        "Develop a browser-based fallback authentication path using WebAuthn and standard web browsers, minimizing the need for specialized hardware or software.",
+        "Implement a hardware-token-based fallback authentication path that provides strong security and portability, but may require users to purchase and manage physical tokens.",
+        "Explore a hybrid approach that combines browser-based authentication with a one-time password (OTP) delivered via SMS or email as a secondary fallback mechanism."
+      ],
+      "review": "These options do not fully address the challenge of ensuring that the fallback authentication path is as secure and user-friendly as the primary authentication method, preventing user frustration and security vulnerabilities."
+    },
+    {
+      "lever_id": "0e46c64a-e584-44a0-b2c2-ab36451dbcd2",
+      "name": "Institutional Engagement Depth",
+      "consequences": "The depth of engagement with Digitaliseringsstyrelsen and other relevant authorities determines the project's influence on policy and procurement decisions. Deep engagement requires significant time and resources but increases the likelihood of securing formal commitments. Superficial engagement is less resource-intensive but may have limited impact.",
+      "options": [
+        "Establish a formal advisory relationship with Digitaliseringsstyrelsen, providing regular updates on the project's progress and seeking feedback on policy proposals.",
+        "Conduct workshops and presentations for Digitaliseringsstyrelsen and other relevant authorities, showcasing the project's findings and demonstrators.",
+        "Engage in informal consultations with key decision-makers within Digitaliseringsstyrelsen to build relationships and influence policy discussions."
+      ],
+      "review": "These options do not guarantee that Digitaliseringsstyrelsen will adopt the project's recommendations, especially if they conflict with existing policies or vendor relationships."
+    },
+    {
+      "lever_id": "99035db1-0b11-467c-a8fc-a7dde34b18c3",
+      "name": "Trust Framework Diversification",
+      "consequences": "Expanding the trust framework beyond Apple and Google requires integrating alternative identity verification methods. This could increase complexity and initial costs, but it also enhances resilience against platform-specific vulnerabilities and policy changes, while promoting a more competitive market for identity solutions.",
+      "options": [
+        "Prioritize integration of hardware security modules (HSMs) and smart cards as certified authentication factors within the AltID framework, ensuring a tangible, platform-independent root of trust.",
+        "Establish a national certification authority for open-source attestation providers, enabling community-vetted device integrity assessments that bypass proprietary platform APIs.",
+        "Pilot a distributed ledger technology (DLT)-based identity layer that allows users to control their identity data and selectively disclose attributes to service providers, reducing reliance on centralized platform authorities."
+      ],
+      "review": "These options do not address the challenge of user familiarity and acceptance of new authentication methods compared to the convenience of existing platform-mediated solutions."
+    },
+    {
+      "lever_id": "00a06b27-015c-48f6-a735-1bf535bc1a80",
+      "name": "Procurement Evaluation Criteria",
+      "consequences": "Altering procurement criteria to favor platform-neutral solutions can incentivize vendors to develop more diverse offerings. This may initially limit the pool of qualified bidders, but it fosters innovation and reduces long-term dependence on a few dominant suppliers, aligning with Denmark's digital sovereignty goals.",
+      "options": [
+        "Mandate that all digital identity solutions procured by the Danish government must demonstrate interoperability with at least three distinct operating systems and device types, ensuring broad accessibility.",
+        "Assign a significant weighting in the procurement scoring process to solutions that minimize reliance on proprietary platform APIs and offer open-source or royalty-free alternatives.",
+        "Require vendors to provide detailed documentation and training materials that enable Danish developers and integrators to customize and extend the solution without vendor lock-in."
+      ],
+      "review": "These options do not fully account for the potential for increased upfront costs and complexity in evaluating and managing a more diverse set of solutions."
+    },
+    {
+      "lever_id": "fd78dd23-af0f-4be7-9732-56cbc4d69f4f",
+      "name": "Standards Body Influence",
+      "consequences": "Actively shaping relevant standards can ensure that platform-neutrality and fallback mechanisms are considered essential features. This requires dedicated resources and expertise, but it can create a level playing field for diverse solutions and prevent de facto standardization around proprietary platform technologies.",
+      "options": [
+        "Propose specific extensions to the eIDAS framework that mandate support for platform-neutral authentication methods and certified fallback mechanisms in all qualified digital identity wallets.",
+        "Contribute actively to the development of open standards for secure authentication and identity management within relevant working groups at the IETF, W3C, and ISO.",
+        "Organize a series of workshops and conferences in Copenhagen to promote awareness and adoption of platform-neutral digital identity standards among European policymakers and industry stakeholders."
+      ],
+      "review": "These options do not guarantee that the project's proposals will be adopted or that the resulting standards will be effectively implemented across the EU."
+    },
+    {
+      "lever_id": "9dd0df83-f18a-49de-b246-e4ac2086ca9c",
+      "name": "Fallback Mechanism Certification",
+      "consequences": "Establishing a certification process for fallback authentication paths ensures a baseline level of security and reliability. This requires defining clear technical and operational requirements, but it provides assurance that alternative access methods are trustworthy and can be relied upon in critical situations.",
+      "options": [
+        "Develop a national certification scheme for hardware-token-based authentication solutions that meet stringent security and usability requirements, ensuring a reliable fallback option.",
+        "Create a sandbox environment for testing and validating browser-based authentication flows that minimize reliance on platform-specific APIs and comply with privacy regulations.",
+        "Establish a formal process for accrediting organizations that provide fallback authentication services, ensuring they adhere to defined security protocols and operational best practices."
+      ],
+      "review": "These options do not address the potential for higher costs and complexity associated with maintaining and auditing a separate certification process."
+    },
+    {
+      "lever_id": "179c3ad7-8fad-4708-b805-c5f947d057a3",
+      "name": "Public Awareness Campaign",
+      "consequences": "Educating the public about the risks of platform dependence and the benefits of platform-neutral alternatives can increase demand for more diverse solutions. This requires clear and accessible communication, but it can create a more informed and engaged citizenry that supports policies promoting digital sovereignty.",
+      "options": [
+        "Launch a national public awareness campaign highlighting the importance of digital sovereignty and the risks of relying on a small number of foreign technology suppliers for essential services.",
+        "Develop educational materials and training programs for citizens on how to use platform-neutral authentication methods and protect their digital identities.",
+        "Partner with civil-society organizations and media outlets to promote informed discussions about digital identity and the need for greater resilience and supplier diversity."
+      ],
+      "review": "These options do not guarantee that the public will prioritize digital sovereignty and resilience over convenience and familiarity with existing platform-dependent solutions."
+    },
+    {
+      "lever_id": "ebb639f7-3a15-4ced-a9aa-27a494fb5c2d",
+      "name": "Legislative Mandate Scope",
+      "consequences": "Enacting legislation that mandates platform-neutrality and fallback access for critical public services can create a strong legal foundation for change. This requires political will and careful drafting, but it can ensure that these principles are embedded in the long-term digital identity strategy.",
+      "options": [
+        "Introduce legislation requiring all Danish public-sector digital identity systems to support platform-neutral authentication methods and certified fallback mechanisms.",
+        "Amend existing procurement laws to prioritize solutions that minimize reliance on proprietary platform APIs and promote supplier diversity.",
+        "Establish a parliamentary committee to oversee the implementation of platform-neutral digital identity policies and ensure accountability."
+      ],
+      "review": "These options do not account for the potential for legislative delays, political opposition, or unintended consequences of overly prescriptive regulations."
+    }
+  ],
+  "metadata": {
+    "metadata_1": {
+      "context_window": 1048576,
+      "num_output": 8192,
+      "is_chat_model": true,
+      "is_function_calling_model": false,
+      "model_name": "google/gemini-2.0-flash-001",
+      "system_role": "system",
+      "llm_classname": "OpenRouter_LLM"
+    },
+    "metadata_2": {
+      "context_window": 1048576,
+      "num_output": 8192,
+      "is_chat_model": true,
+      "is_function_calling_model": false,
+      "model_name": "google/gemini-2.0-flash-001",
+      "system_role": "system",
+      "llm_classname": "OpenRouter_LLM"
+    }
+  },
+  "system_prompt": "You are an expert strategic analyst. Generate solution space parameters following these directives:\n\n1. **Output Requirements**\n   - You must generate 5 to 7 levers per response.\n   - Each lever's `options` field must contain exactly 3 qualitative strategic choices as plain strings.\n\n2. **Lever Quality Standards**\n   - Consequences: describe the direct effect of pulling this lever, then at least one downstream implication or trade-off. Use numbers only when the project context provides them directly \u2014 do not calculate, derive, or estimate figures. Target length: 2\u20133 sentences.\n   - Options MUST:\n     \u2022 Represent genuinely distinct strategic pathways (not just labels)\n     \u2022 Include at least one unconventional or non-obvious approach\n     \u2022 NO prefixes (e.g., \"Option A:\", \"Choice 1:\")\n\n3. **Strategic Framing**\n   - Name each lever using language drawn directly from the project's own domain \u2014 avoid formulaic patterns or repeated prefixes\n   - Frame options as complete strategic approaches\n   - Ensure levers challenge core project assumptions\n\n4. **Validation Protocols**\n   - For `review_lever`:\n     One sentence identifying the key risk or constraint that the proposed options collectively do not resolve.\n     Examples:\n     - \"Switching from seasonal contract labor to year-round employees stabilizes harvest quality, but the idle-wage burden during the 5-month off-season adds a fixed cost that erases the per-unit savings unless utilization reaches year-round levels.\"\n     - \"Each additional clinical site requires its own IRB approval, site-initiation visit, and staff credentialing \u2014 a sequential overhead that compounds rather than parallelizes, so doubling site count does not halve enrollment time.\"\n     - \"Pooling catastrophe risk across three coastal regions reduces expected annual loss on paper, but a single regional hurricane season can correlate all three simultaneously, turning the diversification assumption into a concentration risk at the worst possible moment.\"\n     Do not use square brackets or placeholder text.\n\n5. **Prohibitions**\n   - NO prefixes/labels in options (e.g., \"Option A:\", \"Choice 1:\")\n   - NO generic option labels (e.g., \"Optimize X\", \"Tolerate Y\")\n   - NO placeholder consequences or bracket-wrapped templates\n   - NO calculated, derived, or estimated figures \u2014 use only numbers that appear verbatim in the project context\n   - NO marketing language (e.g., \"game-changing\", \"cutting-edge\", \"revolutionary\")\n\n6. **Length Limits**\n   - Keep each `review_lever` to one sentence (20\u201340 words). Identify the key unresolved risk concisely.\n   - Each option should be a concrete, actionable approach (at least 15 words with an action verb) \u2014 not a short label or vague aspiration\n   - Maintain parallel grammatical structure across options\n   - Ensure options are self-contained descriptions",
+  "user_prompt": "File 'plan.txt':\nPlan:\nDenmark's national digital identity infrastructure currently depends in practice on Apple iOS and Google Android for broad citizen access to essential services such as banking, tax filing, healthcare portals, and public administration. This dependency is not limited to app-store distribution. MitID's anti-fraud and app-integrity model relies on platform-controlled signals concerning approved installation channels and device integrity, which means that critical parts of the trust model for Danish digital identity are mediated by two foreign commercial platform providers. Even where direct observation of specific authentication events is not publicly documented, the current setup leaves Danish digital identity structurally dependent on platform vendors that control app availability, device trust signals, and surrounding telemetry environments. This creates not only a digital-sovereignty problem, but also a resilience and contingency problem: essential public access depends on a narrow supplier base and lacks a clearly platform-neutral fallback path.\n\nThis matters because Denmark's public-sector digital strategy for 2026\u20132029 explicitly calls for reduced dependence on a small number of large foreign technology suppliers and for stronger digital sovereignty. The issue should therefore not be framed only as privacy or ideology, but as a concrete public-sector risk involving supplier concentration, reduced strategic autonomy, continuity-of-service exposure, and the absence of a robust fallback authentication path if platform policies, integrity APIs, distribution terms, or geopolitical conditions change.\n\nThis project does not attempt to build and certify a production-ready replacement for MitID within the current trust framework. That would be unrealistic. The MitID ecosystem is conservative, certification-heavy, and tightly coupled to Apple/Google platform integrity signals. Instead, the project's objective is to establish the technical, regulatory, and political basis for formal platform-neutral access requirements and a certified fallback authentication path for Danish digital identity. The primary intervention point is not retrofitting MitID itself, but influencing AltID \u2014 Denmark's staged eIDAS2 wallet rollout \u2014 together with related procurement, standards, and continuity-planning decisions before the next identity stack hardens the same dependencies.\n\nThe project is structured in three phases over 24 months with a total budget of 10.5 million DKK, gated across phases (3.0 million for phase one, 4.0 million for phase two, 3.5 million for phase three). The higher budget reflects the need for credible technical work, policy engagement, external review, institutional overhead, and contingency capacity. Do not assume that 8 million DKK is sufficient for the same scope.\n\nPhase one (months 1\u20138) is a feasibility, risk, and coalition-building phase. The technical work maps the relevant MitID dependency surface, especially platform integrity assumptions, app-distribution constraints, and the architectural conditions required for a platform-neutral or fallback trust model under eIDAS and NSIS at level \"Substantial\" or higher. The policy work reframes the issue in terms of resilience, continuity of service, procurement neutrality, and supplier concentration risk, while also addressing privacy and democratic accountability. In parallel, the advocacy work builds a coalition spanning civil-society organisations, privacy advocates, academic researchers, security experts, contingency-planning stakeholders, and sympathetic members of Folketinget's digital policy committee. The deliverables are: (1) a published feasibility and risk report, (2) a formal policy proposal to Digitaliseringsstyrelsen, (3) a fallback-authentication concept note oriented toward AltID and future procurement requirements, and (4) a permit/approval and stakeholder matrix with lead times, decision gates, and identified blockers. Phase one funding is unconditional.\n\nPhase two (months 9\u201316) develops non-production technical demonstrators. These are not certified MitID clients and do not attempt production integration with live MitID systems. The main demonstrator authenticates against a simulated Danish public-sector identity-provider environment using open standards such as FIDO2/WebAuthn and OpenID Connect on GrapheneOS or one comparable privacy-respecting Android-compatible platform. A secondary demonstrator explores a browser-based or hardware-token-based fallback authentication path that reduces dependence on the mobile OS duopoly altogether. The goal is not to prove immediate deployability, but to produce credible technical evidence that secure, standards-based, fallback-capable access models are feasible without exclusive reliance on Apple or Google as trust anchors. Keep the demonstrator scope lean and defensible; do not expand into feature-rich product development. Phase two funding is conditional on phase one producing a published feasibility report, at least one formal institutional engagement with Digitaliseringsstyrelsen, the MitID operator, or a related public-sector stakeholder, and a documented financing plan covering the remainder of the project.\n\nPhase three (months 17\u201324) focuses on procurement, standards, and continuity intervention around AltID and related digital identity planning. Using the feasibility report, demonstrators, and coalition built in earlier phases, the project seeks inclusion of requirements stating that Danish digital identity systems should not depend exclusively on Apple or Google app stores, platform integrity APIs, or proprietary push-notification infrastructure, and should include a platform-neutral or otherwise certified fallback access path for critical public authentication. The project also engages with relevant EU bodies and technical working groups connected to the European Digital Identity Wallet framework, with the aim of aligning Danish advocacy with broader European requirements on interoperability, portability, resilience, and reduced platform lock-in. The project's role is not to dictate architecture directly, but to create technical evidence, procurement language, and standards pressure that make supplier-neutral and fallback-capable design harder to exclude. If formal traction with AltID is weak by month 16, phase three should de-scope toward publication, coalition consolidation, and EU-facing standards input rather than pretending Danish procurement influence has been secured.\n\nThe project team should include a lead researcher in mobile security and authentication protocols, a regulatory and compliance specialist familiar with Danish and EU digital identity frameworks (including eIDAS and NSIS), a policy and public-affairs coordinator experienced in Danish digital governance and procurement processes, a technical lead for the demonstrator work, and at least one additional engineer or contractor covering web authentication, hardware-token workflows, or Linux/GrapheneOS-related implementation. The technical staffing should avoid dependence on a single specialist. Assume the project's primary physical base is in Copenhagen, Denmark, at a Danish university, independent research institution, or security-qualified R&D facility providing access-controlled workspace appropriate for security-sensitive digital identity research, development, and stakeholder meetings. Budget for institutional overhead, external security review, and limited legal/procurement support explicitly rather than treating them as absorbed costs.\n\nSuccess criteria: by month 24, the project has produced a published feasibility and risk report on platform-neutral and fallback-capable Danish digital identity; delivered two working non-production demonstrators (one mobile-oriented, one browser-based or hardware-token-based fallback); secured a formal written response from Digitaliseringsstyrelsen or another relevant authority to the project's proposal; and achieved inclusion of platform-neutrality, fallback access, continuity, resilience, or supplier-concentration language in at least one official AltID-related design, policy, consultation, or procurement document. A stretch goal is that the project's EU-level engagement contributes to language in relevant European Digital Identity Wallet materials that supports platform-neutral access or certified fallback mechanisms. Do not use consumer adoption rates as a primary KPI for this project, because it is not shipping a production identity product.\n\nPick a realistic scenario that accounts for institutional inertia, regulatory friction, incumbent resistance, financing uncertainty, and the likelihood that convenience arguments will be used against platform-neutral alternatives. Do not assume constructive cooperation from existing operators. The primary lever is not technical disruption for its own sake, but the combination of resilience framing, procurement intervention, standards pressure, and credible technical demonstration.\n\nToday's date:\n2026-Mar-08\n\nProject start ASAP\n\nFile 'purpose.md':\n**Purpose:** business\n\n**Purpose Detailed:** Improvement of Denmark's digital identity infrastructure by reducing dependency on foreign technology suppliers and establishing a platform-neutral fallback authentication path.\n\n**Topic:** Denmark's Digital Identity Infrastructure Improvement\n\nFile 'plan_type.md':\nThis plan requires one or more physical locations. It cannot be executed digitally.\n\n**Explanation:** This project, while focused on digital infrastructure, *heavily relies* on physical elements. It requires a physical base in Copenhagen for research, development, and stakeholder meetings. The project involves building demonstrators, engaging with government bodies, and influencing procurement processes, all of which necessitate physical presence and interaction. The project also requires a physical location with access-controlled workspace appropriate for security-sensitive digital identity research, development, and stakeholder meetings."
+}

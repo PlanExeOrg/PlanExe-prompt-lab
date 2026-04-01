@@ -1,0 +1,200 @@
+[
+  {
+    "lever_id": "457e34d8-aae1-4080-afda-3d6bcb4bfb50",
+    "name": "Platform Integrity Redesign",
+    "consequences": "Pulling this lever will shift the trust model from platform-controlled signals to a distributed integrity verification layer, reducing reliance on Apple/Google. This change will increase development complexity and require new certification pathways, potentially delaying rollout. It also opens the door for alternative OS vendors to participate, but may fragment the ecosystem.",
+    "options": [
+      "Deploy a lightweight, open-source integrity attestation service that aggregates device health metrics from multiple OS vendors and presents a unified trust token to the identity provider.",
+      "Introduce a hardware-backed attestation module that operates independently of the OS, allowing devices to prove integrity through secure enclaves without relying on platform APIs.",
+      "Leverage a blockchain-based audit trail that records device integrity events, enabling cross-platform verification while preserving privacy through zero-knowledge proofs."
+    ],
+    "review": "While these options reduce platform dependency, they do not address the risk that national procurement processes may still mandate platform-specific SDKs, leaving the fallback path unimplemented."
+  },
+  {
+    "lever_id": "2b79e417-a04e-43ac-94f8-0315df511d65",
+    "name": "Stakeholder Coalition Expansion",
+    "consequences": "Expanding the coalition will broaden influence across civil society, academia, and industry, increasing pressure on regulators. However, coordinating diverse interests may slow decision-making and dilute the focus on platform neutrality. It also risks exposing the project to political backlash if coalition members are perceived as adversarial to incumbent operators.",
+    "options": [
+      "Convenie a quarterly roundtable that includes privacy NGOs, university researchers, and small tech firms to co-create policy briefs and share technical findings.",
+      "Launch a public petition campaign that gathers signatures from citizens and businesses, quantifying demand for platform-neutral identity access, and present the results to the digital policy committee.",
+      "Form a cross-sector advisory board that assigns each member a specific advocacy task, such as media outreach, legal analysis, or technical validation, ensuring coordinated action."
+    ],
+    "review": "These coalition tactics increase visibility but do not mitigate the risk that procurement authorities may still prioritize cost over platform neutrality."
+  },
+  {
+    "lever_id": "2841ccf5-1a50-4bac-996a-27dbf01ffa39",
+    "name": "Demonstrator Validation",
+    "consequences": "Building credible demonstrators will provide tangible evidence of fallback feasibility, strengthening the case to regulators. Yet, limited scope may lead stakeholders to question scalability, and the demonstrators may be perceived as proof-of-concept rather than production-ready, limiting influence on procurement decisions.",
+    "options": [
+      "Construct a mobile demonstrator that authenticates via FIDO2/WebAuthn on GrapheneOS, then logs the transaction to a secure, tamper-evident ledger for auditability.",
+      "Develop a browser-based fallback that uses a hardware token and a custom JavaScript library to perform end-to-end encryption before sending credentials to the identity provider.",
+      "Create a hybrid demonstrator that combines a lightweight Linux container with a secure element, allowing users to authenticate on any device while bypassing OS-level integrity checks."
+    ],
+    "review": "While demonstrators show technical viability, they do not resolve the uncertainty that procurement committees may reject non-standard authentication flows."
+  },
+  {
+    "lever_id": "ba435bae-0bb4-4eea-a58b-0f1cdf422377",
+    "name": "Policy Narrative Shift",
+    "consequences": "Reframing the issue as a resilience and continuity risk will align with national security priorities, potentially accelerating policy adoption. However, this framing may trigger defensive responses from incumbent operators who argue that platform ecosystems already provide robust security, leading to increased lobbying against platform neutrality.",
+    "options": [
+      "Publish a white paper that quantifies potential service disruption scenarios caused by platform policy changes, framing platform neutrality as a national security imperative.",
+      "Host a policy symposium where experts present case studies of platform lock-in failures in other countries, linking them to Denmark's digital sovereignty goals.",
+      "Draft a legislative amendment proposal that mandates a minimum percentage of platform-neutral authentication methods in all public digital identity services."
+    ],
+    "review": "These narrative shifts may raise awareness but do not eliminate the risk that existing procurement contracts lock in platform-specific solutions."
+  },
+  {
+    "lever_id": "2252e877-b783-4346-a685-345f77e33036",
+    "name": "Procurement Requirement Engineering",
+    "consequences": "Engineering procurement language to include platform-neutral clauses will embed the fallback requirement into future contracts, creating a structural barrier to platform lock-in. This may increase upfront costs and extend procurement timelines, potentially causing resistance from budget holders and procurement officers.",
+    "options": [
+      "Draft a procurement specification that requires all identity providers to support a standardized fallback authentication API, with penalties for non-compliance.",
+      "Propose a modular procurement framework that separates core identity services from platform-dependent components, allowing independent evaluation of each module.",
+      "Introduce a phased procurement approach that first tests platform-neutral pilots before full-scale contract award, ensuring compliance before commitment."
+    ],
+    "review": "These procurement strategies embed fallback requirements but do not address the risk that incumbent vendors may still offer bundled solutions that sidestep the clauses."
+  },
+  {
+    "lever_id": "b8be5fd0-e19b-4dcc-85e1-d4999ac93045",
+    "name": "EU Standards Advocacy",
+    "consequences": "Aligning Danish efforts with EU Digital Identity Wallet standards will amplify influence and create cross-border momentum for platform neutrality. However, EU processes are slow, and aligning national requirements may delay domestic implementation, potentially leaving Denmark exposed to platform lock-in in the interim.",
+    "options": [
+      "Submit a formal contribution to the EU Digital Identity Wallet working group that proposes a mandatory fallback authentication field in the wallet schema.",
+      "Organize a joint EU-Danish workshop that maps national platform-neutral requirements onto existing eIDAS2 specifications, identifying gaps and proposing amendments.",
+      "Publish a comparative analysis of EU member states' fallback mechanisms, using the findings to lobby for harmonized standards that favor platform neutrality."
+    ],
+    "review": "These EU advocacy efforts may influence standards but do not mitigate the risk that national procurement cycles will outpace EU regulatory changes."
+  },
+  {
+    "lever_id": "d4f65cac-a398-4e70-871b-334c534786ca",
+    "name": "Supplier Concentration Mitigation",
+    "consequences": "Pulling this lever reduces reliance on Apple/Google by diversifying platform access channels. This may increase integration complexity and require additional certification cycles, potentially delaying deployment timelines.",
+    "options": [
+      "Establish a dedicated open-source app distribution channel that bypasses commercial app stores, enabling direct deployment to certified devices.",
+      "Negotiate a multi-vendor distribution agreement with alternative OS providers, ensuring app availability across a broader ecosystem.",
+      "Create a secure, government-hosted app repository that enforces integrity checks, allowing citizens to install identity apps without third\u2011party intermediaries."
+    ],
+    "review": "While diversifying distribution channels reduces platform lock\u2011in, it introduces new compliance burdens and may fragment user experience across disparate device ecosystems."
+  },
+  {
+    "lever_id": "c9cd3385-5146-4a02-bfc2-274f6b51676d",
+    "name": "Fallback Architecture Blueprint",
+    "consequences": "Implementing a fallback architecture provides a platform\u2011neutral authentication path, enhancing resilience against OS policy changes. However, it may increase development overhead and require additional security audits to maintain trustworthiness.",
+    "options": [
+      "Design a modular fallback module that can be plugged into existing identity stacks, using FIDO2/WebAuthn on hardware tokens.",
+      "Prototype a browser\u2011based fallback flow that leverages WebAuthn and OpenID Connect, eliminating reliance on mobile OS integrity signals.",
+      "Integrate a lightweight, cross\u2011platform authentication gateway that routes credentials through a secure, centrally managed service."
+    ],
+    "review": "Providing a fallback path improves resilience, yet it may create a parallel authentication infrastructure that competes for limited resources and complicates user onboarding."
+  },
+  {
+    "lever_id": "c1eee51b-f245-43f1-a743-56b18ee2c8cb",
+    "name": "Resilience Risk Quantification",
+    "consequences": "Quantifying resilience risks surfaces hidden dependencies and informs procurement priorities. This may expose institutional resistance and require additional stakeholder engagement to address perceived threats to existing workflows.",
+    "options": [
+      "Conduct a comprehensive risk assessment mapping all platform\u2011dependent touchpoints across public services, documenting potential failure modes.",
+      "Develop a resilience scoring framework that quantifies the impact of platform outages on critical citizen services.",
+      "Publish a comparative analysis of resilience metrics between current and proposed platform\u2011neutral models, highlighting trade\u2011offs."
+    ],
+    "review": "Risk quantification clarifies dependencies but may highlight gaps that stakeholders are unwilling to address, potentially stalling procurement decisions and may delay policy adoption."
+  },
+  {
+    "lever_id": "7af54196-ca61-45e2-9c02-c78a2c27c2db",
+    "name": "Digital Sovereignty Advocacy",
+    "consequences": "Advocating for digital sovereignty aligns policy with national security objectives, potentially accelerating policy adoption. Yet it may provoke pushback from commercial partners and require sustained lobbying efforts.",
+    "options": [
+      "Launch a public awareness campaign highlighting the strategic risks of platform dependence, engaging media and stakeholders.",
+      "Draft a formal policy brief that frames platform neutrality as a core national security requirement.",
+      "Organize a roundtable with industry leaders to negotiate a shared commitment to platform\u2011neutral standards, ensuring alignment."
+    ],
+    "review": "Advocacy raises awareness but may encounter entrenched commercial interests that resist policy shifts, limiting immediate impact and could prolong stakeholder alignment."
+  },
+  {
+    "lever_id": "0393cc54-8915-41d9-a72c-fd2f8d8fbc87",
+    "name": "Cross\u2011Platform Compatibility Testing",
+    "consequences": "Systematic compatibility testing ensures fallback solutions work across diverse devices, reducing user friction. It also demands additional testing resources and may uncover unforeseen integration challenges.",
+    "options": [
+      "Set up an automated test harness that validates fallback authentication on GrapheneOS, Android, and iOS devices.",
+      "Deploy a beta testing program with volunteer citizens to evaluate cross\u2011platform usability, collecting feedback on performance.",
+      "Collaborate with hardware manufacturers to certify fallback modules on their devices, ensuring secure integration standards."
+    ],
+    "review": "Compatibility testing improves reliability but can expose performance disparities that require costly optimizations and may necessitate additional development cycles for user experience."
+  },
+  {
+    "lever_id": "e40ef013-0b10-44a3-987e-15e21f29f010",
+    "name": "Public\u2011Private Partnership Lever",
+    "consequences": "Leveraging public\u2011private partnerships can accelerate development and share costs, but may introduce conflicting priorities and governance complexities.",
+    "options": [
+      "Form a joint task force with telecom operators to co\u2011develop secure fallback infrastructure, sharing expertise.",
+      "Secure a co\u2011funding agreement with a leading security vendor to provide expertise and tooling, accelerating development.",
+      "Establish a shared innovation lab that hosts cross\u2011sector teams to prototype platform\u2011neutral solutions, fostering collaboration."
+    ],
+    "review": "Partnerships can mobilize resources, yet differing accountability structures may delay decision\u2011making and dilute focus and may introduce conflicting priorities that stall progress."
+  },
+  {
+    "lever_id": "76fde929-4991-40bd-b4dc-3a1d0b1f3f3f",
+    "name": "Supplier Diversification Incentive",
+    "consequences": "Pulling this lever encourages procurement to consider alternative suppliers, reducing concentration risk. However, expanding the supplier base may increase integration complexity and require additional certification cycles, potentially delaying deployment.",
+    "options": [
+      "Introduce a tiered supplier qualification framework that rewards vendors with proven platform-neutral solutions, encouraging market entry.",
+      "Mandate that all new identity service contracts include clauses for at least two independent platform providers, ensuring redundancy.",
+      "Offer tax incentives to domestic firms developing open-source authentication modules, stimulating local innovation in the tech sector."
+    ],
+    "review": "The options do not address the risk that existing legacy systems may lock in current platform dependencies, making transition costly."
+  },
+  {
+    "lever_id": "9f66f94e-4fb8-4852-be14-b899127fd2f1",
+    "name": "Regulatory Alignment Acceleration",
+    "consequences": "Accelerating regulatory alignment can shorten approval timelines for fallback mechanisms, but may compress stakeholder review cycles, risking oversight of security nuances.",
+    "options": [
+      "Convenie a rapid-response regulatory task force that drafts interim guidelines for platform-neutral authentication within 90 days.",
+      "Publish a white paper mapping current eIDAS requirements to fallback scenarios, guiding regulators on compliance pathways.",
+      "Pilot a sandbox environment where alternative authentication methods can be tested under provisional regulatory oversight."
+    ],
+    "review": "The options fail to mitigate the constraint that regulators may prioritize stability over experimentation, potentially rejecting fallback proposals and may delay approval cycles."
+  },
+  {
+    "lever_id": "478d3736-99bd-44b4-8889-0bec6ab78fb9",
+    "name": "Stakeholder Engagement Intensification",
+    "consequences": "Intensifying engagement broadens support base, but may dilute focus and create conflicting priorities among diverse actors.",
+    "options": [
+      "Organize quarterly roundtables with civil society, academia, and industry to co-create fallback design specifications for stakeholders.",
+      "Deploy a digital portal that aggregates stakeholder feedback and tracks action items, ensuring transparency for all participants.",
+      "Conduct targeted workshops for policymakers to illustrate resilience benefits of platform neutrality, aligning political will."
+    ],
+    "review": "The options do not resolve the risk that key decision-makers may remain unconvinced due to entrenched vendor relationships and may stall procurement reforms."
+  },
+  {
+    "lever_id": "15784239-734c-4d3f-8c28-952aa471a6a2",
+    "name": "Technical Proof-of-Concept Validation",
+    "consequences": "Validating proof-of-concept demonstrates feasibility, yet limited scope may not capture real-world integration challenges.",
+    "options": [
+      "Build a mobile demonstrator using GrapheneOS that authenticates via FIDO2 against a mock public-sector IdP, proving platform neutrality.",
+      "Develop a browser-based fallback prototype that leverages WebAuthn and hardware tokens, showcasing non-OS dependency for critical services.",
+      "Create a cross-platform test suite that measures latency and security gaps between fallback and native solutions."
+    ],
+    "review": "The options do not address the risk that demonstrators may not be representative of production workloads, limiting stakeholder confidence and may reduce policy uptake."
+  },
+  {
+    "lever_id": "82283f0e-c997-4e94-ab44-f3bd3680c962",
+    "name": "Procurement Language Standardization",
+    "consequences": "Standardizing procurement language embeds fallback requirements, but may increase contract complexity and length, slowing procurement cycles.",
+    "options": [
+      "Draft a template clause that mandates platform-neutral authentication pathways in all future AltID procurement documents.",
+      "Embed a mandatory audit requirement for platform dependency metrics within procurement evaluation rubrics to ensure compliance.",
+      "Require that all procurement tenders include a fallback compliance certification checklist, ensuring adherence for all bidders."
+    ],
+    "review": "The options do not mitigate the risk that procurement officials may resist added contractual obligations, perceiving them as burdensome and could delay contract finalization."
+  },
+  {
+    "lever_id": "69cd7511-9f23-4c6c-aa5e-4fb685e7df4c",
+    "name": "Public Awareness Campaign",
+    "consequences": "Raising public awareness can build pressure for change, yet may also expose the project to political backlash if perceived as anti-technology.",
+    "options": [
+      "Launch a media series that explains the risks of platform lock-in and benefits of fallback authentication for citizens.",
+      "Host a public forum where experts demonstrate fallback scenarios, gathering citizen testimonies to influence policy.",
+      "Publish a comparative report showing service outages caused by platform restrictions, highlighting resilience gaps for public services."
+    ],
+    "review": "The options do not resolve the risk that public messaging may be co-opted by industry lobbyists to undermine platform-neutral initiatives."
+  }
+]
