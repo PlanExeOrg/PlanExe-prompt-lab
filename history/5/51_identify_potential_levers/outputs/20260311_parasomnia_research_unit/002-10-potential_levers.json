@@ -1,0 +1,211 @@
+[
+  {
+    "lever_id": "a0046b86-3247-4101-ad8a-da0e353761bf",
+    "name": "PSG Escalation Threshold",
+    "consequences": "Lowering the threshold for full PSG escalation captures more events at clinical-grade resolution, but increases technician workload and participant burden. Raising the threshold reduces burden, but risks missing subtle or atypical events, biasing the dataset towards severe episodes.",
+    "options": [
+      "Escalate to full PSG only after two independent technician flags within a single night",
+      "Trigger full PSG based on a single technician flag plus algorithm-detected anomaly",
+      "Deploy full PSG immediately upon any technician-flagged event"
+    ],
+    "review": "Escalating to full PSG on any technician flag maximizes data capture but may overwhelm resources and reduce technician vigilance over time."
+  },
+  {
+    "lever_id": "cd566ec9-6fe5-43d8-9adf-226f80f1b600",
+    "name": "Exclusion Criteria Stringency",
+    "consequences": "Stricter exclusion criteria improve data homogeneity and reduce confounding factors, but limit recruitment pool and generalizability. Looser criteria expand recruitment, but increase the risk of including participants with comorbid conditions that obscure parasomnia-specific mechanisms.",
+    "options": [
+      "Exclude all participants with any history of psychiatric comorbidity, regardless of current stability",
+      "Allow participants with stable, treated psychiatric conditions, assessed by the study psychologist",
+      "Enroll participants with mild, untreated anxiety or depression, but stratify by these factors in analysis"
+    ],
+    "review": "Excluding all psychiatric comorbidities ensures a cleaner sample but may not reflect the real-world prevalence of parasomnias."
+  },
+  {
+    "lever_id": "43f09cf1-615f-401e-a77b-dab5d483c719",
+    "name": "Sensor Modality Prioritization",
+    "consequences": "Prioritizing high-resolution sensor modalities (e.g., full PSG) increases data richness for captured events, but reduces the number of participants that can be monitored simultaneously due to technician workload. Prioritizing low-burden modalities (e.g., dry-EEG) enables higher throughput, but sacrifices detailed physiological characterization.",
+    "options": [
+      "Focus primarily on high-density EEG and EMG data, limiting participant slots to 6 initially",
+      "Emphasize contact-free mattress sensors and infrared video, expanding to the full 8 slots",
+      "Balance EEG and contact-free data, using 7 participant slots to optimize data breadth"
+    ],
+    "review": "Focusing on high-density EEG limits throughput but provides richer data for characterizing parasomnia subtypes."
+  },
+  {
+    "lever_id": "ecc433c4-11a7-4675-8c4d-74918291fa27",
+    "name": "Control Group Matching Rigor",
+    "consequences": "Tighter matching criteria for the control group (e.g., age, sex, BMI, sleep hygiene) strengthens the validity of between-group comparisons, but makes recruitment more difficult and time-consuming. Looser matching accelerates recruitment, but increases the risk of confounding variables influencing the benchmarked event-triage model.",
+    "options": [
+      "Match controls strictly on age, sex, and BMI, accepting a slower recruitment rate",
+      "Match controls on age and sex only, prioritizing recruitment speed and sample size",
+      "Use a propensity score matching approach, weighting multiple factors to optimize balance"
+    ],
+    "review": "Strict control group matching improves statistical power but may significantly slow down the recruitment process."
+  },
+  {
+    "lever_id": "aff94cbe-ead9-4787-84e4-9846404fcf54",
+    "name": "Annotation Pipeline Depth",
+    "consequences": "More detailed annotation protocols (e.g., micro-arousal scoring, respiratory event analysis) increase the richness of the dataset and the potential for novel findings, but require more technician time and scoring resources. Simpler protocols reduce annotation burden, but may miss subtle features relevant to parasomnia pathophysiology.",
+    "options": [
+      "Implement detailed micro-arousal and respiratory event scoring, increasing annotation time per event",
+      "Focus solely on AASM-defined macro-arousals and motor events, streamlining the annotation process",
+      "Use a hybrid approach, scoring micro-arousals only during full-PSG escalation nights"
+    ],
+    "review": "Detailed annotation protocols increase data richness but strain resources, potentially delaying publication timelines."
+  },
+  {
+    "lever_id": "fc3ca1c6-af29-42db-b985-4a5e8916b1dc",
+    "name": "Episode Capture Window",
+    "consequences": "Extending the maximum participant stay increases the probability of capturing infrequent parasomnia events, but also increases per-participant costs and the risk of participant attrition. Shortening the stay reduces costs, but may result in an underestimation of episode frequency and severity.",
+    "options": [
+      "Cap participant stays at a maximum of 6 weeks, regardless of event capture",
+      "Extend stays up to 12 weeks for participants with fewer than two captured events",
+      "Offer a 'booster' weekend stay after initial discharge for participants with suspected events"
+    ],
+    "review": "Longer participant stays increase the likelihood of capturing events but also raise costs and attrition risks."
+  },
+  {
+    "lever_id": "5df93440-6b65-41f7-92eb-646d055128c4",
+    "name": "Data Sharing Scope",
+    "consequences": "Broader data sharing (e.g., including limited video excerpts with explicit consent) increases the impact and reproducibility of the research, but raises privacy concerns and requires more extensive ethics review. Restricting data sharing to physiological signals reduces privacy risks, but limits the utility of the dataset for external researchers.",
+    "options": [
+      "Share only de-identified physiological data and summary statistics, minimizing privacy risks",
+      "Share limited video excerpts of motor events with explicit participant consent and blurring",
+      "Create a secure, on-site data enclave for external researchers to access sensitive data"
+    ],
+    "review": "Sharing video excerpts enhances data utility but necessitates stringent privacy protocols and participant consent procedures."
+  },
+  {
+    "lever_id": "84a02de0-d635-4852-993b-92dfd7c4ed0c",
+    "name": "Environmental Enrichment Protocol",
+    "consequences": "Introducing controlled stimuli (e.g., ambient noise, light levels) may trigger or exacerbate parasomnia episodes, increasing event capture rates. However, this risks altering the naturalistic sleep environment, potentially skewing baseline behavior and reducing generalizability to real-world settings.",
+    "options": [
+      "Maintain a strictly neutral, home-like environment to minimize external influence on sleep patterns.",
+      "Introduce subtle, pre-approved environmental manipulations to provoke parasomnia events under controlled conditions.",
+      "Personalize the sleep environment based on participant preference to promote relaxation and natural sleep."
+    ],
+    "review": "Stimulus-driven provocation may bias the observed parasomnia phenotypes, limiting the study's ability to characterize spontaneous, naturally occurring events."
+  },
+  {
+    "lever_id": "be82149f-80fe-43dd-952b-aa6b24a4cd94",
+    "name": "Technician Training Curriculum",
+    "consequences": "Comprehensive training in parasomnia recognition and emergency response improves data quality and participant safety. However, extensive training increases personnel costs and may lead to technician fatigue, potentially reducing vigilance during overnight shifts.",
+    "options": [
+      "Prioritize rapid response and safety protocols to minimize immediate risks during parasomnia events.",
+      "Emphasize subtle parasomnia event recognition to maximize the capture of nuanced behavioral phenomena.",
+      "Balance safety and recognition training to ensure both participant well-being and comprehensive data collection."
+    ],
+    "review": "Over-emphasis on rare, dramatic events may desensitize technicians to more subtle, but equally informative, parasomnia manifestations."
+  },
+  {
+    "lever_id": "73ea228a-8a9a-442f-8ca5-5c19264eb5bf",
+    "name": "Data Retention Horizon",
+    "consequences": "Longer data retention allows for future re-analysis and exploration of novel research questions. However, extended storage increases costs and necessitates robust data security measures to protect participant privacy, especially given the video component.",
+    "options": [
+      "Retain data for the minimum duration required by funding agencies to minimize storage costs and security risks.",
+      "Archive data indefinitely for potential future research, contingent on ongoing funding for storage and security.",
+      "Establish a rolling retention policy, purging data after a set period unless a specific research need is identified."
+    ],
+    "review": "Indefinite retention, while maximizing future research options, creates a growing liability regarding data security and evolving ethical standards."
+  },
+  {
+    "lever_id": "18b9b5b0-fa27-4798-897e-3634f7334789",
+    "name": "Control Group Diversity",
+    "consequences": "A more diverse control group enhances the generalizability of findings to the broader population. However, recruiting a highly diverse control group increases recruitment costs and may introduce confounding variables that complicate data analysis.",
+    "options": [
+      "Recruit a narrowly defined control group matched on key demographics to minimize confounding variables.",
+      "Target a highly diverse control group reflecting the broader population to maximize the generalizability of findings.",
+      "Stratify the control group by demographic factors to allow for subgroup analysis and control of confounding variables."
+    ],
+    "review": "A highly homogenous control group, while simplifying analysis, may limit the applicability of the event-triage model to diverse patient populations."
+  },
+  {
+    "lever_id": "b71213a6-9502-4466-b097-802c74e96fa7",
+    "name": "PSG Montage Density",
+    "consequences": "Higher-density PSG montages capture more detailed neurophysiological data, potentially revealing subtle biomarkers. However, increased electrode count raises setup time, participant discomfort, and annotation complexity, potentially reducing compliance and throughput.",
+    "options": [
+      "Employ a minimalist PSG montage focusing on essential channels to maximize participant comfort and throughput.",
+      "Utilize a high-density PSG montage to capture detailed neurophysiological data for in-depth analysis.",
+      "Adapt the PSG montage based on individual participant characteristics and research questions to balance data richness and feasibility."
+    ],
+    "review": "Overly complex montages may introduce artifact and noise that obscure genuine physiological signals, reducing the signal-to-noise ratio."
+  },
+  {
+    "lever_id": "07447c05-3a2f-43a7-b3d9-1b9ab3e0ac2f",
+    "name": "Episode Trigger Definition",
+    "consequences": "A broad definition captures more potential parasomnia events, increasing statistical power. However, it also increases the number of false positives requiring manual review, potentially overwhelming annotation resources and reducing precision.",
+    "options": [
+      "Define parasomnia episodes narrowly to minimize false positives and focus annotation efforts on high-confidence events.",
+      "Define parasomnia episodes broadly to maximize event capture and ensure comprehensive coverage of potential phenomena.",
+      "Employ a tiered definition, categorizing events by probability to prioritize annotation efforts based on confidence level."
+    ],
+    "review": "An overly restrictive definition risks missing subtle or atypical parasomnia events, leading to an incomplete characterization of the phenomenon."
+  },
+  {
+    "lever_id": "b2ad3a3b-3068-4cba-bfd9-f517f0a9c8b8",
+    "name": "Enhanced Night Cadence",
+    "consequences": "Increasing enhanced-night PSG frequency improves physiological data granularity and confidence in event characterization. However, more frequent PSG nights increase technician workload, participant burden, and scoring costs, potentially reducing overall study throughput and increasing participant dropout.",
+    "options": [
+      "Schedule enhanced PSG nights weekly to capture more frequent physiological data.",
+      "Trigger enhanced PSG nights only after a technician-flagged event to minimize burden.",
+      "Implement enhanced PSG on nights 1, 3, and 5 to balance data capture and participant comfort."
+    ],
+    "review": "Increasing PSG frequency may not proportionally increase novel findings if the core parasomnia events are already well-characterized by the lower-resolution sensors."
+  },
+  {
+    "lever_id": "5488650b-250b-4d6c-a58a-84f408847741",
+    "name": "Exclusion Criteria Breadth",
+    "consequences": "Narrowing exclusion criteria increases recruitment speed and sample size, but may introduce confounding variables (e.g., undiagnosed sleep apnea) that complicate data interpretation and reduce the generalizability of findings. Broader criteria slow recruitment but ensure a cleaner, more homogeneous sample.",
+    "options": [
+      "Relax exclusion criteria to include participants with well-controlled OSA.",
+      "Maintain strict exclusion criteria to ensure a homogeneous parasomnia cohort.",
+      "Implement staged inclusion, enrolling complex cases after the core cohort is established."
+    ],
+    "review": "Relaxing exclusion criteria without a clear stratification strategy risks diluting the core parasomnia signal with noise from comorbid conditions."
+  },
+  {
+    "lever_id": "26b4ec7c-2351-45b0-9308-d097199cf400",
+    "name": "Sensor Stream Redundancy",
+    "consequences": "Increasing sensor redundancy (e.g., multiple EEG channels, overlapping camera views) improves data robustness and allows for cross-validation of event detection. However, it also increases data storage requirements, annotation workload, and the complexity of the event-triage algorithm.",
+    "options": [
+      "Prioritize fewer, higher-quality sensor streams to reduce data processing overhead.",
+      "Implement overlapping sensor streams to ensure data integrity and cross-validation.",
+      "Focus on a single, validated sensor stream to minimize data complexity and cost."
+    ],
+    "review": "Redundant sensor streams may yield diminishing returns if the primary sensors already provide sufficient signal fidelity for event detection."
+  },
+  {
+    "lever_id": "afaa908f-6054-404a-8ce7-45ff631fd57c",
+    "name": "Annotation Team Size",
+    "consequences": "Increasing the annotation team size accelerates data throughput and reduces the backlog of unannotated data. However, it also increases personnel costs and the complexity of managing inter-rater reliability, potentially introducing systematic biases.",
+    "options": [
+      "Maintain a small, highly trained annotation team to ensure consistency.",
+      "Expand the annotation team to accelerate data throughput and reduce backlogs.",
+      "Outsource initial annotation to a third party to reduce internal workload."
+    ],
+    "review": "Expanding the annotation team without a robust inter-rater reliability protocol could introduce more noise than signal into the adjudicated event dataset."
+  },
+  {
+    "lever_id": "346fc684-e2c2-4405-9219-f0a68cab8e85",
+    "name": "Episode Morphology Granularity",
+    "consequences": "Characterizing episode morphology with high granularity (e.g., detailed movement kinematics, EEG microstates) provides richer data for phenotyping. However, it also increases annotation time and requires specialized expertise, potentially slowing down the overall research timeline.",
+    "options": [
+      "Focus on coarse episode characterization to maximize annotation throughput.",
+      "Prioritize detailed episode characterization to enable fine-grained phenotyping.",
+      "Implement a tiered annotation approach, starting with coarse features and escalating to detailed analysis."
+    ],
+    "review": "Overly granular episode characterization may lead to overfitting the phenotyping model, reducing its generalizability to new datasets."
+  },
+  {
+    "lever_id": "b3882e72-e726-4395-ad09-965f09ec878e",
+    "name": "Control Group Recruitment Ratio",
+    "consequences": "Increasing the control group recruitment ratio strengthens the statistical power of comparisons and improves the benchmarking of the event-triage tools. However, it also increases recruitment costs and the overall study duration, potentially delaying publication and follow-on grant applications.",
+    "options": [
+      "Recruit a small control group to minimize costs and accelerate the timeline.",
+      "Match the control group size to the parasomnia group to maximize statistical power.",
+      "Oversample the control group to improve the robustness of the event-triage benchmark."
+    ],
+    "review": "An excessively large control group may not proportionally improve the event-triage benchmark if the core differences between parasomnia and normal sleep are already well-defined."
+  }
+]

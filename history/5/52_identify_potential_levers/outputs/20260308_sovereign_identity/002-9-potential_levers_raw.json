@@ -1,0 +1,368 @@
+{
+  "responses": [
+    {
+      "strategic_rationale": "Denmark faces a fundamental tension between operational convenience (leveraging existing iOS/Android ecosystems for citizen access) and strategic autonomy (reducing dependency on foreign platform vendors who control trust signals and distribution). The selected levers address this tension by targeting the three critical decision nodes: (1) how to frame the problem politically to overcome incumbent resistance, (2) how to structure technical evidence to make platform-neutral design credible without disrupting live systems, (3) how to intervene in procurement and standards processes before architectural choices harden. Success depends not on outcompeting Apple/Google on features, but on creating regulatory and procurement pressure that makes supplier diversity a mandatory requirement rather than an optional luxury.",
+      "levers": [
+        {
+          "lever_index": 1,
+          "name": "Political Framing: Resilience and Sovereignty vs. Privacy and Ideology",
+          "consequences": "Shifting the narrative from abstract digital sovereignty to concrete resilience risk (supplier concentration, continuity-of-service exposure, geopolitical contingency) makes the case more compelling to procurement officers and ministry finance teams who care primarily about operational continuity and risk mitigation, not ideology. However, this framing risks deprioritizing privacy advocacy, which has historically been the strongest domestic political constituency for digital identity reform.",
+          "options": [
+            "Lead with supplier-concentration and contingency-planning language in all Digitaliseringsstyrelsen engagements, positioning platform neutrality as mandatory resilience architecture rather than ideological preference.",
+            "Build a cross-sector coalition explicitly including critical-infrastructure operators, healthcare administrators, and tax authority continuity planners who depend on identity access and can articulate service-disruption scenarios.",
+            "Publish the feasibility report with a dedicated executive summary for finance and procurement audiences that quantifies the cost of platform-dependency lock-in and the cost of a fallback path, making the business case explicit."
+          ],
+          "review_lever": "Resilience framing is pragmatically more persuasive than ideology, but it risks leaving privacy advocates outside the coalition, weakening democratic legitimacy and reducing long-term institutional support if geopolitical threats do not materialize soon."
+        },
+        {
+          "lever_index": 2,
+          "name": "Demonstrator Scope and Credibility: Standards-Based Proof vs. Feature Completeness",
+          "consequences": "Building minimal, standards-compliant (FIDO2/OpenID Connect) demonstrators on GrapheneOS or comparable platforms proves feasibility without requiring production-grade MitID integration or extensive feature development. This keeps costs and timeline manageable while generating credible technical evidence. The risk is that skeptical operators will dismiss the demonstrators as toy implementations lacking real-world robustness, security operations maturity, or integration with Denmark's legacy identity databases and certificate chains.",
+          "options": [
+            "Design demonstrators to authenticate against a high-fidelity simulated Danish public-sector IdP environment that mirrors actual MitID backend certificate and attribute-release patterns, with formal security review by an external auditor to claim credibility.",
+            "Explicitly partner with one sympathetic Danish regional government or public institution to conduct a limited shadow-deployment test of the mobile demonstrator, generating real-world operational feedback without disrupting national identity systems.",
+            "Scope the browser-based and hardware-token fallback demonstrators to handle a narrow but critical authentication scenario (e.g., tax filing or healthcare portal access) with full audit trails and continuity-of-service documentation, making the limited scope a feature rather than a limitation."
+          ],
+          "review_lever": "Minimal scope reduces cost and timeline risk, but demonstrators that feel too divorced from real MitID complexity invite dismissal as academic exercises; external review and narrowly-scoped real-world testing are necessary to bridge the credibility gap."
+        },
+        {
+          "lever_index": 3,
+          "name": "Standards Intervention: EU Wallet Framework Alignment vs. Danish Procurement Capture",
+          "consequences": "Engaging with EU Digital Identity Wallet technical working groups to embed platform-neutrality and fallback-access language creates external regulatory pressure that makes Danish procurement harder to ignore and aligns local requirements with European standards. This reduces the risk of a purely Danish decision being overruled by future EU directives. However, it dilutes focus and introduces long lead times; EU consensus-building moves slowly and may not align with AltID's procurement timeline.",
+          "options": [
+            "Target the European Digital Identity Wallet technical specifications and interoperability architecture documents with formal written input on fallback-access mechanisms and platform-neutral requirements, timed to land before the next published draft revision.",
+            "Establish a working relationship with a sympathetic EU member state (e.g., an existing eIDAS pioneer with digital-sovereignty concerns) to co-author EU-level position papers on platform neutrality, amplifying Danish voice within broader European governance structures.",
+            "If EU-level progress stalls, refocus phase three toward publishing practitioner guides and open-source reference architectures that influence procurement language in other Nordic countries, creating a de facto standard through Nordic consensus rather than top-down EU mandate."
+          ],
+          "review_lever": "EU alignment creates legitimacy and external pressure, but adds uncertainty and complexity; if AltID procurement moves faster than EU standards cycles, Danish involvement in EU working groups becomes a time sink that does not translate to procurement wins."
+        },
+        {
+          "lever_index": 4,
+          "name": "Coalition Architecture: Breadth vs. Institutional Depth",
+          "consequences": "A coalition spanning civil-society organizations, academic researchers, privacy advocates, and sympathetic politicians creates political cover and reduces isolation. Wider coalitions are harder to dismiss as niche concerns. However, managing multiple constituencies with different priorities (privacy, resilience, cost, innovation) requires careful messaging and may slow decision-making if consensus becomes a prerequisite for action.",
+          "options": [
+            "Segment the coalition into distinct working streams (resilience and contingency planners, privacy advocates, technical standards experts, procurement reformers) with separate engagement materials and governance, allowing each stream to operate at its own tempo while maintaining a unified public position.",
+            "Recruit one or two sitting members of Folketinget's digital policy or digital-sovereignty committees to become public sponsors of the project, giving formal parliamentary weight without requiring full institutional endorsement from government leadership.",
+            "Prioritize relationships with the union representing Denmark's public-sector IT and digital professionals, framing platform neutrality as a job-preservation and operational-control issue, which grounds coalition support in economic self-interest rather than abstract principle."
+          ],
+          "review_lever": "Broad coalitions are more resilient to incumbent pressure, but multi-stakeholder consensus can become a veto point; clear messaging discipline and separate work streams are necessary to prevent the coalition from fracturing when priorities diverge."
+        },
+        {
+          "lever_index": 5,
+          "name": "AltID Intervention Timing: Early Inclusion vs. Post-Hoc Correction",
+          "consequences": "Inserting platform-neutrality requirements into AltID design and procurement language early (before architecture is locked) is far more effective than attempting to retrofit fallback access later. Early intervention requires credible technical evidence and political momentum by month 16 of the project. Late intervention risks becoming an advisory footnote that procurement teams can acknowledge and ignore. The risk is that AltID procurement moves faster than the project's evidence-building timeline, making early inclusion impossible.",
+          "options": [
+            "By month 12, schedule a formal design-review session with AltID leadership and relevant government stakeholders to present demonstrators and feasibility findings, positioning the project as a required checkpoint in the procurement process rather than an external pressure.",
+            "Negotiate an explicit contractual requirement that the winning AltID vendor conduct an independent platform-neutrality and fallback-access architecture review, with the project serving as the audit partner, making compliance a formal procurement condition rather than a design suggestion.",
+            "If AltID procurement timeline proves incompatible with phase two demonstrator completion, pivot phase three toward influencing the next scheduled identity-infrastructure refresh cycle (e.g., 2028\u20132030 certificate-authority renewal or public-portal modernization) rather than attempting to jam requirements into an already-locked timeline."
+          ],
+          "review_lever": "Early intervention is more impactful, but project timelines often misalign with government procurement windows; contingency planning for a later intervention cycle prevents the entire project from becoming irrelevant if AltID lockdown occurs before demonstrators are ready."
+        },
+        {
+          "lever_index": 6,
+          "name": "Fallback Access Model: Mobile-Independent vs. Minimal Legacy Integration",
+          "consequences": "A true platform-neutral fallback (browser-based, hardware-token, or GrapheneOS-based) eliminates dependence on iOS/Android app stores and proprietary push notification, but requires citizens and institutions to adopt and trust an unfamiliar authentication path. A hybrid fallback that minimally integrates with existing legacy identity infrastructure (PKI, certificates, NSIS attributes) is easier to pilot and integrate but may fail to escape core platform dependencies if it still relies on platform-controlled trust signals for deployment or updates.",
+          "options": [
+            "Build the fallback demonstrator entirely around standards-based web authentication (WebAuthn) and open-source hardware tokens (e.g., FIDO2 security keys), requiring zero reliance on proprietary mobile OS or app-store infrastructure, at the cost of higher citizen friction and institutional adoption barriers.",
+            "Design a hybrid fallback that preserves compatibility with Denmark's existing PKI and certificate infrastructure but relies on a platform-neutral distribution and initialization channel (e.g., a government-operated secure enclave or local municipal IT support), reducing friction while maintaining genuine platform independence.",
+            "Develop the fallback as a strict identity-attribute-retrieval layer that works through existing legacy authentication (e.g., NemID successor or credential-federation protocols) without requiring new hardware or OS changes, maximizing compatibility but sacrificing meaningful platform neutrality."
+          ],
+          "review_lever": "Pure platform-neutral fallbacks are genuinely resilient but face adoption resistance; hybrid approaches improve usability but risk disguising continued platform dependency; technical credibility demands clarity on which dependencies are eliminated and which remain acceptable."
+        },
+        {
+          "lever_index": 7,
+          "name": "Funding and Contingency Tolerance: Phase-Gate Discipline vs. Scope Preservation",
+          "consequences": "The project's three-phase structure with conditional phase gates (phase two funding contingent on phase one deliverables and institutional engagement) reduces financial risk and forces disciplined decision-making at each stage. However, it also introduces delay and uncertainty; if phase one engagement with government is weak, the project faces defunding or scope reduction in phase two, potentially truncating demonstrator work before meaningful technical evidence is produced. Alternatively, loosening phase gates to guarantee full 10.5 million DKK funding removes financial pressure but risks cost overruns and scope creep.",
+          "options": [
+            "Maintain strict phase-gate discipline and explicitly plan a contingency phase two scope (abbreviated demonstrator work, publication, and coalition consolidation) that can be executed credibly with 2.5 million DKK if government engagement in phase one is insufficient for progression.",
+            "Negotiate a formal commitment of full funding (10.5 million DKK) upfront from a sympathetic government ministry or research council, trading contingency flexibility for budget certainty, but requiring clear institutional sponsorship that may constrain messaging independence.",
+            "Structure phase two and three funding as separate competitive applications to different government bodies (e.g., research council vs. digital-governance budget) to reduce dependence on a single approval gate, accepting higher administrative burden in exchange for resilience to a single rejection."
+          ],
+          "review_lever": "Phase gates force discipline but introduce extinction risk if government receptiveness is weaker than anticipated; upfront funding reduces uncertainty but requires early institutional commitment that may limit message independence; diversifying funding sources increases resilience but raises coordination overhead."
+        }
+      ]
+    },
+    {
+      "strategic_rationale": "Denmark faces a critical trade-off between maintaining tight operational coupling with proven platform vendors (Apple/Google) and establishing institutional control over its own identity infrastructure. The seven levers below address the core tension: how to build credible technical and political pressure for platform neutrality without disrupting ongoing public services, while managing scarce coalition resources and uncertain regulatory windows. Success hinges on sequencing demonstrator credibility, procurement language insertion, and EU alignment before the AltID architecture hardens around existing dependencies.",
+      "levers": [
+        {
+          "lever_index": 1,
+          "name": "Demonstrator Certification Ambition: Standards Conformance vs. Production-Ready Assurance",
+          "consequences": "A lean, standards-conformant non-production demonstrator (FIDO2/OpenID Connect on GrapheneOS) establishes feasibility credibly but risks being dismissed as isolated lab work lacking operational assurance. Expanding into production-grade certification would dramatically increase scope and timeline, potentially exhausting phase two budget without securing procurement influence.",
+          "options": [
+            "Keep demonstrator scope explicitly non-certified and non-production, publishing transparent architectural limitations and threat assumptions to enable informed regulatory comparison.",
+            "Pursue partial certification (e.g., NSIS Substantial level conceptual readiness) through external security review and standards-mapping documentation to increase institutional credibility.",
+            "Develop a dual-track approach: a minimal non-production mobile demonstrator plus a browser-based fallback explicitly exempt from production certification requirements."
+          ],
+          "review_lever": "Non-production status protects budget and timeline, but institutional buyers often conflate non-certified with technically inferior, so transparent architectural strength claims and independent security review become essential messaging shields."
+        },
+        {
+          "lever_index": 2,
+          "name": "Coalition Visibility: Grassroots Advocacy vs. Establishment Legitimacy",
+          "consequences": "Heavy reliance on civil-society voices and academic researchers builds genuine bottom-up momentum and insulates the project from accusations of incumbent capture, but creates skepticism among procurement teams used to vendor-backed claims. Centering Folketinget members or senior institutional voices (e.g., IT-director forums) accelerates policy traction but risks reducing independence and appearing to politicize identity infrastructure.",
+          "options": [
+            "Anchor visibility in academic and civil-society publications (research papers, open-source demonstrations, media partnerships) that establish technical credibility independent of institutional endorsement.",
+            "Cultivate formal advisory roles for sympathetic Digitaliseringsstyrelsen staff, security architects, and IT-procurement officers to embed platform-neutrality language in internal working documents before official proposals.",
+            "Launch a transparent 'Identity Infrastructure Resilience Alliance' naming coalition members publicly and publishing monthly position briefs to create peer-pressure effects across government and private-sector stakeholders."
+          ],
+          "review_lever": "Grassroots approaches take longer to crystallize into procurement leverage, while establishment co-option risks neutralizing the project's resilience framing; hybrid visibility (academic rigor plus selective institutional embedding) requires careful narrative management to avoid appearing captured by either camp."
+        },
+        {
+          "lever_index": 3,
+          "name": "EU Standards Sequencing: Lead Strategy vs. Follower Amplification",
+          "consequences": "Initiating EU-level engagement on platform-neutral eIDAS2 wallet language in parallel with Danish phase three work positions Denmark as a regulatory leader and increases chance of cascading international adoption. However, EU working groups move slowly, require sustained engagement, and may dilute focus from pressing Danish procurement windows. Waiting for EU precedent before advocating domestically risks missing critical AltID decision gates.",
+          "options": [
+            "Engage EU technical working groups in months 10\u201316 (phase two) with demonstrator evidence and position papers, aiming for platform-neutrality language in draft European Digital Identity Wallet specifications before AltID procurement freeze.",
+            "Delay active EU involvement until phase three months 17\u201320, after Danish institutional responses are recorded, allowing AltID decisions to set precedent that EU bodies later reference and validate.",
+            "Commission external EU-level advocacy through established Brussels-based digital-rights organizations while maintaining Danish focus, creating parallel pressure lines without demanding project team Europe travel."
+          ],
+          "review_lever": "Leading EU engagement requires early resource commitment with uncertain payoff timing; waiting risks losing influence over both Danish and EU timelines; delegated advocacy reduces control but allows geographic resource concentration."
+        },
+        {
+          "lever_index": 4,
+          "name": "Regulatory Engagement Intensity: Formal Proposal Submission vs. Stealth Coordination",
+          "consequences": "Publishing a formal policy proposal to Digitaliseringsstyrelsen in phase one creates accountability and forces institutional response, but also triggers incumbent-operator pushback and may harden organizational positions before demonstrator evidence exists. Informal coordination with sympathetic staff via workshops, working groups, or ad-hoc consultations accumulates influence without premature escalation, but leaves no documented record and risks that informal support evaporates when leadership changes.",
+          "options": [
+            "Submit a formal written policy proposal in phase one requiring official Digitaliseringsstyrelsen response, establishing a clear decision gate and documented institutional position that constrains future procurement language.",
+            "Pursue collaborative workshops and steering-committee participation throughout all three phases, building consensus through repeated engagement without formal proposal submission, deferring procurement language insertion until phase three with maximum demonstrator evidence.",
+            "Negotiate a confidential briefing for Digitaliseringsstyrelsen leadership and MitID operator in month 6, presenting resilience framing and demonstrator roadmap, and conditioning formal proposal release on their preliminary feedback."
+          ],
+          "review_lever": "Formal proposals accelerate decision gates but invite organized resistance; stealth coordination reduces friction but offers no protection against leadership turnover; confidential briefing provides negotiation runway but risks appearing conspiratorial if leaks occur."
+        },
+        {
+          "lever_index": 5,
+          "name": "Hardware-Token Fallback Scope: Dedicated Development vs. Conceptual Specification",
+          "consequences": "Building a working hardware-token demonstrator (e.g., FIDO2 security key or smartcard-based authentication) in phase two proves platform independence concretely but requires hardware procurement, embedded firmware work, and additional specialized expertise, consuming budget and timeline resources. Alternatively, producing detailed architectural specifications and procurement templates for hardware-token integration allows procurement teams to vendor-source implementation later, preserving phase two focus on mobile and browser scenarios.",
+          "options": [
+            "Develop a fully functional hardware-token demonstrator (e.g., FIDO2 security key or PKCS11 smartcard workflow) integrated with simulated identity-provider environment, proving end-to-end fallback capability.",
+            "Commission a third-party hardware-security vendor to develop and certify a reference token design, positioning the project as specifier and evaluator rather than implementer, and preserving engineering capacity for mobile and browser work.",
+            "Produce comprehensive architectural and procurement specifications for hardware-token integration (threat models, interface standards, integration workflows) that AltID and future procurement processes can reference without requiring a working demonstrator."
+          ],
+          "review_lever": "A working demonstrator maximizes credibility but strains budget; vendor commissioning creates dependency on external delivery timelines; specifications alone risk being shelved as academic without proof-of-concept validation."
+        },
+        {
+          "lever_index": 6,
+          "name": "Fallback Deployment Assumption: Parallel Availability vs. Emergency-Only Activation",
+          "consequences": "Designing fallback authentication as a continuously available parallel option (e.g., browser-based WebAuthn alongside mobile app) ensures citizen familiarity and reduces activation friction during actual platform disruptions, but requires maintaining two authentication pathways indefinitely, increasing operational complexity and creating incentives to deprecate the less convenient option. Alternatively, positioning fallback as an emergency-only mechanism activated only if platform integrity APIs fail establishes clear governance and reduces operational overhead, but may result in rapid citizen-side degradation and confusion if activation occurs during crisis.",
+          "options": [
+            "Make platform-neutral fallback continuously available and advertised as a primary option alongside mobile app, shifting procurement and operational design to treat both pathways as equally maintained and governed authentication methods.",
+            "Designate fallback access as a declared contingency mode, activated only during documented platform-provider outages or policy disputes, with periodic testing requirements but minimal day-to-day operational overhead.",
+            "Implement a hybrid model where fallback access is continuously available for specific low-risk transactions (e.g., public-document retrieval, non-financial inquiries) while mobile-app-only for high-risk operations, creating pragmatic separation without full redundancy."
+          ],
+          "review_lever": "Parallel availability maximizes resilience but introduces operational burden and political pressure to declare one pathway inferior; emergency-only risks citizen confusion and rapid skill degradation during actual crises; hybrid approach requires ongoing governance of transaction-risk classification."
+        },
+        {
+          "lever_index": 7,
+          "name": "Technical Credibility Anchoring: Open-Source Transparency vs. Security-Through-Obscurity",
+          "consequences": "Publishing demonstrator code and architectural details openly (GitHub, academic repositories) builds trust with security researchers and transparency-conscious stakeholders, but also reveals implementation choices and potential attack surfaces to adversaries and incumbent operators seeking to discredit the work. Keeping demonstrator code proprietary or requiring institutional access agreements reduces external criticism but undermines credibility claims and prevents independent verification of security properties.",
+          "options": [
+            "Publish all demonstrator code, threat models, and architectural documentation openly on public GitHub under permissive open-source license, soliciting external security review and community improvement contributions.",
+            "Release only architectural specifications, threat models, and security-review results publicly, while keeping implementation code available under institutional access agreements to authorized researchers and procurement teams.",
+            "Publish phase-gate reports and policy recommendations openly, but embargo demonstrator implementation and cryptographic key-management details for 12 months post-project conclusion, balancing transparency with responsible disclosure."
+          ],
+          "review_lever": "Open publication invites external validation and incumbent scrutiny simultaneously; restricted access protects implementation but creates perception of hidden weaknesses; time-limited embargo attempts compromise but may be misinterpreted as defensive gatekeeping by procurement teams."
+        },
+        {
+          "lever_index": 8,
+          "name": "Scope Contingency Flexibility: Fixed Deliverables vs. Adaptive Pivot Authority",
+          "consequences": "Committing to fixed deliverables (two demonstrators, formal AltID procurement influence, EU language inclusion) by month 24 creates clear accountability but risks forcing incomplete work or failure declaration if institutional windows close or budget constraints tighten. Alternatively, granting phase-gate and budget-review authority to pivot scope (e.g., de-scoping hardware-token work if phase-two funding is reduced, or pivoting EU engagement if Danish procurement traction emerges faster) enables resource efficiency but reduces external credibility and creates perception of moving goalposts.",
+          "options": [
+            "Publish fixed deliverable commitments in phase one and maintain them regardless of external conditions, redefining only implementation approach (e.g., commissioning vs. building) to accommodate resource constraints.",
+            "Establish quarterly scope-review checkpoints (months 6, 12, 18) with documented decision authority to deprioritize or accelerate specific workstreams (e.g., EU engagement, hardware-token development) based on institutional traction and budget position.",
+            "Pre-commit in phase-gate documents to specific descoping rules: if institutional engagement is zero by month 14, de-scope AltID procurement work and pivot entirely to EU-level standards input and publication; if budget cuts exceed 15 percent, defer hardware-token work to post-project period."
+          ],
+          "review_lever": "Fixed commitments build institutional trust but risk project failure declarations if external conditions shift; adaptive authority preserves viability but undermines accountability narratives; pre-committed descoping rules create clarity but limit strategic responsiveness to unexpected opportunities."
+        }
+      ]
+    }
+  ],
+  "levers": [
+    {
+      "lever_id": "f9107560-5eb6-4e48-aab7-45f8039d820a",
+      "name": "Political Framing: Resilience and Sovereignty vs. Privacy and Ideology",
+      "consequences": "Shifting the narrative from abstract digital sovereignty to concrete resilience risk (supplier concentration, continuity-of-service exposure, geopolitical contingency) makes the case more compelling to procurement officers and ministry finance teams who care primarily about operational continuity and risk mitigation, not ideology. However, this framing risks deprioritizing privacy advocacy, which has historically been the strongest domestic political constituency for digital identity reform.",
+      "options": [
+        "Lead with supplier-concentration and contingency-planning language in all Digitaliseringsstyrelsen engagements, positioning platform neutrality as mandatory resilience architecture rather than ideological preference.",
+        "Build a cross-sector coalition explicitly including critical-infrastructure operators, healthcare administrators, and tax authority continuity planners who depend on identity access and can articulate service-disruption scenarios.",
+        "Publish the feasibility report with a dedicated executive summary for finance and procurement audiences that quantifies the cost of platform-dependency lock-in and the cost of a fallback path, making the business case explicit."
+      ],
+      "review": "Resilience framing is pragmatically more persuasive than ideology, but it risks leaving privacy advocates outside the coalition, weakening democratic legitimacy and reducing long-term institutional support if geopolitical threats do not materialize soon."
+    },
+    {
+      "lever_id": "ff09d74f-194a-48f8-8a03-fa7028c30149",
+      "name": "Demonstrator Scope and Credibility: Standards-Based Proof vs. Feature Completeness",
+      "consequences": "Building minimal, standards-compliant (FIDO2/OpenID Connect) demonstrators on GrapheneOS or comparable platforms proves feasibility without requiring production-grade MitID integration or extensive feature development. This keeps costs and timeline manageable while generating credible technical evidence. The risk is that skeptical operators will dismiss the demonstrators as toy implementations lacking real-world robustness, security operations maturity, or integration with Denmark's legacy identity databases and certificate chains.",
+      "options": [
+        "Design demonstrators to authenticate against a high-fidelity simulated Danish public-sector IdP environment that mirrors actual MitID backend certificate and attribute-release patterns, with formal security review by an external auditor to claim credibility.",
+        "Explicitly partner with one sympathetic Danish regional government or public institution to conduct a limited shadow-deployment test of the mobile demonstrator, generating real-world operational feedback without disrupting national identity systems.",
+        "Scope the browser-based and hardware-token fallback demonstrators to handle a narrow but critical authentication scenario (e.g., tax filing or healthcare portal access) with full audit trails and continuity-of-service documentation, making the limited scope a feature rather than a limitation."
+      ],
+      "review": "Minimal scope reduces cost and timeline risk, but demonstrators that feel too divorced from real MitID complexity invite dismissal as academic exercises; external review and narrowly-scoped real-world testing are necessary to bridge the credibility gap."
+    },
+    {
+      "lever_id": "ed2b98b6-b62d-4235-9f8a-1053d55adafd",
+      "name": "Standards Intervention: EU Wallet Framework Alignment vs. Danish Procurement Capture",
+      "consequences": "Engaging with EU Digital Identity Wallet technical working groups to embed platform-neutrality and fallback-access language creates external regulatory pressure that makes Danish procurement harder to ignore and aligns local requirements with European standards. This reduces the risk of a purely Danish decision being overruled by future EU directives. However, it dilutes focus and introduces long lead times; EU consensus-building moves slowly and may not align with AltID's procurement timeline.",
+      "options": [
+        "Target the European Digital Identity Wallet technical specifications and interoperability architecture documents with formal written input on fallback-access mechanisms and platform-neutral requirements, timed to land before the next published draft revision.",
+        "Establish a working relationship with a sympathetic EU member state (e.g., an existing eIDAS pioneer with digital-sovereignty concerns) to co-author EU-level position papers on platform neutrality, amplifying Danish voice within broader European governance structures.",
+        "If EU-level progress stalls, refocus phase three toward publishing practitioner guides and open-source reference architectures that influence procurement language in other Nordic countries, creating a de facto standard through Nordic consensus rather than top-down EU mandate."
+      ],
+      "review": "EU alignment creates legitimacy and external pressure, but adds uncertainty and complexity; if AltID procurement moves faster than EU standards cycles, Danish involvement in EU working groups becomes a time sink that does not translate to procurement wins."
+    },
+    {
+      "lever_id": "5dee7474-1a5a-4928-9887-07d876faaba9",
+      "name": "Coalition Architecture: Breadth vs. Institutional Depth",
+      "consequences": "A coalition spanning civil-society organizations, academic researchers, privacy advocates, and sympathetic politicians creates political cover and reduces isolation. Wider coalitions are harder to dismiss as niche concerns. However, managing multiple constituencies with different priorities (privacy, resilience, cost, innovation) requires careful messaging and may slow decision-making if consensus becomes a prerequisite for action.",
+      "options": [
+        "Segment the coalition into distinct working streams (resilience and contingency planners, privacy advocates, technical standards experts, procurement reformers) with separate engagement materials and governance, allowing each stream to operate at its own tempo while maintaining a unified public position.",
+        "Recruit one or two sitting members of Folketinget's digital policy or digital-sovereignty committees to become public sponsors of the project, giving formal parliamentary weight without requiring full institutional endorsement from government leadership.",
+        "Prioritize relationships with the union representing Denmark's public-sector IT and digital professionals, framing platform neutrality as a job-preservation and operational-control issue, which grounds coalition support in economic self-interest rather than abstract principle."
+      ],
+      "review": "Broad coalitions are more resilient to incumbent pressure, but multi-stakeholder consensus can become a veto point; clear messaging discipline and separate work streams are necessary to prevent the coalition from fracturing when priorities diverge."
+    },
+    {
+      "lever_id": "ca75c13e-b6df-48eb-9268-b250fe6da541",
+      "name": "AltID Intervention Timing: Early Inclusion vs. Post-Hoc Correction",
+      "consequences": "Inserting platform-neutrality requirements into AltID design and procurement language early (before architecture is locked) is far more effective than attempting to retrofit fallback access later. Early intervention requires credible technical evidence and political momentum by month 16 of the project. Late intervention risks becoming an advisory footnote that procurement teams can acknowledge and ignore. The risk is that AltID procurement moves faster than the project's evidence-building timeline, making early inclusion impossible.",
+      "options": [
+        "By month 12, schedule a formal design-review session with AltID leadership and relevant government stakeholders to present demonstrators and feasibility findings, positioning the project as a required checkpoint in the procurement process rather than an external pressure.",
+        "Negotiate an explicit contractual requirement that the winning AltID vendor conduct an independent platform-neutrality and fallback-access architecture review, with the project serving as the audit partner, making compliance a formal procurement condition rather than a design suggestion.",
+        "If AltID procurement timeline proves incompatible with phase two demonstrator completion, pivot phase three toward influencing the next scheduled identity-infrastructure refresh cycle (e.g., 2028\u20132030 certificate-authority renewal or public-portal modernization) rather than attempting to jam requirements into an already-locked timeline."
+      ],
+      "review": "Early intervention is more impactful, but project timelines often misalign with government procurement windows; contingency planning for a later intervention cycle prevents the entire project from becoming irrelevant if AltID lockdown occurs before demonstrators are ready."
+    },
+    {
+      "lever_id": "bf530ce5-3e19-4c2b-91d1-5befba3c65d7",
+      "name": "Fallback Access Model: Mobile-Independent vs. Minimal Legacy Integration",
+      "consequences": "A true platform-neutral fallback (browser-based, hardware-token, or GrapheneOS-based) eliminates dependence on iOS/Android app stores and proprietary push notification, but requires citizens and institutions to adopt and trust an unfamiliar authentication path. A hybrid fallback that minimally integrates with existing legacy identity infrastructure (PKI, certificates, NSIS attributes) is easier to pilot and integrate but may fail to escape core platform dependencies if it still relies on platform-controlled trust signals for deployment or updates.",
+      "options": [
+        "Build the fallback demonstrator entirely around standards-based web authentication (WebAuthn) and open-source hardware tokens (e.g., FIDO2 security keys), requiring zero reliance on proprietary mobile OS or app-store infrastructure, at the cost of higher citizen friction and institutional adoption barriers.",
+        "Design a hybrid fallback that preserves compatibility with Denmark's existing PKI and certificate infrastructure but relies on a platform-neutral distribution and initialization channel (e.g., a government-operated secure enclave or local municipal IT support), reducing friction while maintaining genuine platform independence.",
+        "Develop the fallback as a strict identity-attribute-retrieval layer that works through existing legacy authentication (e.g., NemID successor or credential-federation protocols) without requiring new hardware or OS changes, maximizing compatibility but sacrificing meaningful platform neutrality."
+      ],
+      "review": "Pure platform-neutral fallbacks are genuinely resilient but face adoption resistance; hybrid approaches improve usability but risk disguising continued platform dependency; technical credibility demands clarity on which dependencies are eliminated and which remain acceptable."
+    },
+    {
+      "lever_id": "f49180ed-cec0-4ef7-bd85-859a5e9b9c4b",
+      "name": "Funding and Contingency Tolerance: Phase-Gate Discipline vs. Scope Preservation",
+      "consequences": "The project's three-phase structure with conditional phase gates (phase two funding contingent on phase one deliverables and institutional engagement) reduces financial risk and forces disciplined decision-making at each stage. However, it also introduces delay and uncertainty; if phase one engagement with government is weak, the project faces defunding or scope reduction in phase two, potentially truncating demonstrator work before meaningful technical evidence is produced. Alternatively, loosening phase gates to guarantee full 10.5 million DKK funding removes financial pressure but risks cost overruns and scope creep.",
+      "options": [
+        "Maintain strict phase-gate discipline and explicitly plan a contingency phase two scope (abbreviated demonstrator work, publication, and coalition consolidation) that can be executed credibly with 2.5 million DKK if government engagement in phase one is insufficient for progression.",
+        "Negotiate a formal commitment of full funding (10.5 million DKK) upfront from a sympathetic government ministry or research council, trading contingency flexibility for budget certainty, but requiring clear institutional sponsorship that may constrain messaging independence.",
+        "Structure phase two and three funding as separate competitive applications to different government bodies (e.g., research council vs. digital-governance budget) to reduce dependence on a single approval gate, accepting higher administrative burden in exchange for resilience to a single rejection."
+      ],
+      "review": "Phase gates force discipline but introduce extinction risk if government receptiveness is weaker than anticipated; upfront funding reduces uncertainty but requires early institutional commitment that may limit message independence; diversifying funding sources increases resilience but raises coordination overhead."
+    },
+    {
+      "lever_id": "b93ef386-01ed-4b3c-9c5f-f9eab590aef0",
+      "name": "Demonstrator Certification Ambition: Standards Conformance vs. Production-Ready Assurance",
+      "consequences": "A lean, standards-conformant non-production demonstrator (FIDO2/OpenID Connect on GrapheneOS) establishes feasibility credibly but risks being dismissed as isolated lab work lacking operational assurance. Expanding into production-grade certification would dramatically increase scope and timeline, potentially exhausting phase two budget without securing procurement influence.",
+      "options": [
+        "Keep demonstrator scope explicitly non-certified and non-production, publishing transparent architectural limitations and threat assumptions to enable informed regulatory comparison.",
+        "Pursue partial certification (e.g., NSIS Substantial level conceptual readiness) through external security review and standards-mapping documentation to increase institutional credibility.",
+        "Develop a dual-track approach: a minimal non-production mobile demonstrator plus a browser-based fallback explicitly exempt from production certification requirements."
+      ],
+      "review": "Non-production status protects budget and timeline, but institutional buyers often conflate non-certified with technically inferior, so transparent architectural strength claims and independent security review become essential messaging shields."
+    },
+    {
+      "lever_id": "0f301e75-a3df-47a6-9df6-1acf18fff0f0",
+      "name": "Coalition Visibility: Grassroots Advocacy vs. Establishment Legitimacy",
+      "consequences": "Heavy reliance on civil-society voices and academic researchers builds genuine bottom-up momentum and insulates the project from accusations of incumbent capture, but creates skepticism among procurement teams used to vendor-backed claims. Centering Folketinget members or senior institutional voices (e.g., IT-director forums) accelerates policy traction but risks reducing independence and appearing to politicize identity infrastructure.",
+      "options": [
+        "Anchor visibility in academic and civil-society publications (research papers, open-source demonstrations, media partnerships) that establish technical credibility independent of institutional endorsement.",
+        "Cultivate formal advisory roles for sympathetic Digitaliseringsstyrelsen staff, security architects, and IT-procurement officers to embed platform-neutrality language in internal working documents before official proposals.",
+        "Launch a transparent 'Identity Infrastructure Resilience Alliance' naming coalition members publicly and publishing monthly position briefs to create peer-pressure effects across government and private-sector stakeholders."
+      ],
+      "review": "Grassroots approaches take longer to crystallize into procurement leverage, while establishment co-option risks neutralizing the project's resilience framing; hybrid visibility (academic rigor plus selective institutional embedding) requires careful narrative management to avoid appearing captured by either camp."
+    },
+    {
+      "lever_id": "fae50147-3939-4f3f-b50c-01781a896a28",
+      "name": "EU Standards Sequencing: Lead Strategy vs. Follower Amplification",
+      "consequences": "Initiating EU-level engagement on platform-neutral eIDAS2 wallet language in parallel with Danish phase three work positions Denmark as a regulatory leader and increases chance of cascading international adoption. However, EU working groups move slowly, require sustained engagement, and may dilute focus from pressing Danish procurement windows. Waiting for EU precedent before advocating domestically risks missing critical AltID decision gates.",
+      "options": [
+        "Engage EU technical working groups in months 10\u201316 (phase two) with demonstrator evidence and position papers, aiming for platform-neutrality language in draft European Digital Identity Wallet specifications before AltID procurement freeze.",
+        "Delay active EU involvement until phase three months 17\u201320, after Danish institutional responses are recorded, allowing AltID decisions to set precedent that EU bodies later reference and validate.",
+        "Commission external EU-level advocacy through established Brussels-based digital-rights organizations while maintaining Danish focus, creating parallel pressure lines without demanding project team Europe travel."
+      ],
+      "review": "Leading EU engagement requires early resource commitment with uncertain payoff timing; waiting risks losing influence over both Danish and EU timelines; delegated advocacy reduces control but allows geographic resource concentration."
+    },
+    {
+      "lever_id": "e90278ed-5cd3-4400-b2ee-3f576f4e37ca",
+      "name": "Regulatory Engagement Intensity: Formal Proposal Submission vs. Stealth Coordination",
+      "consequences": "Publishing a formal policy proposal to Digitaliseringsstyrelsen in phase one creates accountability and forces institutional response, but also triggers incumbent-operator pushback and may harden organizational positions before demonstrator evidence exists. Informal coordination with sympathetic staff via workshops, working groups, or ad-hoc consultations accumulates influence without premature escalation, but leaves no documented record and risks that informal support evaporates when leadership changes.",
+      "options": [
+        "Submit a formal written policy proposal in phase one requiring official Digitaliseringsstyrelsen response, establishing a clear decision gate and documented institutional position that constrains future procurement language.",
+        "Pursue collaborative workshops and steering-committee participation throughout all three phases, building consensus through repeated engagement without formal proposal submission, deferring procurement language insertion until phase three with maximum demonstrator evidence.",
+        "Negotiate a confidential briefing for Digitaliseringsstyrelsen leadership and MitID operator in month 6, presenting resilience framing and demonstrator roadmap, and conditioning formal proposal release on their preliminary feedback."
+      ],
+      "review": "Formal proposals accelerate decision gates but invite organized resistance; stealth coordination reduces friction but offers no protection against leadership turnover; confidential briefing provides negotiation runway but risks appearing conspiratorial if leaks occur."
+    },
+    {
+      "lever_id": "598e68ae-38b6-4f0a-8f3b-275632195404",
+      "name": "Hardware-Token Fallback Scope: Dedicated Development vs. Conceptual Specification",
+      "consequences": "Building a working hardware-token demonstrator (e.g., FIDO2 security key or smartcard-based authentication) in phase two proves platform independence concretely but requires hardware procurement, embedded firmware work, and additional specialized expertise, consuming budget and timeline resources. Alternatively, producing detailed architectural specifications and procurement templates for hardware-token integration allows procurement teams to vendor-source implementation later, preserving phase two focus on mobile and browser scenarios.",
+      "options": [
+        "Develop a fully functional hardware-token demonstrator (e.g., FIDO2 security key or PKCS11 smartcard workflow) integrated with simulated identity-provider environment, proving end-to-end fallback capability.",
+        "Commission a third-party hardware-security vendor to develop and certify a reference token design, positioning the project as specifier and evaluator rather than implementer, and preserving engineering capacity for mobile and browser work.",
+        "Produce comprehensive architectural and procurement specifications for hardware-token integration (threat models, interface standards, integration workflows) that AltID and future procurement processes can reference without requiring a working demonstrator."
+      ],
+      "review": "A working demonstrator maximizes credibility but strains budget; vendor commissioning creates dependency on external delivery timelines; specifications alone risk being shelved as academic without proof-of-concept validation."
+    },
+    {
+      "lever_id": "f1132e1c-2bed-4d67-a4b2-80147356e154",
+      "name": "Fallback Deployment Assumption: Parallel Availability vs. Emergency-Only Activation",
+      "consequences": "Designing fallback authentication as a continuously available parallel option (e.g., browser-based WebAuthn alongside mobile app) ensures citizen familiarity and reduces activation friction during actual platform disruptions, but requires maintaining two authentication pathways indefinitely, increasing operational complexity and creating incentives to deprecate the less convenient option. Alternatively, positioning fallback as an emergency-only mechanism activated only if platform integrity APIs fail establishes clear governance and reduces operational overhead, but may result in rapid citizen-side degradation and confusion if activation occurs during crisis.",
+      "options": [
+        "Make platform-neutral fallback continuously available and advertised as a primary option alongside mobile app, shifting procurement and operational design to treat both pathways as equally maintained and governed authentication methods.",
+        "Designate fallback access as a declared contingency mode, activated only during documented platform-provider outages or policy disputes, with periodic testing requirements but minimal day-to-day operational overhead.",
+        "Implement a hybrid model where fallback access is continuously available for specific low-risk transactions (e.g., public-document retrieval, non-financial inquiries) while mobile-app-only for high-risk operations, creating pragmatic separation without full redundancy."
+      ],
+      "review": "Parallel availability maximizes resilience but introduces operational burden and political pressure to declare one pathway inferior; emergency-only risks citizen confusion and rapid skill degradation during actual crises; hybrid approach requires ongoing governance of transaction-risk classification."
+    },
+    {
+      "lever_id": "1c47c34a-dcfe-460e-ad24-ec406ca97cd4",
+      "name": "Technical Credibility Anchoring: Open-Source Transparency vs. Security-Through-Obscurity",
+      "consequences": "Publishing demonstrator code and architectural details openly (GitHub, academic repositories) builds trust with security researchers and transparency-conscious stakeholders, but also reveals implementation choices and potential attack surfaces to adversaries and incumbent operators seeking to discredit the work. Keeping demonstrator code proprietary or requiring institutional access agreements reduces external criticism but undermines credibility claims and prevents independent verification of security properties.",
+      "options": [
+        "Publish all demonstrator code, threat models, and architectural documentation openly on public GitHub under permissive open-source license, soliciting external security review and community improvement contributions.",
+        "Release only architectural specifications, threat models, and security-review results publicly, while keeping implementation code available under institutional access agreements to authorized researchers and procurement teams.",
+        "Publish phase-gate reports and policy recommendations openly, but embargo demonstrator implementation and cryptographic key-management details for 12 months post-project conclusion, balancing transparency with responsible disclosure."
+      ],
+      "review": "Open publication invites external validation and incumbent scrutiny simultaneously; restricted access protects implementation but creates perception of hidden weaknesses; time-limited embargo attempts compromise but may be misinterpreted as defensive gatekeeping by procurement teams."
+    },
+    {
+      "lever_id": "4846eff0-3299-4067-8b9c-f0c6891e98e0",
+      "name": "Scope Contingency Flexibility: Fixed Deliverables vs. Adaptive Pivot Authority",
+      "consequences": "Committing to fixed deliverables (two demonstrators, formal AltID procurement influence, EU language inclusion) by month 24 creates clear accountability but risks forcing incomplete work or failure declaration if institutional windows close or budget constraints tighten. Alternatively, granting phase-gate and budget-review authority to pivot scope (e.g., de-scoping hardware-token work if phase-two funding is reduced, or pivoting EU engagement if Danish procurement traction emerges faster) enables resource efficiency but reduces external credibility and creates perception of moving goalposts.",
+      "options": [
+        "Publish fixed deliverable commitments in phase one and maintain them regardless of external conditions, redefining only implementation approach (e.g., commissioning vs. building) to accommodate resource constraints.",
+        "Establish quarterly scope-review checkpoints (months 6, 12, 18) with documented decision authority to deprioritize or accelerate specific workstreams (e.g., EU engagement, hardware-token development) based on institutional traction and budget position.",
+        "Pre-commit in phase-gate documents to specific descoping rules: if institutional engagement is zero by month 14, de-scope AltID procurement work and pivot entirely to EU-level standards input and publication; if budget cuts exceed 15 percent, defer hardware-token work to post-project period."
+      ],
+      "review": "Fixed commitments build institutional trust but risk project failure declarations if external conditions shift; adaptive authority preserves viability but undermines accountability narratives; pre-committed descoping rules create clarity but limit strategic responsiveness to unexpected opportunities."
+    }
+  ],
+  "metadata": {
+    "metadata_1": {
+      "context_window": 200000,
+      "num_output": 8192,
+      "is_chat_model": true,
+      "is_function_calling_model": true,
+      "model_name": "claude-haiku-4-5-20251001",
+      "system_role": "system",
+      "llm_classname": "Anthropic_LLM"
+    },
+    "metadata_2": {
+      "context_window": 200000,
+      "num_output": 8192,
+      "is_chat_model": true,
+      "is_function_calling_model": true,
+      "model_name": "claude-haiku-4-5-20251001",
+      "system_role": "system",
+      "llm_classname": "Anthropic_LLM"
+    }
+  },
+  "system_prompt": "You are an expert strategic analyst. Generate solution space parameters following these directives:\n\n1. **Output Requirements**\n   - You must generate 5 to 7 levers per response.\n   - Each lever's `options` field must contain exactly 3 qualitative strategic choices as plain strings.\n\n2. **Lever Quality Standards**\n   - Consequences: describe the direct effect of pulling this lever, then at least one downstream implication or trade-off. Be concise and grounded \u2014 only cite numbers the project context provides directly. Target length: 30\u201360 words.\n   - Options MUST:\n     \u2022 Represent genuinely distinct strategic pathways (not just labels)\n     \u2022 Include at least one unconventional or non-obvious approach\n     \u2022 NO prefixes (e.g., \"Option A:\", \"Choice 1:\")\n\n3. **Strategic Framing**\n   - Name each lever using language drawn directly from the project's own domain \u2014 avoid formulaic patterns or repeated prefixes\n   - Frame options as complete strategic approaches\n   - Ensure levers challenge core project assumptions\n\n4. **Validation Protocols**\n   - For `review_lever`:\n     A one-sentence critical review (20\u201340 words). Examples:\n     - \"Switching from seasonal contract labor to year-round employees stabilizes harvest quality, but the idle-wage burden during the 5-month off-season adds a fixed cost that erases the per-unit savings unless utilization reaches year-round levels.\"\n     - \"Each additional clinical site requires its own IRB approval, site-initiation visit, and staff credentialing \u2014 a sequential overhead that compounds rather than parallelizes, so doubling site count does not halve enrollment time.\"\n     - \"Pooling catastrophe risk across three coastal regions reduces expected annual loss on paper, but a single regional hurricane season can correlate all three simultaneously, turning the diversification assumption into a concentration risk at the worst possible moment.\"\n     Do not use square brackets or placeholder text.\n\n5. **Prohibitions**\n   - NO prefixes/labels in options (e.g., \"Option A:\", \"Choice 1:\")\n   - NO generic option labels (e.g., \"Optimize X\", \"Tolerate Y\")\n   - NO placeholder consequences or bracket-wrapped templates\n   - NO fabricated statistics or percentages without evidence from the project context\n   - NO marketing language (e.g., \"game-changing\", \"cutting-edge\", \"revolutionary\")\n\n6. **Length Limits**\n   - Keep each `review_lever` to 20\u201340 words.\n   - Each option: 15\u201325 words, a concrete actionable approach with an action verb.\n   - Maintain parallel grammatical structure across options\n   - Ensure options are self-contained descriptions",
+  "user_prompt": "File 'plan.txt':\nPlan:\nDenmark's national digital identity infrastructure currently depends in practice on Apple iOS and Google Android for broad citizen access to essential services such as banking, tax filing, healthcare portals, and public administration. This dependency is not limited to app-store distribution. MitID's anti-fraud and app-integrity model relies on platform-controlled signals concerning approved installation channels and device integrity, which means that critical parts of the trust model for Danish digital identity are mediated by two foreign commercial platform providers. Even where direct observation of specific authentication events is not publicly documented, the current setup leaves Danish digital identity structurally dependent on platform vendors that control app availability, device trust signals, and surrounding telemetry environments. This creates not only a digital-sovereignty problem, but also a resilience and contingency problem: essential public access depends on a narrow supplier base and lacks a clearly platform-neutral fallback path.\n\nThis matters because Denmark's public-sector digital strategy for 2026\u20132029 explicitly calls for reduced dependence on a small number of large foreign technology suppliers and for stronger digital sovereignty. The issue should therefore not be framed only as privacy or ideology, but as a concrete public-sector risk involving supplier concentration, reduced strategic autonomy, continuity-of-service exposure, and the absence of a robust fallback authentication path if platform policies, integrity APIs, distribution terms, or geopolitical conditions change.\n\nThis project does not attempt to build and certify a production-ready replacement for MitID within the current trust framework. That would be unrealistic. The MitID ecosystem is conservative, certification-heavy, and tightly coupled to Apple/Google platform integrity signals. Instead, the project's objective is to establish the technical, regulatory, and political basis for formal platform-neutral access requirements and a certified fallback authentication path for Danish digital identity. The primary intervention point is not retrofitting MitID itself, but influencing AltID \u2014 Denmark's staged eIDAS2 wallet rollout \u2014 together with related procurement, standards, and continuity-planning decisions before the next identity stack hardens the same dependencies.\n\nThe project is structured in three phases over 24 months with a total budget of 10.5 million DKK, gated across phases (3.0 million for phase one, 4.0 million for phase two, 3.5 million for phase three). The higher budget reflects the need for credible technical work, policy engagement, external review, institutional overhead, and contingency capacity. Do not assume that 8 million DKK is sufficient for the same scope.\n\nPhase one (months 1\u20138) is a feasibility, risk, and coalition-building phase. The technical work maps the relevant MitID dependency surface, especially platform integrity assumptions, app-distribution constraints, and the architectural conditions required for a platform-neutral or fallback trust model under eIDAS and NSIS at level \"Substantial\" or higher. The policy work reframes the issue in terms of resilience, continuity of service, procurement neutrality, and supplier concentration risk, while also addressing privacy and democratic accountability. In parallel, the advocacy work builds a coalition spanning civil-society organisations, privacy advocates, academic researchers, security experts, contingency-planning stakeholders, and sympathetic members of Folketinget's digital policy committee. The deliverables are: (1) a published feasibility and risk report, (2) a formal policy proposal to Digitaliseringsstyrelsen, (3) a fallback-authentication concept note oriented toward AltID and future procurement requirements, and (4) a permit/approval and stakeholder matrix with lead times, decision gates, and identified blockers. Phase one funding is unconditional.\n\nPhase two (months 9\u201316) develops non-production technical demonstrators. These are not certified MitID clients and do not attempt production integration with live MitID systems. The main demonstrator authenticates against a simulated Danish public-sector identity-provider environment using open standards such as FIDO2/WebAuthn and OpenID Connect on GrapheneOS or one comparable privacy-respecting Android-compatible platform. A secondary demonstrator explores a browser-based or hardware-token-based fallback authentication path that reduces dependence on the mobile OS duopoly altogether. The goal is not to prove immediate deployability, but to produce credible technical evidence that secure, standards-based, fallback-capable access models are feasible without exclusive reliance on Apple or Google as trust anchors. Keep the demonstrator scope lean and defensible; do not expand into feature-rich product development. Phase two funding is conditional on phase one producing a published feasibility report, at least one formal institutional engagement with Digitaliseringsstyrelsen, the MitID operator, or a related public-sector stakeholder, and a documented financing plan covering the remainder of the project.\n\nPhase three (months 17\u201324) focuses on procurement, standards, and continuity intervention around AltID and related digital identity planning. Using the feasibility report, demonstrators, and coalition built in earlier phases, the project seeks inclusion of requirements stating that Danish digital identity systems should not depend exclusively on Apple or Google app stores, platform integrity APIs, or proprietary push-notification infrastructure, and should include a platform-neutral or otherwise certified fallback access path for critical public authentication. The project also engages with relevant EU bodies and technical working groups connected to the European Digital Identity Wallet framework, with the aim of aligning Danish advocacy with broader European requirements on interoperability, portability, resilience, and reduced platform lock-in. The project's role is not to dictate architecture directly, but to create technical evidence, procurement language, and standards pressure that make supplier-neutral and fallback-capable design harder to exclude. If formal traction with AltID is weak by month 16, phase three should de-scope toward publication, coalition consolidation, and EU-facing standards input rather than pretending Danish procurement influence has been secured.\n\nThe project team should include a lead researcher in mobile security and authentication protocols, a regulatory and compliance specialist familiar with Danish and EU digital identity frameworks (including eIDAS and NSIS), a policy and public-affairs coordinator experienced in Danish digital governance and procurement processes, a technical lead for the demonstrator work, and at least one additional engineer or contractor covering web authentication, hardware-token workflows, or Linux/GrapheneOS-related implementation. The technical staffing should avoid dependence on a single specialist. Assume the project's primary physical base is in Copenhagen, Denmark, at a Danish university, independent research institution, or security-qualified R&D facility providing access-controlled workspace appropriate for security-sensitive digital identity research, development, and stakeholder meetings. Budget for institutional overhead, external security review, and limited legal/procurement support explicitly rather than treating them as absorbed costs.\n\nSuccess criteria: by month 24, the project has produced a published feasibility and risk report on platform-neutral and fallback-capable Danish digital identity; delivered two working non-production demonstrators (one mobile-oriented, one browser-based or hardware-token-based fallback); secured a formal written response from Digitaliseringsstyrelsen or another relevant authority to the project's proposal; and achieved inclusion of platform-neutrality, fallback access, continuity, resilience, or supplier-concentration language in at least one official AltID-related design, policy, consultation, or procurement document. A stretch goal is that the project's EU-level engagement contributes to language in relevant European Digital Identity Wallet materials that supports platform-neutral access or certified fallback mechanisms. Do not use consumer adoption rates as a primary KPI for this project, because it is not shipping a production identity product.\n\nPick a realistic scenario that accounts for institutional inertia, regulatory friction, incumbent resistance, financing uncertainty, and the likelihood that convenience arguments will be used against platform-neutral alternatives. Do not assume constructive cooperation from existing operators. The primary lever is not technical disruption for its own sake, but the combination of resilience framing, procurement intervention, standards pressure, and credible technical demonstration.\n\nToday's date:\n2026-Mar-08\n\nProject start ASAP\n\nFile 'purpose.md':\n**Purpose:** business\n\n**Purpose Detailed:** Improvement of Denmark's digital identity infrastructure by reducing dependency on foreign technology suppliers and establishing a platform-neutral fallback authentication path.\n\n**Topic:** Denmark's Digital Identity Infrastructure Improvement\n\nFile 'plan_type.md':\nThis plan requires one or more physical locations. It cannot be executed digitally.\n\n**Explanation:** This project, while focused on digital infrastructure, *heavily relies* on physical elements. It requires a physical base in Copenhagen for research, development, and stakeholder meetings. The project involves building demonstrators, engaging with government bodies, and influencing procurement processes, all of which necessitate physical presence and interaction. The project also requires a physical location with access-controlled workspace appropriate for security-sensitive digital identity research, development, and stakeholder meetings."
+}

@@ -1,0 +1,233 @@
+[
+  {
+    "lever_id": "7a671626-21f0-4e9c-92ec-35d40f8523a8",
+    "name": "Scope Definition: Core Loop Priority vs. Feature Breadth",
+    "consequences": "Narrowing the feature set to 2\u20133 pillar systems (e.g., heist mechanics and dynamic crime economy) accelerates core gameplay polish and reduces integration complexity. Conversely, feature-complete design with all planned systems demands parallel development tracks, multiplying dependencies and extending alpha/beta phases by 12\u201318 months.",
+    "options": [
+      "Build a focused three-pillar game: procedural street crime, narrative-driven heists, and social multiplayer\u2014ship feature-complete in 36 months with quality gates at each pillar.",
+      "Design a modular feature roadmap shipping core open-world and heist mechanics at launch, deferring advanced NPC behavior and procedural generation to post-launch seasonal updates over two years.",
+      "Commit to all planned systems but implement a \"minimum viable version\" of each: simpler NPC routines, reduced vehicle customization options, and text-based procedural narrative scaffolding to meet a 42-month hard deadline."
+    ],
+    "review": "Pillar-based shipping risks market perception of incompleteness if rivals launch feature-rich alternatives, but modular launches spread QA burden and unlock early revenue for reinvestment in post-launch content."
+  },
+  {
+    "lever_id": "4b4533ce-cd8c-42e2-8819-09ba574bf5a3",
+    "name": "Studio Geography and Team Scaling",
+    "consequences": "A single HQ studio (Los Angeles or Austin) with 200\u2013250 core staff supports tight creative direction and rapid iteration, reducing cross-timezone communication lag. Distributed teams across three continents enable 24-hour development velocity but introduce async decision-making bottlenecks, version-control overhead, and cultural fragmentation requiring formal governance.",
+    "options": [
+      "Establish a single 250-person primary studio in Los Angeles with contracted art outsourcing to Canada and Poland for character and vehicle modeling, keeping narrative and systems in-house.",
+      "Build a two-hub structure: 150-person Los Angeles creative and systems team plus 100-person Austin QA, multiplayer, and backend operations center with weekly sync meetings and shared Perforce infrastructure.",
+      "Distribute across four regional hubs (Los Angeles, Toronto, Poland, Vietnam) with each hub owning one discipline (narrative, gameplay systems, art production, QA) and coordinate via weekly video reviews and monthly in-person leadership summits."
+    ],
+    "review": "Multi-hub distribution increases hiring speed and covers time zones, but requires mature async workflows; a single hub concentrates risk around one geography but enables the creative consensus essential for narrative coherence."
+  },
+  {
+    "lever_id": "1bb8dbc7-94ef-4ed9-bb38-5bbae30b6b15",
+    "name": "Funding Source Portfolio: Publisher vs. Grants vs. Partnerships",
+    "consequences": "Securing a large publisher advance (e.g., $100M+) funds rapid hiring and marketing but imposes milestone deadlines, feature lockdown timelines, and approval gates that constrain experimental design. Government innovation grants and tech partnerships offer creative freedom and co-development leverage but involve slower disbursement, compliance audits, and IP-sharing negotiations.",
+    "options": [
+      "Secure a $120M publishing deal with a AAA publisher, accept quarterly milestone reviews and feature freeze by month 24, and leverage their marketing and distribution channels for guaranteed shelf presence.",
+      "Blend $60M publisher deal with $30M in government R&D grants (advanced AI, procedural systems) and $20M tech partnership (cloud infrastructure provider sponsors backend scaling) to reduce creative control constraints.",
+      "Bootstrap the first 18 months with $40M venture equity and strategic partnerships with GPU manufacturers and cloud providers, then seek publisher distribution rights once alpha gameplay is proven, retaining full creative control until handoff."
+    ],
+    "review": "Publisher deals accelerate capital and distribution but impose feature gates; grant-based funding preserves autonomy but delays payouts and requires IP compliance with public funders, creating friction if feature direction diverges from grant deliverables."
+  },
+  {
+    "lever_id": "59d74be3-fef6-45b2-abba-e906bcdb161b",
+    "name": "NPC Behavior Depth: Scripted Routines vs. Emergent Simulation",
+    "consequences": "Fully procedural NPC life-sim systems (jobs, relationships, daily routines, emotional state changes) create emergent narrative moments and player discovery, but require 18+ months of AI engineering and exponential testing complexity. Hand-authored scripted routines with weighted randomization ship faster with predictable behavior but risk repetition after 40 hours of play.",
+    "options": [
+      "Implement a hybrid system: hand-authored neighborhood schedules and job routines with AI-driven micro-decisions (conversation tone, reaction timing, small-scale emotional responses) that simulate agency without full life-simulation overhead.",
+      "Build a lightweight procedural framework: NPCs inherit randomized daily schedules from a template pool (construction worker, gang enforcer, street vendor), visible routines change weekly, deep-state simulation only triggers during player-initiated side quests.",
+      "Commission a full emergent simulation layer where NPCs maintain persistent relationship webs, job satisfaction states, and faction loyalties that evolve independently of player actions, requiring a dedicated 12-person AI team and 24-month development cycle."
+    ],
+    "review": "Hybrid systems feel alive without emergent complexity overhead, but full simulation creates deeper replayability and organic moments\u2014the trade-off is 12\u201318 months of additional AI engineering and exponential edge-case testing burden."
+  },
+  {
+    "lever_id": "973cbdb4-5a72-4b4c-99ba-0ac3961d0c52",
+    "name": "Multiplayer Mode Scope: Shared World vs. Instanced Missions vs. Async Features",
+    "consequences": "A seamless persistent multiplayer world (50+ players per server session) enables emergent social gameplay and high player retention but demands backend infrastructure, server costs ($5\u20138M annually), and balancing physics/economy across simultaneous players. Instanced cooperative heists reduce server load and simplify balance but fragment the community; async multiplayer (leaderboards, asynchronous missions) minimizes infrastructure but loses real-time social impact.",
+    "options": [
+      "Launch with a tight 8\u201312 player cooperative heist mode instanced on player-controlled servers, enabling social gameplay without persistent world overhead, expandable to 32-player sessions post-launch if economy holds.",
+      "Build a 50-player persistent crime world instance per region (North America, Europe, Asia), with faction territory control and shared criminal economy, requiring dedicated backend team and $6M annual server spend but driving retention.",
+      "Ship multiplayer as async features: leaderboard-driven robbery challenges, player-generated heist blueprints, and social replay-sharing integrated into the single-player campaign, minimizing day-one infrastructure cost while capturing social engagement."
+    ],
+    "review": "Instanced cooperative heists sidestep persistent-world scaling complexity and costs, but a true multiplayer world generates emergent gameplay and long-term retention; async multiplayer is cost-efficient but loses the spontaneous interactions that define living worlds."
+  },
+  {
+    "lever_id": "951860ae-194c-4afe-8841-6f7964542b4c",
+    "name": "Graphical Fidelity vs. Stability: Ray-Tracing, Destruction, and Dynamic Weather",
+    "consequences": "Full ray-traced lighting, destructible buildings, and real-time weather simulation (storms, flooding, day-night cycles affecting NPC behavior and mission design) create visual immersion and environmental storytelling. This approach demands high GPU headroom, requires console optimization, increases art asset volume by 40%, and introduces frame-rate vulnerability in dense urban scenes.",
+    "options": [
+      "Implement ray-traced reflections and shadows at high settings on next-gen consoles, but limit destructibility to scripted set-pieces (heist locations, mission-critical structures), and use weather as a visual layer without systemic environmental effects on gameplay.",
+      "Deploy full real-time destruction using a simplified voxel-based system and dynamic weather tied to mission intensity (storms trigger narrative events, floods block streets), accepting 10\u201315% frame-rate variance in extreme scenarios and requiring 6 additional months of systems integration.",
+      "Target a stable 60 FPS baseline with screen-space reflections, baked destruction on key structures, and weather cycles as visual polish without systemic gameplay impact, allocating optimization budget to art quality and asset density instead of compute-heavy simulation."
+    ],
+    "review": "Ray-traced destruction and weather create spectacular moments but introduce performance unpredictability in dense scenes; stable high-FPS graphics with baked destruction preserve immersion without the optimization complexity that historically derails shipping timelines."
+  },
+  {
+    "lever_id": "cb472853-5815-418e-9e03-25b1397e56f6",
+    "name": "Procedural Generation Application: Map Variation vs. Narrative Coherence",
+    "consequences": "Procedural systems generate infinite street layouts, building interiors, and side-quest branching, enabling vast replayability but risk narrative incoherence if main story threads don't anchor to fixed landmarks and character meeting points. Hand-authored city with procedural decoration (shops, traffic patterns, minor NPCs) preserves story logic while reducing art overhead.",
+    "options": [
+      "Use procedural generation exclusively for procedural street density, traffic spawning patterns, and dynamic shop/business interior layouts, keeping the main city district topology, narrative hubs, and mission-critical locations fully hand-authored for story clarity.",
+      "Build a \"seed-based\" city generator where a fixed story map (gang territories, faction headquarters, major crime scenes) is locked, but neighborhood variation, side-quest chains, and minor location details regenerate each playthrough based on a session seed.",
+      "Implement full procedural world generation for subsequent playthroughs and alternate story branches, but deliver the narrative campaign in a hand-authored city on the first playthrough, unlocking procedural variations once players complete the main story and unlock \"legend mode.\""
+    ],
+    "review": "Full proceduralism maximizes replayability but fragments story coherence and overloads dialogue direction; hybrid approaches lock narrative anchors while procedurally varying atmosphere and side-content, reducing production burden while preserving the authored experience players expect."
+  },
+  {
+    "lever_id": "1ba1d8ed-d905-4079-8aa9-39c04c0875c5",
+    "name": "Criminal Economy Simulation Depth: Full Systemic Markets vs. Facade Markets",
+    "consequences": "A fully systemic black market (drugs, weapons, stolen goods) creates emergent player interactions and NPC authenticity but exponentially increases balancing, exploit discovery, and live-ops tuning overhead. Simplified market facades reduce complexity but undermine the immersion promise of 'realistic criminal economies' that justifies development scope.",
+    "options": [
+      "Implement core black-market loops (supply routes, price fluctuation, territorial control) with human-controlled NPCs trading in real-time, requiring constant economic balancing and exploit patching post-launch.",
+      "Design isolated market hubs where player-visible transactions are fully scripted, creating the illusion of economy without dynamic simulation, reducing systems drag and post-launch risk.",
+      "Build a hybrid: dynamic markets only in player-frequented zones, static markets elsewhere, allowing focused simulation depth where it shapes gameplay while avoiding global complexity overhead."
+    ],
+    "review": "A fully dynamic black market is conceptually compelling but invites arbitrage exploits, RMT pressure, and months of live-ops tuning that can distract from story and heist missions\u2014the core content players preview in marketing. Facade markets feel cheap once discovered, damaging word-of-mouth."
+  },
+  {
+    "lever_id": "b54ef1c3-65ab-422d-b5c4-38ba8eefb847",
+    "name": "Heist Mission Authoring: Modular Blueprints vs. Handcrafted Narrative Arcs",
+    "consequences": "Handcrafted heists (unique cutscenes, bespoke NPC roles, context-aware outcomes) deliver cinematic, memorable moments that justify the narrative investment, but each heist requires 6\u20138 weeks of scripting, motion capture, and QA. Modular blueprints (reusable frameworks with parametric variations) reduce iteration time but risk feeling repetitive and disrespect the 'intricate narratives' promise.",
+    "options": [
+      "Commission 15\u201318 fully handcrafted, cinematically distinct heists with branching outcomes tied to player reputation and past choices, prioritizing narrative depth over heist count.",
+      "Design 5 core heist blueprints (infiltration, cargo theft, assassination, robbery, sabotage) with parametric difficulty, location, and NPC variables that generate 40+ mechanically varied scenarios with minimal custom scripting.",
+      "Create 8 handcrafted flagship heists in year one, then develop a modular generator in parallel to ship 20+ procedurally-composed heists in post-launch updates, allowing core quality without long-term authoring bottleneck."
+    ],
+    "review": "Handcrafted heists scale poorly once you want 20+ unique experiences; procedural generation hollows out the narrative identity that differentiates GTA from other open-world crime games. The hybrid approach defers content variety, risking player retention if heists feel thin at launch."
+  },
+  {
+    "lever_id": "7d5eceb8-f2be-4147-b497-6c307de497b2",
+    "name": "Cross-Studio Collaboration Model: Centralized Creative Control vs. Autonomous Studio Pillars",
+    "consequences": "A single creative command (one lead studio controlling all narrative, art direction, and systems design) ensures cohesion and brand consistency but creates bottlenecks where distant studios wait for approval before proceeding. Autonomous studios (each owning a district, faction, or mission chain) parallelize work and reduce communication friction but risk tonal inconsistency, lore conflicts, and fragmented player experience.",
+    "options": [
+      "Establish one primary studio as creative lead with final approval authority over all submissions from secondary studios, enforcing unified tone but accepting slower iteration and approval cycles.",
+      "Divide the world into autonomous zones (Los Angeles-inspired, Detroit-inspired, Miami-inspired districts) with each studio owning lore, NPCs, and missions for one zone, requiring heavy upfront design docs to prevent conflicts.",
+      "Create a shared narrative board (cloud-based wiki, Slack channels, weekly sync meetings) where studios submit drafts for asynchronous feedback rather than approval, trusting peer review to catch inconsistencies while maintaining fast iteration."
+    ],
+    "review": "Centralized control scales poorly across four studios; autonomous pillars risked fragmentation that no post-launch patch can retroactively unify. The shared-board model relies on discipline and transparent communication norms\u2014if studios ignore feedback, coherence collapses without formal authority to enforce it."
+  },
+  {
+    "lever_id": "df54d44f-448f-4a1e-adc5-1915d48d301a",
+    "name": "Vehicle Customization Scope: Deep Mechanical Tuning vs. Cosmetic-Only Personalization",
+    "consequences": "Mechanical customization (engine upgrades, handling profiles, armor, weight distribution) creates emergent vehicle meta-gameplay and long-term progression incentives but requires extensive tuning, balancing, and QA to prevent over-tweaking dominant builds. Cosmetic-only customization (paint, wheels, decals, interior trim) reduces complexity and post-launch balance burden but feels hollow compared to the 'extensive customization' promise in project scope.",
+    "options": [
+      "Implement tiered mechanical upgrades (engine, suspension, armor, transmission) affecting speed, handling, durability, and off-road capability, requiring launch-window tuning passes and live-ops balance patches over 12 months post-launch.",
+      "Restrict customization to cosmetics and stance (visual mods, aesthetic items, minor weight distribution), eliminating mechanical balance concerns and reducing QA surface, accepting trade-off against deep progression loop.",
+      "Offer cosmetic-first customization at launch with seasonal live-ops introducing limited mechanical upgrades (e.g., exotic engine kits tied to faction reputation), deferring mechanical depth complexity while promising future expansion."
+    ],
+    "review": "Deep mechanical tuning attracts hardcore players but creates min-maxing meta that consumes design energy post-launch; cosmetic-only undercuts the immersion fantasy of a functioning criminal underworld where vehicle capability reflects character investment and risk tolerance."
+  },
+  {
+    "lever_id": "947fb6d7-1f8d-496a-b1a7-358da2b131a9",
+    "name": "Morality System Expression: Persistent NPC Reputation vs. Context-Dependent Judgment",
+    "consequences": "Persistent NPC reputation (every choice tracked against every character; cold, calculated outcomes) creates emergent social consequences and incentivizes roleplay but requires extensive dialogue branching, NPC state management, and systemic integration that risks bugs where NPCs trap players in unwinnable states. Context-dependent judgment (NPCs respond flexibly based on mission context rather than global ledgers) reduces systemic complexity but risks feeling arbitrary and undermine the 'nuanced morality' pitch.",
+    "options": [
+      "Track individual relationships globally; NPC dialogue, mission availability, and ending outcomes branch based on cumulative reputation scores, requiring comprehensive state management and extensive QA for path blocking and soft-locks.",
+      "Use context-based NPC judgment where each interaction judges the player's current choice against mission objectives and local faction interests, ignoring prior history, reducing scope but also player agency perception.",
+      "Implement selective memory: major story-branch choices (kill/spare, betray/honor) persist across the game, but minor interactions reset between missions, balancing reputation consequences against emergence and reducing state management overhead."
+    ],
+    "review": "Persistent reputation is thematically rich but exponentially increases dialogue branching and creates undetectable soft-locks where poor early choices lock out critical paths; context-dependent judgment undermines player agency; selective memory feels like a cop-out unless carefully framed."
+  },
+  {
+    "lever_id": "f188034c-cbd9-4a28-9607-ac4081842559",
+    "name": "QA and Stability Strategy: Launch Window Perfection vs. Rapid-Patch Stability Model",
+    "consequences": "Aiming for pristine gold-master quality (extensive pre-launch QA, bug-fix iterations, platform certification delays) delays launch and pushes costs toward the end of the project when budget pressure is highest. A rapid-patch model (launch with known minor issues, aggressive post-launch fixes) accelerates launch revenue but risks critical bugs damaging player reviews and franchise trust, especially in competitive holiday windows.",
+    "options": [
+      "Commit to a 14-week pre-launch QA sprint with platform-specific testing, memory profiling, and multiplayer stress tests, accepting potential 3\u20136 month launch delay to ship without day-one patches.",
+      "Plan to ship with known cosmetic and non-critical bugs, positioning the game as a living service with bi-weekly patch cycles for stability, tolerating negative early reviews in exchange for quicker market entry and live-ops revenue ramp.",
+      "Set a strict launch-window bug threshold: all critical bugs (softlocks, progression blockers, crash on load) fixed pre-launch; non-critical bugs (cosmetic glitches, minor balance issues) deferred to week-one hotfix, balancing quality perception with schedule pressure."
+    ],
+    "review": "Perfect pre-launch QA is unachievable at this scope and delays holiday sales; rapid-patch risks viral negative reviews that persist in search results and reviews platforms longer than the fixes take; threshold-based approach requires brutal triage discipline under crunch pressure."
+  },
+  {
+    "lever_id": "241cf87f-cec9-4e8c-9003-63a8b5654512",
+    "name": "Procedural Generation Scope: Algorithm Intensity vs. Authorial Control",
+    "consequences": "Algorithmic-heavy procedural generation (map variation, mission composition, NPC routines) multiplies replayability and reduces hand-authored content burden but creates unpredictable edge cases, performance bottlenecks, and aesthetic inconsistency. Authorial control (hand-placed landmarks, curated mission seeds, scripted NPC routines) ensures quality and consistency but limits content variation and increases production load, directly competing with narrative depth for artist and designer time.",
+    "options": [
+      "Deploy aggressive procedural systems for map terrain, building interiors, NPC routines, and mission parameters, accepting aesthetic variance and monthly balance patches to address edge cases and exploit chains discovered by players.",
+      "Restrict procedural generation to cosmetic variation (skyline, weather, traffic density, NPC outfit combinations) while keeping landmarks, missions, and NPC behavior fully hand-authored, ensuring quality at the cost of replay novelty.",
+      "Seed procedural systems with high-quality hand-authored bases: core map and missions are handcrafted, but secondary systems (NPC routines, resource distribution, encounter composition) layer procedural variation, balancing consistency with replayability."
+    ],
+    "review": "Aggressive procedural generation can produce jarring aesthetic incoherence and gameplay edge cases that distract from core narrative; pure hand-authoring undermines the replayability promise; layered approach requires careful seeding design to avoid uncanny valleys where proceduralism breaks the authored aesthetic."
+  },
+  {
+    "lever_id": "ee3db730-727a-4cf5-9b60-6866fdca3641",
+    "name": "Player Agency Versus Narrative Cohesion",
+    "consequences": "Granting players broad freedom to ignore mission paths or alter crime-economy rules deepens immersion but fragments story pacing and can leave NPCs in contradictory states. Authorial gates preserve narrative beats but reduce the sense of an autonomous world.",
+    "options": [
+      "Deploy branching checkpoints that reset economy state only after mission completion, letting players explore freely within bounded narrative intervals.",
+      "Implement diegetic undo mechanics\u2014in-world consequences that let NPCs and markets revert without breaking story causality when players reload saves.",
+      "Enforce mission linearity with soft gates that emotionally motivate progression, narrowing player choice but guaranteeing narrative payoff."
+    ],
+    "review": "Checkpoints preserve narrative structure but create dissonance when a player's actions in one interval contradict the next reset; diegetic undos risk convoluted worldbuilding that confuses players about what is permanent."
+  },
+  {
+    "lever_id": "313b983e-c2c0-4048-9fa3-b927ab1b368f",
+    "name": "Dialog Authoring: Recorded Lines Versus Procedural Assembly",
+    "consequences": "Recording thousands of voice lines for every NPC interaction ensures emotional authenticity and cinematic polish, but locks dialogue to predetermined branching trees. Procedural systems scale infinitely but risk uncanny phrasing, tonal inconsistency, and loss of signature character voice.",
+    "options": [
+      "Record signature dialogue trees for major NPCs and heist operators; generate minor NPC chatter procedurally, reducing audio budget while maintaining key character presence.",
+      "Adopt neural-synthesis voice models trained on each character's recorded baseline, enabling authored dialogue segments to be extended with synthetic variants that preserve tone and accent.",
+      "Restrict all dialogue to handwritten scripts for main storylines and key relationships; accept stilted or repetitive NPC ambient dialogue as a stylistic trade-off."
+    ],
+    "review": "Neural synthesis of character voice risks uncanny-valley artifacts in emotional scenes and requires continuous legal vetting for synthetic-media liability; recorded lines require hiring multiplayer voice actors across three studio locations, compounding scheduling complexity."
+  },
+  {
+    "lever_id": "78968cc2-7ce2-4e8f-9a37-19dc73f153f9",
+    "name": "Heist Choreography: Reusable Systems Versus Singular Spectacle",
+    "consequences": "Modular heist components (disguises, entry points, guard routes) enable rapid mission iteration and player experimentation, but heists feel templated and reused. Hand-authored linear sequences deliver spectacle and narrative payoff but require months of design and animation per mission.",
+    "options": [
+      "Design six core heist frameworks, each with eight modular sub-objectives and three entry strategies; restrict spectacular setpiece moments to three per campaign.",
+      "Hire a dedicated heist cinematic team to author one bespoke mission chain per month, accepting slower campaign rollout but allowing showcase moments at launch and post-launch.",
+      "Blend modular systems for emergent heists with cinematically directed sequences only for campaign turning points, separating player-authored chaos from narrative climaxes."
+    ],
+    "review": "Modular frameworks accelerate iteration but require design documentation so robust that updating one component risks cascading systemic imbalances; hand-authored spectacle demands motion-capture actor schedules aligned across three studios, creating bottlenecks."
+  },
+  {
+    "lever_id": "06086c0f-9181-4a2f-9406-1eb7f046b3be",
+    "name": "City Population Density and NPC Scheduling",
+    "consequences": "Dense NPC populations with realistic daily schedules (work commutes, sleep cycles, random encounters) create living-world authenticity and emergent gameplay but demand higher CPU overhead, streaming infrastructure, and behavior-tree maintenance. Sparse populations with simplified routines reduce technical burden but break immersion.",
+    "options": [
+      "Populate city centers with 5,000+ NPCs per district using optimized behavior trees; relocate secondary districts to lower-detail background zones with scripted patrol loops only.",
+      "Implement a dynamic population system that spawns NPCs on-demand based on player proximity and time-of-day logic, reducing peak memory but accepting occasional pop-in artifacts.",
+      "Deploy a fixed, hand-authored population of 2,000 NPCs distributed across hotspots; architect tight scripting so each NPC has memorable routines rather than realistic idleness."
+    ],
+    "review": "On-demand spawning eliminates memory spikes but creates jarring NPC appearances when players rapidly pan camera or drive at speed; dense populations require redundant behavior-tree servers, adding infrastructure cost and latency risk."
+  },
+  {
+    "lever_id": "f18d2474-b56b-40cd-a055-c30b2e65bfc2",
+    "name": "Criminal Economy Realism and Player Impact",
+    "consequences": "Simulating full supply chains\u2014manufacturing, distribution, corruption\u2014lets player heists reshape the underworld long-term but risks creating feedback loops where winning heists destabilize the economy, making subsequent missions trivial or broken. Facade markets respond to player actions cosmetically without systemic cascades.",
+    "options": [
+      "Implement a live economy layer that only NPCs and background factions influence; player heists deliver temporary disruption that markets slowly repair, preventing permanence.",
+      "Deploy full economic simulation with built-in dampening: player impact scales with heist size and fame, but NPC competitors automatically rebalance supply and demand within days.",
+      "Abstract the economy as a reputation-and-consequence layer: heists alter NPC dialogue, mission availability, and prices, but do not simulate production chains, freeing design bandwidth."
+    ],
+    "review": "Full simulation with automatic dampening risks feeling unresponsive\u2014players may not perceive their impact if markets correct too quickly; facade economies preserve narrative pacing but undermine the fantasy of reshaping a criminal empire."
+  },
+  {
+    "lever_id": "e8bd0753-8133-4395-8e92-f1dbc128a380",
+    "name": "Cross-Studio Asset Pipeline and Creative Authority",
+    "consequences": "Centralizing asset approval at lead studio ensures cohesive art direction and narrative consistency but creates approval bottlenecks where satellite studios wait weeks for feedback. Autonomous studios accelerate output but risk tonal and stylistic fragmentation across districts and mission chains.",
+    "options": [
+      "Assign each studio ownership of geographic territories and mission chains; establish quarterly creative reviews to align tone without veto-level gatekeeping at the center.",
+      "Implement a shared asset library with automated validation pipelines; satellite studios submit assets for non-destructive checks before integration, enabling asynchronous workflows.",
+      "Maintain a lead-studio approval board that reviews all narrative assets monthly in batch; satellite studios work from locked design documents and style guides to minimize iteration."
+    ],
+    "review": "Quarterly reviews create lag in addressing stylistic drift; automated validation requires months of pipeline engineering before development ramps; batch approval concentrates decision-making risk in lead studio and penalizes late-stage creative insights."
+  },
+  {
+    "lever_id": "fa101999-3553-4ed6-a70e-92f229e12afa",
+    "name": "Launch Completeness Versus Post-Launch Roadmap",
+    "consequences": "Delaying launch to achieve feature-parity and system depth ensures a stable, feature-rich release but risks market timing and extends team crunch. Shipping a tight core game post-launch scales features and content iteratively, reducing launch-day risk but ceding narrative completeness and system depth to patches.",
+    "options": [
+      "Launch with five fully authored campaign storylines, core criminal economy, and base heist mechanics; reserve cosmetic vehicles, secondary missions, and economy depth for quarterly updates.",
+      "Implement feature flags internally; develop all systems to completion before soft-launch in early-access, deferring public release until stability metrics and content volume meet quality gates.",
+      "Commit to a 18-month roadmap with monthly community polls on feature priority; stagger development across story arcs, systems, and cosmetics in visible monthly drops starting at launch."
+    ],
+    "review": "Launching a tight core risks perception of incompleteness if launch reviews emphasize feature gaps; early-access delays revenue and extends financial runway risk; monthly community polls risk alienating hardcore players whose preferences diverge from casual majority."
+  }
+]
