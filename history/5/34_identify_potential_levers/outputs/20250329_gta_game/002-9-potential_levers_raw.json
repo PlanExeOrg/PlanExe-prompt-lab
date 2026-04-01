@@ -1,0 +1,448 @@
+{
+  "responses": [
+    {
+      "strategic_rationale": "Core tensions center on delivering a believable, living city at scale while managing cost, schedule, and creative risk. The plan must reconcile a physical studio requirement with distributed talent access, and balance procedural world-building against handcrafted anchors that guide tone. A robust live-service economy and multiplayer framework are critical to long-term viability, yet both invite governance, security, and balance challenges. The six levers below target world-building, studio posture, narrative flexibility, multiplayer scope, economic design, and funding governance to guide decisions that sustain momentum without compromising discipline or creative integrity.",
+      "levers": [
+        {
+          "lever_index": 1,
+          "name": "Procedural generation fidelity versus handcrafted landmarks",
+          "consequences": "Hybrid world design accelerates scale while preserving narrative anchors; it enables dense exploration and diverse districts, but requires strong art direction to maintain a cohesive aesthetic across procedural and handcrafted content. It increases QA complexity and inter-team coordination, which can slow milestones. Long-term updates demand careful curation to prevent drift in tone across zones and ensure consistency.",
+          "options": [
+            "Invest in a hybrid world approach that blends high-fidelity procedural blocks with a curated set of handcrafted districts to anchor player experiences.",
+            "Prioritize fully procedural city generation with modular content pipelines, reducing manual asset creation and enabling rapid expansion.",
+            "Emphasize handcrafted, story-driven districts with tight level design constraints to maximize narrative impact and replayability at manageable scale."
+          ],
+          "review_lever": "Trade-off centers on consistency versus creativity; the three options leave a gap in scalable QA discipline for emergent content and risk of inconsistent tone between procedural and handcrafted areas during updates."
+        },
+        {
+          "lever_index": 2,
+          "name": "Facility footprint and studio posture",
+          "consequences": "Flagship studios paired with regional hubs enhance real-time collaboration and IP cohesion, but increase real estate and ongoing operating costs. A centralized studio with satellite labs reduces travel and coordination overhead, yet concentrates risk and limits talent diversity. A fully distributed model offers flexibility and broader hiring reach, but risks misalignment and longer onboarding cycles.",
+          "options": [
+            "Establish a flagship studio in Los Angeles complemented by regional hubs to maintain physical collaboration while enabling tiered recruitment.",
+            "Adopt a centralized studio model with key satellite labs for motion capture and high-end rendering, minimizing travel and coordination overhead.",
+            "Pursue a fully distributed model with strict co-location windows and quarterly in-person sprints to preserve culture and alignment."
+          ],
+          "review_lever": "The trade-off is between centralized control and dispersed agility; all options leave an unaddressed gap in long-term talent retention strategies and consistent studio culture development."
+        },
+        {
+          "lever_index": 3,
+          "name": "Criminal economy and NPC markets",
+          "consequences": "Dynamic markets increase realism and player agency, enabling emergent storytelling, but can destabilize progression and complicate balance if prices shift unexpectedly. Scripted economies reduce volatility but limit emergent narratives and player-driven outcomes. Adaptive economies tuned from playtests require robust telemetry and governance to avoid exploitation and content drift.",
+          "options": [
+            "Implement dynamic black-market economy with player-driven prices and supply chains managed by emergent behavior rules.",
+            "Lock in a controlled economic loop with scripted factions and predictable supply-demand curves to ensure balanced progression.",
+            "Experiment with adaptive economy using data-driven tuning from playtesting to evolve with player behavior."
+          ],
+          "review_lever": "Trade-off centers on realism versus determinism; the three options leave unaddressed how to prevent exploitation in markets and how to maintain consistent pacing when prices shift across locales."
+        },
+        {
+          "lever_index": 4,
+          "name": "Narrative architecture and branching",
+          "consequences": "Branching increases writer workload and QA complexity, potentially fragmenting player experience and prolonging development cycles. A single-arc approach speeds delivery and preserves cohesion but may limit replayability and player agency. A modular timeline-aware system can maintain continuity while enabling varied outcomes, but requires sophisticated state tracking and gating to avoid confusion.",
+          "options": [
+            "Adopt a modular narrative framework with branching chapters that players unlock through choices and reputation.",
+            "Center on a single strong arc with multiple endings guided by player morality to reduce narrative fragmentation.",
+            "Implement player-driven alternate timelines via time-lapse heists that reframe prior decisions in new contexts."
+          ],
+          "review_lever": "Branching improves agency but demands pervasive state tracking; the three options leave an unaddressed gap in how to ensure emotional payoff remains consistent across branches."
+        },
+        {
+          "lever_index": 5,
+          "name": "Open-world multiplayer integration strategy",
+          "consequences": "Integrated co-op across the open world increases networking complexity and security risk, requiring robust anti-cheat, server capacity, and privacy safeguards. A dedicated standalone online mode reduces risk to single-player balance but fragments the player community and increases maintenance scope. Opt-in missions with limited social features protect core experience but may underutilize live-service opportunities.",
+          "options": [
+            "Launch a shared-spawn, seamless co-op layer across the single-player map with permissioned PvP zones and loot sharing.",
+            "Create a separate persistent online mode that hosts criminal enterprises with seasonal resets and economy shards.",
+            "Test a light-touch multiplayer component with opt-in missions that never affect core single-player progression."
+          ],
+          "review_lever": "The trade-off centers on social connectivity versus system stability; all three options leave an unaddressed gap in scalable anti-cheat measures and cross-play policy."
+        },
+        {
+          "lever_index": 6,
+          "name": "Funding and governance model",
+          "consequences": "Diversified funding accelerates capability expansion but increases oversight and milestone pressure. Equity stakes dilute founder control and future upside; in-kind partnerships can constrain creative direction and release timing.",
+          "options": [
+            "Pursue a mix of publisher advances, strategic industry partnerships, and targeted government grants with strict milestone-based disbursement.",
+            "Engage in selective equity sharing with strategic investors to align long-term development incentives.",
+            "Leverage in-kind partnerships with hardware vendors for development resources in exchange for exclusive content commitments."
+          ],
+          "review_lever": "Diversification narrows risk but amplifies governance demands; the three options leave unaddressed how to maintain creative autonomy under external oversight and milestone pressure."
+        }
+      ]
+    },
+    {
+      "strategic_rationale": "Strategic Rationale: The project faces a core triad: speed to market, world-scale ambition, and sustainable operating costs. The levers focus on how assets are delivered (streaming vs local), how systems behave (AI fidelity and mission design), how the world is structured (one-city focus vs multi-city), how vehicles and gameplay loops are realized (realism vs budget), and how the product evolves post-launch (live service cadence). Together they shape risk around latency, balance between depth and breadth, and the ongoing resource burden, guiding decision-making toward options that preserve narrative integrity while keeping production feasible.",
+      "levers": [
+        {
+          "lever_index": 1,
+          "name": "City-scale streaming and asset lifecycle strategy",
+          "consequences": "Shifts asset delivery toward on-demand streaming, reducing install size and memory pressure on clients. This approach increases runtime network dependency and potential buffering during peak gameplay, creating reliability and latency trade-offs in offline or unstable network scenarios.",
+          "options": [
+            "Adopt a city-scale streaming pipeline that streams assets on demand during gameplay to minimize disk footprint while preserving visual fidelity.",
+            "Invest in a modular asset library with prioritized caching to accelerate load times and support dynamic urban events.",
+            "Terminate reliance on third-party city models by building an internal control grid for procedural layouts and hand-authored landmarks."
+          ],
+          "review_lever": "Streaming reduces disk footprint but increases runtime network dependency and buffering risk; the three options do not solve offline play reliability or regional bandwidth cost concerns."
+        },
+        {
+          "lever_index": 2,
+          "name": "Law enforcement AI fidelity and response scaling",
+          "consequences": "Higher AI fidelity heightens game tension and mission stakes, while increasing debugging needs and risk of unpredictable behavior. The options, however, do not fully address fairness across player styles or dynamic difficulty tuning at scale.",
+          "options": [
+            "Invest in adaptive police AI with variable response patterns tied to player notoriety to balance tension and fairness.",
+            "Limit citywide police presence to core mission zones to reduce orchestration complexity while preserving big heist excitement.",
+            "Deploy modular AI behaviors that can be swapped per region to test alternative policing narratives without rework."
+          ],
+          "review_lever": "The trade-off is realism versus playability; the three options leave gaps in equitable difficulty balancing and cross-city policing consistency."
+        },
+        {
+          "lever_index": 3,
+          "name": "Mission design strategy: handcrafted heists versus dynamic procedural heists",
+          "consequences": "Handcrafted missions ensure narrative precision and pacing, but limit variability; procedural heists boost replayability yet risk diluting storytelling focus.",
+          "options": [
+            "Pursue handcrafted heists with tight scripting, ensuring cinematic pacing and clear mission objectives at every stage.",
+            "Adopt a hybrid approach blending procedural frameworks with manual design to maintain variety while preserving narrative anchors.",
+            "Shift toward fully procedural heist generation to maximize randomness and player-driven outcomes, accepting potential narrative incongruities."
+          ],
+          "review_lever": "The trade-off between narrative control and replay depth; the options leave unresolved questions about cross-mission coherence and the maintenance burden of hybrid designs."
+        },
+        {
+          "lever_index": 4,
+          "name": "Vehicle customization realism and performance budget",
+          "consequences": "Deeper realism increases asset counts and shader complexity, potentially impacting frame rate on lower-end hardware; optimization will be needed to maintain platform parity.",
+          "options": [
+            "Expand a high-fidelity vehicle customization catalog with modular parts, applying procedural textures to manage memory use.",
+            "Limit customization depth for common cars to maintain performance targets while offering premium options for key vehicles.",
+            "Introduce a crafting-style upgrade system that binds parts to mission outcomes, reducing asset duplication while preserving player choice."
+          ],
+          "review_lever": "The trade-off is feature richness versus performance stability; the options do not specify target frame rates or testing scope across platforms."
+        },
+        {
+          "lever_index": 5,
+          "name": "Narrative scope: single-city focus versus multi-city sandbox expansion",
+          "consequences": "Single-city focus tightens narrative coherence and QA, while multi-city expansion broadens lore and scale but multiplies localization and integration challenges.",
+          "options": [
+            "Develop a tight narrative spine around a single urban core to maximize coherence and emotional impact.",
+            "Expand to a multi-city sandbox with interconnected branches to deliver long-tail player exploration.",
+            "Implement modular city expansions that connect through shared lore and cross-city missions, enabling staged releases without overhauling core design."
+          ],
+          "review_lever": "The trade-off is depth versus breadth; the options do not define progress criteria for cross-city storytelling or phased expansion against budget."
+        },
+        {
+          "lever_index": 6,
+          "name": "Live service cadence and episodic release strategy",
+          "consequences": "A steady release cadence sustains engagement and revenue streams, but demands ongoing content production, community management, and QA; risks resource drain away from the core launch.",
+          "options": [
+            "Adopt a quarterly episodic release cadence with fresh missions and events to maintain ongoing player engagement.",
+            "Maintain a one-shot launch with a comprehensive post-launch update plan focused on bug fixes and major content patches.",
+            "Pilot monthly micro-events tied to real-world holidays to test demand while limiting long-term commitments."
+          ],
+          "review_lever": "Ongoing resource commitment versus launch completeness; the options do not address backlog risk or quality debt if updates lag."
+        }
+      ]
+    },
+    {
+      "strategic_rationale": "Strategic rationale: The project sits at the intersection of large-scale open-world design, enduring IP risk, and escalating development costs anchored by physical studio presence. Core tensions revolve around maintaining creative depth while controlling schedule pressure and capital exposure; balancing centralized versus distributed talent pipelines; managing a dense, living city without sacrificing narrative clarity; sustaining ongoing live-service commitments without eroding single-player ambition; and aligning localization, compliance, and partnerships across diverse markets. The levers proposed address these tensions by testing alternatives for studio footprint, tooling governance, world density, release cadence, mission design governance, and localization approach, enabling deliberate trade-offs rather than assumptions.",
+      "levers": [
+        {
+          "lever_index": 1,
+          "name": "Studio footprint optimization across flagship hubs",
+          "consequences": "Consolidating core work into a primary flagship studio increases collaboration speed and reduces real estate overhead. A three-hub model preserves regional talent and time-zone coverage but raises coordination costs and staff travel, potentially slowing progress during handoffs.",
+          "options": [
+            "Consolidate core development to a single flagship campus and deploy rotating secondees from satellite studios to maximize collaboration efficiency during sprint cycles.",
+            "Maintain a three-hub model with structured cross-site sprints and on-site visits every quarter to preserve domain knowledge while controlling cross-continental travel costs.",
+            "Distribute core engine work across regional hubs with a formal residency program that rotates engineers to maintain fresh perspectives and reduce long-term burnout."
+          ],
+          "review_lever": "Consolidation into a single flagship campus improves alignment, but relocation burdens arise; the three options leave unaddressed resilience against regional disruptions and long-term talent attrition across hubs."
+        },
+        {
+          "lever_index": 2,
+          "name": "Toolchain governance and licensing strategy across engine and middleware",
+          "consequences": "Establishing a multi-vendor toolchain reduces dependency on a single supplier and stabilizes pricing across the project, but it can complicate integration and raise compatibility risks between components. It also increases internal coordination overhead and testing surface, potentially slowing feature delivery.",
+          "options": [
+            "Pursue multi-vendor licensing for core tools with standardized interfaces to prevent lock-in while maintaining flexibility and cross-platform compatibility.",
+            "Negotiate long-term exclusive terms with one engine provider in exchange for predictable pricing and prioritized bug fixes, accepting reduced feature parity agility.",
+            "Invest in in-house tooling for critical pipelines while licensing only non-core components to balance control and speed."
+          ],
+          "review_lever": "Exclusive vendor deals can stabilize costs and support, but reduce bargaining power during renewals; the three options leave unaddressed supplier risk if roadmap shifts or terms become unfavorable."
+        },
+        {
+          "lever_index": 3,
+          "name": "Open-world density management and narrative throughput balance",
+          "consequences": "Enhancing open-world density improves realism and player agency but imposes heavier optimization requirements and potential performance bottlenecks. It can also disrupt narrative pacing if side content overwhelms main missions, trading clarity for richness.",
+          "options": [
+            "Implement a modular city systems stack with adjustable density parameters to tailor performance per platform while preserving the core ambition of a living city.",
+            "Adopt a narrative-driven design that prioritizes tightly scripted missions and pacing to maintain story clarity even with lower systemic density.",
+            "Pursue a hybrid approach combining dense procedural content in side activities with hand-authored main missions to balance scope, polish, and player engagement."
+          ],
+          "review_lever": "Density-focused strategies place heavier QA and optimization demands; the three options leave unaddressed how to measure and preserve player engagement without overloading systems."
+        },
+        {
+          "lever_index": 4,
+          "name": "Live-service cadence versus single-player depth",
+          "consequences": "Frequent updates sustain engagement but require ongoing maintenance, staffing, and funding; the project risks maintenance fatigue and feature creep if cadence outpaces quality. A misaligned cadence can dilute core gameplay to chase novelty.",
+          "options": [
+            "Adopt a quarterly live-service update cycle with a fixed feature budget, ensuring predictable maintenance while risking stale core content.",
+            "Maintain a robust single-player campaign with episodic extensions as separate, paid releases to preserve narrative integrity while providing ongoing revenue.",
+            "Pursue a blended model with yearly major releases and monthly micro-events to balance fresh content with responsible scope control."
+          ],
+          "review_lever": "Cadence planning distributes QA across many releases; the options leave unaddressed long-term capital needs and staffing stability if episodic failures accumulate."
+        },
+        {
+          "lever_index": 5,
+          "name": "Mission design ownership and outsourcing governance",
+          "consequences": "In-house mission design preserves engine integration and storytelling coherence, yet scaling is constrained by staffing and talent availability. Outsourcing can accelerate throughput but introduces IP risk, quality variance, and the need for stringent QA gates and cultural alignment.",
+          "options": [
+            "Build core mission architecture in-house and selectively outsource side-quests to proven studios under tight QA gates and clear brand guidelines.",
+            "Source all mission design to a trusted external network with standardized briefs, shared tooling, and strict milestone reviews to maximize throughput.",
+            "Adopt a rotating mission-design team model where in-house leads collaborate with partner studios to balance control, throughput, and knowledge transfer."
+          ],
+          "review_lever": "In-house focus maintains consistency; outsourcing offers speed but threatens brand coherence; the three options leave unaddressed long-term IP stewardship and retention of critical design language."
+        },
+        {
+          "lever_index": 6,
+          "name": "Localization governance across key markets",
+          "consequences": "Localization governance across markets improves cultural resonance and regulatory readiness, but adds translation schedules, legal reviews, and QA visible to multiple stakeholders. It also creates potential branding drift if global direction isn't consistently enforced.",
+          "options": [
+            "Establish in-house localization studios to deliver authentic cultural adaptation across three core markets, ensuring brand consistency and rapid iteration.",
+            "Partner with regional studios to adapt content for each market, sharing IP while enforcing global brand guidelines and safety reviews.",
+            "Engage community-driven localization with curated, monitored translations to expand reach quickly while maintaining guardrails on quality and content safety."
+          ],
+          "review_lever": "Localization governance improves market fit but raises coordination complexity; the options leave unaddressed how to unify tone and safety across languages and jurisdictions."
+        }
+      ]
+    }
+  ],
+  "levers": [
+    {
+      "lever_id": "f8c5140f-c801-4bb7-b8ca-229e027ede81",
+      "name": "Procedural generation fidelity versus handcrafted landmarks",
+      "consequences": "Hybrid world design accelerates scale while preserving narrative anchors; it enables dense exploration and diverse districts, but requires strong art direction to maintain a cohesive aesthetic across procedural and handcrafted content. It increases QA complexity and inter-team coordination, which can slow milestones. Long-term updates demand careful curation to prevent drift in tone across zones and ensure consistency.",
+      "options": [
+        "Invest in a hybrid world approach that blends high-fidelity procedural blocks with a curated set of handcrafted districts to anchor player experiences.",
+        "Prioritize fully procedural city generation with modular content pipelines, reducing manual asset creation and enabling rapid expansion.",
+        "Emphasize handcrafted, story-driven districts with tight level design constraints to maximize narrative impact and replayability at manageable scale."
+      ],
+      "review": "Trade-off centers on consistency versus creativity; the three options leave a gap in scalable QA discipline for emergent content and risk of inconsistent tone between procedural and handcrafted areas during updates."
+    },
+    {
+      "lever_id": "da534a98-2f97-4d82-af5b-4dcf0390789b",
+      "name": "Facility footprint and studio posture",
+      "consequences": "Flagship studios paired with regional hubs enhance real-time collaboration and IP cohesion, but increase real estate and ongoing operating costs. A centralized studio with satellite labs reduces travel and coordination overhead, yet concentrates risk and limits talent diversity. A fully distributed model offers flexibility and broader hiring reach, but risks misalignment and longer onboarding cycles.",
+      "options": [
+        "Establish a flagship studio in Los Angeles complemented by regional hubs to maintain physical collaboration while enabling tiered recruitment.",
+        "Adopt a centralized studio model with key satellite labs for motion capture and high-end rendering, minimizing travel and coordination overhead.",
+        "Pursue a fully distributed model with strict co-location windows and quarterly in-person sprints to preserve culture and alignment."
+      ],
+      "review": "The trade-off is between centralized control and dispersed agility; all options leave an unaddressed gap in long-term talent retention strategies and consistent studio culture development."
+    },
+    {
+      "lever_id": "1baa069b-d467-4c76-885a-3a4f9f8c9eae",
+      "name": "Criminal economy and NPC markets",
+      "consequences": "Dynamic markets increase realism and player agency, enabling emergent storytelling, but can destabilize progression and complicate balance if prices shift unexpectedly. Scripted economies reduce volatility but limit emergent narratives and player-driven outcomes. Adaptive economies tuned from playtests require robust telemetry and governance to avoid exploitation and content drift.",
+      "options": [
+        "Implement dynamic black-market economy with player-driven prices and supply chains managed by emergent behavior rules.",
+        "Lock in a controlled economic loop with scripted factions and predictable supply-demand curves to ensure balanced progression.",
+        "Experiment with adaptive economy using data-driven tuning from playtesting to evolve with player behavior."
+      ],
+      "review": "Trade-off centers on realism versus determinism; the three options leave unaddressed how to prevent exploitation in markets and how to maintain consistent pacing when prices shift across locales."
+    },
+    {
+      "lever_id": "ffb29307-f183-4f1a-92fb-fd2ca934a1e0",
+      "name": "Narrative architecture and branching",
+      "consequences": "Branching increases writer workload and QA complexity, potentially fragmenting player experience and prolonging development cycles. A single-arc approach speeds delivery and preserves cohesion but may limit replayability and player agency. A modular timeline-aware system can maintain continuity while enabling varied outcomes, but requires sophisticated state tracking and gating to avoid confusion.",
+      "options": [
+        "Adopt a modular narrative framework with branching chapters that players unlock through choices and reputation.",
+        "Center on a single strong arc with multiple endings guided by player morality to reduce narrative fragmentation.",
+        "Implement player-driven alternate timelines via time-lapse heists that reframe prior decisions in new contexts."
+      ],
+      "review": "Branching improves agency but demands pervasive state tracking; the three options leave an unaddressed gap in how to ensure emotional payoff remains consistent across branches."
+    },
+    {
+      "lever_id": "e50f6030-b18d-4ffc-bde0-069166a1d6ba",
+      "name": "Open-world multiplayer integration strategy",
+      "consequences": "Integrated co-op across the open world increases networking complexity and security risk, requiring robust anti-cheat, server capacity, and privacy safeguards. A dedicated standalone online mode reduces risk to single-player balance but fragments the player community and increases maintenance scope. Opt-in missions with limited social features protect core experience but may underutilize live-service opportunities.",
+      "options": [
+        "Launch a shared-spawn, seamless co-op layer across the single-player map with permissioned PvP zones and loot sharing.",
+        "Create a separate persistent online mode that hosts criminal enterprises with seasonal resets and economy shards.",
+        "Test a light-touch multiplayer component with opt-in missions that never affect core single-player progression."
+      ],
+      "review": "The trade-off centers on social connectivity versus system stability; all three options leave an unaddressed gap in scalable anti-cheat measures and cross-play policy."
+    },
+    {
+      "lever_id": "f57e0cbe-46cc-4924-8c06-f9500a28c877",
+      "name": "Funding and governance model",
+      "consequences": "Diversified funding accelerates capability expansion but increases oversight and milestone pressure. Equity stakes dilute founder control and future upside; in-kind partnerships can constrain creative direction and release timing.",
+      "options": [
+        "Pursue a mix of publisher advances, strategic industry partnerships, and targeted government grants with strict milestone-based disbursement.",
+        "Engage in selective equity sharing with strategic investors to align long-term development incentives.",
+        "Leverage in-kind partnerships with hardware vendors for development resources in exchange for exclusive content commitments."
+      ],
+      "review": "Diversification narrows risk but amplifies governance demands; the three options leave unaddressed how to maintain creative autonomy under external oversight and milestone pressure."
+    },
+    {
+      "lever_id": "24149609-a2e3-4645-8e04-5a7cdd567baa",
+      "name": "City-scale streaming and asset lifecycle strategy",
+      "consequences": "Shifts asset delivery toward on-demand streaming, reducing install size and memory pressure on clients. This approach increases runtime network dependency and potential buffering during peak gameplay, creating reliability and latency trade-offs in offline or unstable network scenarios.",
+      "options": [
+        "Adopt a city-scale streaming pipeline that streams assets on demand during gameplay to minimize disk footprint while preserving visual fidelity.",
+        "Invest in a modular asset library with prioritized caching to accelerate load times and support dynamic urban events.",
+        "Terminate reliance on third-party city models by building an internal control grid for procedural layouts and hand-authored landmarks."
+      ],
+      "review": "Streaming reduces disk footprint but increases runtime network dependency and buffering risk; the three options do not solve offline play reliability or regional bandwidth cost concerns."
+    },
+    {
+      "lever_id": "e66100bb-72f7-4f97-adce-ebfd770615a6",
+      "name": "Law enforcement AI fidelity and response scaling",
+      "consequences": "Higher AI fidelity heightens game tension and mission stakes, while increasing debugging needs and risk of unpredictable behavior. The options, however, do not fully address fairness across player styles or dynamic difficulty tuning at scale.",
+      "options": [
+        "Invest in adaptive police AI with variable response patterns tied to player notoriety to balance tension and fairness.",
+        "Limit citywide police presence to core mission zones to reduce orchestration complexity while preserving big heist excitement.",
+        "Deploy modular AI behaviors that can be swapped per region to test alternative policing narratives without rework."
+      ],
+      "review": "The trade-off is realism versus playability; the three options leave gaps in equitable difficulty balancing and cross-city policing consistency."
+    },
+    {
+      "lever_id": "a2381377-54a8-4ddb-9355-4fb1b105b1e4",
+      "name": "Mission design strategy: handcrafted heists versus dynamic procedural heists",
+      "consequences": "Handcrafted missions ensure narrative precision and pacing, but limit variability; procedural heists boost replayability yet risk diluting storytelling focus.",
+      "options": [
+        "Pursue handcrafted heists with tight scripting, ensuring cinematic pacing and clear mission objectives at every stage.",
+        "Adopt a hybrid approach blending procedural frameworks with manual design to maintain variety while preserving narrative anchors.",
+        "Shift toward fully procedural heist generation to maximize randomness and player-driven outcomes, accepting potential narrative incongruities."
+      ],
+      "review": "The trade-off between narrative control and replay depth; the options leave unresolved questions about cross-mission coherence and the maintenance burden of hybrid designs."
+    },
+    {
+      "lever_id": "5f9ee5eb-d891-4239-a2dc-7fcf6f427940",
+      "name": "Vehicle customization realism and performance budget",
+      "consequences": "Deeper realism increases asset counts and shader complexity, potentially impacting frame rate on lower-end hardware; optimization will be needed to maintain platform parity.",
+      "options": [
+        "Expand a high-fidelity vehicle customization catalog with modular parts, applying procedural textures to manage memory use.",
+        "Limit customization depth for common cars to maintain performance targets while offering premium options for key vehicles.",
+        "Introduce a crafting-style upgrade system that binds parts to mission outcomes, reducing asset duplication while preserving player choice."
+      ],
+      "review": "The trade-off is feature richness versus performance stability; the options do not specify target frame rates or testing scope across platforms."
+    },
+    {
+      "lever_id": "4ca9d34c-9b1c-4a59-9aa5-e20aa1b9265f",
+      "name": "Narrative scope: single-city focus versus multi-city sandbox expansion",
+      "consequences": "Single-city focus tightens narrative coherence and QA, while multi-city expansion broadens lore and scale but multiplies localization and integration challenges.",
+      "options": [
+        "Develop a tight narrative spine around a single urban core to maximize coherence and emotional impact.",
+        "Expand to a multi-city sandbox with interconnected branches to deliver long-tail player exploration.",
+        "Implement modular city expansions that connect through shared lore and cross-city missions, enabling staged releases without overhauling core design."
+      ],
+      "review": "The trade-off is depth versus breadth; the options do not define progress criteria for cross-city storytelling or phased expansion against budget."
+    },
+    {
+      "lever_id": "627dbfda-beb0-473d-914c-9e29928ff9a0",
+      "name": "Live service cadence and episodic release strategy",
+      "consequences": "A steady release cadence sustains engagement and revenue streams, but demands ongoing content production, community management, and QA; risks resource drain away from the core launch.",
+      "options": [
+        "Adopt a quarterly episodic release cadence with fresh missions and events to maintain ongoing player engagement.",
+        "Maintain a one-shot launch with a comprehensive post-launch update plan focused on bug fixes and major content patches.",
+        "Pilot monthly micro-events tied to real-world holidays to test demand while limiting long-term commitments."
+      ],
+      "review": "Ongoing resource commitment versus launch completeness; the options do not address backlog risk or quality debt if updates lag."
+    },
+    {
+      "lever_id": "bf7175ed-c00e-4d7e-bce8-d2856e2ab76d",
+      "name": "Studio footprint optimization across flagship hubs",
+      "consequences": "Consolidating core work into a primary flagship studio increases collaboration speed and reduces real estate overhead. A three-hub model preserves regional talent and time-zone coverage but raises coordination costs and staff travel, potentially slowing progress during handoffs.",
+      "options": [
+        "Consolidate core development to a single flagship campus and deploy rotating secondees from satellite studios to maximize collaboration efficiency during sprint cycles.",
+        "Maintain a three-hub model with structured cross-site sprints and on-site visits every quarter to preserve domain knowledge while controlling cross-continental travel costs.",
+        "Distribute core engine work across regional hubs with a formal residency program that rotates engineers to maintain fresh perspectives and reduce long-term burnout."
+      ],
+      "review": "Consolidation into a single flagship campus improves alignment, but relocation burdens arise; the three options leave unaddressed resilience against regional disruptions and long-term talent attrition across hubs."
+    },
+    {
+      "lever_id": "79c34964-49d4-40a5-a52d-72df94c6638c",
+      "name": "Toolchain governance and licensing strategy across engine and middleware",
+      "consequences": "Establishing a multi-vendor toolchain reduces dependency on a single supplier and stabilizes pricing across the project, but it can complicate integration and raise compatibility risks between components. It also increases internal coordination overhead and testing surface, potentially slowing feature delivery.",
+      "options": [
+        "Pursue multi-vendor licensing for core tools with standardized interfaces to prevent lock-in while maintaining flexibility and cross-platform compatibility.",
+        "Negotiate long-term exclusive terms with one engine provider in exchange for predictable pricing and prioritized bug fixes, accepting reduced feature parity agility.",
+        "Invest in in-house tooling for critical pipelines while licensing only non-core components to balance control and speed."
+      ],
+      "review": "Exclusive vendor deals can stabilize costs and support, but reduce bargaining power during renewals; the three options leave unaddressed supplier risk if roadmap shifts or terms become unfavorable."
+    },
+    {
+      "lever_id": "8dc91142-52d5-4e9a-bb00-0f00f9a55613",
+      "name": "Open-world density management and narrative throughput balance",
+      "consequences": "Enhancing open-world density improves realism and player agency but imposes heavier optimization requirements and potential performance bottlenecks. It can also disrupt narrative pacing if side content overwhelms main missions, trading clarity for richness.",
+      "options": [
+        "Implement a modular city systems stack with adjustable density parameters to tailor performance per platform while preserving the core ambition of a living city.",
+        "Adopt a narrative-driven design that prioritizes tightly scripted missions and pacing to maintain story clarity even with lower systemic density.",
+        "Pursue a hybrid approach combining dense procedural content in side activities with hand-authored main missions to balance scope, polish, and player engagement."
+      ],
+      "review": "Density-focused strategies place heavier QA and optimization demands; the three options leave unaddressed how to measure and preserve player engagement without overloading systems."
+    },
+    {
+      "lever_id": "5f70bb74-b637-496d-ad33-0cd9a7f48301",
+      "name": "Live-service cadence versus single-player depth",
+      "consequences": "Frequent updates sustain engagement but require ongoing maintenance, staffing, and funding; the project risks maintenance fatigue and feature creep if cadence outpaces quality. A misaligned cadence can dilute core gameplay to chase novelty.",
+      "options": [
+        "Adopt a quarterly live-service update cycle with a fixed feature budget, ensuring predictable maintenance while risking stale core content.",
+        "Maintain a robust single-player campaign with episodic extensions as separate, paid releases to preserve narrative integrity while providing ongoing revenue.",
+        "Pursue a blended model with yearly major releases and monthly micro-events to balance fresh content with responsible scope control."
+      ],
+      "review": "Cadence planning distributes QA across many releases; the options leave unaddressed long-term capital needs and staffing stability if episodic failures accumulate."
+    },
+    {
+      "lever_id": "ef9f4712-faf5-4479-b2ee-575d30ac9fd8",
+      "name": "Mission design ownership and outsourcing governance",
+      "consequences": "In-house mission design preserves engine integration and storytelling coherence, yet scaling is constrained by staffing and talent availability. Outsourcing can accelerate throughput but introduces IP risk, quality variance, and the need for stringent QA gates and cultural alignment.",
+      "options": [
+        "Build core mission architecture in-house and selectively outsource side-quests to proven studios under tight QA gates and clear brand guidelines.",
+        "Source all mission design to a trusted external network with standardized briefs, shared tooling, and strict milestone reviews to maximize throughput.",
+        "Adopt a rotating mission-design team model where in-house leads collaborate with partner studios to balance control, throughput, and knowledge transfer."
+      ],
+      "review": "In-house focus maintains consistency; outsourcing offers speed but threatens brand coherence; the three options leave unaddressed long-term IP stewardship and retention of critical design language."
+    },
+    {
+      "lever_id": "6ccb26ad-14a1-4baa-9f8e-a7c89d2e6abb",
+      "name": "Localization governance across key markets",
+      "consequences": "Localization governance across markets improves cultural resonance and regulatory readiness, but adds translation schedules, legal reviews, and QA visible to multiple stakeholders. It also creates potential branding drift if global direction isn't consistently enforced.",
+      "options": [
+        "Establish in-house localization studios to deliver authentic cultural adaptation across three core markets, ensuring brand consistency and rapid iteration.",
+        "Partner with regional studios to adapt content for each market, sharing IP while enforcing global brand guidelines and safety reviews.",
+        "Engage community-driven localization with curated, monitored translations to expand reach quickly while maintaining guardrails on quality and content safety."
+      ],
+      "review": "Localization governance improves market fit but raises coordination complexity; the options leave unaddressed how to unify tone and safety across languages and jurisdictions."
+    }
+  ],
+  "metadata": {
+    "metadata_1": {
+      "context_window": 400000,
+      "num_output": 128000,
+      "is_chat_model": true,
+      "is_function_calling_model": true,
+      "model_name": "gpt-5-nano",
+      "system_role": "user",
+      "llm_classname": "openai_llm"
+    },
+    "metadata_2": {
+      "context_window": 400000,
+      "num_output": 128000,
+      "is_chat_model": true,
+      "is_function_calling_model": true,
+      "model_name": "gpt-5-nano",
+      "system_role": "user",
+      "llm_classname": "openai_llm"
+    },
+    "metadata_3": {
+      "context_window": 400000,
+      "num_output": 128000,
+      "is_chat_model": true,
+      "is_function_calling_model": true,
+      "model_name": "gpt-5-nano",
+      "system_role": "user",
+      "llm_classname": "openai_llm"
+    }
+  },
+  "system_prompt": "You are an expert strategic analyst. Generate solution space parameters following these directives:\n\n1. **Output Requirements**\n   - You must generate 5 to 7 levers per response.\n   - Each lever's `options` field must contain exactly 3 qualitative strategic choices as plain strings.\n\n2. **Lever Quality Standards**\n   - Consequences: describe the direct effect of pulling this lever, then at least one downstream implication or trade-off. Be concise and grounded \u2014 use numbers only when the project context provides them directly \u2014 do not calculate, derive, or estimate figures. Target length: 2\u20134 sentences.\n   - Options MUST:\n     \u2022 Represent genuinely distinct strategic pathways (not just labels)\n     \u2022 Include at least one unconventional or non-obvious approach\n     \u2022 NO prefixes (e.g., \"Option A:\", \"Choice 1:\")\n\n3. **Strategic Framing**\n   - Name each lever using language drawn directly from the project's own domain \u2014 avoid formulaic patterns or repeated prefixes\n   - Frame options as complete strategic approaches\n   - Ensure levers challenge core project assumptions\n\n4. **Validation Protocols**\n   - For `review_lever`:\n     A short critical review \u2014 identify the primary trade-off this lever introduces, then state the specific gap the three options leave unaddressed.\n     Examples:\n     - \"Switching from seasonal contract labor to year-round employees stabilizes harvest quality, but the idle-wage burden during the 5-month off-season adds a fixed cost that erases the per-unit savings unless utilization reaches year-round levels.\"\n     - \"Each additional clinical site requires its own IRB approval, site-initiation visit, and staff credentialing \u2014 a sequential overhead that compounds rather than parallelizes, so doubling site count does not halve enrollment time.\"\n     - \"Pooling catastrophe risk across three coastal regions reduces expected annual loss on paper, but a single regional hurricane season can correlate all three simultaneously, turning the diversification assumption into a concentration risk at the worst possible moment.\"\n     Do not use square brackets or placeholder text.\n\n5. **Prohibitions**\n   - NO prefixes/labels in options (e.g., \"Option A:\", \"Choice 1:\")\n   - NO generic option labels (e.g., \"Optimize X\", \"Tolerate Y\")\n   - NO placeholder consequences or bracket-wrapped templates\n   - NO fabricated statistics or percentages without evidence from the project context\n   - NO marketing language (e.g., \"game-changing\", \"cutting-edge\", \"revolutionary\")\n\n6. **Length Limits**\n   - Keep each `review_lever` to one sentence (20\u201340 words). State the trade-off and the gap concisely.\n   - Each option should be a concrete, actionable approach (at least 15 words with an action verb) \u2014 not a short label or vague aspiration\n   - Maintain parallel grammatical structure across options\n   - Ensure options are self-contained descriptions",
+  "user_prompt": "File 'plan.txt':\nPlan:\nDevelop the next Grand Theft Auto (GTA), featuring a sprawling, immersive open-world metropolis blending elements of Los Angeles, Detroit, and Miami, filled with intricate narratives of crime, corruption, and power struggles, realistic criminal economies, dynamic NPC interactions, complex heist mechanics, extensive vehicle customization, nuanced morality systems, advanced procedural generation, next-gen graphical fidelity, multiplayer modes, and innovative gameplay funded by strategic industry partnerships, publisher investments, and government innovation grants. Don't go for the most aggressive scenario. Banned words: blockchain, DAO, crowdfunding.\n\nToday's date:\n2026-Mar-13\n\nProject start ASAP\n\nFile 'purpose.md':\n**Purpose:** business\n\n**Purpose Detailed:** Developing a new Grand Theft Auto game with advanced features, complex narratives, and strategic funding.\n\n**Topic:** Grand Theft Auto (GTA) Game Development\n\nFile 'plan_type.md':\nThis plan requires one or more physical locations. It cannot be executed digitally.\n\n**Explanation:** Developing a Grand Theft Auto game, even with advanced procedural generation and cloud-based tools, *inherently requires* a physical development environment, including offices, hardware, and in-person collaboration among developers, artists, and designers. Testing the game also requires physical devices and real-world testing scenarios. Securing funding through partnerships and grants involves physical meetings and presentations. Therefore, this plan is classified as physical."
+}
